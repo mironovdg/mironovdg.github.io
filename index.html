@@ -236,6 +236,7 @@ textarea{
 .topic-chip.mastered:hover{border-color:var(--ok)}
 .topic-chip.mastered[aria-current="true"]{border-color:var(--lamp);box-shadow:inset 0 0 0 1px var(--lamp)}
 .tr-explain{font-size:14px;color:var(--ink-soft);max-width:var(--measure);margin:0 0 12px}
+.tr-legend{font-size:13px;line-height:1.5;color:var(--rain);max-width:none;margin:-6px 0 18px}
 .tr-stats{font-family:var(--mono);font-size:12.5px;color:var(--rain);margin-bottom:12px}
 .tr-log{margin-top:26px}
 .tr-log h3{margin:0 0 8px}
@@ -2068,6 +2069,7 @@ summary:hover{background:var(--lamp-soft)}
 
     root.innerHTML =
       '<div class="tr-topics"></div>' +
+      '<p class="tr-legend">Процент — сколько слов вспомнилось при последней проверке. «Проверено 20 из 29» — сколько слов темы ты уже проверял, ✓ — проверены все. Зелёная заливка — каждое слово темы подтверждено в обе стороны.</p>' +
       '<div class="tr-tools">' +
         '<select class="tr-dir">' +
           '<option value="both">Спрашивать в обе стороны</option>' +
@@ -2145,7 +2147,7 @@ summary:hover{background:var(--lamp-soft)}
           const done = (p.tested === p.total);
           meta = (done ? '<span class="t-done">✓</span> ' : "") +
                  '<span class="t-pct ' + cls + '">' + pct + "%</span>" +
-                 '<span class="t-dim"> · ' + (done ? "все " + p.total : p.tested + " из " + p.total) + "</span>";
+                 '<span class="t-dim"> · ' + (done ? "проверены все " + p.total : "проверено " + p.tested + " из " + p.total) + "</span>";
         }
         // тема освоена, когда каждое её слово подтверждено — вспомнено в обе стороны с первой попытки
         const list = groupWords(g);
