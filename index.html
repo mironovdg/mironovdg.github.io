@@ -237,6 +237,8 @@ textarea{
 .topic-chip.mastered[aria-current="true"]{border-color:var(--lamp);box-shadow:inset 0 0 0 1px var(--lamp)}
 .tr-explain{font-size:14px;color:var(--ink-soft);max-width:var(--measure);margin:0 0 12px}
 .tr-legend{font-size:13px;line-height:1.5;color:var(--rain);max-width:none;margin:-6px 0 18px}
+.chapter-gate{margin-top:56px}
+.chapter-gate .gate-session{margin-top:20px}
 .tr-stats{font-family:var(--mono);font-size:12.5px;color:var(--rain);margin-bottom:12px}
 .tr-log{margin-top:26px}
 .tr-log h3{margin:0 0 8px}
@@ -339,6 +341,9 @@ summary:hover{background:var(--lamp-soft)}
     <li><button type="button" class="chapter-tab" data-chapter="ch3">3 · Locker 14</button></li>
     <li class="soon">Глава 4 — после отчёта по третьей</li>
   </ul>
+
+  <!-- разминка перед новой главой: показывается вместо главы, если к ней приступают не в день прохождения предыдущей -->
+  <section class="chapter-gate" id="chapter-gate" hidden></section>
 
   <!-- ================= ГЛАВА 1 ================= -->
   <article class="chapter" id="ch1">
@@ -806,7 +811,7 @@ summary:hover{background:var(--lamp-soft)}
 
   <!-- ================= ОТЧЁТ: считает открытую главу ================= -->
   <!-- ================= ГЛАВА 3 ================= -->
-  <article class="chapter" id="ch3" hidden>
+  <article class="chapter" id="ch3" hidden data-prev-done="2026-09-20">
     <div class="chapter-head">
       <p class="eyebrow">Глава 3</p>
       <h1>Locker 14</h1>
@@ -1653,7 +1658,14 @@ summary:hover{background:var(--lamp-soft)}
     return document.querySelector(".chapter:not([hidden])") || document.querySelector(".chapter");
   }
   function showChapter(id){
-    document.querySelectorAll(".chapter").forEach(function(ch){ ch.hidden = (ch.id !== id); });
+    const target = document.getElementById(id);
+    const gated = needsGate(target);
+    document.querySelectorAll(".chapter").forEach(function(ch){ ch.hidden = gated || (ch.id !== id); });
+    gateBox.hidden = !gated;
+    if (!gated){ gateBox.innerHTML = ""; delete gateBox.dataset.for; }
+    else if (gateBox.dataset.for !== id) renderGate(target);   // идущую разминку не сбрасываем
+    const reportSection = document.querySelector(".report-section");
+    if (reportSection) reportSection.hidden = gated;
     document.querySelectorAll(".chapter-tab").forEach(function(t){
       if (t.dataset.chapter === id) t.setAttribute("aria-current","true");
       else t.removeAttribute("aria-current");
@@ -1666,6 +1678,248 @@ summary:hover{background:var(--lamp-soft)}
   document.querySelectorAll(".chapter-tab").forEach(function(tab){
     tab.addEventListener("click", function(){ showChapter(tab.dataset.chapter); });
   });
+
+  // ---------- разминка перед новой главой ----------
+  // Правило ученика (21.09.2026): если к новой главе приступаешь не в тот день, когда прошёл
+  // предыдущую, глава открывается только после разминки — все слова предыдущей главы и трудные
+  // слова всех глав до неё, в обе стороны; не вспомнилось — повторяется, пока не вспомнится всё.
+  // В тот же день глава открыта сразу. Касается только самой новой главы.
+  // data-prev-done у главы — день, когда пришёл отчёт по предыдущей (ставит автоматика).
+  const GATE_KEY = "blue-suitcase-gate-open";
+  const gateBox = document.getElementById("chapter-gate");
+
+  function localDay(){
+    const d = new Date();
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  }
+  function readJSON(key, fallback){
+    try { const v = JSON.parse(localStorage.getItem(key) || "null"); return v == null ? fallback : v; } catch(e){ return fallback; }
+  }
+  function writeJSON(key, v){ try { localStorage.setItem(key, JSON.stringify(v)); } catch(e){} }
+  function chapterNum(id){ return Number(String(id || "").replace(/\D/g, "")) || 0; }
+  function wordsRu(n){
+    const d = n % 10, h = n % 100;
+    return (d === 1 && h !== 11) ? "слово" : (d >= 2 && d <= 4 && (h < 12 || h > 14)) ? "слова" : "слов";
+  }
+
+  function gateOpened(id){ return readJSON(GATE_KEY, []).indexOf(id) !== -1; }
+  function openGate(id){
+    const list = readJSON(GATE_KEY, []);
+    if (list.indexOf(id) === -1){ list.push(id); writeJSON(GATE_KEY, list); }
+  }
+  // глава уже начата на этом устройстве — есть хоть один ответ в упражнениях
+  function chapterStarted(id){
+    const vals = (readJSON(STORE, {}) || {}).vals || {};
+    return Object.keys(vals).some(function(k){ return k.indexOf(id + ".") === 0 && String(vals[k] || "").trim() !== ""; });
+  }
+
+  // все слова главы n-1 + трудные слова глав до неё (и входного теста — его слова вплетены в главы)
+  function gateWords(n){
+    let learned = [];
+    try { learned = JSON.parse(document.getElementById("data-learned").textContent) || []; } catch(e){ learned = []; }
+    const hardHere = readJSON("blue-suitcase-review-learned", []);
+    const seen = {};
+    return learned.filter(function(x){
+      if (!x || !x.w || seen[x.w]) return false;
+      const m = /^глава (\d+)$/.exec(x.g || "");
+      const from = m ? Number(m[1]) : (x.g === "входной тест" ? 0 : -1);
+      if (from < 0 || from >= n) return false;
+      const take = from === n - 1 || x.s === "for_review" || hardHere.indexOf(x.w) !== -1;
+      if (take) seen[x.w] = true;
+      return take;
+    });
+  }
+
+  function needsGate(ch){
+    const all = document.querySelectorAll(".chapter");
+    if (!ch || ch !== all[all.length - 1]) return false;
+    const n = chapterNum(ch.id);
+    if (n < 2 || ch.dataset.gatePassed) return false;
+    if (gateOpened(ch.id) || chapterStarted(ch.id)) return false;
+    let doneHere = null;
+    try { doneHere = localStorage.getItem("blue-suitcase-done-ch" + (n - 1)); } catch(e){}
+    if (ch.dataset.prevDone === localDay() || doneHere === localDay() || !gateWords(n).length){
+      openGate(ch.id);   // приступил в тот же день — глава открыта и дальше
+      return false;
+    }
+    return true;
+  }
+
+  function renderGate(ch){
+    const n = chapterNum(ch.id);
+    const words = gateWords(n);
+    const prev = document.getElementById("ch" + (n - 1));
+    const prevTitle = prev && prev.querySelector("h1") ? prev.querySelector("h1").textContent : "";
+    const when = ch.dataset.prevDone
+      ? new Date(ch.dataset.prevDone + "T12:00:00").toLocaleDateString("ru-RU", {day:"numeric", month:"long"}) : "";
+    gateBox.dataset.for = ch.id;
+    gateBox.innerHTML =
+      '<p class="sec-label">Разминка перед главой ' + n + '</p>' +
+      '<h2>Сначала вспомни слова</h2>' +
+      '<p>' + (when ? "Глава " + (n - 1) + " пройдена " + esc(when) + ", а сегодня другой день. " : "Предыдущая глава пройдена не сегодня. ") +
+        "Прежде чем читать главу " + n + ", вспомни все слова главы " + (n - 1) + (prevTitle ? " «" + esc(prevTitle) + "»" : "") +
+        " и трудные слова глав до неё: " + words.length + " " + wordsRu(words.length) + ", в обе стороны.</p>" +
+      '<p>Что не вспомнилось, повторится в конце круга — и так, пока не вспомнятся все. Тогда глава откроется. ' +
+        'Первый круг засчитывается как обычная проверка в «Изученной лексике».</p>' +
+      '<div class="gate-session"><div class="bar"><button class="act gate-start" type="button">Начать разминку</button></div></div>';
+    gateBox.querySelector(".gate-start").addEventListener("click", function(){ runGate(ch, words); });
+  }
+
+  function runGate(ch, words){
+    const n = chapterNum(ch.id);
+    const box = gateBox.querySelector(".gate-session");
+    const first = {};                         // слово -> {en, ru}: ответы первого круга
+    const result = { confirmed: [], difficult: [], known: 0 };
+    let round = 1, deck = [], pos = 0, failedCards = [];
+
+    function shuffle(a){
+      a = a.slice();
+      for (let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); const t = a[i]; a[i] = a[j]; a[j] = t; }
+      // одно и то же слово не должно идти двумя карточками подряд
+      for (let i = 1; i < a.length; i++){
+        if (a[i].item.w !== a[i - 1].item.w) continue;
+        for (let j = i + 1; j < a.length; j++){
+          if (a[j].item.w !== a[i - 1].item.w){ const t = a[i]; a[i] = a[j]; a[j] = t; break; }
+        }
+      }
+      return a;
+    }
+    function start(cards){ deck = shuffle(cards); pos = 0; failedCards = []; showCard(); }
+
+    function showCard(){
+      if (pos >= deck.length){ endRound(); return; }
+      const c = deck[pos];
+      const front = c.side === "en" ? c.item.w : c.item.t;
+      const back  = c.side === "en" ? c.item.t : c.item.w;
+      box.innerHTML =
+        '<div class="tr-card">' +
+          '<div class="tr-progress">круг ' + round + " · " + (pos + 1) + " / " + deck.length + " · " +
+            (c.side === "en" ? "английское → русское" : "русское → английское") + '</div>' +
+          '<div class="tr-word">' + esc(front) + '</div>' +
+          '<div class="tr-answer blank">' + esc(back) + '</div>' +
+          '<div class="tr-buttons">' +
+            '<button class="act ghost tr-show" type="button">Показать ответ</button>' +
+            '<button class="know" type="button">Знаю</button>' +
+            '<button class="dont" type="button">Не знаю</button>' +
+          '</div>' +
+        '</div>';
+      box.querySelector(".tr-show").addEventListener("click", function(){
+        box.querySelector(".tr-answer").classList.remove("blank");
+        this.disabled = true;
+      });
+      box.querySelector(".know").addEventListener("click", function(){ answer(true); });
+      box.querySelector(".dont").addEventListener("click", function(){ answer(false); });
+    }
+
+    function answer(ok){
+      const c = deck[pos];
+      if (round === 1){ first[c.item.w] = first[c.item.w] || {}; first[c.item.w][c.side] = ok; }
+      if (!ok) failedCards.push({ item: c.item, side: c.side });
+      pos++;
+      showCard();
+    }
+
+    function endRound(){
+      if (round === 1) recordFirstRound();
+      if (!failedCards.length){ finish(); return; }
+      const names = [];
+      failedCards.forEach(function(c){ if (names.indexOf(c.item.w) === -1) names.push(c.item.w); });
+      const again = failedCards.slice();
+      box.innerHTML =
+        '<div class="tr-result">' +
+          '<h3>Круг ' + round + ' закончен</h3>' +
+          '<p class="tr-list">Не вспомнились: ' + names.map(function(w){ return "<b>" + esc(w) + "</b>"; }).join(", ") + '</p>' +
+          '<p class="tr-stats">Повторим их — глава откроется, когда вспомнятся все.</p>' +
+          '<div class="bar"><button class="act gate-next" type="button">Повторить</button></div>' +
+        '</div>';
+      box.querySelector(".gate-next").addEventListener("click", function(){ round++; start(again); });
+    }
+
+    // первый круг — обычная проверка «Изученной лексики» по тем же правилам:
+    // в обе стороны с первой попытки — в словарь; ошибся — трудное, подтвердится только в другой день
+    function recordFirstRound(){
+      const day = localDay();
+      const stats = readJSON("blue-suitcase-stats-learned", {});
+      const review = readJSON("blue-suitcase-review-learned", []);
+      const failDays = readJSON("blue-suitcase-failday-learned", {});
+      Object.keys(first).forEach(function(w){
+        const a = first[w];
+        if (a.en === false || a.ru === false){
+          if (review.indexOf(w) === -1) review.push(w);
+          stats[w] = 0; failDays[w] = day;
+          result.difficult.push(w);
+          return;
+        }
+        result.known++;
+        if (failDays[w] === day) return;
+        const already = Number(stats[w]) >= 2;
+        stats[w] = 2; delete failDays[w];
+        const i = review.indexOf(w);
+        if (i !== -1) review.splice(i, 1);
+        if (!already) result.confirmed.push(w);
+      });
+      writeJSON("blue-suitcase-stats-learned", stats);
+      writeJSON("blue-suitcase-review-learned", review);
+      writeJSON("blue-suitcase-failday-learned", failDays);
+      const log = readJSON("blue-suitcase-sessions", []);
+      log.push({ ts: Date.now(), list: "learned", g: "разминка перед главой " + n, dir: "both", k: result.known, n: Object.keys(first).length });
+      writeJSON("blue-suitcase-sessions", log.slice(-150));
+      document.dispatchEvent(new CustomEvent("bs:trainer-reload"));
+      document.dispatchEvent(new CustomEvent("bs:vocab-changed"));
+    }
+
+    function finish(){
+      openGate(ch.id);
+      const total = Object.keys(first).length;
+      const list = function(a){ return a.map(esc).join(", "); };
+      box.innerHTML =
+        '<div class="tr-result">' +
+          '<h3>Все слова вспомнились</h3>' +
+          '<p class="tr-stats">С первого раза в обе стороны: ' + result.known + " из " + total + ". Глава " + n + " открыта.</p>" +
+          (result.confirmed.length ? '<p class="tr-list">В словарь: <span class="ok-words">' + list(result.confirmed) + '</span></p>' : "") +
+          (result.difficult.length ? '<p class="tr-list">Трудные — вернутся в следующую главу: ' + result.difficult.map(function(w){ return "<b>" + esc(w) + "</b>"; }).join(", ") + '</p>' : "") +
+          '<p class="tr-stats gate-sendline"></p>' +
+          '<div class="bar"><button class="act gate-read" type="button">Читать главу</button></div>' +
+        '</div>';
+      box.querySelector(".gate-read").addEventListener("click", function(){
+        showChapter(ch.id);
+        ch.scrollIntoView({ block: "start" });
+      });
+      sendResults();
+    }
+
+    // результаты первого круга уходят так же, как из тренажёра; недоставленное ждёт в очереди
+    async function sendResults(){
+      if (!result.confirmed.length && !result.difficult.length) return;
+      const line = box.querySelector(".gate-sendline");
+      const say = function(t, bad){ if (line){ line.textContent = t; line.style.color = bad ? "var(--no)" : "var(--ok)"; } };
+      const OUTBOX = "blue-suitcase-outbox";
+      const entry = {
+        sentAt: new Date().toISOString(), kind: "trainer", list: "learned", source: "gate", chapter: ch.id,
+        text: "Разминка перед главой " + n + " — результаты первого круга\n" +
+              "В словарь, вспомнил в обе стороны с первой попытки (" + result.confirmed.length + "): " + (result.confirmed.join(", ") || "нет") + "\n" +
+              "Трудные (" + result.difficult.length + "): " + (result.difficult.join(", ") || "нет"),
+        confirmed: result.confirmed, difficult: result.difficult
+      };
+      const batch = readJSON(OUTBOX, []).concat([entry]);
+      const keep = function(){ writeJSON(OUTBOX, batch); };
+      if (typeof window.__bsSend !== "function"){ keep(); say("не отправлено — результаты уйдут со следующей проверкой", true); return; }
+      say("отправляю результаты…");
+      try {
+        const r = await window.__bsSend(batch);
+        if (r === "unavailable"){ keep(); say("отправка недоступна — результаты уйдут со следующей проверкой", true); return; }
+        try { localStorage.removeItem(OUTBOX); } catch(e){}
+        say("результаты отправлены");
+      } catch(err){
+        keep();
+        say("не удалось отправить — результаты уйдут со следующей проверкой", true);
+      }
+    }
+
+    const cards = [];
+    words.forEach(function(x){ cards.push({ item: x, side: "en" }); cards.push({ item: x, side: "ru" }); });
+    start(cards);
+  }
 
   // ---------- словарь: скрыть перевод и отметить забытые ----------
   document.querySelectorAll(".chapter").forEach(function(ch){
@@ -2531,6 +2785,16 @@ summary:hover{background:var(--lamp-soft)}
       if (line){ line.textContent = "результаты отправлены"; line.style.color = "var(--ok)"; }
     })();
 
+    // разминка перед главой пишет результаты в то же хранилище — перечитываем, иначе
+    // следующее сохранение тренажёра затрёт их старым состоянием из памяти
+    document.addEventListener("bs:trainer-reload", function(){
+      try { wordStats = JSON.parse(localStorage.getItem(STATS_KEY) || "{}") || {}; } catch(e){}
+      try { review = JSON.parse(localStorage.getItem(KEY) || "[]") || []; } catch(e){}
+      renderTopics();
+      renderTable();
+      renderLog();
+    });
+
     renderTopics();
     renderTable();
     renderLog();
@@ -2671,6 +2935,14 @@ summary:hover{background:var(--lamp-soft)}
     if (!ta.value.trim()) document.getElementById("build-report").click();
     const text = ta.value.trim();
     if (!text){ sendNote("отчёт пустой — сначала «Собрать отчёт»", true); return; }
+
+    // день прохождения главы: следующая глава, открытая в тот же день, обходится без разминки.
+    // Пишем до отправки — на claude.ai после публикации страница перезагружается.
+    const doneCh = document.querySelector(".chapter:not([hidden])");
+    if (doneCh){
+      const d = new Date();
+      try { localStorage.setItem("blue-suitcase-done-" + doneCh.id, d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0")); } catch(e){}
+    }
 
     sendNote("отправляю…");
     try {
