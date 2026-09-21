@@ -1196,7 +1196,9 @@ summary:hover{background:var(--lamp-soft)}
     if (network && onClaude()) status.blocked = true;   // claude.ai не выпускает страницу в интернет
     status.state = "error";
     // причина — чтобы по одному скриншоту было понятно, что мешает
-    status.detail = network ? "браузер не пускает запрос к script.google.com" : String((e && e.message) || e || "неизвестная ошибка");
+    status.detail = network
+      ? "браузер не пускает запрос к script.google.com — проверь блокировщик рекламы (добавь сайт в исключения) или VPN"
+      : String((e && e.message) || e || "неизвестная ошибка");
     render();
     if (!status.blocked){
       clearTimeout(retryTimer);
