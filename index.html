@@ -2086,7 +2086,10 @@ summary:hover{background:var(--lamp-soft)}
         '<button class="act ghost tr-hide" type="button">Скрыть перевод в таблице</button>' +
         '<button class="act ghost tr-forget" type="button">Сбросить прогресс</button>' +
       '</div>' +
-      '<p class="tr-explain">Слово, которое ты отметил «Не знаю», попадает в список трудных: оно краснеет в таблице, остаётся там между заходами и само уходит мне после проверки — я верну его в ближайшую главу. Трудное слово подтверждается только в другой день: вспомнил в обе стороны с первой попытки — оно уходит из списка и засчитывается в словарь.</p>' +
+      '<p class="tr-explain">' + (listName === "a1"
+        ? 'Слово, которое ты отметил «Не знаю», попадает в список трудных: оно краснеет в таблице и остаётся там между заходами. В главу оно сразу не идёт — сначала проверь его ещё раз: «Повторить трудные», «трудные в теме» или «все трудные». Не вспомнил и на повторной проверке — я верну его в ближайшую главу. '
+        : 'Слово, которое ты отметил «Не знаю», попадает в список трудных: оно краснеет в таблице, остаётся там между заходами и само уходит мне после проверки — я верну его в ближайшую главу. ') +
+        'Трудное слово подтверждается только в другой день: вспомнил в обе стороны с первой попытки — оно уходит из списка и засчитывается в словарь.</p>' +
       '<p class="tr-stats"></p>' +
       '<div class="tr-session"></div>' +
       '<div class="scroll"><table class="vocab"><tbody></tbody></table></div>' +
@@ -2352,6 +2355,11 @@ summary:hover{background:var(--lamp-soft)}
       return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
     }
 
+    // Правило ученика для A1 (21.09.2026): слова A1 он хочет вспомнить, а не выучить заново.
+    // Первое «Не знаю» только кладёт слово в трудные. В главу оно идёт, лишь если не вспомнилось
+    // и на повторной проверке — то есть когда проваливается слово, которое уже лежало в трудных.
+    const recheckRule = (listName === "a1");
+
     function renderResult(){
       const asked = Object.keys(answers);
       const bothWays = (selDir.value === "both");
@@ -2366,7 +2374,7 @@ summary:hover{background:var(--lamp-soft)}
         if (a.en === false) bad.push("en");
         if (a.ru === false) bad.push("ru");
         if (bad.length){
-          failed.push({w:w, sides:bad});
+          failed.push({w:w, sides:bad, again: inReview(w)});   // again: провал повторной проверки
           addReview(w); wordStats[w] = 0; failDays[w] = day;
           return;
         }
@@ -2389,6 +2397,20 @@ summary:hover{background:var(--lamp-soft)}
       addLog({ ts: Date.now(), list: listName, g: currentGroup, dir: selDir.value, k: full, n: asked.length });
 
       const sideText = function(s){ return s === "en" ? "с английского" : "с русского"; };
+      const fmtFailed = function(list){
+        return list.map(function(f){
+          return '<b>' + esc(f.w) + '</b>' + (bothWays ? ' <span class="dim">(' + f.sides.map(sideText).join(" и ") + ')</span>' : "");
+        }).join(", ");
+      };
+      // для A1: первый провал ждёт повторной проверки, провал повторной — в главу
+      const toRecheck = recheckRule ? failed.filter(function(f){ return !f.again; }) : [];
+      const toChapter = recheckRule ? failed.filter(function(f){ return f.again; }) : failed;
+      const failedHtml = !failed.length ? "" : !recheckRule
+        ? '<p class="tr-list">Трудные: ' + fmtFailed(failed) + '</p>'
+        : (toRecheck.length
+            ? '<p class="tr-list">Трудные — в главу пока не идут, проверь их ещё раз: ' + fmtFailed(toRecheck) + '</p>' : "") +
+          (toChapter.length
+            ? '<p class="tr-list">Не вспомнил и на повторной проверке — уйдут в следующую главу: ' + fmtFailed(toChapter) + '</p>' : "");
       const html =
         '<div class="tr-result">' +
           '<h3>' + (isRetry ? "Повтор закончен" : "Проверка закончена") + '</h3>' +
@@ -2398,10 +2420,7 @@ summary:hover{background:var(--lamp-soft)}
             : "слов, которые вспомнились; проверка в одну сторону в словарь не идёт") + '</p>' +
           (confirmedNow.length
             ? '<p class="tr-list">В словарь: <span class="ok-words">' + confirmedNow.map(esc).join(", ") + '</span></p>' : "") +
-          (failed.length
-            ? '<p class="tr-list">Трудные: ' + failed.map(function(f){
-                return '<b>' + esc(f.w) + '</b>' + (bothWays ? ' <span class="dim">(' + f.sides.map(sideText).join(" и ") + ')</span>' : "");
-              }).join(", ") + '</p>' : "") +
+          failedHtml +
           (waitTomorrow.length
             ? '<p class="tr-list">Вспомнил, но сегодня уже ошибался — засчитается, если вспомнишь завтра или позже: <span class="dim">' + waitTomorrow.map(esc).join(", ") + '</span></p>' : "") +
           (!isRetry && bothWays && asked.length && !failed.length && !waitTomorrow.length
@@ -2417,10 +2436,17 @@ summary:hover{background:var(--lamp-soft)}
       renderTopics();
       renderTable();
 
-      // Результаты уходят сами, без кнопки. Повтор в тот же день не отправляем:
-      // его трудные уже ушли первым заходом, а подтверждать он не может.
-      if (!isRetry && (confirmedNow.length || failed.length)){
-        autoSend(confirmedNow, failed.map(function(f){ return f.w; }), html, failed);
+      // Результаты уходят сами, без кнопки.
+      // «Изученная лексика»: повтор в тот же день не отправляем — его трудные уже ушли первым заходом,
+      // а подтверждать он не может.
+      // A1: повтор — это и есть повторная проверка, его провалы уходят в главу.
+      const wordsOf = function(list){ return list.map(function(f){ return f.w; }); };
+      if (recheckRule){
+        if (confirmedNow.length || toChapter.length || toRecheck.length){
+          autoSend(confirmedNow, wordsOf(toChapter), wordsOf(toRecheck), html, failed);
+        }
+      } else if (!isRetry && (confirmedNow.length || failed.length)){
+        autoSend(confirmedNow, wordsOf(failed), [], html, failed);
       }
     }
 
@@ -2442,7 +2468,8 @@ summary:hover{background:var(--lamp-soft)}
 
     function keepInOutbox(batch){ try { localStorage.setItem(OUTBOX_KEY, JSON.stringify(batch)); } catch(e){} }
 
-    async function autoSend(confirmed, difficult, html, failed){
+    // difficult — в главу; recheck (только A1) — первое «Не знаю», в главу не идёт, ждёт повторной проверки
+    async function autoSend(confirmed, difficult, recheck, html, failed){
       const line = session.querySelector(".tr-sendline");
       const say = function(t, bad){ if (line){ line.textContent = t; line.style.color = bad ? "var(--no)" : "var(--ok)"; } };
 
@@ -2454,9 +2481,13 @@ summary:hover{background:var(--lamp-soft)}
         sentAt: new Date().toISOString(), kind: "trainer", list: listName,
         text: "Тренажёр «" + label + "» — результаты\n" +
               "В словарь, вспомнил в обе стороны с первой попытки (" + confirmed.length + "): " + (confirmed.join(", ") || "нет") + "\n" +
-              "Трудные (" + difficult.length + "): " + (difficult.join(", ") || "нет"),
+              (recheckRule
+                ? "Не вспомнил и на повторной проверке, в главу (" + difficult.length + "): " + (difficult.join(", ") || "нет") + "\n" +
+                  "Трудные, ждут повторной проверки, в главу не идут (" + recheck.length + "): " + (recheck.join(", ") || "нет")
+                : "Трудные (" + difficult.length + "): " + (difficult.join(", ") || "нет")),
         confirmed: confirmed, difficult: difficult
       };
+      if (recheckRule) entry.recheck = recheck;
       const batch = outbox.concat([entry]);
 
       if (typeof window.__bsSend !== "function"){
