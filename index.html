@@ -1462,13 +1462,15 @@ summary:hover{background:var(--lamp-soft)}
   ];
   // данные упражнений по главам: разметка глав остаётся тонкой, содержимое живёт здесь
   const CHOICE = { ch1: EX3, ch2: EX3_CH2, ch3: EX3_CH3 };
+  // В сопоставлении — все новые слова главы (правило ученика, 21.09.2026).
+  // Новые пары дописываются только в конец: ответы хранятся по порядковому номеру строки.
   const MATCH = {
-    ch1: { words:["shift","suitcase","corridor","towel","wet","midnight","upstairs","strange"],
-           ru:["смена (рабочая)","чемодан","коридор","полотенце","мокрый","полночь","наверх","странный"] },
-    ch2: { words:["notebook","lock","pocket","envelope","dust","owner","label","drawer"],
-           ru:["блокнот","замок","карман","конверт","пыль","владелец","бирка","ящик (стола)"] },
-    ch3: { words:["locker","platform","ring","stamp","silence","promise","pull","explain"],
-           ru:["ячейка камеры хранения","платформа","кольцо","почтовая марка","тишина","обещать","тянуть","объяснять"] }
+    ch1: { words:["shift","suitcase","corridor","towel","wet","midnight","upstairs","strange","arrive","guest","reception desk","lift"],
+           ru:["смена (рабочая)","чемодан","коридор","полотенце","мокрый","полночь","наверх","странный","приезжать, прибывать","гость, постоялец","стойка регистрации","лифт"] },
+    ch2: { words:["notebook","lock","pocket","envelope","dust","owner","label","drawer","careful","smell","handwriting","worried"],
+           ru:["блокнот","замок","карман","конверт","пыль","владелец","бирка","ящик (стола)","осторожный","запах","почерк","встревоженный"] },
+    ch3: { words:["locker","platform","ring","stamp","silence","promise","pull","explain","ticket office","crowd","hide","return"],
+           ru:["ячейка камеры хранения","платформа","кольцо","почтовая марка","тишина","обещать","тянуть","объяснять","билетная касса","толпа","прятать","возвращаться"] }
   };
 
   // ---------- сборка динамических упражнений ----------
@@ -2055,20 +2057,29 @@ summary:hover{background:var(--lamp-soft)}
   }
 
   // все слова главы n-1 + трудные слова глав до неё (и входного теста — его слова вплетены в главы)
+  // Слова и обороты вместе (правило ученика, 21.09.2026): у каждого элемента list —
+  // «learned» или «phrases», туда и записывается результат первого круга.
   function gateWords(n){
-    let learned = [];
-    try { learned = JSON.parse(document.getElementById("data-learned").textContent) || []; } catch(e){ learned = []; }
-    const hardHere = readJSON("blue-suitcase-review-learned", []);
-    const seen = {};
-    return learned.filter(function(x){
-      if (!x || !x.w || seen[x.w]) return false;
-      const m = /^глава (\d+)$/.exec(x.g || "");
-      const from = m ? Number(m[1]) : (x.g === "входной тест" ? 0 : -1);
-      if (from < 0 || from >= n) return false;
-      const take = from === n - 1 || x.s === "for_review" || hardHere.indexOf(x.w) !== -1;
-      if (take) seen[x.w] = true;
-      return take;
-    });
+    function pick(blockId, list){
+      let data = [];
+      try { data = JSON.parse(document.getElementById(blockId).textContent) || []; } catch(e){ data = []; }
+      const hardHere = readJSON("blue-suitcase-review-" + list, []);
+      const seen = {};
+      return data.filter(function(x){
+        if (!x || !x.w || seen[x.w]) return false;
+        const m = /^глава (\d+)$/.exec(x.g || "");
+        const from = m ? Number(m[1]) : (x.g === "входной тест" ? 0 : -1);
+        if (from < 0 || from >= n) return false;
+        const take = from === n - 1 || x.s === "for_review" || hardHere.indexOf(x.w) !== -1;
+        if (take) seen[x.w] = true;
+        return take;
+      }).map(function(x){ return { w: x.w, t: x.t, list: list }; });
+    }
+    return pick("data-learned", "learned").concat(pick("data-phrases", "phrases"));
+  }
+  function phrasesRu(n){
+    const d = n % 10, h = n % 100;
+    return (d === 1 && h !== 11) ? "оборот" : (d >= 2 && d <= 4 && (h < 12 || h > 14)) ? "оборота" : "оборотов";
   }
 
   function needsGate(ch){
@@ -2089,6 +2100,9 @@ summary:hover{background:var(--lamp-soft)}
   function renderGate(ch){
     const n = chapterNum(ch.id);
     const words = gateWords(n);
+    const nW = words.filter(function(x){ return x.list === "learned"; }).length;
+    const nP = words.length - nW;
+    const amount = nW + " " + wordsRu(nW) + (nP ? " и " + nP + " " + phrasesRu(nP) : "");
     const prev = document.getElementById("ch" + (n - 1));
     const prevTitle = prev && prev.querySelector("h1") ? prev.querySelector("h1").textContent : "";
     const when = ch.dataset.prevDone
@@ -2098,10 +2112,10 @@ summary:hover{background:var(--lamp-soft)}
       '<p class="sec-label">Разминка перед главой ' + n + '</p>' +
       '<h2>Сначала вспомни слова</h2>' +
       '<p>' + (when ? "Глава " + (n - 1) + " пройдена " + esc(when) + ", а сегодня другой день. " : "Предыдущая глава пройдена не сегодня. ") +
-        "Прежде чем читать главу " + n + ", вспомни все слова главы " + (n - 1) + (prevTitle ? " «" + esc(prevTitle) + "»" : "") +
-        " и трудные слова глав до неё: " + words.length + " " + wordsRu(words.length) + ", в обе стороны.</p>" +
-      '<p>Что не вспомнилось, повторится в конце круга — и так, пока не вспомнятся все. Тогда глава откроется. ' +
-        'Первый круг засчитывается как обычная проверка в «Изученной лексике».</p>' +
+        "Прежде чем читать главу " + n + ", вспомни все слова и обороты главы " + (n - 1) + (prevTitle ? " «" + esc(prevTitle) + "»" : "") +
+        " и трудные из глав до неё: " + amount + ", в обе стороны.</p>" +
+      '<p>Что не вспомнилось, повторится в конце круга — и так, пока не вспомнится всё. Тогда глава откроется. ' +
+        'Первый круг засчитывается как обычная проверка: слова — в «Изученной лексике», обороты — в «Оборотах».</p>' +
       '<div class="gate-session"><div class="bar"><button class="act gate-start" type="button">Начать разминку</button></div></div>';
     gateBox.querySelector(".gate-start").addEventListener("click", function(){ runGate(ch, words); });
   }
@@ -2109,8 +2123,11 @@ summary:hover{background:var(--lamp-soft)}
   function runGate(ch, words){
     const n = chapterNum(ch.id);
     const box = gateBox.querySelector(".gate-session");
-    const first = {};                         // слово -> {en, ru}: ответы первого круга
-    const result = { confirmed: [], difficult: [], known: 0 };
+    const first = {};                         // «список|слово» -> {item, en, ru}: ответы первого круга
+    const result = {
+      learned: { confirmed: [], difficult: [], known: 0, asked: 0 },
+      phrases: { confirmed: [], difficult: [], known: 0, asked: 0 }
+    };
     let round = 1, deck = [], pos = 0, failedCards = [];
 
     function shuffle(a){
@@ -2135,7 +2152,8 @@ summary:hover{background:var(--lamp-soft)}
       box.innerHTML =
         '<div class="tr-card">' +
           '<div class="tr-progress">круг ' + round + " · " + (pos + 1) + " / " + deck.length + " · " +
-            (c.side === "en" ? "английское → русское" : "русское → английское") + '</div>' +
+            (c.side === "en" ? "английское → русское" : "русское → английское") +
+            (c.item.list === "phrases" ? " · оборот" : "") + '</div>' +
           '<div class="tr-word">' + esc(front) + '</div>' +
           '<div class="tr-answer blank">' + esc(back) + '</div>' +
           '<div class="tr-buttons">' +
@@ -2154,7 +2172,11 @@ summary:hover{background:var(--lamp-soft)}
 
     function answer(ok){
       const c = deck[pos];
-      if (round === 1){ first[c.item.w] = first[c.item.w] || {}; first[c.item.w][c.side] = ok; }
+      if (round === 1){
+        const k = c.item.list + "|" + c.item.w;
+        first[k] = first[k] || { item: c.item };
+        first[k][c.side] = ok;
+      }
       if (!ok) failedCards.push({ item: c.item, side: c.side });
       pos++;
       showCard();
@@ -2176,34 +2198,40 @@ summary:hover{background:var(--lamp-soft)}
       box.querySelector(".gate-next").addEventListener("click", function(){ round++; start(again); });
     }
 
-    // первый круг — обычная проверка «Изученной лексики» по тем же правилам:
-    // в обе стороны с первой попытки — в словарь; ошибся — трудное, подтвердится только в другой день
+    // первый круг — обычная проверка тренажёра по тем же правилам, каждый элемент — в свой список:
+    // в обе стороны с первой попытки — засчитан; ошибся — трудное, подтвердится только в другой день
     function recordFirstRound(){
       const day = localDay();
-      const stats = readJSON("blue-suitcase-stats-learned", {});
-      const review = readJSON("blue-suitcase-review-learned", []);
-      const failDays = readJSON("blue-suitcase-failday-learned", {});
-      Object.keys(first).forEach(function(w){
-        const a = first[w];
-        if (a.en === false || a.ru === false){
-          if (review.indexOf(w) === -1) review.push(w);
-          stats[w] = 0; failDays[w] = day;
-          result.difficult.push(w);
-          return;
-        }
-        result.known++;
-        if (failDays[w] === day) return;
-        const already = Number(stats[w]) >= 2;
-        stats[w] = 2; delete failDays[w];
-        const i = review.indexOf(w);
-        if (i !== -1) review.splice(i, 1);
-        if (!already) result.confirmed.push(w);
-      });
-      writeJSON("blue-suitcase-stats-learned", stats);
-      writeJSON("blue-suitcase-review-learned", review);
-      writeJSON("blue-suitcase-failday-learned", failDays);
       const log = readJSON("blue-suitcase-sessions", []);
-      log.push({ ts: Date.now(), list: "learned", g: "разминка перед главой " + n, dir: "both", k: result.known, n: Object.keys(first).length });
+      ["learned", "phrases"].forEach(function(list){
+        const keys = Object.keys(first).filter(function(k){ return first[k].item.list === list; });
+        if (!keys.length) return;
+        const r = result[list];
+        const stats = readJSON("blue-suitcase-stats-" + list, {});
+        const review = readJSON("blue-suitcase-review-" + list, []);
+        const failDays = readJSON("blue-suitcase-failday-" + list, {});
+        keys.forEach(function(k){
+          const a = first[k], w = a.item.w;
+          r.asked++;
+          if (a.en === false || a.ru === false){
+            if (review.indexOf(w) === -1) review.push(w);
+            stats[w] = 0; failDays[w] = day;
+            r.difficult.push(w);
+            return;
+          }
+          r.known++;
+          if (failDays[w] === day) return;
+          const already = Number(stats[w]) >= 2;
+          stats[w] = 2; delete failDays[w];
+          const i = review.indexOf(w);
+          if (i !== -1) review.splice(i, 1);
+          if (!already) r.confirmed.push(w);
+        });
+        writeJSON("blue-suitcase-stats-" + list, stats);
+        writeJSON("blue-suitcase-review-" + list, review);
+        writeJSON("blue-suitcase-failday-" + list, failDays);
+        log.push({ ts: Date.now(), list: list, g: "разминка перед главой " + n, dir: "both", k: r.known, n: r.asked });
+      });
       writeJSON("blue-suitcase-sessions", log.slice(-150));
       document.dispatchEvent(new CustomEvent("bs:trainer-reload"));
       document.dispatchEvent(new CustomEvent("bs:vocab-changed"));
@@ -2212,13 +2240,16 @@ summary:hover{background:var(--lamp-soft)}
     function finish(){
       openGate(ch.id);
       const total = Object.keys(first).length;
+      const known = result.learned.known + result.phrases.known;
       const list = function(a){ return a.map(esc).join(", "); };
+      const hard = result.learned.difficult.concat(result.phrases.difficult);
       box.innerHTML =
         '<div class="tr-result">' +
-          '<h3>Все слова вспомнились</h3>' +
-          '<p class="tr-stats">С первого раза в обе стороны: ' + result.known + " из " + total + ". Глава " + n + " открыта.</p>" +
-          (result.confirmed.length ? '<p class="tr-list">В словарь: <span class="ok-words">' + list(result.confirmed) + '</span></p>' : "") +
-          (result.difficult.length ? '<p class="tr-list">Трудные — вернутся в следующую главу: ' + result.difficult.map(function(w){ return "<b>" + esc(w) + "</b>"; }).join(", ") + '</p>' : "") +
+          '<h3>Всё вспомнилось</h3>' +
+          '<p class="tr-stats">С первого раза в обе стороны: ' + known + " из " + total + ". Глава " + n + " открыта.</p>" +
+          (result.learned.confirmed.length ? '<p class="tr-list">В словарь: <span class="ok-words">' + list(result.learned.confirmed) + '</span></p>' : "") +
+          (result.phrases.confirmed.length ? '<p class="tr-list">Обороты засчитаны: <span class="ok-words">' + list(result.phrases.confirmed) + '</span></p>' : "") +
+          (hard.length ? '<p class="tr-list">Трудные — вернутся в следующую главу: ' + hard.map(function(w){ return "<b>" + esc(w) + "</b>"; }).join(", ") + '</p>' : "") +
           '<p class="tr-stats gate-sendline"></p>' +
           '<div class="bar"><button class="act gate-read" type="button">Читать главу</button></div>' +
         '</div>';
@@ -2231,18 +2262,25 @@ summary:hover{background:var(--lamp-soft)}
 
     // результаты первого круга уходят так же, как из тренажёра; недоставленное ждёт в очереди
     async function sendResults(){
-      if (!result.confirmed.length && !result.difficult.length) return;
+      // по записи на список: слова разбираются в лист vocab, обороты — в лист phrases
+      const now = Date.now();
+      const entries = [];
+      [["learned", "слова"], ["phrases", "обороты"]].forEach(function(pair, i){
+        const r = result[pair[0]];
+        if (!r.confirmed.length && !r.difficult.length) return;
+        entries.push({
+          sentAt: new Date(now + i).toISOString(), kind: "trainer", list: pair[0], source: "gate", chapter: ch.id,
+          text: "Разминка перед главой " + n + " — " + pair[1] + ", результаты первого круга\n" +
+                "Засчитано, вспомнил в обе стороны с первой попытки (" + r.confirmed.length + "): " + (r.confirmed.join(", ") || "нет") + "\n" +
+                "Трудные (" + r.difficult.length + "): " + (r.difficult.join(", ") || "нет"),
+          confirmed: r.confirmed, difficult: r.difficult
+        });
+      });
+      if (!entries.length) return;
       const line = box.querySelector(".gate-sendline");
       const say = function(t, bad){ if (line){ line.textContent = t; line.style.color = bad ? "var(--no)" : "var(--ok)"; } };
       const OUTBOX = "blue-suitcase-outbox";
-      const entry = {
-        sentAt: new Date().toISOString(), kind: "trainer", list: "learned", source: "gate", chapter: ch.id,
-        text: "Разминка перед главой " + n + " — результаты первого круга\n" +
-              "В словарь, вспомнил в обе стороны с первой попытки (" + result.confirmed.length + "): " + (result.confirmed.join(", ") || "нет") + "\n" +
-              "Трудные (" + result.difficult.length + "): " + (result.difficult.join(", ") || "нет"),
-        confirmed: result.confirmed, difficult: result.difficult
-      };
-      const batch = readJSON(OUTBOX, []).concat([entry]);
+      const batch = readJSON(OUTBOX, []).concat(entries);
       const keep = function(){ writeJSON(OUTBOX, batch); };
       if (typeof window.__bsSend !== "function"){ keep(); say("не отправлено — результаты уйдут со следующей проверкой", true); return; }
       say("отправляю результаты…");
