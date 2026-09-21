@@ -1159,11 +1159,18 @@ summary:hover{background:var(--lamp-soft)}
     origSet.call(this, name, val);
     if (was !== val) markDirty(name);
   };
+  // Удаление не разносится по устройствам: книга общий прогресс только перезаписывает, а стёртое
+  // в одном браузере (очистка данных сайта, чужой код) не должно стирать его везде.
+  // Забываем отметку времени — при следующей сверке значение вернётся из таблицы.
   proto.removeItem = function(k){
     if (this !== store) return origRemove.call(this, k);
-    const name = String(k), was = store.getItem(name);
+    const name = String(k);
     origRemove.call(this, name);
-    if (was !== null) markDirty(name);
+    if (!syncable(name)) return;
+    delete meta[name];
+    const i = dirty.indexOf(name);
+    if (i !== -1) dirty.splice(i, 1);
+    saveMeta();
   };
 
   // ---------- обмен с таблицей ----------
@@ -1183,11 +1190,19 @@ summary:hover{background:var(--lamp-soft)}
     if (!data.state || typeof data.state !== "object") throw new Error("скрипт таблицы не умеет хранить прогресс — его нужно обновить");
     return data;
   }
+  let retryDelay = 15000, retryTimer = null;
   function fail(e){
     const network = blockedByPolicy || (e && e.name === "TypeError");
     if (network && onClaude()) status.blocked = true;   // claude.ai не выпускает страницу в интернет
     status.state = "error";
+    // причина — чтобы по одному скриншоту было понятно, что мешает
+    status.detail = network ? "браузер не пускает запрос к script.google.com" : String((e && e.message) || e || "неизвестная ошибка");
     render();
+    if (!status.blocked){
+      clearTimeout(retryTimer);
+      retryTimer = setTimeout(pull, retryDelay);
+      retryDelay = Math.min(retryDelay * 2, 180000);
+    }
   }
 
   // применяет состояние из таблицы; возвращает, сколько ключей здесь поменялось
@@ -1218,7 +1233,10 @@ summary:hover{background:var(--lamp-soft)}
 
   function changesFor(keys){
     const c = {};
-    keys.forEach(function(k){ c[k] = { t: meta[k] || 1, v: store.getItem(k) }; });
+    keys.forEach(function(k){
+      const v = store.getItem(k);
+      if (v !== null) c[k] = { t: meta[k] || 1, v: v };   // пустоту не отправляем никогда
+    });
     return c;
   }
 
@@ -1262,6 +1280,7 @@ summary:hover{background:var(--lamp-soft)}
       const data = await call({ action: "pull" });
       const changed = applyRemote(data.state);
       loading = false;
+      retryDelay = 15000;
       status.state = "ok"; status.at = Date.now(); render();
       if (dirty.length) schedulePush(300);
       if (changed) remoteChanged();
@@ -1314,7 +1333,7 @@ summary:hover{background:var(--lamp-soft)}
         status.state === "off" ? "Синхронизация не подключена на этом устройстве — открой ссылку синхронизации из чата" :
         status.state === "busy" ? "синхронизирую…" :
         status.state === "ok" ? "Прогресс общий для телефона и компьютера · сверено в " + hhmm(status.at) :
-        status.state === "error" ? "Нет связи с хранилищем — всё сохранено здесь и уйдёт, когда связь появится" : "";
+        status.state === "error" ? "Нет связи с хранилищем (" + (status.detail || "причина неизвестна") + ") — всё сохранено здесь и уйдёт, когда связь появится" : "";
     }
     if (!banner) return;
     if (status.reload){
