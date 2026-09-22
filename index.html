@@ -61,6 +61,7 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);f
 .toc .chapter-tab:hover{border-color:var(--lamp);color:var(--lamp)}
 .toc .chapter-tab[aria-current="true"]{color:var(--lamp);border-color:var(--lamp);background:var(--lamp-soft)}
 .toc .soon{font-size:13.5px;color:var(--rain);align-self:center;padding-left:4px}
+.toc .soon.writing{color:var(--lamp)}
 
 /* ---------- заголовки глав ---------- */
 .chapter{margin-top:56px}
@@ -1056,8 +1057,6 @@ summary:hover{background:var(--lamp-soft)}
       <div class="bar">
         <button class="act ghost" type="button" id="build-report">Собрать отчёт</button>
         <button class="act" type="button" id="send-report">Отправить отчёт</button>
-        <button class="act ghost" type="button" id="copy-report">Скопировать</button>
-        <button class="act ghost" type="button" id="reset">Очистить главу</button>
       </div>
       <p class="saved" id="send-note"></p>
       <p class="saved" id="saved-note"></p>
@@ -2022,6 +2021,32 @@ summary:hover{background:var(--lamp-soft)}
     tab.addEventListener("click", function(){ showChapter(tab.dataset.chapter); });
   });
 
+  // ---------- статус следующей главы в оглавлении ----------
+  // Отчёт по последней главе уже отправлен — значит, следующая пишется; показываем это вместо
+  // «после отчёта». Отметки об отправке синхронизируются, статус видно на обоих устройствах.
+  function renderNextStatus(){
+    const soon = document.querySelector(".toc .soon");
+    const all = document.querySelectorAll(".chapter");
+    if (!soon || !all.length) return;
+    const n = chapterNum(all[all.length - 1].id);
+    let sentAt = null, day = null;
+    try {
+      sentAt = localStorage.getItem("blue-suitcase-sent-ch" + n);
+      day = localStorage.getItem("blue-suitcase-done-ch" + n);
+    } catch(e){}
+    if (!sentAt && !day){
+      soon.textContent = "Глава " + (n + 1) + " — после отчёта по главе " + n;
+      soon.classList.remove("writing");
+      return;
+    }
+    const when = sentAt ? new Date(sentAt) : new Date(day + "T12:00:00");
+    const date = when.toLocaleDateString("ru-RU", { day: "numeric", month: "long" }) +
+      (sentAt ? " в " + when.toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" }) : "");
+    soon.textContent = "Глава " + (n + 1) + " пишется — отчёт по главе " + n + " отправлен " + date + ". Появится здесь сама.";
+    soon.classList.add("writing");
+  }
+  document.addEventListener("bs:report-sent", renderNextStatus);
+
   // ---------- разминка перед новой главой ----------
   // Правило ученика (21.09.2026): если к новой главе приступаешь не в тот день, когда прошёл
   // предыдущую, глава открывается только после разминки — все слова предыдущей главы и трудные
@@ -2556,35 +2581,6 @@ summary:hover{background:var(--lamp-soft)}
     save();
   });
 
-  document.getElementById("copy-report").addEventListener("click", function(){
-    const ta = document.getElementById("report-text");
-    if (!ta.value) return;
-    ta.select();
-    navigator.clipboard.writeText(ta.value).then(function(){
-      document.getElementById("copy-report").textContent = "Скопировано";
-      setTimeout(function(){ document.getElementById("copy-report").textContent = "Скопировать"; }, 1600);
-    }).catch(function(){ document.execCommand("copy"); });
-  });
-
-  document.getElementById("reset").addEventListener("click", function(){
-    const ch = activeChapter();
-    const title = (ch.querySelector("h1") || {}).textContent || ch.id;
-    if (!confirm("Стереть ответы по главе «" + title + "»? Другие главы не тронутся.")) return;
-    try {
-      const raw = localStorage.getItem(STORE);
-      if (raw){
-        const s = JSON.parse(raw);
-        const prefix = ch.id + ".";
-        Object.keys(s.vals || {}).forEach(function(k){ if (k.indexOf(prefix) === 0) delete s.vals[k]; });
-        Object.keys(s.scores || {}).forEach(function(k){ if (k.indexOf(prefix) === 0) delete s.scores[k]; });
-        const chWords = Array.prototype.map.call(ch.querySelectorAll("input[data-miss]"), function(c){ return c.dataset.miss; });
-        s.miss = (s.miss || []).filter(function(w){ return chWords.indexOf(w) === -1; });
-        localStorage.setItem(STORE, JSON.stringify(s));
-      }
-    } catch(e){}
-    location.reload();
-  });
-
   assignKeys();
   restore();
   document.querySelectorAll('.ex-block[data-id="questions"]').forEach(renderSpelled);
@@ -2592,6 +2588,7 @@ summary:hover{background:var(--lamp-soft)}
   try { startChapter = localStorage.getItem(CHAPTER_KEY) || "ch1"; } catch(e){}
   if (!document.getElementById(startChapter)) startChapter = "ch1";
   showChapter(startChapter);
+  renderNextStatus();
 })();
 </script>
 
@@ -3305,9 +3302,27 @@ summary:hover{background:var(--lamp-soft)}
     // день прохождения главы: следующая глава, открытая в тот же день, обходится без разминки.
     // Пишем до отправки — на claude.ai после публикации страница перезагружается.
     const doneCh = document.querySelector(".chapter:not([hidden])");
+    const doneKey = doneCh ? "blue-suitcase-done-" + doneCh.id : null;
+    const sentKey = doneCh ? "blue-suitcase-sent-" + doneCh.id : null;
+    let prevDone = null, prevSent = null;
     if (doneCh){
       const d = new Date();
-      try { localStorage.setItem("blue-suitcase-done-" + doneCh.id, d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0")); } catch(e){}
+      try {
+        prevDone = localStorage.getItem(doneKey);
+        prevSent = localStorage.getItem(sentKey);
+        localStorage.setItem(doneKey, d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"));
+        localStorage.setItem(sentKey, d.toISOString());   // для статуса «глава пишется»
+      } catch(e){}
+      document.dispatchEvent(new CustomEvent("bs:report-sent"));
+    }
+    // отправка не удалась — отметки назад (пустая строка, а не удаление: удаление синхронизация не разносит)
+    function undoMarks(){
+      if (!doneCh) return;
+      try {
+        localStorage.setItem(doneKey, prevDone || "");
+        localStorage.setItem(sentKey, prevSent || "");
+      } catch(e){}
+      document.dispatchEvent(new CustomEvent("bs:report-sent"));
     }
 
     sendNote("отправляю…");
@@ -3319,19 +3334,23 @@ summary:hover{background:var(--lamp-soft)}
         text: text
       });
       if (result === "unavailable"){
-        try {
-          await navigator.clipboard.writeText(text);
-          sendNote("отправка недоступна в этом режиме — отчёт скопирован, вставь его в чат", true);
-        } catch(e){
-          sendNote("отправка недоступна — скопируй отчёт кнопкой рядом и вставь в чат", true);
-        }
+        undoMarks();
+        sendNote("отправка недоступна — " + await copyFallback(ta), true);
         return;
       }
       sendNote("отчёт отправлен — можно закрывать книгу");
     } catch(err){
-      sendNote(explainSendError(err, "Нажми «Скопировать» и вставь отчёт в чат."), true);
+      undoMarks();
+      sendNote(explainSendError(err, await copyFallback(ta)), true);
     }
   });
+
+  // запасной путь, если отправка не удалась: отчёт — в буфер обмена, чтобы вставить его в чат;
+  // не дал браузер — выделяем текст в поле, скопировать его одним нажатием
+  async function copyFallback(ta){
+    try { await navigator.clipboard.writeText(ta.value); return "отчёт скопирован, вставь его в чат"; }
+    catch(e){ ta.focus(); ta.select(); return "отчёт выделен в поле ниже — скопируй его и вставь в чат"; }
+  }
 
 })();
 </script>
