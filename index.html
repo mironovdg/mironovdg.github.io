@@ -12,7 +12,8 @@
   --ink:#181c1f; --ink-soft:#464f54; --rain:#727d83;
   --line:#dcded8; --line-soft:#e7e9e3;
   --lamp:#9c6317; --lamp-soft:#f2e7d3;
-  --sea:#23444c; --case:#37548a; --sea-soft:#e2edee;
+  --sea:#23444c; --case:#37548a; --sea-soft:#e2edee; --case-soft:#e3e9f3;
+  --radius:4px;
   --ok:#2c6a49; --ok-soft:#e3efe8; --ok-line:#b7d4c3; --mastered-bg:#cfe9d9; --mastered-line:#7fb896;
   --no:#a3342a; --no-soft:#f8e9e6;
   --shadow:0 1px 1px rgba(24,28,31,.04), 0 10px 28px rgba(24,28,31,.06);
@@ -23,22 +24,24 @@
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
+    color-scheme:dark;
     --paper:#13181b; --surface:#1a2124; --field:#161d20;
     --ink:#e7e7e1; --ink-soft:#b6bfc3; --rain:#8d979b;
     --line:#2a3237; --line-soft:#222a2e;
     --lamp:#e2ab53; --lamp-soft:#2a2418;
-    --sea:#8ab8bb; --case:#8aa9de; --sea-soft:#1c2c2e;
+    --sea:#8ab8bb; --case:#8aa9de; --sea-soft:#1c2c2e; --case-soft:#1c2433;
     --ok:#7fc49f; --ok-soft:#1b2a22; --ok-line:#2e5b43; --mastered-bg:#21402f; --mastered-line:#3f7a58;
     --no:#e59187; --no-soft:#2e2220;
     --shadow:0 1px 1px rgba(0,0,0,.3), 0 10px 28px rgba(0,0,0,.35);
   }
 }
 :root[data-theme="dark"]{
+  color-scheme:dark;
   --paper:#13181b; --surface:#1a2124; --field:#161d20;
   --ink:#e7e7e1; --ink-soft:#b6bfc3; --rain:#8d979b;
   --line:#2a3237; --line-soft:#222a2e;
   --lamp:#e2ab53; --lamp-soft:#2a2418;
-  --sea:#8ab8bb; --case:#8aa9de; --sea-soft:#1c2c2e;
+  --sea:#8ab8bb; --case:#8aa9de; --sea-soft:#1c2c2e; --case-soft:#1c2433;
   --ok:#7fc49f; --ok-soft:#1b2a22; --ok-line:#2e5b43; --mastered-bg:#21402f; --mastered-line:#3f7a58;
   --no:#e59187; --no-soft:#2e2220;
   --shadow:0 1px 1px rgba(0,0,0,.3), 0 10px 28px rgba(0,0,0,.35);
@@ -48,20 +51,52 @@
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
 .page{max-width:46rem;margin:0 auto;padding:clamp(24px,5vw,56px) clamp(18px,4vw,32px) 120px}
 
-/* ---------- обложка и навигация ---------- */
-.masthead{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;padding-bottom:22px;border-bottom:1px solid var(--line)}
+/* ---------- обложка ---------- */
+.masthead{display:flex;justify-content:space-between;align-items:flex-end;gap:16px 28px;flex-wrap:wrap;padding-bottom:22px;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:16px;min-width:0}
+.brand-mark{flex:0 0 auto;color:var(--case)}
+.brand-mark .body{fill:var(--case-soft)}
 .book-title{font-family:var(--serif);font-weight:600;font-size:clamp(30px,5.5vw,40px);line-height:1.05;letter-spacing:-.02em;margin:0}
-.book-sub{font-family:var(--mono);font-size:12px;letter-spacing:.11em;text-transform:uppercase;color:var(--rain);margin:0 0 12px}
-.fob{flex:0 0 auto;color:var(--lamp);opacity:.9}
-.toc{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0;padding:0;list-style:none}
-.toc .chapter-tab{
-  font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--ink-soft);cursor:pointer;
-  border:1px solid var(--line);border-radius:2px;padding:6px 10px;background:var(--surface);display:inline-block
+.book-sub{font-family:var(--mono);font-size:12px;letter-spacing:.11em;text-transform:uppercase;color:var(--rain);margin:0 0 8px;max-width:none}
+
+/* словарный запас ученика — главная цифра книги, живёт в шапке */
+.vocab-count{
+  display:grid;grid-template-columns:auto auto;column-gap:18px;row-gap:0;justify-items:end;align-items:baseline;
+  background:none;border:0;padding:4px 0 2px;margin:0;cursor:pointer;color:var(--rain);text-align:right;font:inherit
 }
-.toc .chapter-tab:hover{border-color:var(--lamp);color:var(--lamp)}
-.toc .chapter-tab[aria-current="true"]{color:var(--lamp);border-color:var(--lamp);background:var(--lamp-soft)}
-.toc .soon{font-size:13.5px;color:var(--rain);align-self:center;padding-left:4px}
-.toc .soon.writing{color:var(--lamp)}
+.vocab-count .vc-label{grid-column:1 / -1;font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--rain);margin-bottom:2px}
+.vocab-count .vc-num{font-size:13.5px;color:var(--ink-soft);white-space:nowrap}
+.vocab-count .vc-num b{font-family:var(--serif);font-size:28px;font-weight:600;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.vocab-count .vc-words b{color:var(--lamp)}
+.vocab-count .vc-phrases b{color:var(--sea)}
+.vocab-count:hover .vc-num{color:var(--ink)}
+
+/* ---------- навигация: указатель из трёх строк — главы, лексика, обороты ---------- */
+.views{margin:0;border-bottom:1px solid var(--line)}
+.views-row{display:grid;grid-template-columns:5.5rem 1fr;align-items:baseline;gap:6px 12px;padding:10px 0;border-top:1px solid var(--line-soft)}
+.views-row:first-child{border-top:0}
+.views-label{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;padding-top:3px}
+.views-row-book .views-label{color:var(--rain)}
+.views-group-word .views-label{color:var(--lamp)}
+.views-group-phrase .views-label{color:var(--sea)}
+.views-items,.toc{display:flex;flex-wrap:wrap;gap:4px 2px;margin:0;padding:0;list-style:none;align-items:baseline}
+.view-tab,.toc .chapter-tab{
+  background:none;border:0;border-radius:999px;color:var(--ink-soft);cursor:pointer;
+  font-family:var(--sans);font-size:14px;line-height:1.3;padding:5px 11px
+}
+.view-tab:hover,.toc .chapter-tab:hover{background:var(--surface);color:var(--ink)}
+.tab-n{margin-left:6px;font-family:var(--mono);font-size:11px;color:var(--rain)}
+.tab-n:empty{display:none}
+.views-group-word .view-tab[aria-current="true"]{background:var(--lamp-soft);color:var(--lamp)}
+.views-group-phrase .view-tab[aria-current="true"]{background:var(--sea-soft);color:var(--sea)}
+.view-tab[aria-current="true"] .tab-n{color:inherit;opacity:.7}
+.toc .chapter-tab{font-family:var(--serif);font-size:15px}
+.toc .ch-n{font-family:var(--mono);font-size:11.5px;color:var(--rain);margin-right:7px;font-variant-numeric:tabular-nums}
+/* открытая глава подсвечена, только когда открыт раздел глав */
+body[data-view="chapters"] .toc .chapter-tab[aria-current="true"]{background:var(--lamp-soft);color:var(--lamp)}
+body[data-view="chapters"] .toc .chapter-tab[aria-current="true"] .ch-n{color:inherit}
+.toc .soon{font-family:var(--mono);font-size:12px;color:var(--rain);padding:5px 11px;border:1px dashed var(--line);border-radius:999px}
+.toc .soon.writing{color:var(--lamp);border-color:var(--lamp)}
 
 /* ---------- заголовки глав ---------- */
 .chapter{margin-top:56px}
@@ -69,19 +104,23 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);f
 .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--rain);margin:0 0 12px}
 h1{font-family:var(--serif);font-weight:600;font-size:clamp(30px,5.5vw,42px);line-height:1.08;letter-spacing:-.02em;margin:0;text-wrap:balance}
 .dek{font-family:var(--serif);font-size:19px;line-height:1.5;color:var(--ink-soft);margin:14px 0 0;max-width:30rem}
-.chips{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin:22px 0 0}
-.chips li{font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--ink-soft);border:1px solid var(--line);border-radius:2px;padding:5px 9px;background:var(--surface)}
-.chips li.key{color:var(--lamp);border-color:var(--lamp);background:var(--lamp-soft)}
+/* паспорт главы: уровень — плашкой, остальное — строкой через точки */
+.chips{display:flex;flex-wrap:wrap;align-items:center;gap:6px 0;list-style:none;padding:0;margin:20px 0 0;font-family:var(--mono);font-size:12px;letter-spacing:.03em;color:var(--rain)}
+.chips li{display:inline-flex;align-items:center}
+.chips li + li::before{content:"·";margin:0 10px;color:var(--line)}
+.chips li.key{color:var(--lamp);background:var(--lamp-soft);border-radius:999px;padding:4px 11px}
+.chips li.key + li::before{content:none}
+.chips li.key{margin-right:12px}
 
 section{margin-top:52px}
-.sec-label{font-family:var(--mono);font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--rain);display:flex;align-items:center;gap:10px;margin:0 0 10px}
+.sec-label{font-family:var(--mono);font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--rain);display:flex;align-items:center;gap:10px;margin:0 0 10px;max-width:none}
 .sec-label::after{content:"";flex:1;height:1px;background:var(--line)}
 h2{font-family:var(--serif);font-weight:600;font-size:26px;line-height:1.2;letter-spacing:-.01em;margin:0 0 16px;text-wrap:balance}
 h3{font-family:var(--sans);font-weight:600;font-size:16px;margin:28px 0 10px}
 p{margin:0 0 14px;max-width:var(--measure)}
 
 /* ---------- памятка ---------- */
-.howto{background:var(--surface);border:1px solid var(--line);border-left:2px solid var(--lamp);border-radius:3px;padding:16px 20px;margin:0 0 32px}
+.howto{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 22px;margin:0 0 32px}
 .howto-list{margin:0;padding-left:1.35em;display:grid;gap:9px;font-size:15px;line-height:1.5;color:var(--ink-soft)}
 .howto-list li::marker{font-family:var(--mono);font-size:12px;color:var(--lamp)}
 .howto-list b{color:var(--ink);font-weight:600}
@@ -107,7 +146,7 @@ table.forms td{font-family:var(--mono);font-size:14px;font-variant-numeric:tabul
 table.forms td.gloss{font-family:var(--sans);color:var(--ink-soft)}
 table.forms tr td:nth-child(2){color:var(--lamp)}
 .dict-tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 14px}
-.dict.hidden td.ru{color:transparent;background:var(--line-soft);border-radius:2px;user-select:none}
+.dict.hidden td.ru{color:transparent;background:var(--line-soft);border-radius:var(--radius);user-select:none}
 td.miss{width:1%;white-space:nowrap}
 td.miss label{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--rain);cursor:pointer}
 
@@ -117,7 +156,7 @@ td.miss label{display:inline-flex;align-items:center;gap:6px;font-size:13px;colo
 .rule-row .kind{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--sea);display:block}
 .rule-row .formula{font-family:var(--mono);font-size:11.5px;color:var(--rain);display:block;margin-top:3px}
 .rule-row .ex{font-family:var(--serif);font-size:17px}
-.trap{background:var(--lamp-soft);border-radius:3px;padding:16px 20px;margin-top:22px}
+.trap{background:var(--lamp-soft);border-radius:var(--radius);padding:16px 20px;margin-top:22px}
 .trap p{margin:0 0 8px;color:var(--ink);max-width:none}
 .trap p:last-child{margin:0}
 .trap .no{color:var(--lamp);font-family:var(--mono);font-size:14px}
@@ -126,7 +165,7 @@ td.miss label{display:inline-flex;align-items:center;gap:6px;font-size:13px;colo
 /* ---------- упражнения ---------- */
 .ex-block{border-top:1px solid var(--line);padding-top:22px;margin-top:30px}
 .ex-head{display:flex;align-items:baseline;gap:12px;margin-bottom:4px}
-.ex-num{font-family:var(--mono);font-size:12px;color:var(--lamp);border:1px solid var(--lamp);border-radius:2px;padding:2px 7px;flex:0 0 auto}
+.ex-num{font-family:var(--mono);font-size:12px;color:var(--lamp);border:1px solid var(--lamp);border-radius:var(--radius);padding:2px 7px;flex:0 0 auto}
 .ex-title{font-weight:600;font-size:16px}
 .ex-hint{color:var(--rain);font-size:14px;margin:0 0 16px}
 .task{display:grid;gap:12px;margin:0 0 16px;counter-reset:none}
@@ -137,17 +176,17 @@ td.miss label{display:inline-flex;align-items:center;gap:6px;font-size:13px;colo
 .prompt-en{font-family:var(--serif);font-size:17px;margin:0 0 6px;line-height:1.5}
 input[type=text]{
   width:100%;padding:9px 12px;font-family:var(--serif);font-size:16px;
-  background:var(--field);color:var(--ink);border:1px solid var(--line);border-radius:3px
+  background:var(--field);color:var(--ink);border:1px solid var(--line);border-radius:var(--radius)
 }
 input.gap-input{width:8.5em;display:inline-block;padding:3px 8px;font-size:15px;vertical-align:baseline;margin:0 2px}
 input[type=text]:focus,select:focus{outline:2px solid var(--lamp);outline-offset:1px;border-color:var(--lamp)}
 input.right,select.right{border-color:var(--ok);background:var(--ok-soft)}
 input.wrong,select.wrong{border-color:var(--no);background:var(--no-soft)}
-select{padding:8px 10px;font-family:var(--sans);font-size:15px;background:var(--field);color:var(--ink);border:1px solid var(--line);border-radius:3px}
+select{padding:8px 10px;font-family:var(--sans);font-size:15px;background:var(--field);color:var(--ink);border:1px solid var(--line);border-radius:var(--radius)}
 .opts{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
 .opts label{
   display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:14px;
-  border:1px solid var(--line);border-radius:3px;padding:6px 11px;cursor:pointer;background:var(--field)
+  border:1px solid var(--line);border-radius:var(--radius);padding:6px 11px;cursor:pointer;background:var(--field)
 }
 .opts label:hover{border-color:var(--lamp)}
 .opts label.right{border-color:var(--ok);background:var(--ok-soft);color:var(--ok)}
@@ -158,13 +197,13 @@ select{padding:8px 10px;font-family:var(--sans);font-size:15px;background:var(--
 .verdict.ok{color:var(--ok)}
 .verdict.bad{color:var(--no)}
 .verdict .ref{color:var(--ink-soft)}
-mark.kw{background:var(--lamp-soft);color:var(--lamp);padding:0 3px;border-radius:2px;font-weight:600}
+mark.kw{background:var(--lamp-soft);color:var(--lamp);padding:0 3px;border-radius:var(--radius);font-weight:600}
 .verdict .spelled,.spelled-box .spelled{font-family:var(--serif);color:var(--ok);font-weight:600}
 .spelled-box{margin:12px 0 0;font-size:13.5px;color:var(--rain);max-width:none}
 .spelled-box p{margin:0 0 6px;max-width:none}
 .verdict .unverified,.spelled-box .unverified{font-family:var(--serif);color:var(--lamp);font-weight:600}
 .self-mark{
-  font-family:var(--sans);font-size:12px;background:none;border:1px solid var(--line);border-radius:2px;
+  font-family:var(--sans);font-size:12px;background:none;border:1px solid var(--line);border-radius:var(--radius);
   color:var(--ink-soft);padding:3px 9px;margin-left:8px;cursor:pointer
 }
 .self-mark:hover{border-color:var(--ok);color:var(--ok)}
@@ -172,7 +211,7 @@ mark.kw{background:var(--lamp-soft);color:var(--lamp);padding:0 3px;border-radiu
 .match-row{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}
 .match-row .en{font-family:var(--serif);font-weight:600;font-size:16px}
 .bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px}
-button.act{background:var(--lamp);color:var(--paper);border:0;border-radius:3px;padding:10px 18px;font-family:var(--sans);font-size:14.5px;cursor:pointer}
+button.act{background:var(--lamp);color:var(--paper);border:0;border-radius:var(--radius);padding:10px 18px;font-family:var(--sans);font-size:14.5px;cursor:pointer}
 button.act:hover{filter:brightness(1.08)}
 button.ghost{background:transparent;color:var(--ink-soft);border:1px solid var(--line)}
 button.ghost:hover{border-color:var(--lamp);color:var(--lamp)}
@@ -182,52 +221,16 @@ button:focus-visible{outline:2px solid var(--lamp);outline-offset:2px}
 .score.errs{color:var(--no)}
 
 /* ---------- итог ---------- */
-.report{background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:20px 22px;margin-top:20px}
+.report{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;margin-top:20px}
 .report h3{margin-top:0}
 .totals{display:grid;gap:8px;margin:0 0 16px}
 .total-row{display:grid;grid-template-columns:1fr auto;gap:12px;font-size:15px;padding:7px 0;border-bottom:1px solid var(--line-soft)}
 .total-row span:last-child{font-family:var(--mono);font-size:14px}
 textarea{
   width:100%;min-height:170px;padding:12px 14px;font-family:var(--mono);font-size:13px;line-height:1.5;
-  background:var(--field);color:var(--ink);border:1px solid var(--line);border-radius:3px;resize:vertical
+  background:var(--field);color:var(--ink);border:1px solid var(--line);border-radius:var(--radius);resize:vertical
 }
 .saved{font-family:var(--mono);font-size:12px;color:var(--rain)}
-
-/* ---------- разделы книги ---------- */
-.views{display:flex;flex-wrap:wrap;align-items:center;gap:8px 6px;margin:20px 0 0;border-bottom:1px solid var(--line);padding-bottom:10px}
-.view-tab{
-  background:none;border:0;border-bottom:2px solid transparent;color:var(--rain);cursor:pointer;
-  font-family:var(--sans);font-size:14.5px;padding:9px 14px;margin-bottom:-1px
-}
-.view-tab:hover{color:var(--ink)}
-.view-tab[aria-current="true"]{color:var(--lamp);border-bottom-color:var(--lamp)}
-.view-tab-main{padding-left:0}
-.tab-n{margin-left:5px;font-family:var(--mono);font-size:11px;opacity:.65}
-.tab-n:empty{display:none}
-
-/* группы «Лексика» / «Обороты»: своя капсула и свой акцентный цвет на каждую */
-.views-group{
-  display:flex;flex-wrap:wrap;align-items:center;gap:1px;
-  background:var(--surface);border:1px solid var(--line-soft);border-radius:18px;padding:3px 10px 3px 3px
-}
-.views-group-label{
-  font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;
-  white-space:nowrap;padding:0 9px;pointer-events:none
-}
-.views-group-word .views-group-label{color:var(--lamp)}
-.views-group-phrase .views-group-label{color:var(--sea)}
-.views-group .view-tab{
-  border-bottom:0;border-radius:14px;padding:6.5px 12px;font-size:13.5px
-}
-.views-group .view-tab:hover{background:var(--field)}
-.views-group-word .view-tab[aria-current="true"]{background:var(--lamp-soft);color:var(--lamp)}
-.views-group-phrase .view-tab[aria-current="true"]{background:var(--sea-soft);color:var(--sea)}
-.vocab-count{
-  margin-left:auto;align-self:center;padding:9px 2px 9px 14px;cursor:pointer;
-  font-family:var(--mono);font-size:12.5px;color:var(--rain);white-space:nowrap
-}
-.vocab-count:hover{color:var(--ink)}
-.vocab-count b{color:var(--lamp);font-weight:500;font-size:14px}
 
 /* ---------- тренажёр лексики ---------- */
 .trainer{margin-top:22px}
@@ -239,7 +242,7 @@ textarea{
 .tr-topics{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px;margin-bottom:18px}
 .topic-chip{
   display:flex;flex-direction:column;gap:3px;text-align:left;cursor:pointer;
-  background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:9px 12px;
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:9px 12px;
   font-family:var(--sans);color:var(--ink)
 }
 .topic-chip:hover{border-color:var(--lamp)}
@@ -252,6 +255,9 @@ textarea{
 .topic-chip .t-pct.bad{color:var(--no)}
 .topic-chip .t-done{color:var(--ok)}
 .topic-chip .t-meta{display:block}
+/* полоска — какая часть всей темы уже вспоминается */
+.topic-chip .t-bar{display:block;height:3px;border-radius:var(--radius);background:var(--line-soft);overflow:hidden;margin-top:5px}
+.topic-chip .t-bar i{display:block;height:100%;background:var(--ok);border-radius:var(--radius)}
 /* тема освоена целиком — мягкая зелёная заливка; рамка выбора остаётся поверх */
 .topic-chip.mastered{background:var(--mastered-bg);border-color:var(--mastered-line)}
 .topic-chip.mastered .t-name{color:var(--ok);font-weight:500}
@@ -259,7 +265,7 @@ textarea{
 .topic-chip.mastered[aria-current="true"]{border-color:var(--lamp);box-shadow:inset 0 0 0 1px var(--lamp)}
 .tr-explain{font-size:14px;color:var(--ink-soft);max-width:var(--measure);margin:0 0 12px}
 .tr-legend{font-size:13px;line-height:1.5;color:var(--rain);max-width:none;margin:-6px 0 18px}
-.sync-banner{background:var(--surface);border:1px solid var(--line);border-left:2px solid var(--lamp);border-radius:3px;padding:14px 18px;margin:18px 0 0;font-size:15px;line-height:1.5;color:var(--ink-soft)}
+.sync-banner{background:var(--lamp-soft);border:1px solid var(--lamp);border-radius:var(--radius);padding:14px 18px;margin:18px 0 0;font-size:15px;line-height:1.5;color:var(--ink-soft)}
 .sync-banner p{margin:0 0 10px;max-width:none}
 .sync-banner p:last-child{margin-bottom:0}
 .sync-banner b{color:var(--ink)}
@@ -287,9 +293,9 @@ table.vocab{min-width:26rem}
 table.vocab td.w{font-family:var(--serif);font-weight:600}
 table.vocab td.meta{font-family:var(--mono);font-size:12px;color:var(--rain);white-space:nowrap}
 table.vocab tr.flagged td.w{color:var(--no)}
-table.vocab.hidden td.ru{color:transparent;background:var(--line-soft);border-radius:2px;user-select:none}
+table.vocab.hidden td.ru{color:transparent;background:var(--line-soft);border-radius:var(--radius);user-select:none}
 .tr-card{
-  background:var(--surface);border:1px solid var(--lamp);border-radius:4px;padding:28px 24px;text-align:center;
+  background:var(--surface);border:1px solid var(--lamp);border-radius:var(--radius);padding:28px 24px;text-align:center;
   margin-bottom:16px
 }
 .tr-progress{font-family:var(--mono);font-size:12px;color:var(--rain);letter-spacing:.08em}
@@ -299,10 +305,10 @@ table.vocab.hidden td.ru{color:transparent;background:var(--line-soft);border-ra
 .tr-answer.blank,.tr-answer.blank *{color:transparent}
 .tr-note{display:block;font-family:var(--mono);font-size:12.5px;color:var(--rain);margin-top:6px}
 .tr-buttons{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:18px}
-button.know{background:var(--ok);color:var(--paper);border:0;border-radius:3px;padding:10px 20px;font-family:var(--sans);font-size:14.5px;cursor:pointer}
-button.dont{background:var(--no);color:var(--paper);border:0;border-radius:3px;padding:10px 20px;font-family:var(--sans);font-size:14.5px;cursor:pointer}
+button.know{background:var(--ok);color:var(--paper);border:0;border-radius:var(--radius);padding:10px 20px;font-family:var(--sans);font-size:14.5px;cursor:pointer}
+button.dont{background:var(--no);color:var(--paper);border:0;border-radius:var(--radius);padding:10px 20px;font-family:var(--sans);font-size:14.5px;cursor:pointer}
 button.know:hover,button.dont:hover{filter:brightness(1.08)}
-.tr-result{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:20px 22px;margin-bottom:16px}
+.tr-result{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;margin-bottom:16px}
 .tr-result h3{margin-top:0}
 .tr-result .big{font-family:var(--serif);font-size:30px;font-weight:600}
 .tr-list{font-family:var(--serif);font-size:16px;color:var(--ink-soft);margin:10px 0 0;line-height:1.7}
@@ -310,7 +316,7 @@ button.know:hover,button.dont:hover{filter:brightness(1.08)}
 .tr-list .ok-words{color:var(--ok);font-weight:600}
 
 .summary-ru{border-left:2px solid var(--case);padding:4px 0 4px 20px;margin:0;font-family:var(--serif);font-size:17.5px;line-height:1.6;color:var(--ink-soft);max-width:var(--measure)}
-details{margin-top:16px;border:1px solid var(--line);border-radius:3px;background:var(--surface)}
+details{margin-top:16px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
 details[open]{border-color:var(--lamp)}
 summary{cursor:pointer;padding:11px 16px;font-family:var(--mono);font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--lamp);list-style:none;display:flex;align-items:center;gap:9px}
 summary::-webkit-details-marker{display:none}
@@ -334,7 +340,14 @@ summary:hover{background:var(--lamp-soft)}
   .says,.stage{grid-column:1;border-left:0;padding-left:0}
   .stage{margin:8px 0}
   .rule-row{grid-template-columns:1fr}
-  .masthead{flex-direction:column-reverse;align-items:flex-start;gap:10px}
+  .masthead{align-items:flex-start}
+  .brand{gap:12px}
+  .brand-mark{width:40px;height:40px}
+  .vocab-count{grid-template-columns:auto auto auto;justify-items:start;text-align:left;column-gap:14px}
+  .vocab-count .vc-label{grid-column:auto;margin:0}
+  .vocab-count .vc-num b{font-size:22px}
+  .views-row{grid-template-columns:1fr;gap:4px}
+  .views-label{padding:0 0 0 11px}
   input.gap-input{width:7em}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
@@ -342,52 +355,59 @@ summary:hover{background:var(--lamp-soft)}
 
 <div class="page">
 
-  <div class="masthead">
-    <div>
-      <p class="book-sub">Учебная книга · уровень A2</p>
-      <h1 class="book-title">The Blue Suitcase</h1>
+  <header class="masthead">
+    <div class="brand">
+      <svg class="brand-mark" width="48" height="48" viewBox="0 0 48 48" aria-hidden="true">
+        <path d="M18 13.5 V10 a3 3 0 0 1 3-3 h6 a3 3 0 0 1 3 3 v3.5" fill="none" stroke="currentColor" stroke-width="1.6"/>
+        <rect class="body" x="6.8" y="13.5" width="34.4" height="25" rx="4" stroke="currentColor" stroke-width="1.6"/>
+        <path d="M15.5 13.5 v25 M32.5 13.5 v25" stroke="currentColor" stroke-width="1.6"/>
+        <path d="M12 41.5 v1.2 M36 41.5 v1.2" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+      </svg>
+      <div>
+        <p class="book-sub">Учебная книга · уровень A2</p>
+        <h1 class="book-title">The Blue Suitcase</h1>
+      </div>
     </div>
-    <svg class="fob" width="58" height="58" viewBox="0 0 62 62" aria-hidden="true">
-      <rect x="8.5" y="8.5" width="45" height="45" rx="9" fill="none" stroke="currentColor" stroke-width="1.2"/>
-      <circle cx="31" cy="17.5" r="2.6" fill="none" stroke="currentColor" stroke-width="1.2"/>
-      <path d="M20 40 h22 M20 34 h22" stroke="currentColor" stroke-width="1.2" opacity=".55"/>
-    </svg>
-  </div>
+    <button type="button" class="vocab-count" id="vocab-count"></button>
+  </header>
 
-  <nav class="views">
-    <button type="button" class="view-tab view-tab-main" data-view="chapters" aria-current="true">Главы книги</button>
-
-    <div class="views-group views-group-word">
-      <span class="views-group-label">Лексика</span>
-      <button type="button" class="view-tab" data-view="learned">Изученная<span class="tab-n" data-n="learned"></span></button>
-      <button type="button" class="view-tab" data-view="a1">A1<span class="tab-n" data-n="a1"></span></button>
-      <button type="button" class="view-tab" data-view="a2">A2<span class="tab-n" data-n="a2"></span></button>
-      <button type="button" class="view-tab" data-view="b1w">B1<span class="tab-n" data-n="b1w"></span></button>
-      <button type="button" class="view-tab" data-view="b2w">B2<span class="tab-n" data-n="b2w"></span></button>
-      <button type="button" class="view-tab" data-view="c1w">C1<span class="tab-n" data-n="c1w"></span></button>
-    </div>
-
-    <div class="views-group views-group-phrase">
-      <span class="views-group-label">Обороты</span>
-      <button type="button" class="view-tab" data-view="phrases">Из глав<span class="tab-n" data-n="phrases"></span></button>
-      <button type="button" class="view-tab" data-view="b1">B1<span class="tab-n" data-n="b1"></span></button>
-      <button type="button" class="view-tab" data-view="b2">B2<span class="tab-n" data-n="b2"></span></button>
-      <button type="button" class="view-tab" data-view="c1">C1<span class="tab-n" data-n="c1"></span></button>
+  <nav class="views" aria-label="Разделы книги">
+    <div class="views-row views-row-book">
+      <span class="views-label">Главы</span>
+      <ul class="toc">
+        <li><button type="button" class="chapter-tab" data-chapter="ch1" aria-current="true"><span class="ch-n">1</span>The Night Shift</button></li>
+        <li><button type="button" class="chapter-tab" data-chapter="ch2"><span class="ch-n">2</span>What Was Inside</button></li>
+        <li><button type="button" class="chapter-tab" data-chapter="ch3"><span class="ch-n">3</span>Locker 14</button></li>
+        <li><button type="button" class="chapter-tab" data-chapter="ch4"><span class="ch-n">4</span>The Café Across the Street</button></li>
+        <li class="soon">Глава 5 — после отчёта по главе 4</li>
+      </ul>
     </div>
 
-    <span class="vocab-count" id="vocab-count"></span>
+    <div class="views-row views-group-word">
+      <span class="views-label">Лексика</span>
+      <div class="views-items">
+        <button type="button" class="view-tab" data-view="learned">Изученная<span class="tab-n" data-n="learned"></span></button>
+        <button type="button" class="view-tab" data-view="a1">A1<span class="tab-n" data-n="a1"></span></button>
+        <button type="button" class="view-tab" data-view="a2">A2<span class="tab-n" data-n="a2"></span></button>
+        <button type="button" class="view-tab" data-view="b1w">B1<span class="tab-n" data-n="b1w"></span></button>
+        <button type="button" class="view-tab" data-view="b2w">B2<span class="tab-n" data-n="b2w"></span></button>
+        <button type="button" class="view-tab" data-view="c1w">C1<span class="tab-n" data-n="c1w"></span></button>
+      </div>
+    </div>
+
+    <div class="views-row views-group-phrase">
+      <span class="views-label">Обороты</span>
+      <div class="views-items">
+        <button type="button" class="view-tab" data-view="phrases">Из глав<span class="tab-n" data-n="phrases"></span></button>
+        <button type="button" class="view-tab" data-view="b1">B1<span class="tab-n" data-n="b1"></span></button>
+        <button type="button" class="view-tab" data-view="b2">B2<span class="tab-n" data-n="b2"></span></button>
+        <button type="button" class="view-tab" data-view="c1">C1<span class="tab-n" data-n="c1"></span></button>
+      </div>
+    </div>
   </nav>
   <div class="sync-banner" id="sync-banner" hidden></div>
 
   <div class="view" id="view-chapters">
-
-  <ul class="toc">
-    <li><button type="button" class="chapter-tab" data-chapter="ch1" aria-current="true">1 · The Night Shift</button></li>
-    <li><button type="button" class="chapter-tab" data-chapter="ch2">2 · What Was Inside</button></li>
-    <li><button type="button" class="chapter-tab" data-chapter="ch3">3 · Locker 14</button></li>
-    <li><button type="button" class="chapter-tab" data-chapter="ch4">4 · The Café Across the Street</button></li>
-    <li class="soon">Глава 5 — после отчёта по главе 4</li>
-  </ul>
 
   <!-- разминка перед новой главой: показывается вместо главы, если к ней приступают не в день прохождения предыдущей -->
   <section class="chapter-gate" id="chapter-gate" hidden></section>
@@ -2383,7 +2403,10 @@ summary:hover{background:var(--lamp-soft)}
     if (ta) ta.value = "";
   }
   document.querySelectorAll(".chapter-tab").forEach(function(tab){
-    tab.addEventListener("click", function(){ showChapter(tab.dataset.chapter); });
+    tab.addEventListener("click", function(){
+      showChapter(tab.dataset.chapter);
+      if (typeof window.__bsShowView === "function") window.__bsShowView("chapters");
+    });
   });
 
   // ---------- статус следующей главы в оглавлении ----------
@@ -2401,13 +2424,15 @@ summary:hover{background:var(--lamp-soft)}
     } catch(e){}
     if (!sentAt && !day){
       soon.textContent = "Глава " + (n + 1) + " — после отчёта по главе " + n;
+      soon.title = "Следующая глава появится, когда ты отправишь отчёт по главе " + n + ".";
       soon.classList.remove("writing");
       return;
     }
     const when = sentAt ? new Date(sentAt) : new Date(day + "T12:00:00");
     const date = when.toLocaleDateString("ru-RU", { day: "numeric", month: "long" }) +
       (sentAt ? " в " + when.toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" }) : "");
-    soon.textContent = "Глава " + (n + 1) + " пишется — отчёт по главе " + n + " отправлен " + date + ". Появится здесь сама.";
+    soon.textContent = "Глава " + (n + 1) + " пишется · отчёт отправлен " + date;
+    soon.title = "Отчёт по главе " + n + " отправлен " + date + ". Глава " + (n + 1) + " появится здесь сама.";
     soon.classList.add("writing");
   }
   document.addEventListener("bs:report-sent", renderNextStatus);
@@ -2970,9 +2995,11 @@ summary:hover{background:var(--lamp-soft)}
       else t.removeAttribute("aria-current");
     });
     document.querySelectorAll(".view").forEach(function(v){ v.hidden = (v.id !== "view-" + name); });
+    document.body.dataset.view = name;   // по нему подсвечивается открытая глава в указателе
     try { localStorage.setItem(VIEW_KEY, name); } catch(e){}
     window.scrollTo({top:0, behavior:"instant"});
   }
+  window.__bsShowView = showView;        // главы в указателе открывают раздел глав из любого раздела
   tabs.forEach(function(t){ t.addEventListener("click", function(){ showView(t.dataset.view); }); });
   let startView = "chapters";
   try { startView = localStorage.getItem(VIEW_KEY) || "chapters"; } catch(e){}
@@ -3080,8 +3107,9 @@ summary:hover{background:var(--lamp-soft)}
     if (!el) return;
     const r = confirmedVocab();
     const ph = confirmedPhrases();
-    el.innerHTML = "Словарь: <b>" + r.total + "</b> " + wordsWord(r.total) +
-      " · <b>" + ph.total + "</b> " + phrasesWord(ph.total);
+    el.innerHTML = '<span class="vc-label">Словарь</span>' +
+      '<span class="vc-num vc-words"><b>' + r.total + "</b> " + wordsWord(r.total) + "</span>" +
+      '<span class="vc-num vc-phrases"><b>' + ph.total + "</b> " + phrasesWord(ph.total) + "</span>";
     el.title = "Подтверждённый запас — слова, по которым есть доказательство владения:\n" +
       "· из входного теста и трекера: " + r.src.test + "\n" +
       "· вспомнил в тренажёре в обе стороны: " + r.src.two + "\n" +
@@ -3123,7 +3151,7 @@ summary:hover{background:var(--lamp-soft)}
 
     root.innerHTML =
       '<div class="tr-topics"></div>' +
-      '<p class="tr-legend">Процент — сколько слов вспомнилось при последней проверке. «Проверено 20 из 29» — сколько слов темы ты уже проверял, ✓ — проверены все. Зелёная заливка — каждое слово темы подтверждено в обе стороны.</p>' +
+      '<p class="tr-legend">Процент — сколько слов вспомнилось при последней проверке. «Проверено 20 из 29» — сколько слов темы ты уже проверял, ✓ — проверены все. Полоска — какая часть всей темы уже вспоминается. Зелёная заливка — каждое слово темы подтверждено в обе стороны.</p>' +
       '<div class="tr-tools">' +
         '<select class="tr-dir">' +
           '<option value="both">Спрашивать в обе стороны</option>' +
@@ -3212,10 +3240,12 @@ summary:hover{background:var(--lamp-soft)}
         // тема освоена, когда каждое её слово подтверждено — вспомнено в обе стороны с первой попытки
         const list = groupWords(g);
         const mastered = list.length > 0 && list.every(function(x){ return Number(wordStats[x.w]) >= 2; });
+        const share = p.total ? Math.round(p.correct / p.total * 100) : 0;
         return '<button type="button" class="topic-chip' + (mastered ? " mastered" : "") + '" data-g="' + esc(g) + '"' +
                (g === currentGroup ? ' aria-current="true"' : "") +
                (mastered ? ' title="Тема освоена: все слова подтверждены в обе стороны"' : "") + '>' +
-               '<span class="t-name">' + esc(name) + '</span><span class="t-meta">' + meta + '</span></button>';
+               '<span class="t-name">' + esc(name) + '</span><span class="t-meta">' + meta + '</span>' +
+               '<span class="t-bar" aria-hidden="true"><i style="width:' + share + '%"></i></span></button>';
       }).join("");
       topicsBox.querySelectorAll(".topic-chip").forEach(function(chip){
         chip.addEventListener("click", function(){
