@@ -381,6 +381,24 @@ button.hard:hover{filter:brightness(1.08)}
 .td-answer-line{font-size:18px;margin:6px 0 4px}
 .td-answer-line b{font-family:var(--serif);font-size:22px}
 
+/* ---------- как учиться ---------- */
+.method h3{font-family:var(--serif);font-size:20px;font-weight:600;margin:34px 0 10px}
+.method-route{margin:0;padding-left:1.4em;display:grid;gap:10px;max-width:var(--measure)}
+.method-route li::marker{font-family:var(--mono);font-size:13px;color:var(--lamp)}
+.method-route b,.method-list b{color:var(--ink)}
+.method-list{margin:0;padding-left:1.2em;display:grid;gap:8px;max-width:var(--measure)}
+.method-table{min-width:24rem;margin:4px 0 16px}
+.method-table td.num{font-family:var(--mono);color:var(--lamp);width:3.5rem}
+.method-grades{display:grid;gap:6px;margin:0 0 12px}
+.method-grades p{margin:0}
+.method-grades .g{display:inline-block;min-width:6.5rem;text-align:center;border-radius:var(--radius);padding:2px 8px;margin-right:10px;font-size:14px;color:var(--paper)}
+.method-grades .g2{background:var(--ok)}
+.method-grades .g1{background:var(--lamp)}
+.method-grades .g0{background:var(--no)}
+.views-row-today .view-tab[aria-current="true"]:not(.today-tab){background:var(--lamp-soft);color:var(--lamp)}
+.td-method{font-size:14px;color:var(--rain);margin:18px 0 0}
+button.linkish{background:none;border:0;padding:0;font:inherit;color:var(--sea);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+
 /* ---------- озвучка ---------- */
 .tts-bar{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:6px 14px;margin:10px 0 0;font-family:var(--mono);font-size:11.5px;color:var(--rain)}
 .tts-bar .tts-label{text-transform:uppercase;letter-spacing:.12em;color:var(--sea)}
@@ -465,6 +483,7 @@ td.w.speaking{color:var(--sea)}
       <span class="views-label">Сегодня</span>
       <div class="views-items">
         <button type="button" class="view-tab today-tab" data-view="today">Повторение<span class="today-n" id="today-n"></span></button>
+        <button type="button" class="view-tab" data-view="method">Как учиться</button>
       </div>
     </div>
     <div class="views-row views-row-book">
@@ -512,6 +531,73 @@ td.w.speaking{color:var(--sea)}
     <section style="margin-top:34px">
       <p class="sec-label">Повторение на сегодня</p>
       <div class="today" id="today"></div>
+    </section>
+  </div>
+
+  <!-- ================= КАК УЧИТЬСЯ ================= -->
+  <div class="view method" id="view-method" hidden>
+    <section style="margin-top:34px">
+      <p class="sec-label">Как учиться</p>
+      <h2>Как слово становится своим</h2>
+      <p>Книга учит слова двумя путями сразу: историей — слово встречается в живом диалоге, — и повторением по расписанию, которое возвращает слово ровно тогда, когда оно начинает забываться. Хватает 15–20 минут в день.</p>
+
+      <h3>Путь одного слова</h3>
+      <ol class="method-route">
+        <li><b>Глава.</b> Слово появляется в диалоге, в ситуации. Его можно послушать — нажми на реплику или на «Прочитать диалог».</li>
+        <li><b>Мини-словарь и упражнения.</b> Сначала узнаёшь (соедини, выбери), потом вспоминаешь и пишешь сам (пропуски, вопросы, перевод). Что не вспомнилось — отметь галочкой «Не вспомнил».</li>
+        <li><b>Отчёт по главе.</b> Кнопка «Отправить отчёт» внизу главы. В этот же день все слова и обороты главы попадают в «Повторение» — первый раз они вернутся завтра.</li>
+        <li><b>Повторение по расписанию.</b> Слово возвращается через 1, 3, 7, 16, 35 и 90 дней — каждый раз, когда вот-вот забудется. Карточка каждый раз немного сложнее.</li>
+        <li><b>Усвоено.</b> Когда ты напечатал слово по-английски по памяти после перерыва в неделю и больше, оно попадает в словарь — это число в шапке книги.</li>
+        <li><b>Если забылось</b> — ничего страшного: слово вернётся завтра и ещё раз в конце занятия. Слово из главы, которое не даётся, я вплету и в следующую главу.</li>
+      </ol>
+
+      <h3>Расписание и карточки</h3>
+      <div class="scroll">
+        <table class="method-table">
+          <thead><tr><th>Ступень</th><th>Когда вернётся</th><th>Какая карточка</th></tr></thead>
+          <tbody>
+            <tr><td class="num">1</td><td>через 1 день</td><td>с английского: видишь и слышишь слово, вспоминаешь перевод</td></tr>
+            <tr><td class="num">2</td><td>через 3 дня</td><td>с русского: печатаешь слово по-английски</td></tr>
+            <tr><td class="num">3</td><td>через 7 дней</td><td>с русского, печатаешь — <b>верно без подсказки = усвоено</b></td></tr>
+            <tr><td class="num">4</td><td>через 16 дней</td><td>на слух: слово только звучит, вспоминаешь перевод</td></tr>
+            <tr><td class="num">5</td><td>через 35 дней</td><td>с русского, печатаешь</td></tr>
+            <tr><td class="num">6</td><td>через 90 дней</td><td>с русского, печатаешь</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="method-grades">
+        <p><span class="g g2">Помню</span> на следующую ступень, интервал растёт.</p>
+        <p><span class="g g1">С трудом</span> та же ступень, тот же интервал ещё раз.</p>
+        <p><span class="g g0">Не помню</span> завтра снова (ступень 1) и ещё раз в конце сегодняшнего занятия.</p>
+      </div>
+      <p>Когда печатаешь, оценку ставит книга: верно — «Помню»; опечатка в одну букву или помогла подсказка «Первая буква» — «С трудом»; не то слово или «Не помню» — «Не помню».</p>
+
+      <h3>Новые слова</h3>
+      <p>До <b>10 новых слов в день</b>. В день отчёта по главе это слова главы. В остальные дни — самые употребительные слова английского по частотному списку NGSL, которых ты ещё не учишь (слова A1 книга не предлагает — их проверяешь сам в «Лексике A1»). Новое слово сначала показывается целиком — написание, звук, перевод, пример, — и сразу же его нужно напечатать. Если слово уже знаешь, нажми «Уже знаю»: оно не займёт место в лимите и придёт на проверку через неделю.</p>
+
+      <h3>Синонимы</h3>
+      <p>С русского часто подходит несколько английских слов. Чтобы было ясно, какое загадано, карточка показывает пример с пропуском, схему букв (<span class="cue">_ _ _ _ _</span>) и слова, которые не подходят (<span class="cue">не: big, huge</span>). Если напечатал синоним из словаря книги — это не ошибка: «верно по смыслу», карточка вернётся в конце занятия с первой буквой. Если книга твой синоним не узнала — нажми «Моё слово тоже подходит»: пара запомнится, а я уточню перевод, чтобы карточка стала однозначной.</p>
+
+      <h3>Что значат числа</h3>
+      <ul class="method-list">
+        <li><b>Словарь в шапке</b> — усвоенные слова и обороты. Ниже — «в работе»: всё, что сейчас в расписании, но ещё не усвоено.</li>
+        <li><b>«Повторение · 45 · ≈9 мин»</b> — сколько карточек на сегодня и примерно сколько времени.</li>
+        <li><b>В меню у разделов</b> — дробь «усвоено / всего», например <span class="cue">A2 24/702</span>; в конце строки — итог по всем разделам и процент.</li>
+      </ul>
+
+      <h3>Главы и разминка</h3>
+      <p>Каждая глава повторяет слова, которым в расписании подошёл срок, и все слова, которые не даются. Если за новую главу берёшься не в тот день, когда прошёл предыдущую, сначала будет разминка по её словам: не больше двух кругов, и глава открывается; что не вспомнилось — придёт завтра в «Повторении».</p>
+
+      <h3>Разделы «Лексика» и «Обороты»</h3>
+      <p>Это свободная тренировка по темам — быстро проверить, что ты уже знаешь. Вспомнил слово в обе стороны с первой попытки — оно встанет в «Повторение» на проверку через неделю, а в словарь попадёт, когда вспомнится там. В справочниках A1–C2 первое «Не знаю» ещё не повод учить слово: оно ждёт повторной проверки, и только если не вспомнилось и на ней — начинает учиться.</p>
+
+      <h3>Звук</h3>
+      <p>Слова и реплики звучат голосом твоего браузера или телефона — настройки в строке «Озвучка» под меню: британский или американский голос, обычная или медленная скорость. Режим «на слух» тренирует главное для разговора с носителем — узнавать слово ушами, а не глазами.</p>
+
+      <h3>Почему так</h3>
+      <p>Слово запоминается надолго, когда его <b>достаёшь из памяти сам</b>, а не перечитываешь, и когда между повторениями есть паузы, растущие с каждым успехом. Печатать слово труднее, чем узнавать, — зато так учится и написание, и «активный» словарь, из которого говоришь. Повторять понемногу каждый день лучше, чем много раз подряд за один присест: пропустил день — ничего не пропало, карточки просто подождут.</p>
+
+      <div class="bar"><button class="act method-go" type="button">К повторению на сегодня</button></div>
     </section>
   </div>
 
@@ -3780,6 +3866,8 @@ td.w.speaking{color:var(--sea)}
     if (changed){ saveSrs(s); document.dispatchEvent(new CustomEvent("bs:vocab-changed")); }
   }
   window.bsSRS = { fromTrainer: fromTrainer };
+  const methodGo = document.querySelector(".method-go");
+  if (methodGo) methodGo.addEventListener("click", function(){ showView("today"); });
 
   // ---- кнопка «Повторение» в указателе ----
   function renderTodayTab(sum){
@@ -3828,14 +3916,10 @@ td.w.speaking{color:var(--sea)}
       '<p class="td-next">Завтра — ' + sum.day1 + ", послезавтра — " + sum.day2 + " к повторению.</p>" +
       '<p class="td-total">Усвоено: <b>' + sum.masteredW + "</b> " + wordsWord(sum.masteredW) + ", <b>" + sum.masteredP + "</b> " + phrasesWord(sum.masteredP) +
         '. В работе: ' + sum.workW + " " + wordsWord(sum.workW) + ", " + sum.workP + " " + phrasesWord(sum.workP) + ".</p>" +
-      '<details class="td-how"><summary>Как это работает</summary><div class="answer-body">' +
-        '<p>Каждое слово повторяется, когда вот-вот начнёт забываться: через 1, 3, 7, 16, 35 и 90 дней. «Помню» — следующий интервал, «С трудом» — тот же ещё раз, «Не помню» — завтра снова и ещё раз в конце занятия.</p>' +
-        '<p>Карточки меняются: сначала узнаёшь слово с английского, потом печатаешь его с русского, потом узнаёшь на слух. В словарь («усвоено») слово попадает, когда ты напечатал его по-английски после перерыва не меньше недели.</p>' +
-        '<p>Новых — до 10 в день: слова пройденной главы (в день отчёта), потом самые частотные слова английского, которых ты ещё не учишь. «Уже знаю» на новом слове не тратит лимит — слово встанет на проверку через неделю.</p>' +
-        '<p>Написал синоним — книга подскажет, какое слово загадано, и спросит ещё раз с первой буквой, без штрафа.</p>' +
-      '</div></details>';
+      '<p class="td-method">Как устроено повторение и почему так — <button type="button" class="linkish td-method-go">«Как учиться»</button></p>';
     const st = box.querySelector(".td-start");
     if (st) st.addEventListener("click", startSession);
+    box.querySelector(".td-method-go").addEventListener("click", function(){ showView("method"); });
   }
   function cardsWord(n){ const d = n % 10, h = n % 100; return (d === 1 && h !== 11) ? "карточка" : (d >= 2 && d <= 4 && (h < 12 || h > 14)) ? "карточки" : "карточек"; }
 
