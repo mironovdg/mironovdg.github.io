@@ -94,6 +94,12 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);f
 .tab-known{color:var(--ok);font-weight:600}
 .tab-known.zero{color:inherit;font-weight:400}
 .view-tab[aria-current="true"] .tab-known:not(.zero){color:var(--ok)}
+.views-total{
+  margin-left:auto;align-self:center;padding:5px 2px 5px 12px;border-left:1px solid var(--line);
+  font-family:var(--mono);font-size:11.5px;color:var(--rain);white-space:nowrap;font-variant-numeric:tabular-nums
+}
+.views-total .vt-label{text-transform:uppercase;letter-spacing:.1em;font-size:10.5px}
+.views-total .vt-pct{color:var(--ink-soft);font-weight:600;margin-left:4px}
 .toc .chapter-tab{font-family:var(--serif);font-size:15px}
 .toc .ch-n{font-family:var(--mono);font-size:11.5px;color:var(--rain);margin-right:7px;font-variant-numeric:tabular-nums}
 /* открытая глава подсвечена, только когда открыт раздел глав */
@@ -337,6 +343,47 @@ summary:hover{background:var(--lamp-soft)}
 .foot p{max-width:none;margin:0 0 8px}
 .foot code{font-family:var(--mono);font-size:13px;color:var(--ink-soft)}
 
+/* ---------- озвучка ---------- */
+.tts-bar{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:6px 14px;margin:10px 0 0;font-family:var(--mono);font-size:11.5px;color:var(--rain)}
+.tts-bar .tts-label{text-transform:uppercase;letter-spacing:.12em;color:var(--sea)}
+.tts-field{display:inline-flex;align-items:center;gap:6px}
+.tts-bar select{font-family:var(--mono);font-size:11.5px;padding:3px 6px;background:var(--field);border:1px solid var(--line);border-radius:var(--radius);color:var(--ink-soft)}
+.tts-test{display:inline-flex;align-items:center;gap:5px;background:none;border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-family:var(--mono);font-size:11.5px;color:var(--sea);cursor:pointer}
+.tts-test:hover{border-color:var(--sea)}
+.tts-warn{color:var(--no)}
+.tts-note{color:var(--rain);font-size:11px;flex-basis:100%;text-align:right}
+.say-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;width:32px;height:32px;margin-left:10px;
+  border:1px solid var(--line);border-radius:999px;background:var(--field);color:var(--sea);cursor:pointer;vertical-align:middle;
+  font-family:var(--sans);font-size:14px;letter-spacing:0;font-weight:400
+}
+.say-btn:hover{border-color:var(--sea);background:var(--sea-soft)}
+.say-btn.big{width:auto;height:auto;padding:14px 22px;margin:4px 0 0}
+.say-btn.big svg{width:22px;height:22px}
+.tr-answer.blank .say-btn{visibility:hidden}
+.tr-ear-word{display:block;font-family:var(--serif);font-weight:600;font-size:24px;color:var(--ink);margin-bottom:4px}
+.tr-answer.blank .tr-ear-word{color:transparent}
+.listen-bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin:0 0 18px}
+.listen-all{display:inline-flex;align-items:center;gap:8px;color:var(--sea)}
+.listen-all.on{background:var(--sea-soft);border-color:var(--sea)}
+.listen-hint{font-size:13px;color:var(--rain)}
+.say-line{background:none;border:0;padding:2px;margin-left:6px;color:var(--rain);cursor:pointer;vertical-align:-2px;opacity:.6}
+.say-line:hover{opacity:1;color:var(--sea)}
+.chapter .script .says,.chapter .script .stage{cursor:pointer;border-radius:var(--radius);transition:background .2s}
+.chapter .script .says:hover{background:var(--surface)}
+.chapter .script .speaking,.chapter .script .speaking:hover{background:var(--sea-soft)}
+td.w{cursor:pointer}
+td.w::after{
+  content:"";display:inline-block;width:11px;height:11px;margin-left:7px;vertical-align:-1px;background:var(--rain);opacity:.45;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M2 6h3l4-3v10l-4-3H2z'/%3E%3Cpath d='M11.4 5.6a3.4 3.4 0 0 1 0 4.8M13.4 3.6a6.2 6.2 0 0 1 0 8.8' fill='none' stroke='black' stroke-width='1.4'/%3E%3C/svg%3E") center/contain no-repeat;
+          mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M2 6h3l4-3v10l-4-3H2z'/%3E%3Cpath d='M11.4 5.6a3.4 3.4 0 0 1 0 4.8M13.4 3.6a6.2 6.2 0 0 1 0 8.8' fill='none' stroke='black' stroke-width='1.4'/%3E%3C/svg%3E") center/contain no-repeat
+}
+td.w:hover::after{background:var(--sea);opacity:1}
+td.w.speaking{color:var(--sea)}
+.tts-off td.w::after,.tts-off .say-line,.tts-off .listen-bar{display:none}
+.tts-off td.w{cursor:auto}
+.tts-off .chapter .script .says,.tts-off .chapter .script .stage{cursor:auto}
+
 @media (max-width:640px){
   body{font-size:16px}
   .script{grid-template-columns:1fr;row-gap:6px}
@@ -397,6 +444,7 @@ summary:hover{background:var(--lamp-soft)}
         <button type="button" class="view-tab" data-view="b2w">B2<span class="tab-n" data-n="b2w"></span></button>
         <button type="button" class="view-tab" data-view="c1w">C1<span class="tab-n" data-n="c1w"></span></button>
         <button type="button" class="view-tab" data-view="c2w">C2<span class="tab-n" data-n="c2w"></span></button>
+        <span class="views-total" data-total="words"></span>
       </div>
     </div>
 
@@ -408,9 +456,11 @@ summary:hover{background:var(--lamp-soft)}
         <button type="button" class="view-tab" data-view="b2">B2<span class="tab-n" data-n="b2"></span></button>
         <button type="button" class="view-tab" data-view="c1">C1<span class="tab-n" data-n="c1"></span></button>
         <button type="button" class="view-tab" data-view="c2">C2<span class="tab-n" data-n="c2"></span></button>
+        <span class="views-total" data-total="phrases"></span>
       </div>
     </div>
   </nav>
+  <div class="tts-bar" id="tts-bar"></div>
   <div class="sync-banner" id="sync-banner" hidden></div>
 
   <div class="view" id="view-chapters">
@@ -1510,6 +1560,238 @@ summary:hover{background:var(--lamp-soft)}
 </div>
 
 <script>
+// ---------- озвучка ----------
+// Встроенный голос браузера (Web Speech API): без внешних сервисов и ключей. Качество зависит
+// от устройства. Кнопки-динамики: у слова на карточке тренажёра и разминки, у слов в таблицах,
+// у реплик диалога; «Прочитать диалог» — вся сцена по ролям. Настройки (британский /
+// американский голос, скорость) — в строке под навигацией, синхронизируются как остальной прогресс.
+(function(){
+  "use strict";
+  const PREF_KEY = "blue-suitcase-tts";
+  const synth = window.speechSynthesis;
+  const supported = !!(synth && window.SpeechSynthesisUtterance);
+  const RATE = { normal: 0.95, slow: 0.72 };
+  const ICON = '<svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true"><path d="M2 6h3l4-3v10l-4-3H2z" fill="currentColor"/>' +
+               '<path d="M11.4 5.6a3.4 3.4 0 0 1 0 4.8M13.4 3.6a6.2 6.2 0 0 1 0 8.8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>';
+  document.documentElement.classList.toggle("tts-off", !supported);
+
+  function readPrefs(){
+    const d = { accent: "gb", speed: "normal" };
+    try { return Object.assign(d, JSON.parse(localStorage.getItem(PREF_KEY) || "{}") || {}); } catch(e){ return d; }
+  }
+  let prefs = readPrefs();
+  function savePrefs(){ try { localStorage.setItem(PREF_KEY, JSON.stringify(prefs)); } catch(e){} }
+
+  // ---- голоса ----
+  let voices = [];
+  const FEMALE = /female|zira|hazel|susan|libby|sonia|maisie|mia\b|samantha|karen|serena|kate|martha|fiona|moira|tessa|victoria|allison|ava\b|jenny|aria|emma|natasha|clara|joanna|kendra|kimberly|salli|amy\b|nicole|olivia|michelle|sara|zoe|jane|elizabeth|bella|eva\b|libby|abbi|hollie|ellie|bella/i;
+  const MALE = /\bmale|david|mark|george|ryan|thomas|daniel|arthur|oliver|guy\b|christopher|eric|alex\b|fred\b|rishi|brian|matthew|joey|justin|russell|james|william|andrew|roger|brandon|jacob|tony|aaron|evan|nathan|tom\b|reed|gordon|alfie|elliot|ethan|noah|ollie/i;
+  function langOf(v){ return String(v.lang || "").replace("_", "-").toLowerCase(); }
+  function quality(v){
+    const n = v.name || ""; let q = 0;
+    if (/natural|neural|online|premium|enhanced/i.test(n)) q += 4;
+    if (/google/i.test(n)) q += 2;
+    if (v.localService === false) q += 1;
+    return q;
+  }
+  function englishVoices(){
+    const want = prefs.accent === "us" ? "en-us" : "en-gb";
+    let list = voices.filter(function(v){ return langOf(v) === want; });
+    if (!list.length) list = voices.filter(function(v){ return langOf(v).indexOf("en") === 0; });
+    return list.slice().sort(function(a, b){ return quality(b) - quality(a); });
+  }
+  function pickVoice(gender){
+    const list = englishVoices();
+    if (!list.length) return null;
+    if (gender === "f"){ const f = list.filter(function(v){ return FEMALE.test(v.name); })[0]; if (f) return f; }
+    if (gender === "m"){ const m = list.filter(function(v){ return MALE.test(v.name) && !FEMALE.test(v.name); })[0]; if (m) return m; }
+    if (gender === "n"){   // рассказчик (ремарки): третий голос, если на устройстве он есть
+      const f = pickVoice("f"), m = pickVoice("m");
+      const other = list.filter(function(v){ return v !== f && v !== m; })[0];
+      if (other) return other;
+    }
+    return list[0];
+  }
+  function loadVoices(){ voices = supported ? synth.getVoices() : []; renderBar(); }
+
+  // кто говорит каким голосом
+  const GENDER = { "kate": "f", "max": "m", "man": "m", "mr bell": "m", "peter bell": "m", "peter": "m",
+                   "mrs doyle": "f", "sam": "m", "anna": "f", "woman": "f" };
+
+  // ---- произнесение ----
+  let seq = 0;                 // номер текущего воспроизведения: старые колбэки его сверяют и замолкают
+  let marked = null, onStop = null;
+  function clean(t){ return String(t || "").replace(/[«»“”]/g, "").replace(/\s+/g, " ").trim(); }
+  function mark(el){
+    unmark();
+    if (!el) return;
+    marked = el; el.classList.add("speaking");
+    const r = el.getBoundingClientRect();
+    if (r.top < 60 || r.bottom > window.innerHeight - 20){
+      const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      el.scrollIntoView({ block: "center", behavior: reduce ? "auto" : "smooth" });
+    }
+  }
+  function unmark(){ if (marked){ marked.classList.remove("speaking"); marked = null; } }
+  function stop(){
+    seq++;
+    if (supported) synth.cancel();
+    unmark();
+    if (onStop){ const f = onStop; onStop = null; f(); }
+  }
+  function utter(text, gender, cb){
+    const u = new SpeechSynthesisUtterance(clean(text));
+    const v = pickVoice(gender);
+    if (v){ u.voice = v; u.lang = v.lang; } else u.lang = prefs.accent === "us" ? "en-US" : "en-GB";
+    u.rate = RATE[prefs.speed] || RATE.normal;
+    // один голос на всех: различаем персонажей высотой тона
+    if ((gender === "f" || gender === "m") && v && pickVoice(gender === "f" ? "m" : "f") === v) u.pitch = gender === "f" ? 1.15 : 0.85;
+    u.onend = function(){ if (cb) cb(true); };
+    u.onerror = function(){ if (cb) cb(false); };
+    synth.speak(u);
+  }
+  // Chrome иногда глотает фразу, если её поставить сразу после cancel() — даём паузу
+  function afterCancel(fn){ setTimeout(fn, 60); }
+
+  function say(text, opt){
+    if (!supported || !clean(text)) return;
+    stop();
+    const my = seq, o = opt || {};
+    afterCancel(function(){
+      if (my !== seq) return;
+      mark(o.el);
+      utter(text, o.gender, function(){ if (my === seq) unmark(); });
+    });
+  }
+  function play(items, done){
+    if (!supported || !items.length) return;
+    stop();
+    const my = seq; let i = 0;
+    onStop = done || null;
+    function next(){
+      if (my !== seq) return;
+      if (i >= items.length){ unmark(); const f = onStop; onStop = null; if (f) f(); return; }
+      const it = items[i++];
+      mark(it.el);
+      utter(it.text, it.gender, function(){ setTimeout(next, it.pause || 250); });
+    }
+    afterCancel(next);
+  }
+
+  // ---- диалоги: кнопка у имени, клик по реплике, «Прочитать диалог» ----
+  function lineText(el){
+    const c = el.cloneNode(true);
+    c.querySelectorAll("em, .say-line").forEach(function(n){ n.remove(); });   // ремарки в скобках не читаем
+    return clean(c.textContent);
+  }
+  function speakerOf(who){
+    const t = who && who.childNodes.length ? who.childNodes[0].textContent : "";
+    return clean(t).toLowerCase();
+  }
+  function dialogueItems(script){
+    const items = []; let speaker = null;
+    Array.prototype.forEach.call(script.children, function(el){
+      if (el.classList.contains("who")) speaker = speakerOf(el);
+      else if (el.classList.contains("says")){ items.push({ el: el, text: lineText(el), gender: GENDER[speaker] }); speaker = null; }
+      else if (el.classList.contains("stage")) items.push({ el: el, text: lineText(el), gender: "n", pause: 400 });
+    });
+    return items.filter(function(x){ return x.text; });
+  }
+  let playingBtn = null;
+  function resetPlayBtn(){
+    if (playingBtn){ playingBtn.classList.remove("on"); playingBtn.querySelector(".lbl").textContent = "Прочитать диалог"; playingBtn = null; }
+  }
+  document.querySelectorAll(".chapter .script").forEach(function(script){
+    script.querySelectorAll(".who").forEach(function(who){
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "say-line"; b.setAttribute("aria-label", "Произнести реплику"); b.innerHTML = ICON;
+      who.appendChild(b);
+    });
+    const bar = document.createElement("div");
+    bar.className = "listen-bar";
+    bar.innerHTML = '<button type="button" class="act ghost listen-all">' + ICON + '<span class="lbl">Прочитать диалог</span></button>' +
+                    '<span class="listen-hint">или нажми на любую реплику</span>';
+    script.parentNode.insertBefore(bar, script);
+  });
+
+  document.addEventListener("click", function(e){
+    if (!supported) return;
+    const t = e.target;
+    const all = t.closest && t.closest(".listen-all");
+    if (all){
+      if (playingBtn === all){ stop(); return; }
+      const script = all.closest(".listen-bar").nextElementSibling;
+      const items = dialogueItems(script);
+      play(items, resetPlayBtn);
+      playingBtn = all; all.classList.add("on"); all.querySelector(".lbl").textContent = "Остановить";
+      return;
+    }
+    const lineBtn = t.closest && t.closest(".say-line");
+    if (lineBtn){
+      const who = lineBtn.closest(".who"), says = who && who.nextElementSibling;
+      if (says) say(lineText(says), { el: says, gender: GENDER[speakerOf(who)] });
+      return;
+    }
+    const line = t.closest && t.closest(".chapter .script .says, .chapter .script .stage");
+    if (line && !(window.getSelection && String(window.getSelection()).trim())){
+      const who = line.previousElementSibling;
+      const gender = line.classList.contains("says") && who && who.classList.contains("who") ? GENDER[speakerOf(who)] : "n";
+      say(lineText(line), { el: line, gender: gender });
+      return;
+    }
+    const btn = t.closest && t.closest("[data-say]");
+    if (btn){ e.preventDefault(); say(btn.getAttribute("data-say")); return; }
+    const cell = t.closest && t.closest("td.w");
+    if (cell && !(t.closest("label, input, a, button"))){ say(cell.textContent, { el: cell }); }
+  });
+  // уходя со страницы или переключая раздел — замолкаем
+  document.addEventListener("visibilitychange", function(){ if (document.hidden) stop(); });
+  document.addEventListener("click", function(e){
+    if (e.target.closest && e.target.closest(".view-tab, .chapter-tab")) stop();
+  }, true);
+
+  // ---- строка настроек под навигацией ----
+  function renderBar(){
+    const bar = document.getElementById("tts-bar");
+    if (!bar) return;
+    if (!supported){
+      bar.innerHTML = '<span class="tts-label">Озвучка</span> недоступна в этом браузере';
+      return;
+    }
+    const v = pickVoice();
+    const none = voices.length && !englishVoices().length;
+    const want = prefs.accent === "us" ? "en-us" : "en-gb";
+    const exact = voices.some(function(x){ return langOf(x) === want; });
+    const fallback = voices.length && !none && !exact;
+    bar.innerHTML =
+      '<span class="tts-label">Озвучка</span>' +
+      '<label class="tts-field">голос <select id="tts-accent">' +
+        '<option value="gb"' + (prefs.accent === "gb" ? " selected" : "") + '>британский</option>' +
+        '<option value="us"' + (prefs.accent === "us" ? " selected" : "") + '>американский</option>' +
+      '</select></label>' +
+      '<label class="tts-field">скорость <select id="tts-speed">' +
+        '<option value="normal"' + (prefs.speed === "normal" ? " selected" : "") + '>обычная</option>' +
+        '<option value="slow"' + (prefs.speed === "slow" ? " selected" : "") + '>медленная</option>' +
+      '</select></label>' +
+      '<button type="button" class="tts-test" data-say="Hello! Welcome to the Anchor Hotel.">' + ICON + '<span>проверить</span></button>' +
+      (none ? '<span class="tts-warn">на устройстве нет английского голоса — добавьте его в настройках системы</span>' : "") +
+      (fallback ? '<span class="tts-note">' + (prefs.accent === "us" ? "американского" : "британского") +
+                  ' голоса на устройстве нет, звучит ' + (v ? v.lang : "другой") + ' — в Edge и на телефоне голосов больше</span>' : "");
+    bar.title = v ? "Голос: " + v.name + " (" + v.lang + ")" : "";
+    bar.querySelector("#tts-accent").addEventListener("change", function(){ prefs.accent = this.value; savePrefs(); renderBar(); });
+    bar.querySelector("#tts-speed").addEventListener("change", function(){ prefs.speed = this.value; savePrefs(); });
+  }
+  if (supported){
+    loadVoices();
+    if (synth.addEventListener) synth.addEventListener("voiceschanged", loadVoices);
+    else synth.onvoiceschanged = loadVoices;
+  } else renderBar();
+
+  window.bsTTS = { supported: supported, say: say, stop: stop, icon: ICON };
+})();
+</script>
+
+<script>
 // ---------- синхронизация прогресса между устройствами ----------
 // Всё, что книга хранит в браузере (ответы, проценты тем, трудные слова, журнал, разминки),
 // сразу уходит в Google Таблицу ученика и подтягивается на другом устройстве при открытии книги
@@ -2587,6 +2869,10 @@ summary:hover{background:var(--lamp-soft)}
       return a;
     }
     function start(cards){ deck = shuffle(cards); pos = 0; failedCards = []; showCard(); }
+    function gateSay(text){
+      if (!(window.bsTTS && window.bsTTS.supported)) return "";
+      return '<button type="button" class="say-btn" data-say="' + esc(text) + '" aria-label="Произнести">' + window.bsTTS.icon + '</button>';
+    }
 
     function showCard(){
       if (pos >= deck.length){ endRound(); return; }
@@ -2598,8 +2884,8 @@ summary:hover{background:var(--lamp-soft)}
           '<div class="tr-progress">круг ' + round + " · " + (pos + 1) + " / " + deck.length + " · " +
             (c.side === "en" ? "английское → русское" : "русское → английское") +
             (c.item.list === "phrases" ? " · оборот" : "") + '</div>' +
-          '<div class="tr-word">' + esc(front) + '</div>' +
-          '<div class="tr-answer blank">' + esc(back) + '</div>' +
+          '<div class="tr-word">' + esc(front) + (c.side === "en" ? gateSay(c.item.w) : "") + '</div>' +
+          '<div class="tr-answer blank">' + esc(back) + (c.side === "ru" ? gateSay(c.item.w) : "") + '</div>' +
           '<div class="tr-buttons">' +
             '<button class="act ghost tr-show" type="button">Показать ответ</button>' +
             '<button class="know" type="button">Знаю</button>' +
@@ -3069,6 +3355,23 @@ summary:hover{background:var(--lamp-soft)}
       const unit = PHRASE_LISTS[list] ? phrasesWord(rows.length) : wordsWord(rows.length);
       el.parentNode.title = "В активном словаре " + k + " из " + rows.length + " " + unit;
     });
+    // итог строки: уникальные слова (обороты) всех разделов, сколько из них в словаре и доля
+    document.querySelectorAll(".views-total[data-total]").forEach(function(el){
+      const phrases = el.dataset.total === "phrases";
+      const lists = phrases ? PHRASE_LIST_NAMES : WORD_LISTS;
+      const known = phrases ? phraseSet : wordSet;
+      const all = Object.create(null);
+      lists.forEach(function(list){ (DATA[list] || []).forEach(function(r){ all[r.w] = 1; }); });
+      const total = Object.keys(all).length;
+      let k = 0;
+      Object.keys(all).forEach(function(w){ if (known[w]) k++; });
+      const share = total ? k / total * 100 : 0;
+      const pct = (share > 0 && share < 10 ? share.toFixed(1).replace(".", ",") : String(Math.round(share))) + "%";
+      el.innerHTML = '<span class="vt-label">итого</span> <b class="tab-known' + (k ? "" : " zero") + '">' + k + "</b>/" + total +
+                     ' <span class="vt-pct">' + pct + "</span>";
+      el.title = "В активном словаре " + k + " из " + total + " " + (phrases ? phrasesWord(total) : wordsWord(total)) +
+                 " (" + pct + "). Каждое слово считается один раз, даже если оно есть в нескольких разделах.";
+    });
   }
 
   function shuffle(a){
@@ -3200,6 +3503,7 @@ summary:hover{background:var(--lamp-soft)}
           '<option value="both">Спрашивать в обе стороны</option>' +
           '<option value="en">Только с английского</option>' +
           '<option value="ru">Только с русского</option>' +
+          (window.bsTTS && window.bsTTS.supported ? '<option value="ear">На слух: слушать → перевод</option>' : '') +
         '</select>' +
         '<select class="tr-size">' +
           '<option value="0" selected>все слова</option><option value="10">10 слов</option>' +
@@ -3406,7 +3710,13 @@ summary:hover{background:var(--lamp-soft)}
     // ---------- сессия карточек ----------
     // Колода состоит из карточек {слово, сторона}. В режиме «в обе стороны»
     // каждое слово даёт две карточки, и знанием считается только пара.
-    const SIDE = { en: "английское → русское", ru: "русское → английское" };
+    const SIDE = { en: "английское → русское", ru: "русское → английское", ear: "на слух → русское" };
+    // кнопка-динамик: произносит английское слово (оборот)
+    function sayBtn(text, big){
+      if (!(window.bsTTS && window.bsTTS.supported)) return "";
+      return '<button type="button" class="say-btn' + (big ? " big" : "") + '" data-say="' + esc(text) + '" aria-label="Произнести">' +
+             window.bsTTS.icon + (big ? "<span>Послушать ещё раз</span>" : "") + '</button>';
+    }
     let deck = [], pos = 0, answers = {};
 
     function makeDeck(pool, size, mode){
@@ -3414,6 +3724,7 @@ summary:hover{background:var(--lamp-soft)}
       const cards = [];
       chosen.forEach(function(x){
         if (mode === "both"){ cards.push({item:x, side:"en"}); cards.push({item:x, side:"ru"}); }
+        else if (mode === "ear"){ cards.push({item:x, side:"en", ear:true}); }   // на слух засчитывается как «с английского»
         else { cards.push({item:x, side:mode}); }
       });
       const mixed = shuffle(cards);
@@ -3455,11 +3766,17 @@ summary:hover{background:var(--lamp-soft)}
       const card = deck[pos], item = card.item;
       const front = card.side === "en" ? item.w : item.t;
       const back  = card.side === "en" ? item.t : item.w;
+      const frontHtml = card.ear
+        ? '<div class="tr-word tr-ear">' + sayBtn(item.w, true) + '</div>'
+        : '<div class="tr-word">' + esc(front) + (card.side === "en" ? sayBtn(item.w) : "") + '</div>';
+      const backHtml = card.ear
+        ? '<span class="tr-ear-word">' + esc(item.w) + '</span>' + esc(item.t)
+        : esc(back) + (card.side === "ru" ? sayBtn(item.w) : "");
       session.innerHTML =
         '<div class="tr-card">' +
-          '<div class="tr-progress">' + (pos + 1) + " / " + deck.length + " · " + SIDE[card.side] + '</div>' +
-          '<div class="tr-word">' + esc(front) + '</div>' +
-          '<div class="tr-answer blank">' + esc(back) +
+          '<div class="tr-progress">' + (pos + 1) + " / " + deck.length + " · " + SIDE[card.ear ? "ear" : card.side] + '</div>' +
+          frontHtml +
+          '<div class="tr-answer blank">' + backHtml +
             (item.n ? '<span class="tr-note">' + esc(item.n) + '</span>' : "") +
           '</div>' +
           '<div class="tr-buttons">' +
@@ -3474,6 +3791,7 @@ summary:hover{background:var(--lamp-soft)}
       });
       session.querySelector(".know").addEventListener("click", function(){ answerCard(true); });
       session.querySelector(".dont").addEventListener("click", function(){ answerCard(false); });
+      if (card.ear && window.bsTTS) window.bsTTS.say(item.w);   // на слух — слово звучит само
     }
 
     // ---------- итог сессии ----------
@@ -3593,7 +3911,7 @@ summary:hover{background:var(--lamp-soft)}
         failed.forEach(function(f){
           const item = words.filter(function(x){ return x.w === f.w; })[0];
           if (!item) return;
-          f.sides.forEach(function(s){ cards.push({item:item, side:s}); });
+          f.sides.forEach(function(s){ cards.push({item:item, side:s, ear: selDir.value === "ear" && s === "en"}); });
         });
         deck = shuffle(cards); pos = 0; answers = {}; isRetry = true;
         renderCard();
