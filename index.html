@@ -82,14 +82,18 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);f
 .views-items,.toc{display:flex;flex-wrap:wrap;gap:4px 2px;margin:0;padding:0;list-style:none;align-items:baseline}
 .view-tab,.toc .chapter-tab{
   background:none;border:0;border-radius:999px;color:var(--ink-soft);cursor:pointer;
-  font-family:var(--sans);font-size:14px;line-height:1.3;padding:5px 11px
+  font-family:var(--sans);font-size:14px;line-height:1.3;padding:5px 9px
 }
 .view-tab:hover,.toc .chapter-tab:hover{background:var(--surface);color:var(--ink)}
-.tab-n{margin-left:6px;font-family:var(--mono);font-size:11px;color:var(--rain)}
+.tab-n{margin-left:5px;font-family:var(--mono);font-size:11px;color:var(--rain)}
 .tab-n:empty{display:none}
 .views-group-word .view-tab[aria-current="true"]{background:var(--lamp-soft);color:var(--lamp)}
 .views-group-phrase .view-tab[aria-current="true"]{background:var(--sea-soft);color:var(--sea)}
-.view-tab[aria-current="true"] .tab-n{color:inherit;opacity:.7}
+.view-tab[aria-current="true"] .tab-n{color:inherit;opacity:.75}
+/* дробь «в активном словаре / всего»: известная часть — зелёная, ноль — приглушённый */
+.tab-known{color:var(--ok);font-weight:600}
+.tab-known.zero{color:inherit;font-weight:400}
+.view-tab[aria-current="true"] .tab-known:not(.zero){color:var(--ok)}
 .toc .chapter-tab{font-family:var(--serif);font-size:15px}
 .toc .ch-n{font-family:var(--mono);font-size:11.5px;color:var(--rain);margin-right:7px;font-variant-numeric:tabular-nums}
 /* открытая глава подсвечена, только когда открыт раздел глав */
@@ -3049,11 +3053,23 @@ summary:hover{background:var(--lamp-soft)}
                        b1w: "Лексика B1", b2w: "Лексика B2", c1w: "Лексика C1", c2w: "Лексика C2",
                        b1: "Обороты B1", b2: "Обороты B2", c1: "Обороты C1", c2: "Обороты C2" };
 
-  // число слов (оборотов) в каждом разделе — в меню
-  document.querySelectorAll(".tab-n[data-n]").forEach(function(el){
-    const rows = DATA[el.dataset.n];
-    if (rows && rows.length) el.textContent = rows.length;
-  });
+  // в меню у каждого раздела: сколько его слов (оборотов) уже в активном словаре / сколько всего.
+  // «Активный словарь» — тот же подтверждённый запас, что в шапке (known в трекере, вспомнил в
+  // тренажёре в обе стороны, написал верно — и не лежит в трудных); слово засчитывается разделу,
+  // в каком бы списке его ни подтвердили.
+  function renderTabCounts(wordSet, phraseSet){
+    document.querySelectorAll(".tab-n[data-n]").forEach(function(el){
+      const list = el.dataset.n;
+      const rows = DATA[list] || [];
+      if (!rows.length){ el.textContent = ""; return; }
+      const known = PHRASE_LISTS[list] ? phraseSet : wordSet;
+      let k = 0;
+      rows.forEach(function(r){ if (known[r.w]) k++; });
+      el.innerHTML = '<b class="tab-known' + (k ? "" : " zero") + '">' + k + "</b>/" + rows.length;
+      const unit = PHRASE_LISTS[list] ? phrasesWord(rows.length) : wordsWord(rows.length);
+      el.parentNode.title = "В активном словаре " + k + " из " + rows.length + " " + unit;
+    });
+  }
 
   function shuffle(a){
     const r = a.slice();
@@ -3110,7 +3126,7 @@ summary:hover{background:var(--lamp-soft)}
     });
     const src = { test:0, two:0, spell:0, removed:removed };
     Object.keys(set).forEach(function(w){ src[set[w]]++; });
-    return { total: Object.keys(set).length, src: src };
+    return { total: Object.keys(set).length, src: src, set: set };
   }
   // обороты считаются отдельно от слов, по тем же правилам: known в трекере
   // или вспомнил в тренажёре в обе стороны с первой попытки — и сейчас не в трудных
@@ -3126,13 +3142,14 @@ summary:hover{background:var(--lamp-soft)}
     });
     let all = 0;
     PHRASE_LIST_NAMES.forEach(function(list){ all += (DATA[list] || []).length; });
-    return { total: Object.keys(set).length, all: all };
+    return { total: Object.keys(set).length, all: all, set: set };
   }
   function renderVocabCount(){
-    const el = document.getElementById("vocab-count");
-    if (!el) return;
     const r = confirmedVocab();
     const ph = confirmedPhrases();
+    renderTabCounts(r.set, ph.set);
+    const el = document.getElementById("vocab-count");
+    if (!el) return;
     el.innerHTML = '<span class="vc-label">Словарь</span>' +
       '<span class="vc-num vc-words"><b>' + r.total + "</b> " + wordsWord(r.total) + "</span>" +
       '<span class="vc-num vc-phrases"><b>' + ph.total + "</b> " + phrasesWord(ph.total) + "</span>";
