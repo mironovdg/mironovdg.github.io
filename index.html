@@ -449,6 +449,41 @@ button.role-all{border-style:dashed}
 .rp-btns button.act{padding:8px 14px;font-size:14px}
 body.rp-open .page{padding-bottom:230px}
 
+/* ---------- трудные звуки ---------- */
+.snd-group{font-family:var(--serif);font-size:20px;font-weight:600;margin:30px 0 4px}
+.snd-group-note{font-size:14px;color:var(--rain);margin:0 0 14px}
+.snd-sets{display:grid;grid-template-columns:repeat(auto-fill,minmax(13.5rem,1fr));gap:12px}
+.snd-set{border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);padding:14px 16px;display:flex;flex-direction:column;gap:4px}
+.snd-set p{margin:0;max-width:none}
+.snd-ipa{font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--lamp)}
+.snd-title{font-family:var(--serif);font-size:19px;color:var(--ink)}
+.snd-pairs{font-size:13px;color:var(--rain);flex:1}
+.snd-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px}
+.snd-foot button.act{padding:7px 14px;font-size:14px}
+.snd-last{font-family:var(--mono);font-size:12px;color:var(--ok)}
+.snd-warn{color:var(--no);font-size:14px;margin-top:16px}
+.snd-card{text-align:center}
+.snd-say{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--rain);margin:10px auto 6px;max-width:none}
+.snd-words{display:flex;justify-content:center;align-items:baseline;flex-wrap:wrap;gap:6px 18px;margin:0 0 16px}
+.snd-words small{display:block;font-family:var(--sans);font-size:13px;font-weight:400;color:var(--rain);margin-top:2px}
+.snd-target{font-family:var(--serif);font-size:34px;font-weight:600;color:var(--ink)}
+.snd-vs{font-size:13px;color:var(--rain)}
+.snd-other{font-family:var(--serif);font-size:22px;color:var(--rain)}
+.snd-btns{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.snd-btns button{display:inline-flex;align-items:center;gap:7px}
+.snd-btns button.on{background:var(--no)}
+.snd-live{font-family:var(--serif);font-style:italic;color:var(--ink-soft);min-height:1.4em;margin:12px auto 0;max-width:none}
+.snd-res{min-height:1.4em;margin:4px auto 0;max-width:none}
+.snd-res.ok{color:var(--ok)}
+.snd-res.no{color:var(--no)}
+.snd-res.warn{color:var(--lamp)}
+.snd-tip{font-size:14px;color:var(--ink-soft);background:var(--paper);border-radius:var(--radius);padding:10px 12px;margin:14px auto 0;max-width:30rem;text-align:left}
+.snd-after{display:flex;justify-content:center;gap:8px;margin-top:12px}
+.snd-quit{display:block;margin:16px auto 0;font-size:13px}
+.snd-sum{font-size:18px;margin:12px auto 6px;max-width:none}
+.snd-note{font-size:13px;color:var(--rain);margin:12px auto;max-width:none}
+.snd-done .snd-btns{margin-top:6px}
+
 /* ---------- как учиться ---------- */
 .method h3{font-family:var(--serif);font-size:20px;font-weight:600;margin:34px 0 10px}
 .method-route{margin:0;padding-left:1.4em;display:grid;gap:10px;max-width:var(--measure)}
@@ -551,6 +586,7 @@ td.w.speaking{color:var(--sea)}
       <span class="views-label">Сегодня</span>
       <div class="views-items">
         <button type="button" class="view-tab today-tab" data-view="today">Повторение<span class="today-n" id="today-n"></span></button>
+        <button type="button" class="view-tab" data-view="sounds">Звуки</button>
         <button type="button" class="view-tab" data-view="method">Как учиться</button>
       </div>
     </div>
@@ -601,6 +637,17 @@ td.w.speaking{color:var(--sea)}
     <section style="margin-top:34px">
       <p class="sec-label">Повторение на сегодня</p>
       <div class="today" id="today"></div>
+    </section>
+  </div>
+
+  <!-- ================= ТРУДНЫЕ ЗВУКИ ================= -->
+  <div class="view" id="view-sounds" hidden>
+    <section style="margin-top:34px">
+      <p class="sec-label">Трудные звуки</p>
+      <h2>Два слова — один звук разницы</h2>
+      <p>В каждой паре слова различаются одним звуком: <span class="cue">think — sink</span>, <span class="cue">sheep — ship</span>. Послушай пару, потом скажи слово, которое просит книга, — она распознаёт, какое из двух у тебя прозвучало. Образец — британский английский.</p>
+      <p>Первая группа — звуки, которые у русскоговорящих чаще всего выходят не так и мешают тебя понять. Вторая — британские гласные: то, чем оксфордское произношение отличается от американского. Хватает одного набора в день, 3–4 минуты. Итог приходит мне, и трудные звуки я вплету в следующие главы.</p>
+      <div class="sounds" id="sounds"></div>
     </section>
   </div>
 
@@ -666,6 +713,8 @@ td.w.speaking{color:var(--sea)}
 
       <h3>Произношение: по ролям</h3>
       <p>Над диалогом главы — строка «По ролям». Выбери героя: его реплики читаешь вслух ты, остальные читает книга; в конце прогона кнопка «Поменяться ролями» сразу запускает второй прогон за другого героя. «Все реплики» — весь диалог читаешь ты, книга только проверяет. Твою реплику книга распознаёт и сверяет с текстом: узнанные слова становятся зелёными, неузнанные — красными; мелкие служебные слова (a, the, to) отмечаются пунктиром и чистоте не мешают, имена в счёт не идут. Если всё узнано — книга сама идёт дальше. Если нет — послушай «Образец», запиши себя («Записать себя», потом «Я») и скажи ещё раз. В конце — сколько реплик вышло чисто с первого раза и какие слова не узнавались; итог приходит мне, и эти слова я вплету в следующие главы.</p>
+      <h3>Произношение: трудные звуки</h3>
+      <p>Раздел «Звуки» в первой строке меню — пары слов, которые различаются одним звуком (<span class="cue">think — sink</span>, <span class="cue">sheep — ship</span>, <span class="cue">coat — caught</span>). Книга просит сказать одно слово пары и распознаёт, какое прозвучало; под карточкой — как ставить язык и губы. Образец — британский английский: первая группа — ошибки, типичные для русскоговорящих, вторая — британские гласные. Одного набора в день достаточно.</p>
       <p>Распознавание проверяет, понятно ли тебя, а не каждый звук отдельно, — поэтому красное слово значит «так не поймут», а зелёное ещё не гарантирует идеального звука. Лучше всего работает в тихой комнате, телефон — сантиметрах в 20–30.</p>
 
       <h3>Почему так</h3>
@@ -1810,6 +1859,21 @@ td.w.speaking{color:var(--sea)}
   }
   let prefs = readPrefs();
   function savePrefs(){ try { localStorage.setItem(PREF_KEY, JSON.stringify(prefs)); } catch(e){} }
+  // Образец произношения — британский (решение ученика, 23.09.2026): один раз ставим британский голос
+  // на всех устройствах; отметка синхронизируется, и выбор в списке потом остаётся за учеником.
+  const ACCENT_KEY = "blue-suitcase-accent-choice";
+  function accentChoice(){
+    let done = null;
+    try { done = localStorage.getItem(ACCENT_KEY); } catch(e){ return; }
+    prefs = readPrefs();                  // настройка могла прийти с другого устройства
+    if (!done){
+      prefs.accent = "gb"; savePrefs();
+      try { localStorage.setItem(ACCENT_KEY, "gb 2026-09-23"); } catch(e){}
+    }
+    if (typeof renderBar === "function" && voices.length) renderBar();
+  }
+  document.addEventListener("bs:sync-ready", accentChoice);
+  setTimeout(function(){ if (window.__bsSyncReady !== true) accentChoice(); }, 12000);
 
   // ---- голоса ----
   let voices = [];
@@ -2016,11 +2080,14 @@ td.w.speaking{color:var(--sea)}
       MIC_BTN +
       (none ? '<span class="tts-warn">на устройстве нет английского голоса — добавьте его в настройках системы</span>' : "") +
       (fallback ? '<span class="tts-note">' + (prefs.accent === "us" ? "американского" : "британского") +
-                  ' голоса на устройстве нет, звучит ' + (v ? v.lang : "другой") + ' — в Edge и на телефоне голосов больше</span>' : "");
+                  ' голоса на устройстве нет, звучит ' + (v ? v.lang : "другой") +
+                  (/Windows/.test(navigator.userAgent) && !/Edg\//.test(navigator.userAgent)
+                    ? ' — на компьютере британские голоса есть в браузере Edge' : ' — в Edge и на телефоне голосов больше') + '</span>' : "");
     bar.title = v ? "Голос: " + v.name + " (" + v.lang + ")" : "";
     bar.querySelector("#tts-accent").addEventListener("change", function(){ prefs.accent = this.value; savePrefs(); renderBar(); });
     bar.querySelector("#tts-speed").addEventListener("change", function(){ prefs.speed = this.value; savePrefs(); });
   }
+  if (window.__bsSyncReady === true || !(function(){ try { return localStorage.getItem("bs-sync-key"); } catch(e){ return null; } })()) accentChoice();
   if (supported){
     loadVoices();
     if (synth.addEventListener) synth.addEventListener("voiceschanged", loadVoices);
@@ -2543,6 +2610,7 @@ td.w.speaking{color:var(--sea)}
    "sight site", "sole soul", "tied tide", "toe tow", "waist waste", "war wore"
   ].forEach(function(g){ const w = g.split(" "); w.forEach(function(x){ HOMO[x] = w[0]; }); });
   function hkey(t){ return HOMO[t] || t; }
+  window.bsPron = { tokens: tokens, hkey: hkey };
   // какие слова образца есть в услышанном, по порядку (наибольшая общая подпоследовательность)
   function align(target, heard){
     const n = target.length, m = heard.length;
@@ -2947,6 +3015,250 @@ td.w.speaking{color:var(--sea)}
     if (e.target.closest(".view-tab, .chapter-tab, .listen-all")) finish(true);
   }, true);
   document.addEventListener("visibilitychange", function(){ if (document.hidden && S) finish(true); });
+})();
+</script>
+
+<script>
+// ---------- трудные звуки ----------
+// Третий шаг произношения (решение ученика, 23.09.2026; образец — британский): пары слов, которые
+// различаются одним звуком (think — sink, sheep — ship). Ученик говорит слово, распознавание
+// решает, какое из двух прозвучало. Первая группа — ошибки русскоговорящих, вторая — британские
+// гласные. Итог набора — отчёт kind: "pron", source: "sounds"; результаты — blue-suitcase-sounds.
+(function(){
+  "use strict";
+  const TTS = window.bsTTS, MIC = window.bsMic, P = window.bsPron;
+  const box = document.getElementById("sounds");
+  if (!TTS || !MIC || !P || !box) return;
+  const KEY = "blue-suitcase-sounds";
+  // пары: [трудное слово, перевод, слово для сравнения, перевод]; both — говорить оба слова пары
+  const SETS = [
+    { id: "th", group: "ru", ipa: "[θ] — [s]", both: false,
+      tip: "Кончик языка слегка между зубами, выдох без голоса — как будто остужаешь суп. Не «с» и не «ф».",
+      pairs: [["think", "думать", "sink", "тонуть"], ["thick", "толстый", "sick", "больной"], ["mouth", "рот", "mouse", "мышь"],
+              ["thumb", "большой палец", "sum", "сумма"], ["path", "тропинка", "pass", "проходить"], ["worth", "стоящий", "worse", "хуже"],
+              ["faith", "вера", "face", "лицо"], ["three", "три", "free", "свободный"]] },
+    { id: "dh", group: "ru", ipa: "[ð] — [d]", both: false,
+      tip: "Язык так же между зубами, но с голосом — звук «жужжит». Не «д» и не «з».",
+      pairs: [["they", "они", "day", "день"], ["then", "тогда", "den", "логово"], ["those", "те", "doze", "дремать"],
+              ["breathe", "дышать", "breeze", "бриз"], ["though", "хотя", "dough", "тесто"], ["there", "там", "dare", "сметь"]] },
+    { id: "w", group: "ru", ipa: "[w] — [v]", both: true,
+      tip: "w — губы вытянуты трубочкой и сразу раскрываются, зубы губ не касаются. v — верхние зубы касаются нижней губы.",
+      pairs: [["west", "запад", "vest", "майка"], ["wine", "вино", "vine", "лоза"], ["wet", "мокрый", "vet", "ветеринар"],
+              ["while", "пока", "vile", "мерзкий"], ["worse", "хуже", "verse", "стих"], ["wheel", "колесо", "veal", "телятина"]] },
+    { id: "ii", group: "ru", ipa: "[iː] — [ɪ]", both: true,
+      tip: "sheep — долгий напряжённый «и», губы в улыбке. ship — короткий расслабленный звук, ближе к «ы».",
+      pairs: [["sheep", "овца", "ship", "корабль"], ["leave", "уходить", "live", "жить"], ["seat", "сиденье", "sit", "сидеть"],
+              ["feel", "чувствовать", "fill", "наполнять"], ["heat", "жара", "hit", "ударять"], ["sleep", "спать", "slip", "поскользнуться"],
+              ["green", "зелёный", "grin", "ухмылка"]] },
+    { id: "ae", group: "ru", ipa: "[æ] — [e]", both: true,
+      tip: "bad — рот широко открыт, звук открытый, почти «а». bed — как русское «э» в слове «это».",
+      pairs: [["bad", "плохой", "bed", "кровать"], ["man", "мужчина", "men", "мужчины"], ["sad", "грустный", "said", "сказал"],
+              ["pan", "сковорода", "pen", "ручка"], ["bag", "сумка", "beg", "умолять"], ["had", "имел", "head", "голова"], ["sat", "сидел", "set", "набор"]] },
+    { id: "uu", group: "ru", ipa: "[uː] — [ʊ]", both: true,
+      tip: "fool — долгий «у», губы вытянуты вперёд. full — короткий, губы почти не вытянуты.",
+      pairs: [["fool", "дурак", "full", "полный"], ["pool", "бассейн", "pull", "тянуть"], ["Luke", "Люк (имя)", "look", "смотреть"],
+              ["suit", "костюм", "soot", "сажа"]] },
+    { id: "voiced", group: "ru", ipa: "звонкий конец", both: false,
+      tip: "По-русски конец слова оглушается («зуб» звучит как «зуп»), в английском — нет. Звонкий согласный на конце, и гласная перед ним длиннее: bag — «бэ-эг», back — коротко.",
+      pairs: [["bag", "сумка", "back", "назад"], ["eyes", "глаза", "ice", "лёд"], ["dog", "собака", "dock", "причал"],
+              ["prize", "приз", "price", "цена"], ["bed", "кровать", "bet", "пари"], ["leave", "уходить", "leaf", "лист"],
+              ["cab", "такси", "cap", "кепка"], ["rise", "подниматься", "rice", "рис"]] },
+    { id: "h", group: "ru", ipa: "[h]", both: false,
+      tip: "h — лёгкий выдох, как будто дышишь на стекло, без хрипа русского «х».",
+      pairs: [["hat", "шляпа", "at", "в, у"], ["heat", "жара", "eat", "есть"], ["hear", "слышать", "ear", "ухо"],
+              ["hold", "держать", "old", "старый"], ["hair", "волосы", "air", "воздух"], ["heart", "сердце", "art", "искусство"]] },
+    { id: "ng", group: "ru", ipa: "[ŋ] — [n]", both: false,
+      tip: "ŋ — задняя часть языка прижата к нёбу, воздух идёт через нос, «г» в конце не произносится: sing — не «синг».",
+      pairs: [["sing", "петь", "sin", "грех"], ["thing", "вещь", "thin", "тонкий"], ["wing", "крыло", "win", "выигрывать"],
+              ["rang", "звонил", "ran", "бежал"], ["sung", "спетый", "sun", "солнце"], ["bang", "хлопок", "ban", "запрет"]] },
+    { id: "goat", group: "gb", ipa: "[əʊ] — [ɔː]", both: true,
+      tip: "coat — британский [əʊ]: начинается с короткого нейтрального «э» и скользит к «у», это не русское «о». caught — долгий «о», губы округлены.",
+      pairs: [["coat", "пальто", "caught", "поймал"], ["low", "низкий", "law", "закон"], ["so", "так", "saw", "видел"],
+              ["boat", "лодка", "bought", "купил"], ["woke", "проснулся", "walk", "гулять"], ["cold", "холодный", "called", "позвал"]] },
+    { id: "bath", group: "gb", ipa: "[ɑː] — [æ]", both: true,
+      tip: "cart, heart — долгий глубокий «а», r после гласной в британском не звучит. cat, hat — короткий открытый [æ].",
+      pairs: [["cart", "тележка", "cat", "кошка"], ["heart", "сердце", "hat", "шляпа"], ["part", "часть", "pat", "похлопать"],
+              ["bark", "лаять", "back", "назад"], ["march", "марш", "match", "матч"]] },
+    { id: "lot", group: "gb", ipa: "[ɒ] — [ʌ]", both: true,
+      tip: "hot, not — британский короткий «о», губы округлены. cut, luck — короткий «а», губы не округлять.",
+      pairs: [["cot", "детская кроватка", "cut", "резать"], ["not", "не", "nut", "орех"], ["shot", "выстрел", "shut", "закрывать"],
+              ["lock", "замок", "luck", "удача"], ["dog", "собака", "dug", "выкопал"], ["boss", "начальник", "bus", "автобус"]] },
+    { id: "nurse", group: "gb", ipa: "[ɜː] — [ɔː]", both: true,
+      tip: "work — рот приоткрыт, губы не округлять, средний звук, похожий на «ё» в «мёд». walk — губы округлены, долгий «о». r после гласной в британском не звучит.",
+      pairs: [["work", "работа", "walk", "гулять"], ["word", "слово", "ward", "палата"], ["shirt", "рубашка", "short", "короткий"],
+              ["burn", "гореть", "born", "рождённый"], ["firm", "твёрдый", "form", "форма"], ["bird", "птица", "board", "доска"]] }
+  ];
+  const GROUPS = [["ru", "Главное для русскоговорящих", "Эти звуки сильнее всего мешают тебя понять — начинай с них."],
+                  ["gb", "Британский акцент", "Гласные, которыми британская речь отличается от американской и от русской."]];
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function today(){ const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  function shuffle(a){ a = a.slice(); for (let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); const t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  function readStats(){ try { return JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch(e){ return {}; } }
+  function key(w){ const t = P.tokens(w); return t.length ? P.hkey(t[0]) : ""; }
+  function title(set){ return set.pairs[0][0] + " — " + set.pairs[0][2]; }
+
+  // ---- список наборов ----
+  function renderList(){
+    const st = readStats();
+    box.innerHTML = GROUPS.map(function(g){
+      return '<h3 class="snd-group">' + g[1] + '</h3><p class="snd-group-note">' + g[2] + '</p><div class="snd-sets">' +
+        SETS.filter(function(s){ return s.group === g[0]; }).map(function(s){
+          const r = st[s.id];
+          return '<div class="snd-set">' +
+            '<p class="snd-ipa">' + esc(s.ipa) + '</p>' +
+            '<p class="snd-title">' + esc(title(s)) + '</p>' +
+            '<p class="snd-pairs">' + s.pairs.slice(1, 4).map(function(p){ return esc(p[0] + " — " + p[2]); }).join(" · ") + '</p>' +
+            '<div class="snd-foot"><button type="button" class="act snd-start" data-set="' + s.id + '">Начать</button>' +
+            (r ? '<span class="snd-last">' + r.ok + '/' + r.n + ' · ' + esc(r.d.slice(8, 10) + "." + r.d.slice(5, 7)) + '</span>' : "") + '</div>' +
+          '</div>';
+        }).join("") + '</div>';
+    }).join("") +
+    (MIC.available() ? "" : '<p class="snd-warn">Этот браузер не распознаёт речь — слушать пары можно, но проверки не будет. Открой книгу в Chrome, Яндекс Браузере или Safari.</p>');
+  }
+
+  // ---- сеанс ----
+  let S = null;
+  function start(set, only){
+    let cards = [];
+    set.pairs.forEach(function(p){
+      if (!only || only.indexOf(p[0]) !== -1) cards.push({ say: p[0], ru: p[1], other: p[2], oru: p[3] });
+      if (set.both && (!only || only.indexOf(p[2]) !== -1)) cards.push({ say: p[2], ru: p[3], other: p[0], oru: p[1] });
+    });
+    S = { set: set, only: !!only, cards: shuffle(cards), i: 0, ok: 0, first: {}, confused: [], missed: [], token: 0, auto: 0 };
+    renderCard();
+    box.scrollIntoView({ block: "start", behavior: "auto" });
+  }
+  function card(){ return S && S.cards ? S.cards[S.i] : null; }
+  function renderCard(){
+    const c = card();
+    if (!c){ finish(); return; }
+    const can = MIC.available();
+    box.innerHTML =
+      '<div class="tr-card snd-card">' +
+        '<div class="tr-progress">' + (S.i + 1) + ' / ' + S.cards.length + ' · ' + esc(S.set.ipa) + '</div>' +
+        '<p class="snd-say">Скажи</p>' +
+        '<div class="snd-words"><span class="snd-target">' + esc(c.say) + '<small>' + esc(c.ru) + '</small></span>' +
+          '<span class="snd-vs">а не</span><span class="snd-other">' + esc(c.other) + '<small>' + esc(c.oru) + '</small></span></div>' +
+        '<div class="snd-btns">' +
+          (TTS.supported ? '<button type="button" class="act ghost snd-hear">' + TTS.icon + '<span>Послушать</span></button>' +
+                           '<button type="button" class="act ghost snd-pair">' + TTS.icon + '<span>Пару</span></button>' : "") +
+          '<button type="button" class="act snd-speak"' + (can ? "" : " disabled") + '>' + TTS.micIcon + '<span>Сказать</span></button>' +
+        '</div>' +
+        '<p class="snd-live" aria-live="polite"></p>' +
+        '<p class="snd-res" aria-live="polite"></p>' +
+        '<p class="snd-tip">' + esc(S.set.tip) + '</p>' +
+        '<div class="snd-after" hidden><button type="button" class="act ghost snd-again">Ещё раз</button><button type="button" class="act snd-next">Дальше</button></div>' +
+        '<button type="button" class="linkish snd-quit">Закончить</button>' +
+      '</div>';
+  }
+  function setRes(text, cls){ const el = box.querySelector(".snd-res"); if (el){ el.textContent = text; el.className = "snd-res" + (cls ? " " + cls : ""); } }
+  function speak(){
+    const c = card();
+    if (!c) return;
+    clearTimeout(S.auto);
+    TTS.stop();
+    const my = ++S.token;
+    const btn = box.querySelector(".snd-speak"), live = box.querySelector(".snd-live");
+    btn.classList.add("on"); btn.querySelector("span").textContent = "Слушаю…";
+    live.textContent = ""; setRes("", "");
+    box.querySelector(".snd-after").hidden = true;
+    MIC.recognize(MIC.lang(), function(t){ if (S && S.token === my) live.textContent = "«" + t + "»"; }, { maxMs: 5000 })
+      .then(function(out){ if (S && S.token === my) judge(c, out.alts); })
+      .catch(function(err){
+        if (!S || S.token !== my) return;
+        btn.classList.remove("on"); btn.querySelector("span").textContent = "Сказать";
+        const code = (err && err.code) || "unknown";
+        setRes(code === "no-speech" ? "Не услышал. Нажми «Сказать» и произнеси слово сразу." : MIC.errorText(code), code === "no-speech" ? "warn" : "no");
+      });
+  }
+  function judge(c, alts){
+    const btn = box.querySelector(".snd-speak"), live = box.querySelector(".snd-live");
+    btn.classList.remove("on"); btn.querySelector("span").textContent = "Сказать ещё раз";
+    const want = key(c.say), other = key(c.other);
+    const top = P.tokens(alts[0].t).map(P.hkey);
+    const inAny = alts.some(function(a){ return P.tokens(a.t).map(P.hkey).indexOf(want) !== -1; });
+    live.textContent = "Услышал: «" + alts[0].t + "»";
+    let verdict;
+    if (top.indexOf(want) !== -1) verdict = "ok";
+    else if (top.indexOf(other) !== -1) verdict = "confused";
+    else if (inAny) verdict = "almost";
+    else verdict = "unclear";
+    const firstTry = !(c.say in S.first);
+    if (firstTry){
+      S.first[c.say] = verdict === "ok";
+      if (verdict === "ok") S.ok++;
+      else {
+        S.missed.push(c.say);
+        if (verdict === "confused") S.confused.push(c.say + " → " + c.other);
+      }
+    }
+    if (verdict === "ok"){
+      setRes("✓ Прозвучало «" + c.say + "»", "ok");
+      const my = S.token;
+      S.auto = setTimeout(function(){ if (S && S.token === my) nextCard(); }, 900);
+      return;
+    }
+    setRes(verdict === "confused" ? "Прозвучало «" + c.other + "» вместо «" + c.say + "». Послушай пару и скажи ещё раз."
+         : verdict === "almost" ? "Почти: книга сомневалась, «" + c.say + "» это или нет. Скажи чётче."
+         : "Не похоже ни на «" + c.say + "», ни на «" + c.other + "». Скажи ещё раз.", verdict === "almost" ? "warn" : "no");
+    box.querySelector(".snd-after").hidden = false;
+  }
+  function nextCard(){ clearTimeout(S.auto); S.token++; S.i++; renderCard(); }
+  function finish(){
+    const set = S.set, n = S.cards.length;
+    const st = readStats();
+    const prev = st[set.id];
+    if (!S.only){      // счёт набора — только по полному прогону, повтор ошибок его не переписывает
+      st[set.id] = { d: today(), ok: S.ok, n: n, best: Math.max(S.ok / n, prev && prev.best || 0) };
+      try { localStorage.setItem(KEY, JSON.stringify(st)); } catch(e){}
+    }
+    const conf = {};
+    S.confused.forEach(function(x){ conf[x] = (conf[x] || 0) + 1; });
+    const confList = Object.keys(conf).map(function(x){ return x + (conf[x] > 1 ? " ×" + conf[x] : ""); });
+    MIC.send({ sentAt: new Date().toISOString(), kind: "pron", source: "sounds", set: set.id, title: set.ipa + " " + title(set), lang: MIC.lang(),
+               ok: S.ok, n: n, redo: S.only, missed: S.missed, confused: S.confused,
+               text: "Произношение · звуки " + set.ipa + " (" + title(set) + (S.only ? ", повтор ошибок" : "") + "): с первого раза " + S.ok + " из " + n +
+                     (confList.length ? "; путалось: " + confList.join(", ") : "") +
+                     (S.missed.length > S.confused.length ? "; неясно: " + S.missed.filter(function(w){ return !S.confused.some(function(x){ return x.indexOf(w + " →") === 0; }); }).join(", ") : "") });
+    const missed = S.missed.slice();
+    box.innerHTML =
+      '<div class="tr-card snd-card snd-done">' +
+        '<div class="tr-progress">' + esc(set.ipa) + ' · ' + esc(title(set)) + '</div>' +
+        '<p class="snd-sum">С первого раза: <b>' + S.ok + ' из ' + n + '</b></p>' +
+        (confList.length ? '<p class="snd-res no">Путалось: ' + esc(confList.join(", ")) + '</p>' : "") +
+        (missed.length ? '<p class="snd-tip">' + esc(set.tip) + '</p>' : '<p class="snd-res ok">Все слова прозвучали как надо.</p>') +
+        '<p class="snd-note">Итог уйдёт мне — трудные звуки я вплету в следующие главы.</p>' +
+        '<div class="snd-btns">' +
+          (missed.length ? '<button type="button" class="act snd-redo">Ещё раз по ошибкам</button>' : "") +
+          '<button type="button" class="act ghost snd-restart">Весь набор заново</button>' +
+          '<button type="button" class="act ghost snd-list">К списку</button>' +
+        '</div>' +
+      '</div>';
+    S = { set: set, missed: missed, done: true };
+  }
+  function quit(){ if (S && !S.done){ clearTimeout(S.auto); S.token++; } MIC.stop(); TTS.stop(); S = null; renderList(); }
+
+  box.addEventListener("click", function(e){
+    const t = e.target.closest && e.target.closest("button");
+    if (!t) return;
+    if (t.classList.contains("snd-start")){ const set = SETS.filter(function(s){ return s.id === t.dataset.set; })[0]; if (set) start(set); return; }
+    if (!S) return;
+    const c = card();
+    if (t.classList.contains("snd-hear") && c){ MIC.stop(); TTS.play([{ text: c.say, gender: "f" }]); }
+    else if (t.classList.contains("snd-pair") && c){ MIC.stop(); TTS.play([{ text: c.say, gender: "f", pause: 500 }, { text: c.other, gender: "f", pause: 500 }, { text: c.say, gender: "f" }]); }
+    else if (t.classList.contains("snd-speak")) speak();
+    else if (t.classList.contains("snd-again")) speak();
+    else if (t.classList.contains("snd-next")) nextCard();
+    else if (t.classList.contains("snd-quit")) quit();
+    else if (t.classList.contains("snd-redo")) start(S.set, S.missed);
+    else if (t.classList.contains("snd-restart")) start(S.set);
+    else if (t.classList.contains("snd-list")) quit();
+  });
+  // ушёл в другой раздел — тренировка останавливается
+  document.addEventListener("click", function(e){
+    if (S && !S.done && e.target.closest && e.target.closest(".view-tab, .chapter-tab") && !e.target.closest('[data-view="sounds"]')) quit();
+  }, true);
+  renderList();
 })();
 </script>
 
