@@ -342,6 +342,44 @@ summary:hover{background:var(--lamp-soft)}
 .foot{margin-top:64px;padding-top:22px;border-top:1px solid var(--line);color:var(--rain);font-size:14px}
 .foot p{max-width:none;margin:0 0 8px}
 .foot code{font-family:var(--mono);font-size:13px;color:var(--ink-soft)}
+.foot a{color:var(--sea)}
+
+/* ---------- повторение на сегодня ---------- */
+.views-row-today .views-label{color:var(--lamp)}
+.today-tab{font-weight:500;color:var(--ink)}
+.today-tab .today-n{margin-left:8px;font-family:var(--mono);font-size:11.5px;color:var(--rain)}
+.today-tab.has-due{background:var(--lamp);color:var(--paper)}
+.today-tab.has-due .today-n{color:var(--paper);opacity:.85}
+.today-tab.has-due:hover{background:var(--lamp);filter:brightness(1.08);color:var(--paper)}
+.today-tab[aria-current="true"]{box-shadow:0 0 0 2px var(--lamp-soft)}
+.today-tab:not(.has-due)[aria-current="true"]{background:var(--lamp-soft);color:var(--lamp)}
+.vocab-count .vc-work{grid-column:1 / -1;font-family:var(--mono);font-size:11px;color:var(--rain);margin-top:2px}
+.today h2{margin-bottom:10px}
+.td-line{display:flex;flex-wrap:wrap;gap:6px 22px;font-size:15px;color:var(--ink-soft);margin:0 0 16px;max-width:none}
+.td-line b{font-family:var(--serif);font-size:22px;color:var(--ink);font-weight:600;margin-right:4px;font-variant-numeric:tabular-nums}
+.td-next,.td-total{font-size:14px;color:var(--rain);margin:14px 0 0}
+.td-total b{color:var(--ok)}
+.td-how{margin-top:22px}
+button.hard{background:var(--lamp);color:var(--paper);border:0;border-radius:var(--radius);padding:10px 20px;font-family:var(--sans);font-size:14.5px;cursor:pointer}
+button.hard:hover{filter:brightness(1.08)}
+.td-example{font-family:var(--serif);font-style:italic;color:var(--ink-soft);font-size:16px;margin:10px auto 0;max-width:30rem}
+.td-type .td-ru{font-size:28px}
+.td-cloze{font-family:var(--serif);font-size:17px;color:var(--ink-soft);margin:8px auto 0;max-width:30rem}
+.td-pattern{font-family:var(--mono);font-size:18px;letter-spacing:.08em;color:var(--rain);margin:10px 0 0;max-width:none}
+.td-excl{font-family:var(--mono);font-size:12.5px;color:var(--lamp);margin:6px 0 0;max-width:none}
+.td-hint,.td-hint-inline{font-family:var(--mono);font-size:13px;color:var(--sea);margin:6px 0 0}
+.td-hint-inline{align-self:center}
+.td-form{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:18px auto 0;max-width:26rem}
+.td-form .tr-input{flex:1 1 12rem;text-align:center;font-size:20px;padding:10px 12px}
+.td-aux{margin-top:10px}
+.td-feedback{margin-top:14px}
+.td-feedback p{max-width:none;margin:0 0 6px}
+.td-ok{color:var(--ok)}
+.td-almost{color:var(--lamp)}
+.td-bad{color:var(--no)}
+.td-small{font-size:13.5px;color:var(--rain)}
+.td-answer-line{font-size:18px;margin:6px 0 4px}
+.td-answer-line b{font-family:var(--serif);font-size:22px}
 
 /* ---------- озвучка ---------- */
 .tts-bar{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:6px 14px;margin:10px 0 0;font-family:var(--mono);font-size:11.5px;color:var(--rain)}
@@ -423,6 +461,12 @@ td.w.speaking{color:var(--sea)}
   </header>
 
   <nav class="views" aria-label="Разделы книги">
+    <div class="views-row views-row-today">
+      <span class="views-label">Сегодня</span>
+      <div class="views-items">
+        <button type="button" class="view-tab today-tab" data-view="today">Повторение<span class="today-n" id="today-n"></span></button>
+      </div>
+    </div>
     <div class="views-row views-row-book">
       <span class="views-label">Главы</span>
       <ul class="toc">
@@ -462,6 +506,14 @@ td.w.speaking{color:var(--sea)}
   </nav>
   <div class="tts-bar" id="tts-bar"></div>
   <div class="sync-banner" id="sync-banner" hidden></div>
+
+  <!-- ================= ПОВТОРЕНИЕ НА СЕГОДНЯ ================= -->
+  <div class="view" id="view-today" hidden>
+    <section style="margin-top:34px">
+      <p class="sec-label">Повторение на сегодня</p>
+      <div class="today" id="today"></div>
+    </section>
+  </div>
 
   <div class="view" id="view-chapters">
 
@@ -1552,6 +1604,7 @@ td.w.speaking{color:var(--sea)}
   <script type="application/json" id="data-c1">[{"w":"allow for","t":"учитывать, делать поправку на","g":"фразовые глаголы","n":"Allow for delays when you plan the trip."},{"w":"bank on","t":"рассчитывать на, полагаться на","g":"фразовые глаголы","n":"Don\u0027t bank on him arriving on time."},{"w":"bear out","t":"подтверждать","g":"фразовые глаголы","n":"The results bear out our theory."},{"w":"boil down to","t":"сводиться к","g":"фразовые глаголы","n":"It all boils down to money in the end."},{"w":"brush aside","t":"отмахнуться от","g":"фразовые глаголы","n":"She brushed aside his concerns."},{"w":"brush up on","t":"освежить (знания)","g":"фразовые глаголы","n":"I need to brush up on my French."},{"w":"build on","t":"опираться на, развивать (успех)","g":"фразовые глаголы","n":"We can build on last year\u0027s results."},{"w":"chip in","t":"скидываться, вносить вклад","g":"фразовые глаголы","n":"Everyone chipped in for the present."},{"w":"clamp down on","t":"принимать жёсткие меры против","g":"фразовые глаголы","n":"The government clamped down on tax evasion."},{"w":"close in on","t":"приближаться к, обкладывать","g":"фразовые глаголы","n":"Police are closing in on the suspect."},{"w":"come to terms with","t":"смириться с","g":"фразовые глаголы","n":"It took years to come to terms with the loss."},{"w":"delve into","t":"углубляться в","g":"фразовые глаголы","n":"Let\u0027s delve into the details."},{"w":"dwell on","t":"зацикливаться на","g":"фразовые глаголы","n":"Try not to dwell on your mistakes."},{"w":"even out","t":"выравниваться","g":"фразовые глаголы","n":"Prices should even out over time."},{"w":"fall back on","t":"прибегать к (запасному варианту)","g":"фразовые глаголы","n":"We can fall back on our savings."},{"w":"fall short of","t":"не соответствовать, не дотягивать до","g":"фразовые глаголы","n":"The results fell short of expectations."},{"w":"gear up for","t":"готовиться к","g":"фразовые глаголы","n":"Companies are gearing up for the holiday season."},{"w":"home in on","t":"сосредоточиться на, точно нацелиться на","g":"фразовые глаголы","n":"The report homes in on three key issues."},{"w":"lash out at","t":"набрасываться на (словесно)","g":"фразовые глаголы","n":"He lashed out at the reporters."},{"w":"level off","t":"выходить на плато, стабилизироваться","g":"фразовые глаголы","n":"Growth has levelled off this year."},{"w":"lump together","t":"объединять без разбора","g":"фразовые глаголы","n":"You can\u0027t lump all critics together."},{"w":"map out","t":"тщательно спланировать","g":"фразовые глаголы","n":"She mapped out her career plan."},{"w":"narrow down","t":"сужать (выбор)","g":"фразовые глаголы","n":"We narrowed the list down to three."},{"w":"opt out of","t":"отказаться от участия в","g":"фразовые глаголы","n":"He opted out of the pension scheme."},{"w":"phase out","t":"постепенно выводить из употребления","g":"фразовые глаголы","n":"They plan to phase out plastic bags."},{"w":"play down","t":"преуменьшать (значение)","g":"фразовые глаголы","n":"The minister played down the crisis."},{"w":"puzzle out","t":"разгадать, выяснить путём размышлений","g":"фразовые глаголы","n":"We finally puzzled out the meaning."},{"w":"single out","t":"выделять (кого-то из группы)","g":"фразовые глаголы","n":"The report singled out two departments."},{"w":"spell out","t":"разъяснять подробно","g":"фразовые глаголы","n":"Let me spell out the risks."},{"w":"stem from","t":"происходить из, вытекать из","g":"фразовые глаголы","n":"The problem stems from poor planning."},{"w":"tie in with","t":"согласовываться с, увязываться с","g":"фразовые глаголы","n":"This ties in with our earlier findings."},{"w":"tone down","t":"смягчать (тон, формулировку)","g":"фразовые глаголы","n":"You should tone down that email."},{"w":"touch on","t":"затрагивать (тему)","g":"фразовые глаголы","n":"The talk touched on climate change."},{"w":"weigh up","t":"взвешивать (варианты)","g":"фразовые глаголы","n":"Weigh up the pros and cons first."},{"w":"zero in on","t":"точно сфокусироваться на","g":"фразовые глаголы","n":"Investigators zeroed in on one suspect."},{"w":"a double-edged sword","t":"палка о двух концах","g":"идиомы","n":"Social media is a double-edged sword."},{"w":"a far cry from","t":"совсем не то что, далеко от","g":"идиомы","n":"The result was a far cry from what we expected."},{"w":"a grey area","t":"неоднозначная область, серая зона","g":"идиомы","n":"The law here is a bit of a grey area."},{"w":"a leap of faith","t":"шаг в неизвестность, акт веры","g":"идиомы","n":"Starting the business was a leap of faith."},{"w":"a slippery slope","t":"скользкий путь (к худшему)","g":"идиомы","n":"Cutting corners here is a slippery slope."},{"w":"add fuel to the fire","t":"подливать масла в огонь","g":"идиомы","n":"His comment only added fuel to the fire."},{"w":"against all odds","t":"вопреки всему","g":"идиомы","n":"Against all odds, they won the match."},{"w":"at the heart of","t":"в основе, в сердце (проблемы)","g":"идиомы","n":"Trust is at the heart of the issue."},{"w":"bite the bullet","t":"собраться с духом, стерпеть неизбежное","g":"идиомы","n":"We just have to bite the bullet and pay."},{"w":"blow things out of proportion","t":"раздувать из мухи слона","g":"идиомы","n":"Don\u0027t blow this out of proportion."},{"w":"bridge the gap","t":"сократить разрыв","g":"идиомы","n":"The programme aims to bridge the gap between rich and poor."},{"w":"draw a blank","t":"не суметь вспомнить, не найти ответа","g":"идиомы","n":"I drew a blank when they asked for his name."},{"w":"food for thought","t":"пища для размышлений","g":"идиомы","n":"The lecture gave us food for thought."},{"w":"go against the grain","t":"идти вразрез (с привычками, убеждениями)","g":"идиомы","n":"Lying goes against the grain for him."},{"w":"in the grand scheme of things","t":"в общей картине, если смотреть шире","g":"идиомы","n":"It\u0027s a small problem in the grand scheme of things."},{"w":"jump on the bandwagon","t":"присоединиться к модному течению","g":"идиомы","n":"Many brands jumped on the bandwagon."},{"w":"raise the bar","t":"поднимать планку","g":"идиомы","n":"The new champion raised the bar for everyone."},{"w":"read between the lines","t":"читать между строк","g":"идиомы","n":"You need to read between the lines here."},{"w":"shed light on","t":"пролить свет на","g":"идиомы","n":"The report sheds light on the causes."},{"w":"sit on the fence","t":"занимать нейтральную позицию, не определяться","g":"идиомы","n":"He always sits on the fence in arguments."},{"w":"take something with a pinch of salt","t":"относиться с недоверием, скептически","g":"идиомы","n":"Take his promises with a pinch of salt."},{"w":"the tip of the iceberg","t":"верхушка айсберга","g":"идиомы","n":"These complaints are just the tip of the iceberg."},{"w":"throw caution to the wind","t":"отбросить осторожность","g":"идиомы","n":"She threw caution to the wind and quit her job."},{"w":"turn a blind eye to","t":"закрывать глаза на","g":"идиомы","n":"Management turned a blind eye to the problem."},{"w":"weather the storm","t":"пережить трудности","g":"идиомы","n":"The company weathered the storm and survived."},{"w":"albeit","t":"хотя, хоть и","g":"связки и вводные","n":"The plan worked, albeit slowly."},{"w":"arguably","t":"пожалуй, можно поспорить, что","g":"связки и вводные","n":"This is arguably his best film."},{"w":"as it were","t":"так сказать, если можно так выразиться","g":"связки и вводные","n":"He is, as it were, the backbone of the team."},{"w":"be that as it may","t":"как бы то ни было","g":"связки и вводные","n":"Be that as it may, we must finish on time."},{"w":"by and large","t":"в целом, по большому счёту","g":"связки и вводные","n":"By and large, the plan worked well."},{"w":"by virtue of","t":"в силу, благодаря","g":"связки и вводные","n":"She got the job by virtue of her experience."},{"w":"for all intents and purposes","t":"по сути, фактически","g":"связки и вводные","n":"For all intents and purposes, the project is finished."},{"w":"given that","t":"учитывая, что","g":"связки и вводные","n":"Given that it\u0027s raining, let\u0027s stay in."},{"w":"in a nutshell","t":"вкратце, в двух словах","g":"связки и вводные","n":"In a nutshell, the plan failed."},{"w":"in light of","t":"в свете, учитывая","g":"связки и вводные","n":"In light of the new evidence, we changed our view."},{"w":"in retrospect","t":"оглядываясь назад, задним числом","g":"связки и вводные","n":"In retrospect, it was a mistake."},{"w":"insofar as","t":"в той мере, в какой","g":"связки и вводные","n":"Insofar as we can tell, the plan is working."},{"w":"needless to say","t":"само собой разумеется","g":"связки и вводные","n":"Needless to say, everyone was delighted."},{"w":"notwithstanding","t":"несмотря на","g":"связки и вводные","n":"Notwithstanding the risks, they went ahead."},{"w":"on the face of it","t":"на первый взгляд","g":"связки и вводные","n":"On the face of it, the idea seems simple."},{"w":"per se","t":"как таковой, само по себе","g":"связки и вводные","n":"The price isn\u0027t the issue per se."},{"w":"to put it bluntly","t":"говоря прямо, без обиняков","g":"связки и вводные","n":"To put it bluntly, the plan failed."},{"w":"with hindsight","t":"задним числом, оглядываясь назад","g":"связки и вводные","n":"With hindsight, we should have waited."}]</script>
   <script type="application/json" id="data-c2w">[{"w":"allude","t":"намекать, упоминать вскользь","g":"действия: речь и мысль","n":"allude to"},{"w":"ascertain","t":"удостоверяться, выяснять","g":"действия: речь и мысль","n":""},{"w":"bemoan","t":"сетовать, оплакивать","g":"действия: речь и мысль","n":""},{"w":"berate","t":"отчитывать, бранить","g":"действия: речь и мысль","n":""},{"w":"cajole","t":"уговаривать лестью","g":"действия: речь и мысль","n":""},{"w":"castigate","t":"сурово критиковать, бичевать","g":"действия: речь и мысль","n":""},{"w":"coax","t":"уговаривать мягко, выманивать","g":"действия: речь и мысль","n":""},{"w":"construe","t":"истолковывать","g":"действия: речь и мысль","n":"construe as"},{"w":"corroborate","t":"подтверждать (свидетельством)","g":"действия: речь и мысль","n":""},{"w":"debunk","t":"развенчивать (миф)","g":"действия: речь и мысль","n":""},{"w":"decry","t":"осуждать публично","g":"действия: речь и мысль","n":""},{"w":"deem","t":"считать, полагать","g":"действия: речь и мысль","n":"deem it necessary"},{"w":"deride","t":"высмеивать","g":"действия: речь и мысль","n":""},{"w":"disparage","t":"принижать, отзываться пренебрежительно","g":"действия: речь и мысль","n":""},{"w":"dissuade","t":"отговаривать","g":"действия: речь и мысль","n":"dissuade smb from"},{"w":"divulge","t":"разглашать","g":"действия: речь и мысль","n":""},{"w":"elucidate","t":"разъяснять, проливать свет","g":"действия: речь и мысль","n":""},{"w":"embellish","t":"приукрашивать","g":"действия: речь и мысль","n":""},{"w":"equivocate","t":"увиливать, говорить уклончиво","g":"действия: речь и мысль","n":""},{"w":"espouse","t":"поддерживать (идею), отстаивать","g":"действия: речь и мысль","n":""},{"w":"expound","t":"подробно излагать","g":"действия: речь и мысль","n":""},{"w":"extol","t":"превозносить","g":"действия: речь и мысль","n":""},{"w":"fathom","t":"постигать, понимать до конца","g":"действия: речь и мысль","n":"обычно с отрицанием: I can\u0027t fathom why"},{"w":"feign","t":"симулировать, изображать","g":"действия: речь и мысль","n":""},{"w":"goad","t":"подстрекать, подначивать","g":"действия: речь и мысль","n":""},{"w":"implore","t":"умолять","g":"действия: речь и мысль","n":""},{"w":"impugn","t":"оспаривать, ставить под сомнение","g":"действия: речь и мысль","n":""},{"w":"insinuate","t":"намекать (неприятное), вкрадываться","g":"действия: речь и мысль","n":""},{"w":"lament","t":"сокрушаться, оплакивать","g":"действия: речь и мысль","n":""},{"w":"lambast","t":"разносить, громить (критикой)","g":"действия: речь и мысль","n":""},{"w":"obfuscate","t":"запутывать, затемнять (смысл)","g":"действия: речь и мысль","n":""},{"w":"ostracise","t":"подвергать остракизму, изгонять","g":"действия: речь и мысль","n":""},{"w":"placate","t":"умиротворять, задабривать","g":"действия: речь и мысль","n":""},{"w":"ponder","t":"размышлять, обдумывать","g":"действия: речь и мысль","n":""},{"w":"posit","t":"постулировать, утверждать","g":"действия: речь и мысль","n":""},{"w":"purport","t":"претендовать, якобы быть","g":"действия: речь и мысль","n":"purport to be"},{"w":"rebuke","t":"упрекать, делать выговор","g":"действия: речь и мысль","n":""},{"w":"rebut","t":"опровергать (довод)","g":"действия: речь и мысль","n":""},{"w":"reminisce","t":"предаваться воспоминаниям","g":"действия: речь и мысль","n":""},{"w":"repudiate","t":"отвергать, отрекаться","g":"действия: речь и мысль","n":""},{"w":"retort","t":"парировать, резко ответить","g":"действия: речь и мысль","n":""},{"w":"scoff","t":"насмехаться","g":"действия: речь и мысль","n":"scoff at"},{"w":"surmise","t":"предполагать, догадываться","g":"действия: речь и мысль","n":""},{"w":"venerate","t":"почитать, благоговеть","g":"действия: речь и мысль","n":""},{"w":"waver","t":"колебаться, дрогнуть","g":"действия: речь и мысль","n":""},{"w":"wheedle","t":"выманивать лестью","g":"действия: речь и мысль","n":""},{"w":"abate","t":"стихать, ослабевать","g":"действия: процессы","n":""},{"w":"abscond","t":"скрыться (с деньгами), сбежать","g":"действия: процессы","n":""},{"w":"amass","t":"накапливать (в большом количестве)","g":"действия: процессы","n":""},{"w":"ameliorate","t":"улучшать (положение)","g":"действия: процессы","n":""},{"w":"beset","t":"осаждать, одолевать (о проблемах)","g":"действия: процессы","n":"beset - beset"},{"w":"burgeon","t":"бурно расти, расцветать","g":"действия: процессы","n":""},{"w":"capitulate","t":"капитулировать, сдаться","g":"действия: процессы","n":""},{"w":"coalesce","t":"сливаться, объединяться","g":"действия: процессы","n":""},{"w":"curtail","t":"урезать, сокращать","g":"действия: процессы","n":""},{"w":"dwindle","t":"сокращаться, таять","g":"действия: процессы","n":""},{"w":"elude","t":"ускользать, избегать","g":"действия: процессы","n":"the answer eludes me"},{"w":"encroach","t":"посягать, вторгаться","g":"действия: процессы","n":"encroach on"},{"w":"engender","t":"порождать, вызывать","g":"действия: процессы","n":""},{"w":"entrench","t":"укоренять, закреплять","g":"действия: процессы","n":""},{"w":"eradicate","t":"искоренять","g":"действия: процессы","n":""},{"w":"exacerbate","t":"усугублять","g":"действия: процессы","n":""},{"w":"exonerate","t":"оправдывать, снимать обвинение","g":"действия: процессы","n":""},{"w":"forgo","t":"отказываться от, обходиться без","g":"действия: процессы","n":"forwent - forgone"},{"w":"galvanise","t":"побуждать к действию, встряхнуть","g":"действия: процессы","n":""},{"w":"hamper","t":"мешать, затруднять","g":"действия: процессы","n":""},{"w":"impede","t":"препятствовать","g":"действия: процессы","n":""},{"w":"instigate","t":"инициировать, подстрекать","g":"действия: процессы","n":""},{"w":"languish","t":"томиться, чахнуть","g":"действия: процессы","n":""},{"w":"meander","t":"петлять, бродить без цели","g":"действия: процессы","n":""},{"w":"oscillate","t":"колебаться, качаться","g":"действия: процессы","n":""},{"w":"perpetuate","t":"увековечивать, сохранять (плохое)","g":"действия: процессы","n":""},{"w":"plummet","t":"резко падать","g":"действия: процессы","n":""},{"w":"proliferate","t":"быстро распространяться, размножаться","g":"действия: процессы","n":""},{"w":"rectify","t":"исправлять","g":"действия: процессы","n":""},{"w":"replenish","t":"пополнять","g":"действия: процессы","n":""},{"w":"reinstate","t":"восстанавливать (в должности, в правах)","g":"действия: процессы","n":""},{"w":"squander","t":"растрачивать впустую","g":"действия: процессы","n":""},{"w":"stifle","t":"подавлять, душить","g":"действия: процессы","n":""},{"w":"subjugate","t":"покорять, порабощать","g":"действия: процессы","n":""},{"w":"supersede","t":"заменять, вытеснять (более новым)","g":"действия: процессы","n":""},{"w":"thwart","t":"срывать (планы), мешать","g":"действия: процессы","n":""},{"w":"truncate","t":"усекать, обрезать","g":"действия: процессы","n":""},{"w":"unravel","t":"распутывать, рушиться","g":"действия: процессы","n":""},{"w":"usurp","t":"узурпировать, захватывать","g":"действия: процессы","n":""},{"w":"wane","t":"убывать, ослабевать","g":"действия: процессы","n":"wax and wane"},{"w":"wield","t":"владеть (оружием, властью), обладать","g":"действия: процессы","n":"wield power"},{"w":"wither","t":"увядать, засыхать","g":"действия: процессы","n":""},{"w":"cogent","t":"убедительный, веский","g":"качества: ум и речь","n":""},{"w":"convoluted","t":"запутанный, замысловатый","g":"качества: ум и речь","n":""},{"w":"cryptic","t":"загадочный, туманный","g":"качества: ум и речь","n":""},{"w":"erudite","t":"эрудированный","g":"качества: ум и речь","n":""},{"w":"esoteric","t":"эзотерический, понятный немногим","g":"качества: ум и речь","n":""},{"w":"facetious","t":"шутливый (неуместно)","g":"качества: ум и речь","n":""},{"w":"fallacious","t":"ошибочный, ложный (о доводе)","g":"качества: ум и речь","n":""},{"w":"glib","t":"бойкий, поверхностный","g":"качества: ум и речь","n":""},{"w":"incisive","t":"острый, проницательный (об уме, критике)","g":"качества: ум и речь","n":""},{"w":"inscrutable","t":"непостижимый, непроницаемый","g":"качества: ум и речь","n":""},{"w":"laconic","t":"лаконичный, немногословный","g":"качества: ум и речь","n":""},{"w":"loquacious","t":"болтливый, словоохотливый","g":"качества: ум и речь","n":""},{"w":"lucid","t":"ясный, внятный","g":"качества: ум и речь","n":""},{"w":"obtuse","t":"тупой, непонятливый","g":"качества: ум и речь","n":""},{"w":"pedantic","t":"педантичный","g":"качества: ум и речь","n":""},{"w":"perfunctory","t":"поверхностный, для галочки","g":"качества: ум и речь","n":""},{"w":"pithy","t":"сжатый и меткий","g":"качества: ум и речь","n":""},{"w":"pompous","t":"напыщенный","g":"качества: ум и речь","n":""},{"w":"prosaic","t":"прозаичный, заурядный","g":"качества: ум и речь","n":""},{"w":"sardonic","t":"язвительный, сардонический","g":"качества: ум и речь","n":""},{"w":"spurious","t":"ложный, поддельный","g":"качества: ум и речь","n":""},{"w":"tacit","t":"молчаливый, подразумеваемый","g":"качества: ум и речь","n":"tacit agreement"},{"w":"tenuous","t":"слабый, натянутый (о связи, доводе)","g":"качества: ум и речь","n":""},{"w":"trite","t":"избитый, банальный","g":"качества: ум и речь","n":""},{"w":"vacuous","t":"пустой, бессодержательный","g":"качества: ум и речь","n":""},{"w":"verbose","t":"многословный","g":"качества: ум и речь","n":""},{"w":"wry","t":"кривой, ироничный (об улыбке, юморе)","g":"качества: ум и речь","n":""},{"w":"affable","t":"приветливый, добродушный","g":"качества: характер","n":""},{"w":"aloof","t":"отчуждённый, держащийся в стороне","g":"качества: характер","n":""},{"w":"assiduous","t":"усердный, прилежный","g":"качества: характер","n":""},{"w":"benevolent","t":"доброжелательный, благотворительный","g":"качества: характер","n":""},{"w":"callous","t":"бессердечный, чёрствый","g":"качества: характер","n":""},{"w":"capricious","t":"капризный, непостоянный","g":"качества: характер","n":""},{"w":"diffident","t":"застенчивый, неуверенный","g":"качества: характер","n":""},{"w":"disingenuous","t":"неискренний, лукавый","g":"качества: характер","n":""},{"w":"fastidious","t":"привередливый, придирчивый","g":"качества: характер","n":""},{"w":"gregarious","t":"общительный, стадный","g":"качества: характер","n":""},{"w":"impetuous","t":"импульсивный, стремительный","g":"качества: характер","n":""},{"w":"indolent","t":"ленивый, праздный","g":"качества: характер","n":""},{"w":"insolent","t":"дерзкий, наглый","g":"качества: характер","n":""},{"w":"intransigent","t":"непримиримый, неуступчивый","g":"качества: характер","n":""},{"w":"irascible","t":"вспыльчивый, раздражительный","g":"качества: характер","n":""},{"w":"magnanimous","t":"великодушный","g":"качества: характер","n":""},{"w":"mercurial","t":"переменчивый (о настроении)","g":"качества: характер","n":""},{"w":"obsequious","t":"подобострастный, угодливый","g":"качества: характер","n":""},{"w":"parsimonious","t":"скупой","g":"качества: характер","n":""},{"w":"petulant","t":"раздражительный, капризный","g":"качества: характер","n":""},{"w":"reticent","t":"сдержанный, неразговорчивый","g":"качества: характер","n":""},{"w":"sanguine","t":"оптимистичный, жизнерадостный","g":"качества: характер","n":""},{"w":"stoic","t":"стоический, невозмутимый","g":"качества: характер","n":""},{"w":"sycophantic","t":"льстивый, подхалимский","g":"качества: характер","n":""},{"w":"taciturn","t":"молчаливый, неразговорчивый","g":"качества: характер","n":""},{"w":"truculent","t":"агрессивный, задиристый","g":"качества: характер","n":""},{"w":"unflappable","t":"невозмутимый","g":"качества: характер","n":""},{"w":"vindictive","t":"мстительный","g":"качества: характер","n":""},{"w":"zealous","t":"ревностный, усердный","g":"качества: характер","n":""},{"w":"arduous","t":"трудный, изнурительный","g":"качества: вещи и обстоятельства","n":""},{"w":"auspicious","t":"благоприятный, многообещающий","g":"качества: вещи и обстоятельства","n":""},{"w":"clandestine","t":"тайный, подпольный","g":"качества: вещи и обстоятельства","n":""},{"w":"commensurate","t":"соразмерный, соответствующий","g":"качества: вещи и обстоятельства","n":"commensurate with"},{"w":"conspicuous","t":"заметный, бросающийся в глаза","g":"качества: вещи и обстоятельства","n":""},{"w":"copious","t":"обильный","g":"качества: вещи и обстоятельства","n":""},{"w":"cursory","t":"беглый, поверхностный (о взгляде, осмотре)","g":"качества: вещи и обстоятельства","n":""},{"w":"dire","t":"ужасный, крайний","g":"качества: вещи и обстоятельства","n":"in dire need"},{"w":"egregious","t":"вопиющий","g":"качества: вещи и обстоятельства","n":""},{"w":"ephemeral","t":"эфемерный, мимолётный","g":"качества: вещи и обстоятельства","n":""},{"w":"exorbitant","t":"непомерный (о цене)","g":"качества: вещи и обстоятельства","n":""},{"w":"extraneous","t":"посторонний, не относящийся к делу","g":"качества: вещи и обстоятельства","n":""},{"w":"fortuitous","t":"случайный (удачный)","g":"качества: вещи и обстоятельства","n":""},{"w":"futile","t":"тщетный, бесполезный","g":"качества: вещи и обстоятельства","n":""},{"w":"idiosyncratic","t":"своеобразный, присущий только кому-то","g":"качества: вещи и обстоятельства","n":""},{"w":"immutable","t":"неизменный","g":"качества: вещи и обстоятельства","n":""},{"w":"incongruous","t":"неуместный, несочетаемый","g":"качества: вещи и обстоятельства","n":""},{"w":"innocuous","t":"безобидный","g":"качества: вещи и обстоятельства","n":""},{"w":"insidious","t":"коварный, незаметно опасный","g":"качества: вещи и обстоятельства","n":""},{"w":"intermittent","t":"прерывистый, перемежающийся","g":"качества: вещи и обстоятельства","n":""},{"w":"latent","t":"скрытый, латентный","g":"качества: вещи и обстоятельства","n":""},{"w":"ludicrous","t":"нелепый, смехотворный","g":"качества: вещи и обстоятельства","n":""},{"w":"nascent","t":"зарождающийся","g":"качества: вещи и обстоятельства","n":""},{"w":"nebulous","t":"туманный, расплывчатый","g":"качества: вещи и обстоятельства","n":""},{"w":"negligible","t":"незначительный, ничтожный","g":"качества: вещи и обстоятельства","n":""},{"w":"obsolete","t":"устаревший, вышедший из употребления","g":"качества: вещи и обстоятельства","n":""},{"w":"ominous","t":"зловещий","g":"качества: вещи и обстоятельства","n":""},{"w":"onerous","t":"обременительный","g":"качества: вещи и обстоятельства","n":""},{"w":"opulent","t":"роскошный, богатый","g":"качества: вещи и обстоятельства","n":""},{"w":"palpable","t":"ощутимый, явный","g":"качества: вещи и обстоятельства","n":"palpable tension"},{"w":"paramount","t":"первостепенный","g":"качества: вещи и обстоятельства","n":""},{"w":"peripheral","t":"второстепенный, периферийный","g":"качества: вещи и обстоятельства","n":""},{"w":"pernicious","t":"пагубный","g":"качества: вещи и обстоятельства","n":""},{"w":"pristine","t":"безупречно чистый, нетронутый","g":"качества: вещи и обстоятельства","n":""},{"w":"quintessential","t":"типичнейший, образцовый","g":"качества: вещи и обстоятельства","n":""},{"w":"rudimentary","t":"элементарный, зачаточный","g":"качества: вещи и обстоятельства","n":""},{"w":"salient","t":"главный, выдающийся","g":"качества: вещи и обстоятельства","n":"salient points"},{"w":"superfluous","t":"излишний","g":"качества: вещи и обстоятельства","n":""},{"w":"tantamount","t":"равносильный","g":"качества: вещи и обстоятельства","n":"tantamount to"},{"w":"ubiquitous","t":"вездесущий, повсеместный","g":"качества: вещи и обстоятельства","n":""},{"w":"untenable","t":"несостоятельный (о позиции)","g":"качества: вещи и обстоятельства","n":""},{"w":"unwieldy","t":"громоздкий, неповоротливый","g":"качества: вещи и обстоятельства","n":""},{"w":"vicarious","t":"переживаемый со стороны, косвенный","g":"качества: вещи и обстоятельства","n":"vicarious pleasure"},{"w":"aberration","t":"отклонение от нормы","g":"понятия","n":""},{"w":"acumen","t":"проницательность, чутьё","g":"понятия","n":"business acumen"},{"w":"affinity","t":"склонность, родство","g":"понятия","n":"affinity for"},{"w":"anathema","t":"нечто ненавистное, проклятие","g":"понятия","n":"be anathema to"},{"w":"antithesis","t":"полная противоположность","g":"понятия","n":""},{"w":"apathy","t":"апатия, безразличие","g":"понятия","n":""},{"w":"candour","t":"откровенность, прямота","g":"понятия","n":""},{"w":"catalyst","t":"катализатор (перемен)","g":"понятия","n":""},{"w":"conjecture","t":"догадка, предположение","g":"понятия","n":""},{"w":"connoisseur","t":"знаток, ценитель","g":"понятия","n":""},{"w":"conundrum","t":"головоломка, трудная задача","g":"понятия","n":""},{"w":"dearth","t":"нехватка","g":"понятия","n":"a dearth of"},{"w":"dichotomy","t":"дихотомия, разделение на две части","g":"понятия","n":""},{"w":"epiphany","t":"озарение","g":"понятия","n":""},{"w":"euphemism","t":"эвфемизм","g":"понятия","n":""},{"w":"facade","t":"фасад, видимость","g":"понятия","n":""},{"w":"fallacy","t":"заблуждение, логическая ошибка","g":"понятия","n":""},{"w":"hubris","t":"высокомерие, гордыня","g":"понятия","n":""},{"w":"impasse","t":"тупик","g":"понятия","n":""},{"w":"impetus","t":"импульс, стимул","g":"понятия","n":""},{"w":"inertia","t":"инерция, бездействие","g":"понятия","n":""},{"w":"juxtaposition","t":"сопоставление, соседство","g":"понятия","n":""},{"w":"malaise","t":"недомогание, упадок (общества)","g":"понятия","n":""},{"w":"milieu","t":"среда, окружение","g":"понятия","n":""},{"w":"misnomer","t":"неверное название","g":"понятия","n":""},{"w":"nuance","t":"нюанс, оттенок","g":"понятия","n":""},{"w":"panacea","t":"панацея","g":"понятия","n":""},{"w":"paucity","t":"скудость, малое количество","g":"понятия","n":""},{"w":"pinnacle","t":"вершина, пик","g":"понятия","n":""},{"w":"plethora","t":"изобилие, избыток","g":"понятия","n":"a plethora of"},{"w":"predicament","t":"затруднительное положение","g":"понятия","n":""},{"w":"propensity","t":"склонность","g":"понятия","n":"propensity for"},{"w":"quandary","t":"затруднение, дилемма","g":"понятия","n":"in a quandary"},{"w":"rapport","t":"взаимопонимание","g":"понятия","n":""},{"w":"remorse","t":"раскаяние","g":"понятия","n":""},{"w":"semblance","t":"видимость, подобие","g":"понятия","n":""},{"w":"stalemate","t":"тупик, пат","g":"понятия","n":""},{"w":"tenet","t":"принцип, догмат","g":"понятия","n":""},{"w":"trepidation","t":"трепет, тревога","g":"понятия","n":""},{"w":"veneer","t":"внешний лоск, шпон","g":"понятия","n":""},{"w":"zeitgeist","t":"дух времени","g":"понятия","n":""},{"w":"accolade","t":"награда, похвала","g":"общество и власть","n":""},{"w":"allegiance","t":"верность, преданность","g":"общество и власть","n":""},{"w":"amnesty","t":"амнистия","g":"общество и власть","n":""},{"w":"arbiter","t":"арбитр, вершитель","g":"общество и власть","n":""},{"w":"autocracy","t":"самодержавие, автократия","g":"общество и власть","n":""},{"w":"bureaucracy","t":"бюрократия","g":"общество и власть","n":""},{"w":"clemency","t":"милосердие, помилование","g":"общество и власть","n":""},{"w":"coercion","t":"принуждение","g":"общество и власть","n":""},{"w":"complicity","t":"соучастие","g":"общество и власть","n":""},{"w":"constituency","t":"избирательный округ, электорат","g":"общество и власть","n":""},{"w":"demagogue","t":"демагог","g":"общество и власть","n":""},{"w":"dissent","t":"несогласие, инакомыслие","g":"общество и власть","n":""},{"w":"embargo","t":"эмбарго, запрет","g":"общество и власть","n":""},{"w":"envoy","t":"посланник","g":"общество и власть","n":""},{"w":"exodus","t":"массовый исход","g":"общество и власть","n":""},{"w":"hegemony","t":"гегемония","g":"общество и власть","n":""},{"w":"impunity","t":"безнаказанность","g":"общество и власть","n":"with impunity"},{"w":"insurgency","t":"мятеж, повстанческое движение","g":"общество и власть","n":""},{"w":"mandate","t":"мандат, полномочия","g":"общество и власть","n":""},{"w":"nepotism","t":"кумовство","g":"общество и власть","n":""},{"w":"oligarchy","t":"олигархия","g":"общество и власть","n":""},{"w":"patronage","t":"покровительство","g":"общество и власть","n":""},{"w":"precedent","t":"прецедент","g":"общество и власть","n":""},{"w":"sanction","t":"санкция, одобрение","g":"общество и власть","n":""},{"w":"schism","t":"раскол","g":"общество и власть","n":""},{"w":"secession","t":"отделение (от государства)","g":"общество и власть","n":""},{"w":"sedition","t":"подстрекательство к мятежу","g":"общество и власть","n":""},{"w":"subversion","t":"подрывная деятельность","g":"общество и власть","n":""},{"w":"suffrage","t":"избирательное право","g":"общество и власть","n":""},{"w":"tyranny","t":"тирания","g":"общество и власть","n":""},{"w":"upheaval","t":"потрясение, переворот","g":"общество и власть","n":""},{"w":"bedlam","t":"бедлам, неразбериха","g":"книжное и разговорное","n":""},{"w":"brouhaha","t":"шумиха, переполох","g":"книжное и разговорное","n":""},{"w":"debacle","t":"полный провал","g":"книжное и разговорное","n":""},{"w":"dilapidated","t":"обветшалый","g":"книжное и разговорное","n":""},{"w":"fiasco","t":"фиаско, провал","g":"книжное и разговорное","n":""},{"w":"gist","t":"суть","g":"книжное и разговорное","n":"get the gist"},{"w":"hodgepodge","t":"мешанина","g":"книжное и разговорное","n":"BrE — hotchpotch"},{"w":"kerfuffle","t":"суматоха, шум из-за пустяка","g":"книжное и разговорное","n":"BrE, разговорное"},{"w":"maelstrom","t":"водоворот, круговорот (событий)","g":"книжное и разговорное","n":""},{"w":"melee","t":"свалка, потасовка","g":"книжное и разговорное","n":""},{"w":"misgiving","t":"опасение, сомнение","g":"книжное и разговорное","n":"обычно мн. ч. misgivings"},{"w":"rigmarole","t":"канитель, волокита","g":"книжное и разговорное","n":""},{"w":"shenanigans","t":"проделки, махинации","g":"книжное и разговорное","n":""},{"w":"smattering","t":"поверхностное знание, крупица","g":"книжное и разговорное","n":"a smattering of French"},{"w":"wanderlust","t":"страсть к путешествиям","g":"книжное и разговорное","n":""},{"w":"serendipity","t":"счастливая случайность","g":"книжное и разговорное","n":""},{"w":"reverie","t":"мечтательность, грёзы","g":"книжное и разговорное","n":""},{"w":"solace","t":"утешение","g":"книжное и разговорное","n":""},{"w":"tirade","t":"гневная тирада","g":"книжное и разговорное","n":""},{"w":"vestige","t":"остаток, след","g":"книжное и разговорное","n":""},{"w":"whim","t":"прихоть, каприз","g":"книжное и разговорное","n":"on a whim"}]</script>
   <script type="application/json" id="data-c2">[{"w":"bandy about","t":"упоминать направо и налево","g":"фразовые глаголы","n":"Big numbers are often bandied about in the press."},{"w":"beaver away","t":"усердно трудиться","g":"фразовые глаголы","n":"She\u0027s been beavering away at her thesis all week."},{"w":"bottle up","t":"сдерживать (чувства)","g":"фразовые глаголы","n":"Don\u0027t bottle up your anger."},{"w":"chalk up to","t":"списывать на","g":"фразовые глаголы","n":"Let\u0027s chalk it up to experience."},{"w":"churn out","t":"штамповать, выдавать в больших количествах","g":"фразовые глаголы","n":"The studio churns out a film a month."},{"w":"cotton on to","t":"смекнуть, догадаться","g":"фразовые глаголы","n":"It took me a while to cotton on to the joke."},{"w":"egg on","t":"подначивать","g":"фразовые глаголы","n":"His friends egged him on to jump."},{"w":"fob off","t":"отделаться (отговоркой), всучить","g":"фразовые глаголы","n":"Don\u0027t let them fob you off with excuses."},{"w":"fritter away","t":"растрачивать по мелочам","g":"фразовые глаголы","n":"He frittered away his savings."},{"w":"gloss over","t":"замять, обойти (неприятное)","g":"фразовые глаголы","n":"The report glosses over the real problems."},{"w":"hammer out","t":"выработать (с трудом)","g":"фразовые глаголы","n":"They hammered out a deal after ten hours."},{"w":"hanker after","t":"страстно желать","g":"фразовые глаголы","n":"He still hankers after his old life."},{"w":"iron out","t":"уладить, сгладить","g":"фразовые глаголы","n":"We need to iron out a few problems."},{"w":"mull over","t":"обдумывать","g":"фразовые глаголы","n":"Let me mull it over for a day."},{"w":"paper over","t":"замазать, скрыть (проблему)","g":"фразовые глаголы","n":"The agreement papers over deep differences."},{"w":"pore over","t":"корпеть над, внимательно изучать","g":"фразовые глаголы","n":"She pored over the old letters."},{"w":"rein in","t":"обуздать, сдерживать","g":"фразовые глаголы","n":"The government must rein in spending."},{"w":"ride out","t":"переждать, пережить (трудности)","g":"фразовые глаголы","n":"We\u0027ll ride out the storm."},{"w":"root out","t":"искоренить, выявить","g":"фразовые глаголы","n":"They promised to root out corruption."},{"w":"skirt around","t":"обходить стороной (тему)","g":"фразовые глаголы","n":"He skirted around the question of money."},{"w":"stave off","t":"отсрочить, предотвратить","g":"фразовые глаголы","n":"A snack will stave off hunger until dinner."},{"w":"tap into","t":"задействовать, использовать","g":"фразовые глаголы","n":"The ad taps into our fear of missing out."},{"w":"usher in","t":"возвестить начало, открыть (эпоху)","g":"фразовые глаголы","n":"The internet ushered in a new age."},{"w":"whittle down","t":"постепенно сокращать","g":"фразовые глаголы","n":"We whittled the list down to five names."},{"w":"wind down","t":"сворачивать, расслабляться","g":"фразовые глаголы","n":"I read to wind down before bed."},{"w":"wriggle out of","t":"увильнуть от","g":"фразовые глаголы","n":"He always wriggles out of the washing-up."},{"w":"a bone of contention","t":"яблоко раздора","g":"идиомы","n":"The garden has long been a bone of contention."},{"w":"a blessing in disguise","t":"нет худа без добра","g":"идиомы","n":"Losing that job was a blessing in disguise."},{"w":"a foregone conclusion","t":"предрешённый исход","g":"идиомы","n":"The result was a foregone conclusion."},{"w":"a moot point","t":"спорный вопрос, неважный уже вопрос","g":"идиомы","n":"Whether he knew is a moot point now."},{"w":"a pyrrhic victory","t":"пиррова победа","g":"идиомы","n":"Winning the case was a pyrrhic victory."},{"w":"a red herring","t":"ложный след, отвлекающий манёвр","g":"идиомы","n":"The clue about the car was a red herring."},{"w":"a storm in a teacup","t":"буря в стакане воды","g":"идиомы","n":"The argument was a storm in a teacup."},{"w":"an axe to grind","t":"личный интерес, свои счёты","g":"идиомы","n":"He has no axe to grind, so trust his advice."},{"w":"bark up the wrong tree","t":"идти по ложному пути","g":"идиомы","n":"If you think I took it, you\u0027re barking up the wrong tree."},{"w":"beat about the bush","t":"ходить вокруг да около","g":"идиомы","n":"Stop beating about the bush and tell me."},{"w":"by the skin of your teeth","t":"чудом, едва-едва","g":"идиомы","n":"We caught the train by the skin of our teeth."},{"w":"damn with faint praise","t":"сдержанно хвалить (то есть критиковать)","g":"идиомы","n":"The review damned the film with faint praise."},{"w":"fly in the face of","t":"идти вразрез с","g":"идиомы","n":"This flies in the face of common sense."},{"w":"have a chip on your shoulder","t":"быть обиженным на весь мир","g":"идиомы","n":"He has a chip on his shoulder about his school."},{"w":"in the offing","t":"не за горами, ожидается","g":"идиомы","n":"A change of government is in the offing."},{"w":"keep at bay","t":"держать на расстоянии, сдерживать","g":"идиомы","n":"Exercise keeps stress at bay."},{"w":"leave no stone unturned","t":"перевернуть всё, сделать всё возможное","g":"идиомы","n":"The police left no stone unturned."},{"w":"let sleeping dogs lie","t":"не будить лихо","g":"идиомы","n":"I decided to let sleeping dogs lie."},{"w":"move the goalposts","t":"менять правила по ходу игры","g":"идиомы","n":"The boss keeps moving the goalposts."},{"w":"not hold water","t":"не выдерживать критики","g":"идиомы","n":"His story doesn\u0027t hold water."},{"w":"on tenterhooks","t":"как на иголках","g":"идиомы","n":"We waited for the results on tenterhooks."},{"w":"par for the course","t":"обычное дело, как всегда","g":"идиомы","n":"Delays are par for the course here."},{"w":"put the cart before the horse","t":"ставить телегу впереди лошади","g":"идиомы","n":"Buying the furniture first is putting the cart before the horse."},{"w":"rest on your laurels","t":"почивать на лаврах","g":"идиомы","n":"Don\u0027t rest on your laurels after one win."},{"w":"steal someone\u0027s thunder","t":"перехватить чужую славу","g":"идиомы","n":"She stole my thunder by announcing it first."},{"w":"the elephant in the room","t":"очевидная проблема, о которой молчат","g":"идиомы","n":"Money was the elephant in the room."},{"w":"the devil is in the detail","t":"дьявол кроется в деталях","g":"идиомы","n":"The plan sounds good, but the devil is in the detail."},{"w":"the lion\u0027s share","t":"львиная доля","g":"идиомы","n":"He did the lion\u0027s share of the work."},{"w":"throw down the gauntlet","t":"бросить вызов","g":"идиомы","n":"The champion threw down the gauntlet."},{"w":"toe the line","t":"подчиняться правилам","g":"идиомы","n":"Everyone is expected to toe the line."},{"w":"up in arms","t":"возмущённый","g":"идиомы","n":"Residents are up in arms about the new road."},{"w":"with bated breath","t":"затаив дыхание","g":"идиомы","n":"We listened with bated breath."},{"w":"wreak havoc","t":"сеять хаос","g":"идиомы","n":"The storm wreaked havoc on the coast."},{"w":"all the more so","t":"тем более","g":"связки и книжные обороты","n":"It\u0027s a hard job, all the more so without help."},{"w":"come what may","t":"будь что будет","g":"связки и книжные обороты","n":"Come what may, I\u0027ll finish this book."},{"w":"ergo","t":"следовательно","g":"связки и книжные обороты","n":"He was not there, ergo he could not have seen it."},{"w":"for the sake of argument","t":"допустим, ради спора","g":"связки и книжные обороты","n":"Let\u0027s say, for the sake of argument, that he is right."},{"w":"hitherto","t":"до сих пор, прежде","g":"связки и книжные обороты","n":"a hitherto unknown writer"},{"w":"if anything","t":"скорее даже","g":"связки и книжные обороты","n":"It isn\u0027t worse. If anything, it\u0027s better."},{"w":"in lieu of","t":"вместо","g":"связки и книжные обороты","n":"He got a day off in lieu of payment."},{"w":"in the wake of","t":"вслед за, после","g":"связки и книжные обороты","n":"Prices rose in the wake of the storm."},{"w":"inasmuch as","t":"поскольку, в той мере, в какой","g":"связки и книжные обороты","n":"He is guilty inasmuch as he knew the truth."},{"w":"inter alia","t":"в том числе, среди прочего","g":"связки и книжные обороты","n":"The report covers, inter alia, costs and risks."},{"w":"lest","t":"дабы не, чтобы не","g":"связки и книжные обороты","n":"She wrote it down lest she forget."},{"w":"mind you","t":"впрочем, заметь","g":"связки и книжные обороты","n":"It\u0027s expensive. Mind you, it\u0027s very good."},{"w":"not least","t":"не в последнюю очередь","g":"связки и книжные обороты","n":"It failed for many reasons, not least the cost."},{"w":"on the premise that","t":"исходя из того, что","g":"связки и книжные обороты","n":"The plan works on the premise that prices stay low."},{"w":"that said","t":"при этом, тем не менее","g":"связки и книжные обороты","n":"It\u0027s a long film. That said, I enjoyed it."},{"w":"thereby","t":"тем самым","g":"связки и книжные обороты","n":"He left early, thereby missing the speech."},{"w":"to say the least","t":"мягко говоря","g":"связки и книжные обороты","n":"The meeting was tense, to say the least."},{"w":"vis-à-vis","t":"по отношению к, в сравнении с","g":"связки и книжные обороты","n":"our position vis-à-vis our rivals"},{"w":"whereby","t":"посредством которого, согласно которому","g":"связки и книжные обороты","n":"a system whereby workers share the profit"}]</script>
+  <script type="application/json" id="data-ngsl-order">["the", "be", "and", "of", "to", "a", "in", "have", "it", "you", "he", "for", "they", "not", "that", "we", "on", "with", "this", "I", "do", "as", "at", "she", "but", "from", "by", "will", "or", "say", "go", "so", "all", "if", "one", "would", "about", "can", "which", "there", "know", "more", "get", "who", "like", "when", "think", "make", "time", "see", "what", "up", "some", "other", "out", "good", "people", "year", "take", "no", "well", "because", "very", "just", "come", "could", "work", "use", "than", "now", "then", "also", "into", "only", "look", "want", "give", "first", "new", "way", "find", "over", "any", "after", "day", "where", "thing", "most", "should", "need", "much", "right", "how", "back", "mean", "even", "May", "here", "many", "such", "last", "child", "tell", "really", "call", "before", "company", "through", "down", "show", "life", "man", "change", "place", "long", "between", "feel", "too", "still", "problem", "write", "same", "great", "try", "leave", "number", "both", "own", "part", "point", "little", "help", "ask", "meet", "start", "talk", "something", "put", "another", "become", "interest", "country", "old", "each", "school", "late", "high", "different", "off", "next", "end", "live", "why", "while", "world", "week", "play", "might", "must", "home", "never", "include", "course", "house", "report", "group", "case", "woman", "around", "book", "family", "seem", "let", "again", "kind", "keep", "hear", "system", "every", "question", "during", "always", "big", "set", "small", "study", "follow", "begin", "important", "since", "run", "under", "turn", "few", "bring", "early", "hand", "state", "move", "money", "fact", "however", "area", "provide", "name", "read", "friend", "month", "large", "business", "without", "information", "open", "order", "government", "word", "issue", "market", "pay", "build", "hold", "service", "against", "believe", "second", "though", "yes", "love", "increase", "job", "plan", "result", "away", "example", "happen", "offer", "young", "close", "programme", "lead", "buy", "understand", "far", "today", "hour", "student", "face", "hope", "idea", "cost", "less", "room", "until", "reason", "form", "spend", "head", "car", "learn", "level", "person", "experience", "once", "member", "enough", "bad", "city", "night", "able", "support", "whether", "line", "present", "side", "quite", "although", "sure", "term", "least", "age", "low", "speak", "within", "process", "public", "often", "train", "possible", "actually", "rather", "view", "together", "consider", "price", "parent", "hard", "party", "local", "control", "already", "concern", "product", "lose", "story", "almost", "continue", "stand", "whole", "yet", "rate", "care", "expect", "effect", "sort", "ever", "anything", "cause", "fall", "deal", "water", "send", "allow", "soon", "watch", "base", "probably", "suggest", "past", "power", "test", "visit", "centre", "grow", "nothing", "return", "mother", "walk", "matter", "mind", "value", "office", "record", "stay", "force", "stop", "several", "light", "develop", "remember", "bit", "share", "real", "answer", "sit", "figure", "letter", "decide", "language", "subject", "class", "development", "town", "half", "minute", "food", "break", "clear", "future", "either", "ago", "per", "remain", "top", "among", "win", "colour", "involve", "reach", "social", "period", "across", "note", "history", "create", "drive", "along", "type", "sound", "eye", "music", "game", "political", "free", "receive", "moment", "sale", "policy", "further", "body", "require", "wait", "general", "appear", "toward", "team", "easy", "individual", "full", "black", "sense", "perhaps", "add", "rule", "pass", "produce", "sell", "short", "agree", "law", "everything", "research", "cover", "paper", "position", "near", "human", "computer", "situation", "staff", "activity", "film", "morning", "war", "account", "shop", "major", "someone", "above", "design", "event", "special", "sometimes", "condition", "carry", "choose", "father", "decision", "table", "certain", "forward", "main", "die", "bear", "cut", "describe", "himself", "available", "especially", "strong", "rise", "girl", "maybe", "community", "else", "particular", "role", "join", "difficult", "please", "detail", "difference", "action", "health", "eat", "step", "true", "phone", "themselves", "draw", "white", "date", "practice", "model", "raise", "customer", "front", "explain", "door", "outside", "behind", "economic", "site", "approach", "teacher", "land", "charge", "finally", "sign", "claim", "relationship", "travel", "enjoy", "death", "nice", "amount", "improve", "picture", "boy", "regard", "organization", "happy", "couple", "act", "range", "quality", "project", "round", "opportunity", "road", "accord", "list", "wish", "therefore", "wear", "fund", "rest", "kid", "industry", "education", "measure", "kill", "serve", "likely", "certainly", "national", "itself", "teach", "field", "security", "air", "benefit", "trade", "risk", "news", "standard", "vote", "percent", "focus", "stage", "space", "instead", "realise", "usually", "data", "single", "address", "performance", "chance", "accept", "society", "technology", "mention", "choice", "save", "common", "culture", "total", "demand", "material", "limit", "listen", "due", "wrong", "foot", "effort", "attention", "upon", "check", "complete", "lie", "pick", "reduce", "personal", "ground", "animal", "arrive", "patient", "current", "century", "evidence", "exist", "similar", "fight", "leader", "fine", "street", "former", "contact", "particularly", "wife", "sport", "prepare", "discuss", "response", "voice", "piece", "finish", "suppose", "apply", "president", "fire", "compare", "court", "police", "store", "poor", "knowledge", "laugh", "arm", "heart", "source", "employee", "manage", "simply", "bank", "firm", "cell", "article", "fast", "attack", "foreign", "surprise", "feature", "factor", "pretty", "recently", "affect", "drop", "recent", "official", "financial", "Miss", "art", "campaign", "private", "pause", "everyone", "forget", "page", "worry", "summer", "drink", "opinion", "park", "represent", "key", "inside", "manager", "international", "contain", "notice", "wonder", "nature", "structure", "section", "myself", "exactly", "plant", "paint", "worker", "press", "whatever", "necessary", "region", "growth", "evening", "influence", "respect", "various", "catch", "thus", "skill", "attempt", "son", "simple", "medium", "average", "stock", "management", "character", "bed", "hit", "establish", "indeed", "final", "economy", "fit", "guy", "function", "yesterday", "image", "size", "behaviour", "addition", "determine", "station", "population", "fail", "environment", "production", "contract", "player", "comment", "enter", "occur", "alone", "significant", "drug", "wall", "series", "direct", "success", "tomorrow", "director", "clearly", "lack", "review", "depend", "race", "recognise", "window", "purpose", "department", "gain", "tree", "college", "argue", "board", "holiday", "mark", "church", "machine", "achieve", "item", "prove", "cent", "season", "floor", "stuff", "wide", "anyone", "method", "analysis", "election", "military", "hotel", "club", "below", "movie", "doctor", "discussion", "sorry", "challenge", "nation", "nearly", "statement", "link", "despite", "introduce", "advantage", "ready", "marry", "strike", "mile", "seek", "ability", "unit", "card", "hospital", "quickly", "interview", "agreement", "release", "tax", "solution", "capital", "popular", "specific", "beautiful", "fear", "aim", "television", "serious", "target", "degree", "pull", "red", "husband", "access", "movement", "treat", "identify", "loss", "shall", "modern", "pressure", "bus", "treatment", "conference", "yourself", "supply", "village", "worth", "natural", "express", "indicate", "attend", "brother", "investment", "score", "organise", "trip", "beyond", "sleep", "fish", "promise", "potential", "energy", "trouble", "relation", "touch", "file", "middle", "bar", "suffer", "strategy", "deep", "except", "clean", "tend", "advance", "fill", "star", "network", "generally", "operation", "match", "avoid", "seat", "throw", "task", "normal", "goal", "associate", "blue", "positive", "option", "box", "huge", "message", "instance", "style", "cold", "push", "quarter", "assume", "baby", "successful", "sing", "doubt", "competition", "theory", "propose", "reference", "argument", "adult", "fly", "document", "pattern", "application", "hot", "obviously", "unclear", "bill", "search", "separate", "central", "career", "anyway", "speech", "dog", "officer", "throughout", "oil", "dress", "profit", "guess", "fun", "protect", "resource", "science", "disease", "balance", "damage", "basis", "author", "basic", "encourage", "hair", "male", "operate", "reflect", "exercise", "useful", "restaurant", "income", "property", "previous", "dark", "imagine", "OK", "earn", "daughter", "post", "newspaper", "define", "conclusion", "clock", "everybody", "weekend", "perform", "professional", "mine", "debate", "memory", "green", "song", "object", "maintain", "credit", "ring", "discover", "dead", "afternoon", "prefer", "extend", "possibility", "direction", "facility", "variety", "daily", "clothes", "screen", "track", "dance", "completely", "female", "responsibility", "original", "sister", "rock", "dream", "nor", "university", "easily", "agency", "dollar", "garden", "fix", "ahead", "cross", "yeah", "candidate", "weight", "legal", "proposal", "version", "conversation", "somebody", "pound", "magazine", "shape", "sea", "immediately", "welcome", "smile", "communication", "agent", "traditional", "replace", "judge", "herself", "suddenly", "generation", "estimate", "favourite", "difficulty", "purchase", "shoot", "announce", "unless", "independent", "recommend", "survey", "majority", "stick", "request", "rich", "wind", "none", "exchange", "budget", "famous", "blood", "appropriate", "block", "warm", "count", "scene", "writer", "content", "prevent", "safe", "invite", "mix", "element", "effective", "correct", "medical", "admit", "beat", "telephone", "copy", "committee", "aware", "advice", "glass", "trial", "stress", "radio", "administration", "complex", "text", "context", "ride", "directly", "heavy", "remove", "conduct", "equipment", "otherwise", "title", "extra", "executive", "chair", "expensive", "sample", "sex", "deliver", "video", "connection", "primary", "weather", "collect", "inform", "principle", "straight", "appeal", "highly", "trust", "wonderful", "flat", "absolutely", "flow", "fair", "additional", "responsible", "farm", "collection", "hang", "negative", "band", "relative", "tour", "alternative", "software", "pair", "ship", "attitude", "cheap", "double", "leg", "observe", "sentence", "print", "progress", "truth", "nobody", "examine", "lay", "speed", "politics", "reply", "display", "transfer", "perfect", "slightly", "overall", "intend", "user", "respond", "dinner", "slow", "regular", "physical", "apart", "suit", "federal", "reveal", "percentage", "peace", "status", "crime", "decline", "decade", "launch", "warn", "consumer", "favour", "dry", "partner", "institution", "spot", "horse", "eventually", "heat", "excite", "reader", "importance", "distance", "guide", "grant", "taxi", "feed", "pain", "sector", "mistake", "ensure", "satisfy", "chief", "cool", "expert", "wave", "south", "labour", "surface", "library", "excellent", "edge", "camp", "audience", "lift", "procedure", "email", "global", "struggle", "advertise", "select", "surround", "extent", "river", "annual", "fully", "contrast", "roll", "reality", "photograph", "artist", "conflict", "entire", "presence", "crowd", "corner", "gas", "shift", "net", "category", "secretary", "defence", "quick", "cook", "spread", "nuclear", "scale", "driver", "ball", "cry", "introduction", "requirement", "north", "confirm", "senior", "photo", "refuse", "transport", "emerge", "map", "concept", "island", "reform", "neither", "football", "survive", "flight", "left", "solve", "neighbour", "background", "technique", "traffic", "improvement", "tool", "consequence", "circumstance", "smoke", "reaction", "rain", "busy", "lesson", "brain", "mass", "funny", "contribute", "failure", "schedule", "speaker", "bottom", "adopt", "combine", "mountain", "waste", "hide", "marriage", "ticket", "meal", "colleague", "bag", "repeat", "equal", "expression", "plus", "extremely", "owner", "plane", "commercial", "lady", "duty", "strength", "connect", "cultural", "arrange", "scheme", "payment", "unfortunately", "brief", "bird", "demonstrate", "contribution", "appreciate", "chapter", "secret", "apparently", "novel", "union", "burn", "trend", "initial", "pleasure", "suggestion", "critical", "gather", "mostly", "earth", "pop", "essential", "desire", "promote", "currently", "employ", "path", "topic", "beach", "attract", "engage", "powerful", "flower", "crisis", "settle", "boat", "aid", "fan", "kitchen", "twice", "fresh", "delay", "safety", "engineer", "quiet", "insurance", "nurse", "divide", "length", "investigation", "package", "somewhere", "expand", "commit", "obvious", "jump", "weapon", "relatively", "host", "winter", "district", "broad", "tire", "spring", "spirit", "lunch", "actual", "pool", "battle", "tradition", "cash", "hardly", "award", "coach", "experiment", "consideration", "strange", "code", "possibly", "threat", "accident", "impossible", "revenue", "enable", "afraid", "active", "conclude", "religious", "cancer", "convince", "vary", "environmental", "sun", "healthy", "blow", "volume", "location", "invest", "proceed", "wash", "actor", "glad", "tape", "whereas", "opposite", "stone", "sum", "murder", "monitor", "soldier", "finance", "hate", "egg", "concert", "shock", "comfortable", "usual", "carefully", "pack", "recall", "wine", "camera", "swim", "manufacture", "theatre", "cycle", "coffee", "totally", "museum", "visitor", "freedom", "construction", "dear", "objective", "moreover", "onto", "historical", "oppose", "branch", "vehicle", "scientist", "route", "bind", "belong", "taste", "tonight", "fashion", "danger", "bomb", "army", "dangerous", "decrease", "hurt", "council", "editor", "normally", "sight", "generate", "gift", "delivery", "deny", "guest", "anybody", "bedroom", "quote", "climb", "basically", "violence", "minister", "mainly", "mouth", "noise", "manner", "gun", "square", "occasion", "familiar", "ignore", "destroy", "affair", "civil", "locate", "citizen", "temperature", "gold", "domestic", "load", "belief", "troop", "technical", "remind", "arrangement", "skin", "prison", "switch", "acquire", "corporate", "fairly", "wood", "participate", "tough", "tear", "representative", "capacity", "border", "shake", "assessment", "shoe", "ought", "ad", "fee", "hall", "regulation", "escape", "studio", "proper", "relax", "tourist", "component", "afford", "lawyer", "suspect", "cup", "description", "confidence", "industrial", "complain", "perspective", "error", "arrest", "assess", "register", "asset", "signal", "finger", "relevant", "explore", "leadership", "commitment", "wake", "necessarily", "bright", "frame", "slowly", "bond", "hire", "hole", "tie", "internal", "chain", "literature", "victim", "threaten", "division", "secure", "amaze", "device", "birth", "forest", "root", "factory", "expense", "channel", "investigate", "recommendation", "rank", "typical", "west", "friendly", "resident", "provision", "concentrate", "plenty", "export", "entirely", "strongly", "bridge", "consist", "graduate", "brand", "moral", "insist", "combination", "abuse", "ice", "principal", "master", "definitely", "session", "grade", "nevertheless", "predict", "previously", "protection", "largely", "wed", "rent", "shot", "appearance", "reasonable", "guarantee", "till", "theme", "judgement", "odd", "approve", "loan", "definition", "elect", "atmosphere", "farmer", "comparison", "characteristic", "licence", "rely", "narrow", "succeed", "identity", "desk", "permit", "seriously", "wild", "empty", "commission", "unique", "association", "instrument", "investor", "practical", "tea", "lovely", "soft", "row", "youth", "lock", "fuel", "expectation", "employment", "celebrate", "sexual", "shoulder", "breath", "increasingly", "import", "bottle", "ourselves", "sheet", "engine", "cast", "notion", "conservative", "journey", "opposition", "relief", "debt", "honour", "outcome", "blame", "explanation", "arise", "musical", "recover", "dad", "stretch", "declare", "retire", "tiny", "careful", "suitable", "native", "fruit", "analyse", "witness", "mail", "terrible", "researcher", "ordinary", "selection", "anywhere", "mental", "participant", "vision", "personality", "specifically", "fat", "entry", "fellow", "chemical", "capture", "tip", "discount", "peak", "chairman", "proportion", "ear", "disappear", "shout", "yard", "constant", "significantly", "hill", "considerable", "instruction", "intelligence", "ideal", "folk", "surely", "guard", "cat", "somewhat", "kiss", "presentation", "joint", "compete", "poll", "weak", "faith", "reduction", "reserve", "complaint", "bore", "mission", "somehow", "tone", "neighbourhood", "passenger", "justice", "phase", "thin", "rush", "formal", "religion", "employer", "reject", "latter", "plate", "ban", "steal", "protest", "index", "sad", "frequently", "circle", "helpful", "command", "attractive", "sick", "impression", "unable", "joke", "sky", "column", "electronic", "impose", "criminal", "besides", "properly", "ancient", "coast", "ill", "kick", "closely", "multiple", "yield", "via", "legislation", "county", "unlike", "mobile", "assistant", "implement", "chart", "attach", "hell", "everywhere", "advise", "household", "acknowledge", "reward", "east", "hat", "academic", "voter", "meanwhile", "furthermore", "accuse", "scientific", "wage", "absence", "construct", "remark", "medicine", "professor", "rare", "intention", "dozen", "settlement", "gap", "widely", "minimum", "northern", "estate", "equally", "expose", "alive", "shut", "victory", "resolve", "critic", "variable", "enormous", "sweet", "permanent", "emotion", "pursue", "tall", "urge", "enemy", "appoint", "milk", "talent", "smell", "prior", "priority", "online", "phrase", "pilot", "stable", "merely", "resolution", "communicate", "injury", "vast", "exhibition", "producer", "regional", "immediate", "incident", "childhood", "draft", "slip", "accompany", "politician", "angry", "knock", "seed", "salary", "illustrate", "imply", "breakfast", "temporary", "liberal", "lake", "qualify", "competitive", "truly", "hi", "yellow", "habit", "disk", "core", "emotional", "aircraft", "metal", "existence", "bone", "panel", "prime", "appointment", "emphasise", "maximum", "effectively", "elsewhere", "bother", "initiative", "sharp", "diet", "motion", "grey", "plastic", "complicate", "discipline", "disappoint", "boss", "assumption", "freeze", "extreme", "passage", "reputation", "forth", "negotiation", "mechanism", "coat", "democracy", "pocket", "lucky", "crash", "observation", "meat", "concentration", "implication", "deserve", "unusual", "defend", "classic", "king", "interaction", "repair", "collapse", "borrow", "fundamental", "dish", "abroad", "soul", "capable", "defeat", "presidential", "perfectly", "enhance", "proud", "emergency", "educational", "distinguish", "substantial", "nearby", "manufacturer", "slide", "valuable", "personally", "breast", "cope", "approximately", "accommodation", "highlight", "reporter", "climate", "shirt", "exception", "corporation", "chip", "winner", "encounter", "brown", "breathe", "excuse", "partly", "tennis", "urban", "confuse", "southern", "output", "beauty", "massive", "install", "calculate", "mouse", "mathematics", "upper", "creation", "occupy", "outline", "sufficient", "update", "luck", "preserve", "split", "swing", "illness", "journalist", "sudden", "advertisement", "consistent", "originally", "aside", "comfort", "secondly", "severe", "gene", "prospect", "snow", "plot", "neck", "criteria", "primarily", "integrate", "criticism", "convention", "bet", "retain", "sequence", "plain", "volunteer", "rural", "calm", "abandon", "examination", "rapidly", "efficient", "revolution", "delight", "spell", "premise", "lean", "dramatic", "differ", "grateful", "protein", "bike", "distribute", "intellectual", "derive", "crucial", "unemployment", "wheel", "crop", "minority", "origin", "interpretation", "gentleman", "drama", "landscape", "educate", "toy", "fault", "exhibit", "minor", "hunt", "storm", "thick", "achievement", "negotiate", "dominate", "supplier", "prize", "typically", "peer", "pension", "wing", "acquisition", "laughter", "deeply", "recognition", "electricity", "assistance", "roof", "retirement", "respectively", "variation", "ultimately", "proof", "soil", "smart", "layer", "upset", "tooth", "representation", "preparation", "dispute", "agenda", "emphasis", "edition", "silver", "entertainment", "honest", "undertake", "retail", "wire", "unlikely", "gay", "publication", "slight", "unknown", "framework", "zone", "restrict", "trace", "inch", "equivalent", "solid", "enterprise", "elderly", "owe", "governor", "uniform", "port", "pitch", "arrival", "contemporary", "gate", "ease", "beer", "specialist", "assure", "profile", "mood", "episode", "crack", "numerous", "submit", "symptom", "virtually", "era", "coverage", "tension", "cable", "sensitive", "nervous", "input", "isolate", "prisoner", "eliminate", "tight", "wet", "secondary", "welfare", "recruit", "exclude", "string", "cloud", "persuade", "inspire", "grand", "hence", "crew", "phenomenon", "pupil", "false", "assist", "restore", "formula", "alter", "perceive", "routine", "sink", "stare", "anymore", "hero", "supporter", "convert", "steady", "metre", "truck", "nose", "beside", "sail", "disaster", "pace", "heavily", "devote", "terrorist", "justify", "vital", "fascinate", "external", "spare", "whenever", "depression", "guilty", "underlie", "mum", "distinction", "satisfaction", "incorporate", "pour", "sweep", "obligation", "sir", "evaluate", "anger", "pub", "perception", "naturally", "currency", "database", "initially", "territory", "stream", "rarely", "height", "apparent", "western", "expansion", "constantly", "muscle", "scare", "badly", "everyday", "boundary", "ratio", "essay", "scream", "withdraw", "pollution", "disorder", "furniture", "symbol", "apartment", "demonstration", "analyst", "platform", "steel", "cake", "transform", "wound", "restriction", "foundation", "designer", "strain", "innovation", "album", "singer", "trail", "trap", "loose", "extension", "wealth", "gradually", "tank", "evil", "remarkable", "tune", "grass", "invitation", "transition", "frighten", "bid", "breed", "extraordinary", "brilliant", "adviser", "stem", "reverse", "mode", "mirror", "awful", "pose", "adjust", "creative", "nowadays", "poem", "agricultural", "competitor", "alcohol", "festival", "vegetable", "van", "confident", "planet", "curve", "knee", "overcome", "web", "depth", "entrance", "log", "giant", "god", "portion", "substance", "extensive", "interpret", "independence", "sugar", "inner", "harm", "consult", "pink", "shadow", "strip", "smooth", "intervention", "impress", "exam", "vice", "radical", "similarly", "behave", "loud", "dimension", "subsequent", "infection", "jacket", "efficiency", "dirty", "statistic", "regularly", "resort", "iron", "broadcast", "membership", "bread", "blind", "pure", "bloody", "ally", "quantity", "bend", "mature", "briefly", "alarm", "disturb", "sustain", "flood", "poverty", "crazy", "cite", "newly", "parallel", "gender", "sponsor", "boot", "accurate", "dealer", "button", "burden", "desert", "mate", "occasionally", "shareholder", "bowl", "discovery", "resistance", "bath", "frequency", "criticise", "tap", "philosophy", "lip", "attribute", "apologise", "approval", "grab", "entitle", "lend", "involvement", "exposure", "conventional", "digital", "translate", "edit", "formation", "deposit", "pleasant", "overseas", "advocate", "establishment", "summary", "rough", "pen", "recovery", "seal", "tube", "tower", "characterise", "specify", "exact", "spin", "operator", "infant", "dig", "drag", "mount", "wrap", "anticipate", "dependent", "specialise", "angle", "chicken", "anxiety", "virus", "precisely", "rival", "offence", "detect", "teenager", "admire", "moderate", "surgery", "musician", "significance", "shower", "illegal", "charity", "universal", "cigarette", "constitute", "adequate", "consultant", "historian", "cousin", "visual", "stupid", "keen", "ethnic", "twin", "clinical", "eastern", "forecast", "segment", "custom", "adapt", "sand", "cap", "prompt", "charm", "react", "lecture", "venture", "compound", "rescue", "mess", "preference", "comprehensive", "incentive", "league", "dialogue", "cream", "rapid", "cancel", "regret", "dismiss", "margin", "beneath", "opponent", "resist", "capability", "absolute", "correspond", "stroke", "dare", "barrier", "rid", "divorce", "ruin", "bury", "counsel", "tendency", "frequent", "motor", "survival", "counter", "possess", "permission", "valley", "float", "mad", "greatly", "visible", "electric", "impressive", "evolution", "awareness", "violent", "slave", "wealthy", "architecture", "acceptable", "journal", "coal", "measurement", "random", "successfully", "depress", "illustration", "burst", "privilege", "buyer", "mutual", "rail", "motivate", "laboratory", "mortgage", "promotion", "passion", "champion", "fulfil", "dust", "dedicate", "roughly", "skirt", "province", "March", "evaluation", "compromise", "accomplish", "weakness", "announcement", "salt", "glance", "opera", "contest", "brush", "embarrass", "gallery", "genetic", "aggressive", "chest", "format", "literary", "govern", "embrace", "praise", "silent", "pump", "publisher", "celebration", "golf", "compensation", "classical", "weigh", "versus", "deficit", "modify", "flash", "friendship", "profession", "literally", "equation", "gesture", "entertain", "fantastic", "assign", "inflation", "historic", "injure", "remote", "therapy", "orange", "twist", "personnel", "imagination", "disagree", "throat", "insight", "tackle", "forever", "exceed", "expenditure", "joy", "pregnant", "reliable", "gear", "click", "poet", "fortune", "ceremony", "pile", "pig", "mixture", "automatically", "scholar", "psychological", "dramatically", "stake", "creature", "partnership", "participation", "clause", "penalty", "chamber", "fancy", "poetry", "chat", "clothing", "evolve", "sake", "shelf", "boost", "tail", "possession", "abortion", "curious", "wooden", "boom", "tale", "democratic", "maintenance", "consequently", "pot", "cow", "strengthen", "whilst", "constraint", "fold", "bin", "undergo", "potentially", "scope", "pretend", "diversity", "allege", "pride", "intense", "inquiry", "resign", "craft", "strict", "concrete", "shell", "damn", "distinct", "humour", "limitation", "indication", "stability", "wise", "neglect", "compose", "jail", "shelter", "mere", "carbon", "regulate", "cheese", "trigger", "pipe", "destruction", "guitar", "flag", "piano", "magic", "mystery", "ski", "whisper", "rear", "menu", "species", "moon", "presumably", "bless", "airline", "amendment", "grandmother", "jury", "cooperation", "civilian", "composition", "coin", "regardless", "scan", "bunch", "racial", "greet", "hopefully", "sanction", "trick", "paragraph", "maker", "chocolate", "stimulate", "belt", "potato", "narrative", "tissue", "barely", "invent", "tourism", "pro", "stair", "hesitate", "shine", "motivation", "romantic", "firmly", "interior", "stomach", "nowhere", "pray", "championship", "servant", "immigrant", "excess", "complexity", "liability", "surprisingly", "extract", "implementation", "bias", "differently", "catalogue", "continuous", "golden", "stamp", "guideline", "envelope", "knife", "biological", "consume", "luxury", "weekly", "wherever", "bite", "printer", "firstly", "anxious", "adventure", "fence", "exhaust", "attraction", "ocean", "quietly", "castle", "veteran", "reflection", "nerve", "determination", "altogether", "fiction", "carpet", "cluster", "confusion", "hurry", "logic", "controversial", "raw", "grammar", "revise", "hint", "hook", "bell", "liquid", "panic", "uncle", "rice", "slope", "happiness", "genuine", "vessel", "verb", "reckon", "silly", "transportation", "harbour", "comedy", "chase", "storage", "universe", "horrible", "sheep", "lover", "rat", "portrait", "innocent", "substitute", "supplement", "adjustment", "reasonably", "filter", "flexible", "abstract", "tent", "precise", "distant", "stranger", "shade", "grain", "situate", "summarise", "leap", "snap", "probability", "leather", "uncertainty", "swear", "refugee", "shore", "monthly", "comprise", "stir", "excitement", "sigh", "pregnancy", "experimental", "institutional", "slice", "wander", "empire", "subsequently", "gentle", "attendance", "ownership", "qualification", "suspend", "functional", "voluntary", "pale", "stain", "athlete", "organic", "tongue", "server", "structural", "website", "fool", "alongside", "unite", "gently", "compute", "wipe", "weird", "gaze", "fade", "cough", "hypothesis", "royal", "theoretical", "curtain", "mayor", "darkness", "aunt", "tournament", "registration", "fragment", "listener", "immigration", "tender", "density", "ugly", "module", "faithfully", "autumn", "cheek", "attachment", "holder", "solar", "grin", "rose", "noun", "fortunate", "alright", "lazy", "hello", "hunger", "insure", "ashamed", "blog", "thirst"]</script>
 
   <div class="foot">
     <p class="sync-line" id="sync-line"></p>
@@ -1987,13 +2040,15 @@ td.w.speaking{color:var(--sea)}
     }
   }
 
+  function syncReady(){ if (!window.__bsSyncReady){ window.__bsSyncReady = true; document.dispatchEvent(new CustomEvent("bs:sync-ready")); } }
   async function pull(){
-    if (!key || status.blocked){ loading = false; return; }
+    if (!key || status.blocked){ loading = false; syncReady(); return; }
     status.state = "busy"; render();
     try {
       const data = await call({ action: "pull" });
       const changed = applyRemote(data.state);
       loading = false;
+      syncReady();
       retryDelay = 15000;
       status.state = "ok"; status.at = Date.now(); render();
       if (dirty.length) schedulePush(300);
@@ -2001,6 +2056,7 @@ td.w.speaking{color:var(--sea)}
       else if (status.reload && !busy()) location.reload();   // отложенное обновление, проверка уже закончилась
     } catch(e){
       loading = false;
+      syncReady();
       fail(e);
     }
   }
@@ -2914,7 +2970,9 @@ td.w.speaking{color:var(--sea)}
 
     function endRound(){
       if (round === 1) recordFirstRound();
-      if (!failedCards.length){ finish(); return; }
+      // решение ученика (23.09.2026): без бесконечных кругов — второй круг по ошибкам, и глава открыта;
+      // что не вспомнилось, вернётся завтра в «Повторении»
+      if (!failedCards.length || round >= 2){ finish(); return; }
       const names = [];
       failedCards.forEach(function(c){ if (names.indexOf(c.item.w) === -1) names.push(c.item.w); });
       const again = failedCards.slice();
@@ -2922,7 +2980,7 @@ td.w.speaking{color:var(--sea)}
         '<div class="tr-result">' +
           '<h3>Круг ' + round + ' закончен</h3>' +
           '<p class="tr-list">Не вспомнились: ' + names.map(function(w){ return "<b>" + esc(w) + "</b>"; }).join(", ") + '</p>' +
-          '<p class="tr-stats">Повторим их — глава откроется, когда вспомнятся все.</p>' +
+          '<p class="tr-stats">Повторим их ещё раз — и глава откроется. Что не вспомнится, вернётся завтра в «Повторении».</p>' +
           '<div class="bar"><button class="act gate-next" type="button">Повторить</button></div>' +
         '</div>';
       box.querySelector(".gate-next").addEventListener("click", function(){ round++; start(again); });
@@ -2960,6 +3018,7 @@ td.w.speaking{color:var(--sea)}
         writeJSON("blue-suitcase-stats-" + list, stats);
         writeJSON("blue-suitcase-review-" + list, review);
         writeJSON("blue-suitcase-failday-" + list, failDays);
+        if (window.bsSRS) window.bsSRS.fromTrainer(list === "phrases" ? "p" : "w", r.confirmed, r.difficult, []);
         log.push({ ts: Date.now(), list: list, g: "разминка перед главой " + n, dir: "both", k: r.known, n: r.asked });
       });
       writeJSON("blue-suitcase-sessions", log.slice(-150));
@@ -2975,11 +3034,10 @@ td.w.speaking{color:var(--sea)}
       const hard = result.learned.difficult.concat(result.phrases.difficult);
       box.innerHTML =
         '<div class="tr-result">' +
-          '<h3>Всё вспомнилось</h3>' +
+          '<h3>' + (hard.length ? "Разминка закончена" : "Всё вспомнилось") + '</h3>' +
           '<p class="tr-stats">С первого раза в обе стороны: ' + known + " из " + total + ". Глава " + n + " открыта.</p>" +
-          (result.learned.confirmed.length ? '<p class="tr-list">В словарь: <span class="ok-words">' + list(result.learned.confirmed) + '</span></p>' : "") +
-          (result.phrases.confirmed.length ? '<p class="tr-list">Обороты засчитаны: <span class="ok-words">' + list(result.phrases.confirmed) + '</span></p>' : "") +
-          (hard.length ? '<p class="tr-list">Трудные — вернутся в следующую главу: ' + hard.map(function(w){ return "<b>" + esc(w) + "</b>"; }).join(", ") + '</p>' : "") +
+          (result.learned.confirmed.concat(result.phrases.confirmed).length ? '<p class="tr-list">Вспомнились в обе стороны с первого раза: <span class="ok-words">' + list(result.learned.confirmed.concat(result.phrases.confirmed)) + '</span></p>' : "") +
+          (hard.length ? '<p class="tr-list">Трудные — вернутся завтра в «Повторении» и в следующую главу: ' + hard.map(function(w){ return "<b>" + esc(w) + "</b>"; }).join(", ") + '</p>' : "") +
           '<p class="tr-stats gate-sendline"></p>' +
           '<div class="bar"><button class="act gate-read" type="button">Читать главу</button></div>' +
         '</div>';
@@ -3447,26 +3505,627 @@ td.w.speaking{color:var(--sea)}
     PHRASE_LIST_NAMES.forEach(function(list){ all += (DATA[list] || []).length; });
     return { total: Object.keys(set).length, all: all, set: set };
   }
+  // ======================= ПОВТОРЕНИЕ ПО РАСПИСАНИЮ: «Сегодня» =======================
+  // Решение ученика (23.09.2026). Всё, что ученик учит, живёт в расписании: коробки 1–6 с интервалами
+  // 1, 3, 7, 16, 35, 90 дней. «Помню» — следующая коробка, «С трудом» — тот же интервал ещё раз,
+  // «Не помню» — завтра снова (коробка 1) и ещё раз в конце занятия. В словарь («усвоено») слово
+  // попадает, когда его напечатали по-английски с русского после перерыва не меньше недели;
+  // провал выбрасывает его из словаря до следующего такого раза. Новых — до 10 слов в день:
+  // сначала слова пройденной главы (в день отчёта), потом частотные слова NGSL (без A1).
+  const SRS_KEY = "blue-suitcase-srs";
+  const SYN_KEY = "blue-suitcase-syn";
+  const IV = [0, 1, 3, 7, 16, 35, 90];
+  const NEW_PER_DAY = 10;
+  const MASTER_GAP = 7;
+  const SEC_PER_CARD = 12;
+
+  function dayStr(d){ return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  function todayStr(){ return dayStr(new Date()); }
+  function addDays(s, n){ const p = s.split("-").map(Number); const d = new Date(p[0], p[1] - 1, p[2]); d.setDate(d.getDate() + n); return dayStr(d); }
+  function daysBetween(a, b){
+    const pa = a.split("-").map(Number), pb = b.split("-").map(Number);
+    return Math.round((new Date(pb[0], pb[1] - 1, pb[2]) - new Date(pa[0], pa[1] - 1, pa[2])) / 86400000);
+  }
+
+  // ---- всё, что книга знает о словах и оборотах: перевод, пометка, пример ----
+  const ITEM = { w: Object.create(null), p: Object.create(null) };
+  function addItem(kind, r, list){
+    const cur = ITEM[kind][r.w];
+    const note = (kind === "w" && list === "learned") ? "" : (r.n || "");
+    if (!cur){ ITEM[kind][r.w] = { w: r.w, t: r.t, n: note, list: list, g: r.g }; return; }
+    if (!cur.n && note) cur.n = note;
+  }
+  WORD_LISTS.forEach(function(l){ (DATA[l] || []).forEach(function(r){ addItem("w", r, l); }); });
+  PHRASE_LIST_NAMES.forEach(function(l){ (DATA[l] || []).forEach(function(r){ addItem("p", r, l); }); });
+  const A1_SET = Object.create(null); (DATA.a1 || []).forEach(function(r){ A1_SET[r.w] = 1; });
+  const LEARNED_SET = Object.create(null); (DATA.learned || []).forEach(function(r){ LEARNED_SET[r.w] = r; });
+  const CHAPTER_PHRASES = Object.create(null); (DATA.phrases || []).forEach(function(r){ CHAPTER_PHRASES[r.w] = r; });
+  const NEW_ORDER = readJSON("data-ngsl-order");
+
+  // примеры из мини-словарей глав
+  const EXAMPLE = Object.create(null);
+  document.querySelectorAll(".chapter table tr").forEach(function(tr){
+    const w = tr.querySelector("td.w"), ex = tr.querySelector("td.ex");
+    if (!w || !ex) return;
+    const key = w.textContent.trim(), text = ex.textContent.trim();
+    if (!/[a-z]/i.test(text) || /[а-яё]/i.test(text)) return;
+    if (!EXAMPLE[key]) EXAMPLE[key] = text;
+    const bare = key.replace(/^to /, "");
+    if (!EXAMPLE[bare]) EXAMPLE[bare] = text;
+  });
+  function exampleOf(kind, it){
+    if (EXAMPLE[it.w]) return EXAMPLE[it.w];
+    if (kind === "p" && it.n && /[a-z]/i.test(it.n) && it.n.split(" ").length > 2 && !/[а-яё]/i.test(it.n)) return it.n;
+    return "";
+  }
+  function escRe(s){ return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }
+  // пример с пропуском на месте слова; если слово в примере не нашлось — пустая строка
+  function clozeOf(kind, it){
+    const ex = exampleOf(kind, it);
+    if (!ex) return "";
+    const base = it.w.replace(/^to /, "");
+    const re = new RegExp("\\b" + escRe(base).replace(/\s+/g, "\\s+") + "(s|es|ed|d|ing)?\\b", "i");
+    if (!re.test(ex)) return "";
+    return ex.replace(re, "____");
+  }
+
+  // ---- синонимы: другие слова книги с тем же смыслом по-русски ----
+  function ruTokens(t){
+    return String(t || "").toLowerCase().replace(/\([^)]*\)/g, " ").split(/[,;\/]/)
+      .map(function(x){ return x.replace(/\s[—–-]\s.*$/, "").trim(); })
+      .filter(function(x){ return x.length > 1; });
+  }
+  const RU_INDEX = Object.create(null);
+  ["w", "p"].forEach(function(kind){
+    Object.keys(ITEM[kind]).forEach(function(w){
+      ruTokens(ITEM[kind][w].t).forEach(function(tok){ (RU_INDEX[tok] = RU_INDEX[tok] || []).push(w); });
+    });
+  });
+  function learnedSyns(){ return readKey(SYN_KEY, "{}"); }
+  function synonymsOf(kind, w){
+    const out = [];
+    ruTokens(ITEM[kind][w] && ITEM[kind][w].t).forEach(function(tok){
+      (RU_INDEX[tok] || []).forEach(function(x){ if (x !== w && out.indexOf(x) === -1) out.push(x); });
+    });
+    (learnedSyns()[kind + "|" + w] || []).forEach(function(x){ if (out.indexOf(x) === -1) out.unshift(x); });
+    return out;
+  }
+  function rememberSyn(kind, w, other){
+    const m = learnedSyns(), k = kind + "|" + w;
+    m[k] = m[k] || [];
+    if (m[k].indexOf(other) === -1) m[k].push(other);
+    try { localStorage.setItem(SYN_KEY, JSON.stringify(m)); } catch(e){}
+  }
+
+  // ---- проверка напечатанного ----
+  function norm(x){ return String(x || "").toLowerCase().replace(/[’`´]/g, "'").replace(/[.,!?;:"«»()]/g, " ").replace(/\s+/g, " ").trim(); }
+  function bare(x){ return norm(x).replace(/^(to|a|an|the) /, ""); }
+  function variantsOf(it){
+    const v = [bare(it.w)];
+    const am = String(it.n || "").match(/AmE\s+([a-z][a-z' -]*)/i);
+    if (am) v.push(bare(am[1]));
+    return v;
+  }
+  function lev(a, b){
+    const m = a.length, n = b.length;
+    if (!m) return n; if (!n) return m;
+    let prev = [], cur = [];
+    for (let j = 0; j <= n; j++) prev[j] = j;
+    for (let i = 1; i <= m; i++){
+      cur = [i];
+      for (let j = 1; j <= n; j++){
+        cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+      }
+      prev = cur;
+    }
+    return prev[n];
+  }
+  function checkTyped(kind, w, answer){
+    const it = ITEM[kind][w], a = bare(answer);
+    if (!a) return { res: "empty" };
+    const vs = variantsOf(it);
+    if (vs.indexOf(a) !== -1) return { res: "exact" };
+    const best = Math.min.apply(null, vs.map(function(v){ return lev(a, v); }));
+    const tol = vs[0].length >= 12 ? 2 : (vs[0].length >= 4 ? 1 : 0);
+    if (best <= tol) return { res: "almost" };
+    if (synonymsOf(kind, w).map(bare).indexOf(a) !== -1) return { res: "synonym" };
+    return { res: "wrong" };
+  }
+  function patternOf(w){
+    return w.split(" ").map(function(part){ return part.replace(/[a-z]/gi, "_").split("").join(" "); }).join("   ");
+  }
+  function lettersWord(n){ const d = n % 10, h = n % 100; return (d === 1 && h !== 11) ? "буква" : (d >= 2 && d <= 4 && (h < 12 || h > 14)) ? "буквы" : "букв"; }
+
+  // ---- хранилище расписания ----
+  function lastChapter(){
+    let n = 0;
+    document.querySelectorAll("article.chapter").forEach(function(a){ n = Math.max(n, Number(a.id.replace(/\D/g, "")) || 0); });
+    return n;
+  }
+  function chapterDone(n){
+    if (n < lastChapter()) return true;
+    try { return !!localStorage.getItem("blue-suitcase-done-ch" + n); } catch(e){ return false; }
+  }
+  function groupDone(g){
+    const m = /^глава (\d+)$/.exec(g || "");
+    return m ? chapterDone(Number(m[1])) : true;
+  }
+  function spread(w, t, base){
+    let h = 0; for (let i = 0; i < w.length; i++) h = (h * 31 + w.charCodeAt(i)) >>> 0;
+    return addDays(t, base + (h % 4));
+  }
+  // Первый запуск: переносим то, что было до расписания (решение ученика, 23.09.2026):
+  // слова, уже засчитанные в словарь, остаются в нём и встают на проверку через 7–10 дней;
+  // слова пройденных глав — в работу (трудные — на сегодня, остальные — на завтра); трудные из тренажёров — на сегодня.
+  let migrationAllowed = window.__bsSyncReady === true || !(function(){ try { return localStorage.getItem("bs-sync-key"); } catch(e){ return null; } })();
+  function migrateSrs(){
+    const t = todayStr(), s = { v: 1, since: t, w: {}, p: {} };
+    Object.keys(confirmedVocab().set).forEach(function(w){ s.w[w] = { b: 3, d: spread(w, t, 7), l: t, x: 0, m: 1, a: t, s: "mig" }; });
+    Object.keys(confirmedPhrases().set).forEach(function(w){ s.p[w] = { b: 3, d: spread(w, t, 7), l: t, x: 0, m: 1, a: t, s: "mig" }; });
+    (DATA.learned || []).forEach(function(r){
+      if (s.w[r.w] || !groupDone(r.g)) return;
+      s.w[r.w] = { b: 1, d: r.s === "for_review" ? t : addDays(t, 1), l: t, x: 0, m: 0, a: t, s: "mig" };
+    });
+    (DATA.phrases || []).forEach(function(r){
+      if (s.p[r.w] || !/^глава \d+$/.test(r.g || "") || !groupDone(r.g)) return;
+      s.p[r.w] = { b: 1, d: r.s === "for_review" ? t : addDays(t, 1), l: t, x: 0, m: 0, a: t, s: "mig" };
+    });
+    WORD_LISTS.forEach(function(list){
+      readKey("blue-suitcase-review-" + list, "[]").forEach(function(w){
+        if (ITEM.w[w] && !(s.w[w] && s.w[w].m)) s.w[w] = { b: 1, d: t, l: t, x: 1, m: 0, a: t, s: "mig" };
+      });
+    });
+    PHRASE_LIST_NAMES.forEach(function(list){
+      readKey("blue-suitcase-review-" + list, "[]").forEach(function(w){
+        if (ITEM.p[w] && !(s.p[w] && s.p[w].m)) s.p[w] = { b: 1, d: t, l: t, x: 1, m: 0, a: t, s: "mig" };
+      });
+    });
+    if (migrationAllowed) saveSrs(s);
+    return s;
+  }
+  // Первый перенос ждёт первого обмена синхронизации: иначе устройство, которое ещё не подтянуло
+  // прогресс с другого, перенесло бы неполный словарь. До тех пор расписание считается в памяти.
+  function loadSrs(){
+    let s = null;
+    try { s = JSON.parse(localStorage.getItem(SRS_KEY) || "null"); } catch(e){ s = null; }
+    if (!s || !s.w || !s.p) s = migrateSrs();
+    return s;
+  }
+  function saveSrs(s){ try { localStorage.setItem(SRS_KEY, JSON.stringify(s)); } catch(e){} }
+
+  // слова пройденных глав — в расписание в день отчёта; known из трекера, которых ещё нет, — на проверку через неделю
+  function ensureChapterWords(){
+    if (!migrationAllowed) return;
+    const s = loadSrs(), t = todayStr(); let changed = false;
+    (DATA.learned || []).forEach(function(r){
+      if (s.w[r.w] || !groupDone(r.g)) return;
+      const chapter = /^глава \d+$/.test(r.g || "");
+      if (chapter) s.w[r.w] = { b: 1, d: addDays(t, 1), l: t, x: 0, m: 0, a: t, s: "ch" };
+      else if (r.s === "known") s.w[r.w] = { b: 3, d: addDays(t, 7), l: t, x: 0, m: 0, a: t, s: "known" };
+      else s.w[r.w] = { b: 1, d: t, l: t, x: 0, m: 0, a: t, s: "debt" };
+      changed = true;
+    });
+    (DATA.phrases || []).forEach(function(r){
+      if (s.p[r.w] || !/^глава \d+$/.test(r.g || "") || !groupDone(r.g)) return;
+      s.p[r.w] = { b: 1, d: addDays(t, 1), l: t, x: 0, m: 0, a: t, s: "ch" };
+      changed = true;
+    });
+    if (changed) saveSrs(s);
+  }
+
+  function nextNew(count, s, skip){
+    const out = [];
+    function ok(w){ return ITEM.w[w] && !A1_SET[w] && !LEARNED_SET[w] && !s.w[w] && out.indexOf(w) === -1 && !(skip && skip[w]); }
+    for (let i = 0; i < NEW_ORDER.length && out.length < count; i++) if (ok(NEW_ORDER[i])) out.push(NEW_ORDER[i]);
+    ["a2", "b1w", "b2w", "c1w", "c2w"].forEach(function(l){
+      (DATA[l] || []).forEach(function(r){ if (out.length < count && ok(r.w)) out.push(r.w); });
+    });
+    return out;
+  }
+
+  function srsSummary(){
+    const s = loadSrs(), t = todayStr(), t1 = addDays(t, 1), t2 = addDays(t, 2);
+    const r = { dueW: 0, dueP: 0, masteredW: 0, masteredP: 0, workW: 0, workP: 0, day1: 0, day2: 0, newToday: 0,
+                setW: Object.create(null), setP: Object.create(null) };
+    ["w", "p"].forEach(function(kind){
+      Object.keys(s[kind]).forEach(function(w){
+        const e = s[kind][w];
+        if (!ITEM[kind][w]) return;
+        if (e.m){ if (kind === "w"){ r.masteredW++; r.setW[w] = 1; } else { r.masteredP++; r.setP[w] = 1; } }
+        else if (kind === "w") r.workW++; else r.workP++;
+        if (e.d <= t){ if (kind === "w") r.dueW++; else r.dueP++; }
+        else if (e.d === t1) r.day1++;
+        else if (e.d === t2) r.day2++;
+        if (kind === "w" && e.a === t && (e.s === "ch" || e.s === "new")) r.newToday++;
+      });
+    });
+    r.room = Math.max(0, NEW_PER_DAY - r.newToday);
+    r.fresh = nextNew(r.room, s);
+    r.cards = r.dueW + r.dueP + r.fresh.length * 2;   // новое слово — показ и сразу вспоминание
+    r.minutes = Math.max(1, Math.round(r.cards * SEC_PER_CARD / 60));
+    return r;
+  }
+
+  // оценка: 0 — не помню, 1 — с трудом, 2 — помню; typed — напечатал с русского
+  function gradeSrs(kind, w, g, typed){
+    const s = loadSrs(), e = s[kind][w], t = todayStr();
+    if (!e) return { mastered: false };
+    const gap = e.l ? daysBetween(e.l, t) : 0;
+    let mastered = false;
+    if (g === 0){ e.b = 1; e.d = addDays(t, 1); e.x = (e.x || 0) + 1; e.m = 0; }
+    else if (g === 1){ e.b = Math.max(1, e.b || 1); e.d = addDays(t, IV[e.b]); }
+    else {
+      e.b = Math.min(6, (e.b || 0) + 1); e.d = addDays(t, IV[e.b]);
+      if (typed && gap >= MASTER_GAP && !e.m){ e.m = 1; mastered = true; }
+    }
+    e.l = t;
+    saveSrs(s);
+    return { mastered: mastered, lapses: e.x || 0 };
+  }
+
+  // результаты свободного тренажёра и разминки тоже работают на расписание
+  function fromTrainer(kind, confirmed, failed, recheckOnly){
+    const s = loadSrs(), t = todayStr(); let changed = false;
+    (confirmed || []).forEach(function(w){
+      if (!ITEM[kind][w] || s[kind][w]) return;
+      s[kind][w] = { b: 3, d: addDays(t, 7), l: t, x: 0, m: 0, a: t, s: "tr" }; changed = true;   // вспомнил в обе стороны — проверка через неделю
+    });
+    (failed || []).forEach(function(w){
+      if (!ITEM[kind][w]) return;
+      const e = s[kind][w];
+      if (e){ e.b = 1; e.d = addDays(t, 1); e.x = (e.x || 0) + 1; e.m = 0; e.l = t; changed = true; return; }
+      if (recheckOnly && recheckOnly.indexOf(w) !== -1) return;   // первое «Не знаю» в справочнике — ещё не повод учить
+      s[kind][w] = { b: 1, d: addDays(t, 1), l: t, x: 1, m: 0, a: t, s: "tr" }; changed = true;
+    });
+    if (changed){ saveSrs(s); document.dispatchEvent(new CustomEvent("bs:vocab-changed")); }
+  }
+  window.bsSRS = { fromTrainer: fromTrainer };
+
+  // ---- кнопка «Повторение» в указателе ----
+  function renderTodayTab(sum){
+    const el = document.getElementById("today-n");
+    if (!el) return;
+    const tab = el.closest(".view-tab");
+    if (sum.cards){
+      el.innerHTML = '<b>' + sum.cards + '</b> · ≈' + sum.minutes + ' мин';
+      tab.classList.add("has-due");
+    } else {
+      el.textContent = "✓ всё на сегодня";
+      tab.classList.remove("has-due");
+    }
+  }
+
+  // ---- экран «Сегодня» ----
+  const TYPE_LABEL = { "new": "новое слово", en: "английское → русское", ear: "на слух → русское",
+                       type: "русское → английское · напечатай", practice: "закрепляем · напечатай" };
+  let T = null;   // идущее занятие
+  function todayBox(){ return document.getElementById("today"); }
+  function sayB(text, big){
+    if (!(window.bsTTS && window.bsTTS.supported)) return "";
+    return '<button type="button" class="say-btn' + (big ? " big" : "") + '" data-say="' + esc(text) + '" aria-label="Произнести">' +
+           window.bsTTS.icon + (big ? "<span>Послушать ещё раз</span>" : "") + '</button>';
+  }
+  function speak(text){ if (window.bsTTS && window.bsTTS.supported) window.bsTTS.say(text); }
+  function cardType(e){
+    if ((e.b || 1) <= 1) return "en";
+    if (e.b === 4 && window.bsTTS && window.bsTTS.supported) return "ear";
+    return "type";
+  }
+
+  function renderDashboard(){
+    const box = todayBox();
+    if (!box || T) return;   // идёт занятие или на экране его итог — не перебиваем
+    const sum = srsSummary();
+    const dueTotal = sum.dueW + sum.dueP;
+    box.innerHTML =
+      '<h2>' + (sum.cards ? "На сегодня " + sum.cards + " " + cardsWord(sum.cards) : "На сегодня всё повторено") + '</h2>' +
+      '<p class="td-line">' +
+        '<span><b>' + dueTotal + '</b> к повторению</span>' +
+        '<span><b>' + sum.fresh.length + '</b> ' + (sum.fresh.length === 1 ? "новое слово" : "новых слов") + '</span>' +
+        (sum.cards ? '<span>≈ <b>' + sum.minutes + '</b> мин</span>' : "") +
+      '</p>' +
+      (sum.cards ? '<div class="bar"><button class="act td-start" type="button">Начать</button></div>' : "") +
+      '<p class="td-next">Завтра — ' + sum.day1 + ", послезавтра — " + sum.day2 + " к повторению.</p>" +
+      '<p class="td-total">Усвоено: <b>' + sum.masteredW + "</b> " + wordsWord(sum.masteredW) + ", <b>" + sum.masteredP + "</b> " + phrasesWord(sum.masteredP) +
+        '. В работе: ' + sum.workW + " " + wordsWord(sum.workW) + ", " + sum.workP + " " + phrasesWord(sum.workP) + ".</p>" +
+      '<details class="td-how"><summary>Как это работает</summary><div class="answer-body">' +
+        '<p>Каждое слово повторяется, когда вот-вот начнёт забываться: через 1, 3, 7, 16, 35 и 90 дней. «Помню» — следующий интервал, «С трудом» — тот же ещё раз, «Не помню» — завтра снова и ещё раз в конце занятия.</p>' +
+        '<p>Карточки меняются: сначала узнаёшь слово с английского, потом печатаешь его с русского, потом узнаёшь на слух. В словарь («усвоено») слово попадает, когда ты напечатал его по-английски после перерыва не меньше недели.</p>' +
+        '<p>Новых — до 10 в день: слова пройденной главы (в день отчёта), потом самые частотные слова английского, которых ты ещё не учишь. «Уже знаю» на новом слове не тратит лимит — слово встанет на проверку через неделю.</p>' +
+        '<p>Написал синоним — книга подскажет, какое слово загадано, и спросит ещё раз с первой буквой, без штрафа.</p>' +
+      '</div></details>';
+    const st = box.querySelector(".td-start");
+    if (st) st.addEventListener("click", startSession);
+  }
+  function cardsWord(n){ const d = n % 10, h = n % 100; return (d === 1 && h !== 11) ? "карточка" : (d >= 2 && d <= 4 && (h < 12 || h > 14)) ? "карточки" : "карточек"; }
+
+  function startSession(){
+    ensureChapterWords();
+    const s = loadSrs(), t = todayStr();
+    const due = [];
+    ["w", "p"].forEach(function(kind){
+      Object.keys(s[kind]).forEach(function(w){ const e = s[kind][w]; if (e.d <= t && ITEM[kind][w]) due.push({ kind: kind, w: w, e: e }); });
+    });
+    due.sort(function(a, b){ return a.e.d < b.e.d ? -1 : a.e.d > b.e.d ? 1 : (a.e.b || 0) - (b.e.b || 0); });
+    const sum = srsSummary();
+    T = { cards: [], pos: 0, over: false, graded: Object.create(null), shown: Object.create(null),
+          stats: { g2: 0, g1: 0, g0: 0, learned: 0, known: 0 },
+          mastered: { w: [], p: [] }, debt: { w: [], p: [] }, lapsed: [], syn: [], skip: Object.create(null) };
+    let fi = 0;
+    due.forEach(function(d, i){
+      T.cards.push({ kind: d.kind, w: d.w, type: cardType(d.e), graded: true });
+      if ((i + 1) % 3 === 0 && fi < sum.fresh.length) T.cards.push({ kind: "w", w: sum.fresh[fi++], type: "new" });
+    });
+    while (fi < sum.fresh.length) T.cards.push({ kind: "w", w: sum.fresh[fi++], type: "new" });
+    renderCard();
+  }
+  function later(card, gap){ T.cards.splice(Math.min(T.pos + 1 + (gap || 3), T.cards.length), 0, card); }
+
+  function gradeButtons(){
+    return '<div class="tr-buttons td-grades">' +
+      '<button class="dont" type="button" data-g="0">Не помню</button>' +
+      '<button class="hard" type="button" data-g="1">С трудом</button>' +
+      '<button class="know" type="button" data-g="2">Помню</button></div>';
+  }
+
+  function renderCard(){
+    const box = todayBox();
+    if (!T) return;
+    if (T.pos >= T.cards.length){ finishSession(); return; }
+    const c = T.cards[T.pos], it = ITEM[c.kind][c.w];
+    if (!it){ T.pos++; renderCard(); return; }
+    const head = '<div class="tr-progress">' + (T.pos + 1) + " / " + T.cards.length + " · " + TYPE_LABEL[c.type] +
+                 (c.kind === "p" ? " · оборот" : "") + '</div>';
+    const note = it.n ? '<span class="tr-note">' + esc(it.n) + '</span>' : "";
+    const ex = exampleOf(c.kind, it);
+    const exHtml = ex ? '<p class="td-example">' + esc(ex) + '</p>' : "";
+    let html = "";
+    if (c.type === "new"){
+      html = '<div class="tr-card">' + head +
+        '<div class="tr-word">' + esc(it.w) + sayB(it.w) + '</div>' +
+        '<div class="tr-answer">' + esc(it.t) + note + '</div>' + exHtml +
+        '<div class="tr-buttons"><button class="act td-learn" type="button">Учить</button>' +
+        '<button class="act ghost td-known" type="button">Уже знаю</button></div></div>';
+    } else if (c.type === "en" || c.type === "ear"){
+      html = '<div class="tr-card">' + head +
+        (c.type === "ear" ? '<div class="tr-word tr-ear">' + sayB(it.w, true) + '</div>'
+                          : '<div class="tr-word">' + esc(it.w) + sayB(it.w) + '</div>') +
+        '<div class="tr-answer blank">' + (c.type === "ear" ? '<span class="tr-ear-word">' + esc(it.w) + '</span>' : "") + esc(it.t) + note + '</div>' +
+        '<div class="td-reveal-ex" hidden>' + exHtml + '</div>' +
+        '<div class="tr-buttons td-show"><button class="act ghost tr-show" type="button">Показать ответ</button></div>' +
+        '<div class="td-grade-wrap" hidden>' + gradeButtons() + '</div></div>';
+    } else {
+      const cloze = clozeOf(c.kind, it);
+      const syns = synonymsOf(c.kind, c.w).filter(function(x){ return bare(x) !== bare(it.w); }).slice(0, 3);
+      const first = c.hint ? '<p class="td-hint">Начинается на <b>' + esc(it.w.charAt(0)) + '</b></p>' : "";
+      const letters = it.w.replace(/[^a-z]/gi, "").length;
+      html = '<div class="tr-card td-type">' + head +
+        '<div class="tr-word td-ru">' + esc(it.t) + '</div>' +
+        (cloze ? '<p class="td-cloze">' + esc(cloze) + '</p>' : "") +
+        '<p class="td-pattern" aria-label="' + letters + " " + lettersWord(letters) + '">' + esc(patternOf(it.w)) + '</p>' +
+        (syns.length ? '<p class="td-excl">не: ' + syns.map(esc).join(", ") + '</p>' : "") + first +
+        '<form class="td-form" autocomplete="off"><input class="tr-input" id="td-input" type="text" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Слово по-английски">' +
+        '<button class="act" type="submit">Проверить</button></form>' +
+        '<div class="tr-buttons td-aux">' +
+          (c.hint ? "" : '<button class="act ghost td-first" type="button">Первая буква</button>') +
+          '<button class="act ghost td-giveup" type="button">Не помню</button></div>' +
+        '<div class="td-feedback"></div></div>';
+    }
+    box.innerHTML = html;
+    wireCard(c, it);
+  }
+
+  function next(){ T.pos++; renderCard(); }
+  function applyGrade(c, g, typed){
+    const key = c.kind + "|" + c.w;
+    if (!c.graded || T.graded[key] !== undefined) return;
+    T.graded[key] = g;
+    T.stats["g" + g]++;
+    const r = gradeSrs(c.kind, c.w, g, typed);
+    if (r.mastered) T.mastered[c.kind].push(c.w);
+    if (g === 0){
+      T.lapsed.push(c.w);
+      // в главу: слова и обороты глав, а из справочников — те, что не даются трижды
+      const chapterItem = c.kind === "w" ? !!LEARNED_SET[c.w] : !!CHAPTER_PHRASES[c.w];
+      if ((chapterItem || r.lapses >= 3) && T.debt[c.kind].indexOf(c.w) === -1) T.debt[c.kind].push(c.w);
+      later({ kind: c.kind, w: c.w, type: "practice", hint: true, graded: false }, 3);
+    }
+  }
+
+  function wireCard(c, it){
+    const box = todayBox();
+    if (c.type === "new"){
+      speak(it.w);
+      box.querySelector(".td-learn").addEventListener("click", function(){
+        const s = loadSrs(), t = todayStr();
+        if (!s.w[c.w]){ s.w[c.w] = { b: 1, d: addDays(t, 1), l: t, x: 0, m: 0, a: t, s: "new" }; saveSrs(s); }
+        T.stats.learned++;
+        later({ kind: "w", w: c.w, type: "practice", graded: false }, 2);   // сразу же вспомнить
+        next();
+      });
+      box.querySelector(".td-known").addEventListener("click", function(){
+        const s = loadSrs(), t = todayStr();
+        if (!s.w[c.w]){ s.w[c.w] = { b: 3, d: addDays(t, 7), l: t, x: 0, m: 0, a: t, s: "known" }; saveSrs(s); }
+        T.stats.known++;
+        T.skip[c.w] = 1;
+        const more = nextNew(1, loadSrs(), T.skip);   // «уже знаю» не тратит лимит новых
+        if (more.length) T.cards.push({ kind: "w", w: more[0], type: "new" });
+        next();
+      });
+      return;
+    }
+    if (c.type === "en" || c.type === "ear"){
+      if (c.type === "ear" || c.type === "en") speak(it.w);
+      box.querySelector(".tr-show").addEventListener("click", function(){
+        box.querySelector(".tr-answer").classList.remove("blank");
+        box.querySelector(".td-reveal-ex").hidden = false;
+        box.querySelector(".td-show").hidden = true;
+        box.querySelector(".td-grade-wrap").hidden = false;
+        if (c.type === "ear") speak(it.w);
+      });
+      box.querySelectorAll(".td-grades button").forEach(function(b){
+        b.addEventListener("click", function(){ applyGrade(c, Number(b.dataset.g), false); next(); });
+      });
+      return;
+    }
+    // печатаем с русского
+    const form = box.querySelector(".td-form"), input = box.querySelector("#td-input"), fb = box.querySelector(".td-feedback");
+    setTimeout(function(){ try { input.focus(); } catch(e){} }, 30);
+    let usedHint = !!c.hint, done = false;
+    const first = box.querySelector(".td-first");
+    if (first) first.addEventListener("click", function(){
+      usedHint = true;
+      first.insertAdjacentHTML("afterend", '<span class="td-hint-inline">начинается на <b>' + esc(it.w.charAt(0)) + '</b></span>');
+      first.remove();
+      input.focus();
+    });
+    function finish(g, msg, extra){
+      done = true;
+      input.disabled = true;
+      box.querySelector(".td-aux").hidden = true;
+      form.querySelector("button").disabled = true;
+      fb.innerHTML = msg + '<div class="td-answer-line"><b>' + esc(it.w) + '</b>' + sayB(it.w) + ' — ' + esc(it.t) + '</div>' + (extra || "") +
+                     '<div class="tr-buttons"><button class="act td-next" type="button">Дальше</button></div>';
+      speak(it.w);
+      const nb = fb.querySelector(".td-next");
+      nb.addEventListener("click", function(){ if (g !== null) applyGrade(c, g, true); next(); });
+      setTimeout(function(){ try { nb.focus(); } catch(e){} }, 30);
+      return nb;
+    }
+    function synonymPath(word, manual){
+      rememberSyn(c.kind, c.w, word);
+      if (manual) T.syn.push(c.w + " ← " + word);
+      fb.innerHTML = "";
+      done = true;
+      input.disabled = true;
+      box.querySelector(".td-aux").hidden = true;
+      form.querySelector("button").disabled = true;
+      fb.innerHTML = '<p class="td-ok">Верно по смыслу — <b>' + esc(word) + '</b> тоже так переводится. Но здесь загадано другое слово:</p>' +
+        '<div class="td-answer-line"><b>' + esc(it.w) + '</b>' + sayB(it.w) + ' — ' + esc(it.t) + '</div>' +
+        '<p class="td-small">Спрошу его ещё раз в конце занятия, с первой буквой. Без штрафа.</p>' +
+        '<div class="tr-buttons"><button class="act td-next" type="button">Дальше</button></div>';
+      speak(it.w);
+      // оценка — по второй попытке
+      later({ kind: c.kind, w: c.w, type: "type", hint: true, graded: c.graded }, 4);
+      if (c.graded) c.graded = false;
+      fb.querySelector(".td-next").addEventListener("click", next);
+    }
+    form.addEventListener("submit", function(e){
+      e.preventDefault();
+      if (done) return;
+      const r = checkTyped(c.kind, c.w, input.value);
+      if (r.res === "empty"){ input.focus(); return; }
+      if (r.res === "exact"){
+        finish(usedHint ? 1 : 2, '<p class="td-ok">' + (usedHint ? "Верно — с подсказкой, это «с трудом»." : "Верно!") + '</p>');
+      } else if (r.res === "almost"){
+        finish(1, '<p class="td-almost">Почти: ты написал <b>' + esc(input.value.trim()) + '</b>. Засчитываю как «с трудом».</p>');
+      } else if (r.res === "synonym"){
+        synonymPath(input.value.trim(), false);
+      } else {
+        const typed = input.value.trim();
+        const nb = finish(0, '<p class="td-bad">Не то: ты написал <b>' + esc(typed) + '</b>.</p>',
+          '<p class="td-small"><button type="button" class="self-mark td-mine">Моё слово тоже подходит</button></p>');
+        const mine = fb.querySelector(".td-mine");
+        mine.addEventListener("click", function(){ synonymPath(typed, true); });
+        void nb;
+      }
+    });
+    box.querySelector(".td-giveup").addEventListener("click", function(){
+      if (done) return;
+      finish(0, '<p class="td-bad">Запоминай:</p>');
+    });
+  }
+
+  function finishSession(){
+    const box = todayBox();
+    T.over = true;
+    const st = T.stats, list = function(a){ return a.map(esc).join(", "); };
+    const mastered = T.mastered.w.concat(T.mastered.p);
+    const debt = T.debt.w.concat(T.debt.p);
+    const lapsed = T.lapsed.filter(function(w, i, a){ return a.indexOf(w) === i; });
+    box.innerHTML =
+      '<div class="tr-result">' +
+        '<h3>Готово на сегодня</h3>' +
+        '<p class="td-line"><span><b>' + st.g2 + '</b> помню</span><span><b>' + st.g1 + '</b> с трудом</span><span><b>' + st.g0 + '</b> не помню</span>' +
+          '<span><b>' + st.learned + '</b> новых</span>' + (st.known ? '<span><b>' + st.known + '</b> уже знал</span>' : "") + '</p>' +
+        (mastered.length ? '<p class="tr-list">В словарь — вспомнились через неделю и больше: <span class="ok-words">' + list(mastered) + '</span></p>' : "") +
+        (lapsed.length ? '<p class="tr-list">Вернутся завтра: ' + lapsed.map(function(w){ return "<b>" + esc(w) + "</b>"; }).join(", ") + '</p>' : "") +
+        (debt.length ? '<p class="tr-list">Уйдут в следующую главу: ' + list(debt) + '</p>' : "") +
+        (T.syn.length ? '<p class="tr-list">Твои синонимы — пришлю себе, чтобы уточнить перевод: ' + list(T.syn) + '</p>' : "") +
+        '<p class="tr-stats td-sendline"></p>' +
+        '<div class="bar"><button class="act ghost td-close" type="button">Закрыть</button></div>' +
+      '</div>';
+    box.querySelector(".td-close").addEventListener("click", function(){ T = null; renderDashboard(); });
+    document.dispatchEvent(new CustomEvent("bs:vocab-changed"));
+    // в книгу — только то, что меняет трекер и главы
+    const entries = [];
+    const stamp = new Date().toISOString();
+    function entry(list, conf, diff, extra){
+      return Object.assign({ sentAt: stamp, kind: "trainer", list: list, confirmed: conf, difficult: diff,
+        text: "Повторение на сегодня" + (list === "today-phrases" ? " (обороты)" : "") + " — результаты\n" +
+              "Усвоено, в словарь (вспомнил через неделю и больше): " + (conf.join(", ") || "нет") + "\n" +
+              "Не даются, в главу: " + (diff.join(", ") || "нет") }, extra || {});
+    }
+    if (T.mastered.w.length || T.debt.w.length || T.syn.length){
+      const e = entry("today", T.mastered.w, T.debt.w, T.syn.length ? { synonyms: T.syn } : null);
+      if (T.syn.length) e.text += "\nСиноним вместо загаданного слова (уточнить перевод): " + T.syn.join(", ");
+      entries.push(e);
+    }
+    if (T.mastered.p.length || T.debt.p.length){
+      entries.push(entry("today-phrases", T.mastered.p, T.debt.p));
+      entries[entries.length - 1].sentAt = new Date(Date.parse(stamp) + 1).toISOString();
+    }
+    if (entries.length) sendEntries(entries, box.querySelector(".td-sendline"));
+  }
+
+  async function sendEntries(entries, line){
+    const say = function(t, bad){ if (line){ line.textContent = t; line.style.color = bad ? "var(--no)" : "var(--ok)"; } };
+    let outbox = [];
+    try { outbox = JSON.parse(localStorage.getItem("blue-suitcase-outbox") || "[]") || []; } catch(e){ outbox = []; }
+    const batch = outbox.concat(entries);
+    const keep = function(){ try { localStorage.setItem("blue-suitcase-outbox", JSON.stringify(batch)); } catch(e){} };
+    if (typeof window.__bsSend !== "function"){ keep(); say("не отправлено — результаты уйдут со следующей проверкой", true); return; }
+    say("отправляю результаты…");
+    try {
+      const r = await window.__bsSend(batch);
+      if (r === "unavailable"){ keep(); say("книга открыта файлом — результаты уйдут, когда откроешь её по ссылке", true); return; }
+      try { localStorage.removeItem("blue-suitcase-outbox"); } catch(e){}
+      say("результаты отправлены");
+    } catch(err){ keep(); say("не удалось отправить — результаты уйдут со следующей проверкой", true); }
+  }
+
+  function syncReady(){
+    if (migrationAllowed) return;
+    migrationAllowed = true;
+    loadSrs();                  // сохранит перенос, если его ещё не было
+    ensureChapterWords(); renderVocabCount(); renderDashboard();
+  }
+  document.addEventListener("bs:sync-ready", syncReady);
+  setTimeout(syncReady, 12000);   // связи нет долго — работаем с тем, что есть на устройстве
+  ensureChapterWords();
+  document.addEventListener("bs:report-sent", function(){ ensureChapterWords(); renderVocabCount(); renderDashboard(); });
+  document.addEventListener("bs:trainer-reload", function(){ renderDashboard(); });
+  document.addEventListener("bs:vocab-changed", function(){ renderDashboard(); });
+
   function renderVocabCount(){
-    const r = confirmedVocab();
-    const ph = confirmedPhrases();
-    renderTabCounts(r.set, ph.set);
+    const sum = srsSummary();
+    renderTabCounts(sum.setW, sum.setP);
+    renderTodayTab(sum);
     const el = document.getElementById("vocab-count");
     if (!el) return;
     el.innerHTML = '<span class="vc-label">Словарь</span>' +
-      '<span class="vc-num vc-words"><b>' + r.total + "</b> " + wordsWord(r.total) + "</span>" +
-      '<span class="vc-num vc-phrases"><b>' + ph.total + "</b> " + phrasesWord(ph.total) + "</span>";
-    el.title = "Подтверждённый запас — слова, по которым есть доказательство владения:\n" +
-      "· из входного теста и трекера: " + r.src.test + "\n" +
-      "· вспомнил в тренажёре в обе стороны: " + r.src.two + "\n" +
-      "· написал верно в свободном ответе: " + r.src.spell + "\n" +
-      "Слова из списка трудных не считаются (" + r.src.removed + " снято).\n" +
-      "Обороты считаются отдельно: подтверждено " + ph.total + " из " + ph.all + ". Нажми, чтобы открыть список слов.";
+      '<span class="vc-num vc-words"><b>' + sum.masteredW + "</b> " + wordsWord(sum.masteredW) + "</span>" +
+      '<span class="vc-num vc-phrases"><b>' + sum.masteredP + "</b> " + phrasesWord(sum.masteredP) + "</span>" +
+      '<span class="vc-work">в работе: ' + sum.workW + " " + wordsWord(sum.workW) + " · " + sum.workP + " " + phrasesWord(sum.workP) + "</span>";
+    el.title = "Усвоено — слова и обороты, которые вспомнились и напечатались по-английски после перерыва не меньше недели.\n" +
+      "В работе — остальное в расписании повторения: " + sum.workW + " " + wordsWord(sum.workW) + ", " + sum.workP + " " + phrasesWord(sum.workP) + ".\n" +
+      "Нажми, чтобы открыть повторение на сегодня.";
   }
   document.addEventListener("bs:vocab-changed", renderVocabCount);
   const vcEl = document.getElementById("vocab-count");
-  if (vcEl) vcEl.addEventListener("click", function(){ showView("learned"); });
+  if (vcEl) vcEl.addEventListener("click", function(){ showView("today"); });
   renderVocabCount();
+  renderDashboard();
 
   // ---------- тренажёр ----------
   document.querySelectorAll(".trainer").forEach(function(root){
@@ -3858,6 +4517,9 @@ td.w.speaking{color:var(--sea)}
       // для A1: первый провал ждёт повторной проверки, провал повторной — в главу
       const toRecheck = recheckRule ? failed.filter(function(f){ return !f.again; }) : [];
       const toChapter = recheckRule ? failed.filter(function(f){ return f.again; }) : failed;
+      // расписание повторения (23.09.2026): вспомнил в обе стороны — проверка через неделю; провал — завтра снова
+      if (window.bsSRS) window.bsSRS.fromTrainer(isPhrases ? "p" : "w", confirmedNow,
+        failed.map(function(f){ return f.w; }), toRecheck.map(function(f){ return f.w; }));
       const failedHtml = !failed.length ? "" : !recheckRule
         ? '<p class="tr-list">Трудные: ' + fmtFailed(failed) + '</p>'
         : (toRecheck.length
@@ -3872,7 +4534,7 @@ td.w.speaking{color:var(--sea)}
             ? ", которые вспомнились и с английского, и с русского"
             : ", которые вспомнились; проверка в одну сторону в счёт не идёт") + '</p>' +
           (confirmedNow.length
-            ? '<p class="tr-list">' + (isPhrases ? "Засчитаны: " : "В словарь: ") + '<span class="ok-words">' + confirmedNow.map(esc).join(", ") + '</span></p>' : "") +
+            ? '<p class="tr-list">Вспомнил в обе стороны — проверю через неделю в «Повторении», тогда и в словарь: <span class="ok-words">' + confirmedNow.map(esc).join(", ") + '</span></p>' : "") +
           failedHtml +
           (waitTomorrow.length
             ? '<p class="tr-list">Вспомнил, но сегодня уже ошибался — засчитается, если вспомнишь завтра или позже: <span class="dim">' + waitTomorrow.map(esc).join(", ") + '</span></p>' : "") +
