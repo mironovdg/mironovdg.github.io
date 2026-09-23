@@ -387,6 +387,37 @@ button.hard:hover{filter:brightness(1.08)}
 .td-example .say-btn{width:26px;height:26px;margin-left:8px}
 .td-example .say-btn svg{width:14px;height:14px}
 
+/* ---------- проверка микрофона ---------- */
+.mic-test[aria-expanded="true"]{border-color:var(--sea);background:var(--sea-soft)}
+.mic-check{margin:12px 0 0;padding:16px 18px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow);font-size:14.5px;color:var(--ink-soft)}
+.mc-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.mc-h{font-family:var(--mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.12em;color:var(--sea)}
+.mc-close{background:none;border:0;font-size:24px;line-height:1;color:var(--rain);cursor:pointer;padding:0 4px}
+.mc-close:hover{color:var(--ink)}
+.mc-dev{margin:6px 0 4px;font-family:var(--mono);font-size:12px;color:var(--rain)}
+.mc-env{list-style:none;margin:0 0 4px;padding:0;display:flex;flex-wrap:wrap;gap:2px 16px;font-family:var(--mono);font-size:12px}
+.mc-env .ok{color:var(--ok)}
+.mc-env .no{color:var(--no)}
+.mc-prev{margin:6px 0 0;font-size:13px;color:var(--rain)}
+.mc-warn{margin:8px 0 0;color:var(--no);font-size:13.5px}
+.mc-step{border-top:1px solid var(--line-soft);margin-top:12px;padding-top:10px}
+.mc-step p{margin:0 0 8px}
+.mc-step .mc-t{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--lamp)}
+.mc-step .say-btn{width:26px;height:26px;margin-left:8px}
+.mc-step .say-btn svg{width:14px;height:14px}
+.mc-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px}
+.mic-check .act{display:inline-flex;align-items:center;gap:8px}
+.mic-check .act.on{background:var(--no);border-color:var(--no);color:var(--paper)}
+.mc-meter{display:inline-block;width:96px;height:8px;border-radius:4px;background:var(--line);overflow:hidden}
+.mc-meter i{display:block;height:100%;width:0;background:var(--ok);transition:width .08s linear}
+.mc-live{font-family:var(--serif);font-style:italic;color:var(--ink)}
+.mc-step .mc-res{min-height:1.3em;margin:8px 0 0}
+.mc-res.ok{color:var(--ok)}
+.mc-res.no{color:var(--no)}
+.mc-res.warn{color:var(--lamp)}
+.mc-sum{margin:12px 0 0;color:var(--ink)}
+.mc-sum:empty{display:none}
+
 /* ---------- как учиться ---------- */
 .method h3{font-family:var(--serif);font-size:20px;font-weight:600;margin:34px 0 10px}
 .method-route{margin:0;padding-left:1.4em;display:grid;gap:10px;max-width:var(--measure)}
@@ -531,6 +562,7 @@ td.w.speaking{color:var(--sea)}
     </div>
   </nav>
   <div class="tts-bar" id="tts-bar"></div>
+  <div class="mic-check" id="mic-check" hidden></div>
   <div class="sync-banner" id="sync-banner" hidden></div>
 
   <!-- ================= ПОВТОРЕНИЕ НА СЕГОДНЯ ================= -->
@@ -599,7 +631,7 @@ td.w.speaking{color:var(--sea)}
       <p>Это свободная тренировка по темам — быстро проверить, что ты уже знаешь. Вспомнил слово в обе стороны с первой попытки — оно встанет в «Повторение» на проверку через неделю, а в словарь попадёт, когда вспомнится там. В справочниках A1–C2 первое «Не знаю» ещё не повод учить слово: оно ждёт повторной проверки, и только если не вспомнилось и на ней — начинает учиться.</p>
 
       <h3>Звук</h3>
-      <p>Слова и реплики звучат голосом твоего браузера или телефона — настройки в строке «Озвучка» под меню: британский или американский голос, обычная или медленная скорость. Режим «на слух» тренирует главное для разговора с носителем — узнавать слово ушами, а не глазами.</p>
+      <p>Слова и реплики звучат голосом твоего браузера или телефона — настройки в строке «Озвучка» под меню: британский или американский голос, обычная или медленная скорость. Режим «на слух» тренирует главное для разговора с носителем — узнавать слово ушами, а не глазами. Кнопка «проверить микрофон» там же покажет, может ли книга на этом устройстве записать и распознать твою речь, — это первый шаг к упражнениям на произношение.</p>
 
       <h3>Почему так</h3>
       <p>Слово запоминается надолго, когда его <b>достаёшь из памяти сам</b>, а не перечитываешь, и когда между повторениями есть паузы, растущие с каждым успехом. Печатать слово труднее, чем узнавать, — зато так учится и написание, и «активный» словарь, из которого говоришь. Повторять понемногу каждый день лучше, чем много раз подряд за один присест: пропустил день — ничего не пропало, карточки просто подождут.</p>
@@ -1732,6 +1764,9 @@ td.w.speaking{color:var(--sea)}
   const RATE = { normal: 0.95, slow: 0.72 };
   const ICON = '<svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true"><path d="M2 6h3l4-3v10l-4-3H2z" fill="currentColor"/>' +
                '<path d="M11.4 5.6a3.4 3.4 0 0 1 0 4.8M13.4 3.6a6.2 6.2 0 0 1 0 8.8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>';
+  const MIC_ICON = '<svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true"><rect x="5.5" y="1.5" width="5" height="8.5" rx="2.5" fill="currentColor"/>' +
+                   '<path d="M3.2 7.6a4.8 4.8 0 0 0 9.6 0M8 12.4v2.3M5.6 14.7h4.8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>';
+  const MIC_BTN = '<button type="button" class="tts-test mic-test" aria-expanded="false" aria-controls="mic-check">' + MIC_ICON + '<span>проверить микрофон</span></button>';
   document.documentElement.classList.toggle("tts-off", !supported);
 
   function readPrefs(){
@@ -1924,7 +1959,7 @@ td.w.speaking{color:var(--sea)}
     const bar = document.getElementById("tts-bar");
     if (!bar) return;
     if (!supported){
-      bar.innerHTML = '<span class="tts-label">Озвучка</span> недоступна в этом браузере';
+      bar.innerHTML = '<span class="tts-label">Озвучка</span> недоступна в этом браузере' + MIC_BTN;
       return;
     }
     const v = pickVoice();
@@ -1943,6 +1978,7 @@ td.w.speaking{color:var(--sea)}
         '<option value="slow"' + (prefs.speed === "slow" ? " selected" : "") + '>медленная</option>' +
       '</select></label>' +
       '<button type="button" class="tts-test" data-say="Hello! Welcome to the Anchor Hotel.">' + ICON + '<span>проверить</span></button>' +
+      MIC_BTN +
       (none ? '<span class="tts-warn">на устройстве нет английского голоса — добавьте его в настройках системы</span>' : "") +
       (fallback ? '<span class="tts-note">' + (prefs.accent === "us" ? "американского" : "британского") +
                   ' голоса на устройстве нет, звучит ' + (v ? v.lang : "другой") + ' — в Edge и на телефоне голосов больше</span>' : "");
@@ -1956,7 +1992,430 @@ td.w.speaking{color:var(--sea)}
     else synth.onvoiceschanged = loadVoices;
   } else renderBar();
 
-  window.bsTTS = { supported: supported, say: say, stop: stop, icon: ICON };
+  window.bsTTS = { supported: supported, say: say, stop: stop, icon: ICON, micIcon: MIC_ICON };
+})();
+</script>
+
+<script>
+// ---------- микрофон: проверка записи и распознавания речи ----------
+// Первый шаг к тренировке произношения (решение ученика, 23.09.2026): на каждом устройстве
+// проверить, есть ли запись с микрофона (getUserMedia + MediaRecorder) и распознавание речи
+// (Web Speech API: в Chrome — служба Google, в Safari — Apple, нужна «Диктовка»). Итог хранится
+// на устройстве (bs-mic, не синхронизируется — у телефона и компьютера он разный) и уходит
+// отчётом kind: "mic". Распознавание пригодится упражнениям на произношение: window.bsMic.
+(function(){
+  "use strict";
+  const PHRASE = "Hello, how are you today?";
+  const STORE_KEY = "bs-mic";
+  const OUTBOX = "blue-suitcase-outbox";
+  const ua = navigator.userAgent || "";
+  const isIOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  const isAndroid = /Android/i.test(ua);
+  const inFrame = (function(){ try { return window.self !== window.top; } catch(e){ return true; } })();
+  function Recognition(){ return window.SpeechRecognition || window.webkitSpeechRecognition || null; }
+  function hasGum(){ return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia); }
+  function icon(){ return (window.bsTTS && window.bsTTS.micIcon) || ""; }
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function wait(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+
+  // ---- что за устройство ----
+  function browserName(){
+    if (/YaBrowser|YaSearchBrowser/i.test(ua)) return "Яндекс Браузер";
+    if (/SamsungBrowser/i.test(ua)) return "Samsung Internet";
+    if (/EdgA?\/|EdgiOS/.test(ua)) return "Edge";
+    if (/OPR\/|OPiOS|OPT\//.test(ua)) return "Opera";
+    if (/Firefox|FxiOS/i.test(ua)) return "Firefox";
+    if (/CriOS|Chrome\//.test(ua)) return "Chrome";
+    if (/Safari/.test(ua)) return "Safari";
+    return "браузер";
+  }
+  function browserVersion(){
+    // метка самого браузера важнее метки движка: у Яндекса в строке есть и Chrome/124, и YaBrowser/24
+    const tags = ["YaBrowser", "SamsungBrowser", "EdgA", "EdgiOS", "Edg", "OPR", "FxiOS", "Firefox", "CriOS", "Chrome", "Version"];
+    for (let i = 0; i < tags.length; i++){
+      const m = new RegExp(tags[i] + "\\/(\\d+)").exec(ua);
+      if (m) return m[1];
+    }
+    return "";
+  }
+  function deviceName(){
+    if (isIOS){
+      const v = /OS (\d+)[_.](\d+)/.exec(ua);
+      return (/iPhone/.test(ua) ? "iPhone" : "iPad") + (v ? " · iOS " + v[1] + "." + v[2] : "");
+    }
+    if (isAndroid){ const v = /Android (\d+(?:\.\d+)?)/.exec(ua); return "Android" + (v ? " " + v[1] : ""); }
+    return /Windows/.test(ua) ? "Windows" : /Mac OS/.test(ua) ? "Mac" : /Linux/.test(ua) ? "Linux" : "компьютер";
+  }
+  function deviceLine(){ return deviceName() + " · " + browserName() + (browserVersion() ? " " + browserVersion() : ""); }
+  function lang(){
+    try { return (JSON.parse(localStorage.getItem("blue-suitcase-tts") || "{}") || {}).accent === "us" ? "en-US" : "en-GB"; }
+    catch(e){ return "en-GB"; }
+  }
+
+  // ---- подсказки по ошибкам: у Android и iPhone они разные ----
+  const PERM_HINT = isIOS
+    ? (browserName() === "Safari"
+        ? "Разрешить: «аА» слева от адреса → «Настройки веб-сайта» → Микрофон → «Разрешить». Или Настройки iPhone → Safari → Микрофон."
+        : "Разрешить: Настройки iPhone → " + browserName() + " → Микрофон.")
+    : isAndroid
+      ? "Разрешить: значок слева от адреса → «Разрешения» → Микрофон. Если там уже разрешено — Настройки Android → Приложения → " + browserName() + " → Разрешения → Микрофон."
+      : "Разрешить: значок слева от адреса → Микрофон → «Разрешить», затем обнови страницу.";
+  function srErrorText(code){
+    const b = browserName();
+    switch (code){
+      case "none":
+        if (isIOS) return b === "Safari" ? "Safari на этом устройстве не распознаёт речь — нужна iOS 14.5 или новее."
+                                         : "На iPhone распознавание речи работает в Safari — открой сайт в Safari.";
+        return b === "Firefox" ? "Firefox не умеет распознавать речь — открой сайт в Chrome."
+                               : "Этот браузер не распознаёт речь — открой сайт в Chrome.";
+      case "not-allowed":
+        return "Нет доступа к микрофону. " + PERM_HINT +
+               (isIOS ? " Проверь и «Диктовку»: Настройки → Основные → Клавиатура → «Включить диктовку»." : "");
+      case "service-not-allowed":
+        if (isIOS) return "Распознавание выключено. Включи «Диктовку»: Настройки → Основные → Клавиатура → «Включить диктовку» (или включи Siri), потом обнови страницу.";
+        if (b !== "Chrome" && b !== "Edge") return b + " не пускает к службе распознавания — открой сайт в Chrome.";
+        return isAndroid
+          ? "Браузер не пускает к службе распознавания. На Android ей нужны службы Google: приложение Google и «Голосовой ввод Google» (Настройки → Система → Язык и ввод)."
+          : "Браузер не пускает к службе распознавания — проверь, что в настройках сайта разрешён микрофон, и обнови страницу.";
+      case "network":
+        return "Нет связи со службой распознавания " + (isIOS ? "Apple" : "Google") + ". Если интернет работает — служба недоступна из этой сети. " +
+               "Запись себя и сравнение с образцом при этом работают.";
+      case "no-speech":
+        return "Ничего не услышал. Нажми ещё раз и начинай говорить сразу, чуть громче и ближе к микрофону.";
+      case "audio-capture":
+        return "Микрофон не найден или занят другим приложением (звонок, диктофон, другая вкладка).";
+      case "language-not-supported":
+        return "Английский для распознавания на этом устройстве не установлен.";
+      case "start-failed":
+        return "Распознавание не запустилось.";
+      default:
+        return "Распознавание не сработало (" + code + ").";
+    }
+  }
+
+  // ---- распознавание: одна фраза → варианты текста ----
+  let srStop = null;
+  function fail(c, e){ const x = new Error(c); x.code = c; if (e) x.detail = String((e && (e.name || e.message)) || e); return x; }
+  function recognize(lng, onInterim){
+    return new Promise(function(resolve, reject){
+      const C = Recognition();
+      if (!C){ reject(fail("none")); return; }
+      let r;
+      try { r = new C(); } catch(e){ reject(fail("start-failed", e)); return; }
+      r.lang = lng; r.interimResults = true; r.maxAlternatives = 3; r.continuous = false;
+      let finals = null, heard = "", err = null, settled = false;
+      const timer = setTimeout(function(){ try { r.stop(); } catch(e){} }, 9000);
+      r.onresult = function(ev){
+        const all = Array.prototype.slice.call(ev.results);
+        const fin = all.filter(function(x){ return x.isFinal; });
+        if (fin.length === 1) finals = Array.prototype.slice.call(fin[0]).map(function(a){ return { t: a.transcript.trim(), c: a.confidence }; });
+        else if (fin.length > 1) finals = [{ t: fin.map(function(x){ return x[0].transcript.trim(); }).join(" "), c: fin[fin.length - 1][0].confidence }];
+        const txt = all.map(function(x){ return x[0].transcript; }).join(" ").replace(/\s+/g, " ").trim();
+        if (txt){ heard = txt; if (onInterim) onInterim(txt); }
+      };
+      r.onerror = function(ev){ err = ev.error || "unknown"; };
+      r.onend = function(){
+        clearTimeout(timer);
+        if (settled) return;
+        settled = true; srStop = null;
+        if (finals && finals.length && finals[0].t) resolve({ alts: finals, lang: lng });
+        else if (heard) resolve({ alts: [{ t: heard, c: 0 }], lang: lng, interimOnly: true });
+        else reject(fail(err || "no-speech"));
+      };
+      srStop = function(){ try { r.stop(); } catch(e){} };
+      try { r.start(); }
+      catch(e){ clearTimeout(timer); settled = true; srStop = null; reject(fail("start-failed", e)); }
+    });
+  }
+  function words(s){
+    return String(s || "").toLowerCase().replace(/[’`´]/g, "'").replace(/[^a-z0-9' ]+/g, " ").split(/\s+/).filter(Boolean);
+  }
+  // какие слова образца есть в услышанном
+  function compare(target, heard){
+    const h = words(heard), hit = [], miss = [];
+    words(target).forEach(function(w){
+      const i = h.indexOf(w);
+      if (i !== -1){ hit.push(w); h.splice(i, 1); } else miss.push(w);
+    });
+    return { hit: hit, miss: miss };
+  }
+  window.bsMic = { recognize: recognize, compare: compare, lang: lang, available: function(){ return !!Recognition(); } };
+
+  // ---- панель проверки ----
+  const R = { rec: null, sr: null, sentSig: "", note: "" };
+  let lastBlob = null;
+  function panel(){ return document.getElementById("mic-check"); }
+  function setRes(el, text, cls){ el.textContent = text; el.className = "mc-res" + (cls ? " " + cls : ""); }
+  function readPrev(){ try { return JSON.parse(localStorage.getItem(STORE_KEY) || "null"); } catch(e){ return null; } }
+  function mark(x){ return !x ? "не проверено" : x.ok ? "работает" : "нет (" + (x.code || "?") + ")"; }
+
+  function render(){
+    const box = panel();
+    const env = [
+      [window.isSecureContext !== false, "защищённое соединение"],
+      [hasGum(), "доступ к микрофону"],
+      [!!window.MediaRecorder, "запись звука"],
+      [!!Recognition(), "распознавание речи"]
+    ];
+    const prev = readPrev();
+    const tts = !!(window.bsTTS && window.bsTTS.supported);
+    box.innerHTML =
+      '<div class="mc-head"><span class="mc-h">Проверка микрофона</span>' +
+        '<button type="button" class="mc-close" aria-label="Закрыть">×</button></div>' +
+      '<p class="mc-dev">' + esc(deviceLine()) + '<span class="mc-perm"></span></p>' +
+      '<ul class="mc-env">' + env.map(function(r){
+        return '<li class="' + (r[0] ? "ok" : "no") + '">' + (r[0] ? "✓ " : "✗ ") + esc(r[1]) + '</li>';
+      }).join("") + '</ul>' +
+      (prev && prev.at ? '<p class="mc-prev">Прошлая проверка здесь (' + esc(prev.at.slice(0, 10)) + '): запись — ' + esc(mark(prev.rec)) +
+                         ', распознавание — ' + esc(mark(prev.sr)) + '.</p>' : "") +
+      (inFrame ? '<p class="mc-warn">Эта копия книги открыта внутри claude.ai — там микрофон, скорее всего, закрыт. Проверяй на сайте mironovdg.github.io.</p>' : "") +
+      '<div class="mc-step">' +
+        '<p class="mc-t">1 · Запись</p>' +
+        '<p>Нажми и 3 секунды говори что угодно — потом послушай, как записалось.</p>' +
+        '<div class="mc-row"><button type="button" class="act mc-rec"' + (hasGum() ? "" : " disabled") + '>' + icon() + '<span>Записать 3 секунды</span></button>' +
+          '<span class="mc-meter" aria-hidden="true"><i></i></span>' +
+          '<button type="button" class="act ghost mc-play" hidden>▶ Послушать запись</button></div>' +
+        '<p class="mc-res" aria-live="polite"></p>' +
+      '</div>' +
+      '<div class="mc-step">' +
+        '<p class="mc-t">2 · Распознавание речи</p>' +
+        '<p>Нажми и скажи по-английски: <span class="cue">' + esc(PHRASE) + '</span>' +
+          (tts ? '<button type="button" class="say-btn" data-say="' + esc(PHRASE) + '" aria-label="Послушать фразу">' + window.bsTTS.icon + '</button>' : "") + '</p>' +
+        '<div class="mc-row"><button type="button" class="act mc-say">' + icon() + '<span>Сказать</span></button>' +
+          '<span class="mc-live" aria-live="polite"></span></div>' +
+        '<p class="mc-res" aria-live="polite"></p>' +
+      '</div>' +
+      '<p class="mc-sum" aria-live="polite"></p>';
+    const steps = box.querySelectorAll(".mc-step");
+    if (!hasGum()){
+      R.rec = { ok: false, code: "no-api" };
+      setRes(steps[0].querySelector(".mc-res"), inFrame
+        ? "Здесь браузер не даёт доступа к микрофону — открой сайт mironovdg.github.io."
+        : "Этот браузер не даёт доступа к микрофону" + (window.isSecureContext === false ? " (страница открыта не по https)." : "."), "no");
+    }
+    if (!Recognition()){
+      R.sr = { ok: false, code: "none" };
+      setRes(steps[1].querySelector(".mc-res"), srErrorText("none"), "no");
+      steps[1].querySelector(".mc-say").disabled = true;
+    }
+    if (navigator.permissions && navigator.permissions.query){
+      navigator.permissions.query({ name: "microphone" }).then(function(p){
+        const txt = { granted: "разрешение дано", denied: "микрофон запрещён", prompt: "спросит разрешение" }[p.state];
+        const el = box.querySelector(".mc-perm");
+        if (el && txt) el.textContent = " · " + txt;
+      }).catch(function(){});
+    }
+    summary();
+  }
+
+  function open(){
+    const box = panel();
+    if (!box) return;
+    if (!box.hidden){ close(); return; }
+    R.rec = null; R.sr = null; R.note = "";
+    box.hidden = false;
+    render();
+    document.querySelectorAll(".mic-test").forEach(function(b){ b.setAttribute("aria-expanded", "true"); });
+  }
+  function close(){
+    const box = panel();
+    if (srStop) srStop();
+    if (box) box.hidden = true;
+    document.querySelectorAll(".mic-test").forEach(function(b){ b.setAttribute("aria-expanded", "false"); });
+    report();
+  }
+
+  // ---- шаг 1: запись ----
+  async function doRecord(btn){
+    const step = btn.closest(".mc-step"), res = step.querySelector(".mc-res");
+    const meter = step.querySelector(".mc-meter i"), play = step.querySelector(".mc-play");
+    if (window.bsTTS) window.bsTTS.stop();
+    if (srStop) srStop();
+    btn.disabled = true; play.hidden = true; setRes(res, "Говори…", "");
+    // AudioContext создаём сразу по нажатию: иначе iPhone заводит его «на паузе» и шкала молчит
+    let ctx = null;
+    try { const AC = window.AudioContext || window.webkitAudioContext; if (AC){ ctx = new AC(); if (ctx.resume) ctx.resume(); } } catch(e){ ctx = null; }
+    let stream;
+    try { stream = await navigator.mediaDevices.getUserMedia({ audio: true }); }
+    catch(err){
+      if (ctx) try { ctx.close(); } catch(e){}
+      const name = (err && err.name) || "Error";
+      R.rec = { ok: false, code: name };
+      setRes(res, name === "NotAllowedError" || name === "SecurityError"
+        ? "Нет доступа к микрофону. " + (inFrame ? "Эта копия открыта внутри claude.ai — проверь на сайте mironovdg.github.io." : PERM_HINT)
+        : name === "NotFoundError" ? "Микрофон не найден."
+        : name === "NotReadableError" ? "Микрофон занят другим приложением (звонок, диктофон)."
+        : "Микрофон не включился (" + name + ").", "no");
+      btn.disabled = false;
+      done();
+      return;
+    }
+    let peak = 0, timer = 0, an = null, buf = null;
+    try {
+      if (ctx){ an = ctx.createAnalyser(); an.fftSize = 1024; ctx.createMediaStreamSource(stream).connect(an); buf = new Uint8Array(an.fftSize); }
+    } catch(e){ an = null; }
+    // громкость меряем таймером, а не requestAnimationFrame: тот замирает, если экран погас или вкладка скрыта
+    if (an) timer = setInterval(function(){
+      an.getByteTimeDomainData(buf);
+      let m = 0;
+      for (let i = 0; i < buf.length; i++){ const d = Math.abs(buf[i] - 128); if (d > m) m = d; }
+      const lvl = m / 128;
+      if (lvl > peak) peak = lvl;
+      meter.style.width = Math.min(100, Math.round(lvl * 180)) + "%";
+    }, 50);
+    let blob = null, mime = "";
+    try {
+      if (window.MediaRecorder){
+        const types = ["audio/webm;codecs=opus", "audio/mp4", "audio/webm", "audio/ogg;codecs=opus"];
+        const type = types.filter(function(t){ return MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(t); })[0] || "";
+        const rec = new MediaRecorder(stream, type ? { mimeType: type } : undefined);
+        const chunks = [];
+        rec.ondataavailable = function(e){ if (e.data && e.data.size) chunks.push(e.data); };
+        const stopped = new Promise(function(r){ rec.onstop = r; });
+        rec.start();
+        await wait(3000);
+        rec.stop();
+        await stopped;
+        mime = rec.mimeType || type;
+        if (chunks.length) blob = new Blob(chunks, mime ? { type: mime } : undefined);
+      } else await wait(3000);
+    } catch(e){ blob = null; }
+    clearInterval(timer);
+    meter.style.width = "0";
+    const trusted = !!(an && ctx && ctx.state === "running");
+    // отпускаем микрофон сразу: иначе iPhone оставляет звук в тихом разговорном динамике
+    stream.getTracks().forEach(function(t){ t.stop(); });
+    if (ctx) try { ctx.close(); } catch(e){}
+    btn.disabled = false;
+    btn.querySelector("span").textContent = "Записать ещё раз";
+    const level = trusted ? Math.round(peak * 100) / 100 : null;
+    lastBlob = blob;
+    if (blob) play.hidden = false;
+    if (level !== null && level < 0.02){
+      R.rec = { ok: false, code: "silence", level: level, mime: mime };
+      setRes(res, "Микрофон включился, но записал тишину. Проверь, не закрыт ли он пальцем или чехлом.", "no");
+    } else {
+      R.rec = { ok: true, level: level, mime: mime, size: blob ? blob.size : 0 };
+      if (level !== null && level < 0.08) setRes(res, "Запись есть, но очень тихо — говори ближе к микрофону.", "warn");
+      else setRes(res, blob ? "Микрофон работает — послушай запись." : "Микрофон работает. Сохранять запись этот браузер не умеет, но распознаванию она не нужна.", "ok");
+    }
+    done();
+  }
+  function doPlay(btn){
+    if (!lastBlob) return;
+    if (window.bsTTS) window.bsTTS.stop();
+    const res = btn.closest(".mc-step").querySelector(".mc-res");
+    const url = URL.createObjectURL(lastBlob);
+    const a = new Audio(url);
+    a.onended = function(){ URL.revokeObjectURL(url); };
+    const p = a.play();
+    if (p && p.catch) p.catch(function(err){
+      R.rec.play = "fail:" + ((err && err.name) || "?");
+      setRes(res, "Запись есть, но браузер не может её проиграть (" + ((err && err.name) || "ошибка") + ").", "warn");
+    });
+  }
+
+  // ---- шаг 2: распознавание ----
+  async function doSay(btn){
+    if (srStop){ srStop(); return; }          // второе нажатие — «я закончил»
+    const step = btn.closest(".mc-step"), res = step.querySelector(".mc-res"), live = step.querySelector(".mc-live");
+    if (window.bsTTS) window.bsTTS.stop();
+    const label = btn.querySelector("span");
+    btn.classList.add("on"); label.textContent = "Слушаю… нажми, когда закончишь";
+    live.textContent = ""; setRes(res, "", "");
+    let l = lang(), out = null, err = null;
+    for (let attempt = 0; attempt < 2; attempt++){
+      try { out = await recognize(l, function(t){ live.textContent = "«" + t + "»"; }); err = null; break; }
+      catch(e){
+        err = e;
+        if (e.code === "language-not-supported" && attempt === 0){ l = l === "en-GB" ? "en-US" : "en-GB"; continue; }
+        break;
+      }
+    }
+    btn.classList.remove("on"); label.textContent = "Сказать ещё раз";
+    if (err){
+      if (err.code === "aborted"){ setRes(res, "Остановлено.", ""); return; }
+      R.sr = { ok: false, code: err.code, lang: l };
+      if (err.detail) R.sr.detail = err.detail;
+      setRes(res, srErrorText(err.code), err.code === "no-speech" ? "warn" : "no");
+      done();
+      return;
+    }
+    let best = null, cmp = null;
+    out.alts.forEach(function(a){
+      const c = compare(PHRASE, a.t);
+      if (!cmp || c.hit.length > cmp.hit.length){ best = a; cmp = c; }
+    });
+    const total = cmp.hit.length + cmp.miss.length;
+    live.textContent = "Услышал: «" + best.t + "»";
+    R.sr = { ok: true, lang: out.lang, heard: best.t, match: cmp.hit.length + "/" + total,
+             conf: typeof best.c === "number" ? Math.round(best.c * 100) / 100 : null, alts: out.alts.length };
+    if (out.interimOnly) R.sr.interimOnly = true;
+    if (!cmp.miss.length) setRes(res, "Распознавание работает — фраза узнана целиком.", "ok");
+    else if (cmp.hit.length >= total - 2) setRes(res, "Распознавание работает: узнано " + cmp.hit.length + " из " + total + " слов, не узнаны: " + cmp.miss.join(", ") + ".", "ok");
+    else setRes(res, "Распознавание работает, но узнано только " + cmp.hit.length + " из " + total + " слов. Скажи ещё раз — медленнее и чётче.", "warn");
+    done();
+  }
+
+  // ---- итог и отчёт ----
+  function summary(){
+    const box = panel();
+    const el = box && box.querySelector(".mc-sum");
+    if (!el) return;
+    const rec = R.rec, sr = R.sr;
+    let t = "";
+    if (sr && sr.ok) t = "Итог: на этом устройстве книга сможет слушать тебя и проверять произношение.";
+    else if (sr && sr.code !== "no-speech" && rec && rec.ok) t = "Итог: запись работает, распознавание — нет. Можно будет слушать себя рядом с образцом, но без автоматической проверки.";
+    else if (sr && sr.code !== "no-speech" && rec && !rec.ok) t = "Итог: микрофон на этом устройстве пока недоступен.";
+    el.textContent = t + (R.note ? (t ? " " : "") + R.note : "");
+  }
+  function save(){
+    try { localStorage.setItem(STORE_KEY, JSON.stringify({ at: new Date().toISOString(), device: deviceLine(), rec: R.rec, sr: R.sr })); } catch(e){}
+  }
+  function done(){
+    save();
+    summary();
+    if (R.rec && R.sr && R.sr.code !== "no-speech") report();
+  }
+  function reportText(){
+    const rec = R.rec, sr = R.sr;
+    return "Проверка микрофона · " + deviceLine() + (inFrame ? " · внутри claude.ai" : "") + ": " +
+      "запись " + (!rec ? "не проверялась" : rec.ok ? "✓" + (rec.level !== null && rec.level !== undefined ? " (уровень " + rec.level + ")" : "") + (rec.mime ? " " + rec.mime : "") : "✗ " + rec.code) +
+      (rec && rec.play ? " (проигрывание: " + rec.play + ")" : "") + "; " +
+      "распознавание " + (!sr ? "не проверялось" : sr.ok ? "✓ " + sr.lang + " «" + sr.heard + "» " + sr.match : "✗ " + sr.code + (sr.lang ? " " + sr.lang : ""));
+  }
+  async function report(){
+    if (!R.rec && !R.sr) return;
+    const sig = JSON.stringify([R.rec && R.rec.ok, R.rec && R.rec.code, R.sr && R.sr.ok, R.sr && R.sr.code]);
+    if (sig === R.sentSig) return;
+    R.sentSig = sig;
+    const entry = { sentAt: new Date().toISOString(), kind: "mic", device: deviceLine(), ua: ua.slice(0, 240), frame: inFrame,
+                    api: { secure: window.isSecureContext !== false, gum: hasGum(), recorder: !!window.MediaRecorder, sr: !!Recognition() },
+                    record: R.rec, recognition: R.sr, text: reportText() };
+    let outbox = [];
+    try { outbox = JSON.parse(localStorage.getItem(OUTBOX) || "[]") || []; } catch(e){ outbox = []; }
+    const batch = outbox.concat([entry]);
+    const keep = function(){ try { localStorage.setItem(OUTBOX, JSON.stringify(batch)); } catch(e){} };
+    if (typeof window.__bsSend !== "function"){ keep(); R.note = "Результат уйдёт мне со следующей отправкой."; summary(); return; }
+    try {
+      const r = await window.__bsSend(batch);
+      if (r === "unavailable"){ keep(); R.note = "Книга открыта файлом — результат уйдёт, когда откроешь её по ссылке."; }
+      else { try { localStorage.removeItem(OUTBOX); } catch(e){} R.note = "Результат проверки отправлен мне."; }
+    } catch(e){ keep(); R.note = "Результат пока не отправился — уйдёт со следующей отправкой."; }
+    summary();
+  }
+
+  document.addEventListener("click", function(e){
+    const t = e.target;
+    if (!t || !t.closest) return;
+    if (t.closest(".mic-test")){ e.preventDefault(); open(); return; }
+    const box = panel();
+    if (!box || box.hidden || !box.contains(t)) return;
+    if (t.closest(".mc-close")) close();
+    else if (t.closest(".mc-rec")) doRecord(t.closest(".mc-rec"));
+    else if (t.closest(".mc-play")) doPlay(t.closest(".mc-play"));
+    else if (t.closest(".mc-say")) doSay(t.closest(".mc-say"));
+  });
 })();
 </script>
 
