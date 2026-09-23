@@ -418,6 +418,36 @@ button.hard:hover{filter:brightness(1.08)}
 .mc-sum{margin:12px 0 0;color:var(--ink)}
 .mc-sum:empty{display:none}
 
+/* ---------- чтение по ролям ---------- */
+.roles-bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin:-8px 0 20px}
+.roles-label{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--lamp);margin-right:4px}
+button.role-btn{display:inline-flex;align-items:center;gap:7px;padding:7px 13px;font-size:14px;color:var(--ink-soft)}
+button.role-btn svg{color:var(--lamp)}
+.role-score{font-family:var(--mono);font-size:11.5px;color:var(--ok)}
+.role-score:empty{display:none}
+.roles-hint{flex-basis:100%;font-size:13px;color:var(--rain);margin:2px 0 0}
+.chapter .script .says.rp-mine{background:var(--lamp-soft)}
+.who.rp-mine-who{color:var(--lamp)}
+.chapter .script .says.rp-now{outline:2px solid var(--sea);outline-offset:3px}
+.rp-w.rp-ok{color:var(--ok)}
+.rp-w.rp-miss{color:var(--no);text-decoration:underline wavy;text-decoration-color:var(--no);text-underline-offset:4px}
+.rp-w.rp-soft{color:var(--rain);text-decoration:underline dotted;text-underline-offset:4px}
+.rp-heard{display:block;font-family:var(--mono);font-size:12px;line-height:1.5;color:var(--rain);margin-top:6px}
+.rp-panel{position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--surface);border-top:1px solid var(--line);
+  box-shadow:0 -8px 28px rgba(24,28,31,.12);padding:12px 16px calc(12px + env(safe-area-inset-bottom))}
+.rp-inner{max-width:42rem;margin:0 auto;display:grid;gap:10px}
+.rp-status{font-size:15px;line-height:1.45;color:var(--ink);min-height:1.45em}
+.rp-live{font-family:var(--serif);font-style:italic;color:var(--ink-soft)}
+.rp-good{color:var(--ok)}
+.rp-bad{color:var(--no)}
+.rp-note{color:var(--rain);font-size:13px}
+.rp-dot{width:10px;height:10px;border-radius:50%;background:var(--no);display:inline-block;margin-right:8px;vertical-align:1px;animation:rp-pulse 1.1s ease-in-out infinite}
+.rp-live{display:block;margin-top:4px}
+@keyframes rp-pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.7)}}
+.rp-btns{display:flex;flex-wrap:wrap;gap:8px}
+.rp-btns button.act{padding:8px 14px;font-size:14px}
+body.rp-open .page{padding-bottom:230px}
+
 /* ---------- как учиться ---------- */
 .method h3{font-family:var(--serif);font-size:20px;font-weight:600;margin:34px 0 10px}
 .method-route{margin:0;padding-left:1.4em;display:grid;gap:10px;max-width:var(--measure)}
@@ -631,7 +661,11 @@ td.w.speaking{color:var(--sea)}
       <p>Это свободная тренировка по темам — быстро проверить, что ты уже знаешь. Вспомнил слово в обе стороны с первой попытки — оно встанет в «Повторение» на проверку через неделю, а в словарь попадёт, когда вспомнится там. В справочниках A1–C2 первое «Не знаю» ещё не повод учить слово: оно ждёт повторной проверки, и только если не вспомнилось и на ней — начинает учиться.</p>
 
       <h3>Звук</h3>
-      <p>Слова и реплики звучат голосом твоего браузера или телефона — настройки в строке «Озвучка» под меню: британский или американский голос, обычная или медленная скорость. Режим «на слух» тренирует главное для разговора с носителем — узнавать слово ушами, а не глазами. Кнопка «проверить микрофон» там же покажет, может ли книга на этом устройстве записать и распознать твою речь, — это первый шаг к упражнениям на произношение.</p>
+      <p>Слова и реплики звучат голосом твоего браузера или телефона — настройки в строке «Озвучка» под меню: британский или американский голос, обычная или медленная скорость. Режим «на слух» тренирует главное для разговора с носителем — узнавать слово ушами, а не глазами. Кнопка «проверить микрофон» там же покажет, может ли книга на этом устройстве записать и распознать твою речь.</p>
+
+      <h3>Произношение: по ролям</h3>
+      <p>Над диалогом главы — строка «По ролям». Выбери героя: его реплики читаешь вслух ты, остальные читает книга. Твою реплику книга распознаёт и сверяет с текстом: узнанные слова становятся зелёными, неузнанные — красными; мелкие служебные слова (a, the, to) отмечаются пунктиром и чистоте не мешают, имена в счёт не идут. Если всё узнано — книга сама идёт дальше. Если нет — послушай «Образец», запиши себя («Записать себя», потом «Я») и скажи ещё раз. В конце — сколько реплик вышло чисто с первого раза и какие слова не узнавались; итог приходит мне, и эти слова я вплету в следующие главы.</p>
+      <p>Распознавание проверяет, понятно ли тебя, а не каждый звук отдельно, — поэтому красное слово значит «так не поймут», а зелёное ещё не гарантирует идеального звука. Лучше всего работает в тихой комнате, телефон — сантиметрах в 20–30.</p>
 
       <h3>Почему так</h3>
       <p>Слово запоминается надолго, когда его <b>достаёшь из памяти сам</b>, а не перечитываешь, и когда между повторениями есть паузы, растущие с каждым успехом. Печатать слово труднее, чем узнавать, — зато так учится и написание, и «активный» словарь, из которого говоришь. Повторять понемногу каждый день лучше, чем много раз подряд за один присест: пропустил день — ничего не пропало, карточки просто подождут.</p>
@@ -1875,7 +1909,7 @@ td.w.speaking{color:var(--sea)}
   // ---- диалоги: кнопка у имени, клик по реплике, «Прочитать диалог» ----
   function lineText(el){
     const c = el.cloneNode(true);
-    c.querySelectorAll("em, .say-line").forEach(function(n){ n.remove(); });   // ремарки в скобках не читаем
+    c.querySelectorAll("em, .say-line, .rp-heard").forEach(function(n){ n.remove(); });   // ремарки в скобках и «Услышал…» не читаем
     return clean(c.textContent);
   }
   function speakerOf(who){
@@ -1927,7 +1961,7 @@ td.w.speaking{color:var(--sea)}
       return;
     }
     const line = t.closest && t.closest(".chapter .script .says, .chapter .script .stage");
-    if (line && !(window.getSelection && String(window.getSelection()).trim())){
+    if (line && !document.body.classList.contains("rp-open") && !(window.getSelection && String(window.getSelection()).trim())){
       const who = line.previousElementSibling;
       const gender = line.classList.contains("says") && who && who.classList.contains("who") ? GENDER[speakerOf(who)] : "n";
       say(lineText(line), { el: line, gender: gender });
@@ -1992,7 +2026,8 @@ td.w.speaking{color:var(--sea)}
     else synth.onvoiceschanged = loadVoices;
   } else renderBar();
 
-  window.bsTTS = { supported: supported, say: say, stop: stop, icon: ICON, micIcon: MIC_ICON };
+  window.bsTTS = { supported: supported, say: say, stop: stop, play: play, icon: ICON, micIcon: MIC_ICON,
+                   lineText: lineText, speakerOf: speakerOf, genderOf: function(name){ return GENDER[name]; } };
 })();
 </script>
 
@@ -2096,35 +2131,45 @@ td.w.speaking{color:var(--sea)}
   // ---- распознавание: одна фраза → варианты текста ----
   let srStop = null;
   function fail(c, e){ const x = new Error(c); x.code = c; if (e) x.detail = String((e && (e.name || e.message)) || e); return x; }
-  function recognize(lng, onInterim){
+  // opt: continuous — слушать длинную реплику целиком; silenceMs — остановиться после паузы;
+  // enough(text) — остановиться, как только сказано всё нужное; maxMs — предел времени.
+  function recognize(lng, onInterim, opt){
+    const o = opt || {};
     return new Promise(function(resolve, reject){
       const C = Recognition();
       if (!C){ reject(fail("none")); return; }
       let r;
       try { r = new C(); } catch(e){ reject(fail("start-failed", e)); return; }
-      r.lang = lng; r.interimResults = true; r.maxAlternatives = 3; r.continuous = false;
-      let finals = null, heard = "", err = null, settled = false;
-      const timer = setTimeout(function(){ try { r.stop(); } catch(e){} }, 9000);
+      r.lang = lng; r.interimResults = true; r.maxAlternatives = 3; r.continuous = !!o.continuous;
+      let finals = null, heard = "", err = null, settled = false, quiet = 0;
+      function halt(){ try { r.stop(); } catch(e){} }
+      const myStop = halt;
+      const timer = setTimeout(halt, o.maxMs || 9000);
       r.onresult = function(ev){
         const all = Array.prototype.slice.call(ev.results);
         const fin = all.filter(function(x){ return x.isFinal; });
-        if (fin.length === 1) finals = Array.prototype.slice.call(fin[0]).map(function(a){ return { t: a.transcript.trim(), c: a.confidence }; });
-        else if (fin.length > 1) finals = [{ t: fin.map(function(x){ return x[0].transcript.trim(); }).join(" "), c: fin[fin.length - 1][0].confidence }];
+        if (fin.length === 1 && all.length === 1) finals = Array.prototype.slice.call(fin[0]).map(function(a){ return { t: a.transcript.trim(), c: a.confidence }; });
+        else if (fin.length) finals = [{ t: fin.map(function(x){ return x[0].transcript.trim(); }).join(" "), c: fin[fin.length - 1][0].confidence }];
         const txt = all.map(function(x){ return x[0].transcript; }).join(" ").replace(/\s+/g, " ").trim();
         if (txt){ heard = txt; if (onInterim) onInterim(txt); }
+        if (o.silenceMs){ clearTimeout(quiet); quiet = setTimeout(halt, o.silenceMs); }
+        if (o.enough && txt && o.enough(txt)) halt();
       };
       r.onerror = function(ev){ err = ev.error || "unknown"; };
       r.onend = function(){
-        clearTimeout(timer);
+        clearTimeout(timer); clearTimeout(quiet);
         if (settled) return;
-        settled = true; srStop = null;
-        if (finals && finals.length && finals[0].t) resolve({ alts: finals, lang: lng });
-        else if (heard) resolve({ alts: [{ t: heard, c: 0 }], lang: lng, interimOnly: true });
+        settled = true;
+        if (srStop === myStop) srStop = null;      // следующее распознавание могло уже начаться — его не трогаем
+        const alts = (finals || []).filter(function(a){ return a.t; });
+        // последние слова могли остаться промежуточными — берём и их как ещё один вариант
+        if (heard && !alts.some(function(a){ return a.t === heard; })) alts.push({ t: heard, c: 0 });
+        if (alts.length) resolve({ alts: alts, lang: lng, interimOnly: !(finals && finals.length) });
         else reject(fail(err || "no-speech"));
       };
-      srStop = function(){ try { r.stop(); } catch(e){} };
+      srStop = myStop;
       try { r.start(); }
-      catch(e){ clearTimeout(timer); settled = true; srStop = null; reject(fail("start-failed", e)); }
+      catch(e){ clearTimeout(timer); settled = true; if (srStop === myStop) srStop = null; reject(fail("start-failed", e)); }
     });
   }
   function words(s){
@@ -2139,7 +2184,27 @@ td.w.speaking{color:var(--sea)}
     });
     return { hit: hit, miss: miss };
   }
-  window.bsMic = { recognize: recognize, compare: compare, lang: lang, available: function(){ return !!Recognition(); } };
+  function errorText(code){
+    if (inFrame && (code === "not-allowed" || code === "service-not-allowed" || code === "audio-capture"))
+      return "Эта копия книги открыта внутри claude.ai — там микрофон закрыт. Открой сайт mironovdg.github.io.";
+    return srErrorText(code);
+  }
+  // отправка записи отчёта; то, что не ушло, ждёт в очереди и уходит со следующей отправкой
+  async function sendEntry(entry){
+    let outbox = [];
+    try { outbox = JSON.parse(localStorage.getItem(OUTBOX) || "[]") || []; } catch(e){ outbox = []; }
+    const batch = outbox.concat([entry]);
+    const keep = function(){ try { localStorage.setItem(OUTBOX, JSON.stringify(batch)); } catch(e){} };
+    if (typeof window.__bsSend !== "function"){ keep(); return "queued"; }
+    try {
+      const r = await window.__bsSend(batch);
+      if (r === "unavailable"){ keep(); return "file"; }
+      try { localStorage.removeItem(OUTBOX); } catch(e){}
+      return "sent";
+    } catch(e){ keep(); return "failed"; }
+  }
+  window.bsMic = { recognize: recognize, compare: compare, lang: lang, errorText: errorText, send: sendEntry,
+                   stop: function(){ if (srStop) srStop(); }, available: function(){ return !!Recognition(); } };
 
   // ---- панель проверки ----
   const R = { rec: null, sr: null, sentSig: "", note: "" };
@@ -2337,7 +2402,7 @@ td.w.speaking{color:var(--sea)}
       if (err.code === "aborted"){ setRes(res, "Остановлено.", ""); return; }
       R.sr = { ok: false, code: err.code, lang: l };
       if (err.detail) R.sr.detail = err.detail;
-      setRes(res, srErrorText(err.code), err.code === "no-speech" ? "warn" : "no");
+      setRes(res, errorText(err.code), err.code === "no-speech" ? "warn" : "no");
       done();
       return;
     }
@@ -2392,16 +2457,10 @@ td.w.speaking{color:var(--sea)}
     const entry = { sentAt: new Date().toISOString(), kind: "mic", device: deviceLine(), ua: ua.slice(0, 240), frame: inFrame,
                     api: { secure: window.isSecureContext !== false, gum: hasGum(), recorder: !!window.MediaRecorder, sr: !!Recognition() },
                     record: R.rec, recognition: R.sr, text: reportText() };
-    let outbox = [];
-    try { outbox = JSON.parse(localStorage.getItem(OUTBOX) || "[]") || []; } catch(e){ outbox = []; }
-    const batch = outbox.concat([entry]);
-    const keep = function(){ try { localStorage.setItem(OUTBOX, JSON.stringify(batch)); } catch(e){} };
-    if (typeof window.__bsSend !== "function"){ keep(); R.note = "Результат уйдёт мне со следующей отправкой."; summary(); return; }
-    try {
-      const r = await window.__bsSend(batch);
-      if (r === "unavailable"){ keep(); R.note = "Книга открыта файлом — результат уйдёт, когда откроешь её по ссылке."; }
-      else { try { localStorage.removeItem(OUTBOX); } catch(e){} R.note = "Результат проверки отправлен мне."; }
-    } catch(e){ keep(); R.note = "Результат пока не отправился — уйдёт со следующей отправкой."; }
+    const r = await sendEntry(entry);
+    R.note = { sent: "Результат проверки отправлен мне.", queued: "Результат уйдёт мне со следующей отправкой.",
+               file: "Книга открыта файлом — результат уйдёт, когда откроешь её по ссылке.",
+               failed: "Результат пока не отправился — уйдёт со следующей отправкой." }[r];
     summary();
   }
 
@@ -2416,6 +2475,457 @@ td.w.speaking{color:var(--sea)}
     else if (t.closest(".mc-play")) doPlay(t.closest(".mc-play"));
     else if (t.closest(".mc-say")) doSay(t.closest(".mc-say"));
   });
+})();
+</script>
+
+<script>
+// ---------- чтение по ролям ----------
+// Второй шаг произношения (решение ученика, 23.09.2026): ученик выбирает героя главы и читает вслух
+// его реплики, остальные читает книга. Реплика ученика распознаётся (window.bsMic) и сверяется
+// с текстом по словам: узнанные — зелёные, неузнанные — красные; служебные слова (a, the, to…)
+// не мешают «чисто», имена в счёт не идут. Итог — отчёт kind: "pron", source: "roles", и
+// трудные слова в blue-suitcase-pron (синхронизируется).
+(function(){
+  "use strict";
+  const TTS = window.bsTTS, MIC = window.bsMic;
+  if (!TTS || !MIC) return;
+  const STATS_KEY = "blue-suitcase-pron";
+  const FUNC = { a: 1, an: 1, the: 1, to: 1, of: 1, and: 1, or: 1, "in": 1, on: 1, at: 1, "for": 1, is: 1, are: 1, am: 1,
+                 it: 1, i: 1, you: 1, "do": 1, did: 1, be: 1, as: 1, but: 1, so: 1 };
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function today(){ const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+
+  // ---- слова к одной форме: написанное в книге и распознанное должны совпасть ----
+  const NUM = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve",
+               "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
+  const TENS = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+  const ORD = { "1st": "first", "2nd": "second", "3rd": "third", "4th": "fourth", "5th": "fifth", "6th": "sixth",
+                "7th": "seventh", "8th": "eighth", "9th": "ninth", "10th": "tenth", "11th": "eleventh", "12th": "twelfth" };
+  const SAME = { okay: "ok", gray: "grey", mister: "mr", missus: "mrs", alright: "all right" };
+  function numWords(n){
+    n = Number(n);
+    if (n < 20) return NUM[n];
+    if (n < 100) return TENS[Math.floor(n / 10)] + (n % 10 ? " " + NUM[n % 10] : "");
+    if (n < 1000) return NUM[Math.floor(n / 100)] + " hundred" + (n % 100 ? " " + numWords(n % 100) : "");
+    return String(n);
+  }
+  // британское и американское написание — к одному виду (colour/color, centre/center, realise/realize, travelled/traveled)
+  function canon(t){
+    if (SAME[t]) return SAME[t];
+    if (t.length >= 5) t = t.replace(/([^aeiou])re$/, "$1er").replace(/our$/, "or").replace(/is(e|es|ed|ing)$/, "iz$1").replace(/ll(ed|ing)$/, "l$1");
+    return t;
+  }
+  function tokens(s){
+    let x = String(s || "").toLowerCase().replace(/[’`´‘]/g, "'");
+    x = x.replace(/\b\d+(st|nd|rd|th)\b/g, function(m){ return ORD[m] || m.replace(/\D/g, ""); });
+    x = x.replace(/\bp\.\s?m\b\.?/g, "pm").replace(/\ba\.\s?m\b\.?/g, "am");
+    x = x.replace(/\bcan't\b/g, "can not").replace(/\bcannot\b/g, "can not").replace(/\bwon't\b/g, "will not")
+         .replace(/n't\b/g, " not").replace(/'re\b/g, " are").replace(/'ve\b/g, " have").replace(/'ll\b/g, " will")
+         .replace(/'m\b/g, " am").replace(/'d\b/g, " would").replace(/'s\b/g, " is");
+    x = x.replace(/\d+/g, function(m){ return " " + numWords(m) + " "; });
+    x = x.replace(/[^a-z' ]+/g, " ").replace(/'/g, "");
+    const out = [];
+    x.split(/\s+/).forEach(function(t){ if (t) canon(t).split(" ").forEach(function(p){ out.push(p); }); });
+    return out;
+  }
+  // слова, которые звучат одинаково: распознавание их не различает, и ошибкой произношения это не считается
+  const HOMO = {};
+  ["sea see", "to too two", "for four", "right write", "hear here", "there their", "know no", "knew new",
+   "one won", "eight ate", "by buy bye", "son sun", "week weak", "meet meat", "road rode", "our hour", "whole hole",
+   "piece peace", "wait weight", "pair pear", "plane plain", "mail male", "sale sail", "tail tale", "flower flour",
+   "dear deer", "night knight", "blue blew", "which witch", "weather whether", "would wood", "i eye", "be bee",
+   "where wear", "aloud allowed", "sell cell", "board bored", "break brake", "steal steel",
+   "stair stare", "through threw", "fair fare", "high hi", "made maid", "not knot", "some sum", "check cheque",
+   "cent sent scent", "way weigh", "been bean", "red read", "hair hare", "tea tee", "knows nose",
+   "ball bawl", "berry bury", "cereal serial", "court caught", "die dye", "flu flew", "grown groan", "guest guessed",
+   "heard herd", "in inn", "missed mist", "past passed", "rain reign", "role roll", "scene seen",
+   "sight site", "sole soul", "tied tide", "toe tow", "waist waste", "war wore"
+  ].forEach(function(g){ const w = g.split(" "); w.forEach(function(x){ HOMO[x] = w[0]; }); });
+  function hkey(t){ return HOMO[t] || t; }
+  // какие слова образца есть в услышанном, по порядку (наибольшая общая подпоследовательность)
+  function align(target, heard){
+    const n = target.length, m = heard.length;
+    const dp = [];
+    for (let i = 0; i <= n; i++){ dp.push(new Array(m + 1).fill(0)); }
+    for (let i = n - 1; i >= 0; i--) for (let j = m - 1; j >= 0; j--)
+      dp[i][j] = target[i] === heard[j] ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1]);
+    const hit = {};
+    let i = 0, j = 0;
+    while (i < n && j < m){
+      if (target[i] === heard[j]){ hit[i] = 1; i++; j++; }
+      else if (dp[i + 1][j] >= dp[i][j + 1]) i++;
+      else j++;
+    }
+    return hit;
+  }
+
+  // ---- реплика: слова для показа и для сверки ----
+  function buildLine(el, names){
+    const holder = document.createElement("div");
+    holder.innerHTML = el.dataset.rpOrig;
+    const parts = [];
+    let sentenceStart = true, afterTitle = false;
+    Array.prototype.forEach.call(holder.childNodes, function(node){
+      if (node.nodeType !== 3){
+        if (node.classList && node.classList.contains("rp-heard")) return;
+        parts.push({ html: node.outerHTML || "" });
+        return;
+      }
+      node.textContent.split(/(\s+)/).forEach(function(piece){
+        if (!piece) return;
+        if (/^\s+$/.test(piece)){ parts.push({ html: piece }); return; }
+        const bare = piece.replace(/^[^A-Za-z0-9]+|[^A-Za-z0-9']+$/g, "");
+        const low = bare.toLowerCase();
+        const cap = /^[A-Z][a-z]/.test(bare);
+        const name = afterTitle || (cap && (names[low] || (!sentenceStart && !/^I('|$)/.test(bare))));
+        afterTitle = /^(Mr|Mrs|Ms|Miss|Dr)\.?$/.test(bare);
+        const toks = tokens(piece);
+        parts.push({ word: piece, key: low, toks: toks, name: name || afterTitle, func: toks.length > 0 && toks.every(function(t){ return FUNC[t]; }) });
+        sentenceStart = /[.!?…]["”’)]*$/.test(piece);
+      });
+    });
+    const target = [], owner = [];
+    parts.forEach(function(p, k){ if (p.word && !p.name) p.toks.forEach(function(t){ target.push(hkey(t)); owner.push(k); }); });
+    return { parts: parts, target: target, owner: owner };
+  }
+  function score(line, heardText){
+    const hit = align(line.target, tokens(heardText).map(hkey));
+    const okPart = {};
+    line.parts.forEach(function(p, k){ if (p.word && !p.name) okPart[k] = true; });
+    line.target.forEach(function(t, i){ if (!hit[i]) okPart[line.owner[i]] = false; });
+    let content = 0, contentOk = 0;
+    const missed = [], ok = [];
+    line.parts.forEach(function(p, k){
+      if (!p.word || p.name || !p.toks.length) return;
+      if (!p.func){ content++; if (okPart[k]){ contentOk++; ok.push(p.key); } else missed.push(p.key); }
+    });
+    return { okPart: okPart, content: content, contentOk: contentOk, missed: missed, ok: ok, clean: contentOk === content };
+  }
+  function renderLine(el, line, sc, heardText){
+    el.innerHTML = line.parts.map(function(p, k){
+      if (!p.word) return p.html;
+      const cls = p.name || !p.toks.length ? "rp-name" : sc.okPart[k] ? "rp-ok" : p.func ? "rp-soft" : "rp-miss";
+      return '<span class="rp-w ' + cls + '">' + esc(p.word) + '</span>';
+    }).join("") + '<span class="rp-heard">Услышал: «' + esc(heardText) + '»</span>';
+  }
+
+  // ---- панель внизу экрана ----
+  const panel = document.createElement("div");
+  panel.className = "rp-panel"; panel.id = "rp-panel"; panel.hidden = true;
+  panel.setAttribute("role", "region"); panel.setAttribute("aria-label", "Чтение по ролям");
+  panel.innerHTML = '<div class="rp-inner"><div class="rp-status" aria-live="polite"></div><div class="rp-btns"></div></div>';
+  document.body.appendChild(panel);
+  const pStatus = panel.querySelector(".rp-status"), pBtns = panel.querySelector(".rp-btns");
+  function setPanel(status, buttons){
+    panel.hidden = false;
+    document.body.classList.add("rp-open");
+    pStatus.innerHTML = status;
+    pBtns.innerHTML = buttons.map(function(b){
+      return '<button type="button" class="act' + (b.main ? "" : " ghost") + '" data-act="' + b.act + '">' + b.label + '</button>';
+    }).join("");
+  }
+  function hidePanel(){ panel.hidden = true; document.body.classList.remove("rp-open"); }
+
+  // ---- сессия ----
+  let S = null;
+  function roleName(script, key){
+    let name = key;
+    script.querySelectorAll(".who").forEach(function(w){ if (TTS.speakerOf(w) === key) name = w.childNodes[0].textContent.trim(); });
+    return name;
+  }
+  function start(script, role){
+    if (S) finish(true, true);
+    TTS.stop();
+    const names = {};
+    script.querySelectorAll(".who").forEach(function(w){
+      TTS.speakerOf(w).split(/\s+/).forEach(function(x){ if (x && x !== "man" && x !== "woman") names[x] = 1; });
+    });
+    const items = [];
+    let speaker = null, whoEl = null;
+    Array.prototype.forEach.call(script.children, function(el){
+      if (el.classList.contains("who")){ speaker = TTS.speakerOf(el); whoEl = el; return; }
+      if (!el.classList.contains("says") || !speaker) return;
+      const text = TTS.lineText(el);
+      if (text) items.push({ el: el, who: whoEl, speaker: speaker, text: text, mine: speaker === role, gender: TTS.genderOf(speaker) });
+      speaker = null;
+    });
+    const art = script.closest("article.chapter");
+    S = { script: script, role: role, roleName: roleName(script, role), ch: art ? art.id : "", names: names, items: items, i: -1,
+          lines: items.filter(function(x){ return x.mine; }).length, done: 0, clean: 0, missed: {}, fixed: {}, okWords: {},
+          samples: [], auto: 0, blob: null, token: 0, lang: MIC.lang() };
+    script.classList.add("rp-on");
+    items.forEach(function(it){
+      if (!it.mine) return;
+      it.el.classList.add("rp-mine");
+      if (it.who) it.who.classList.add("rp-mine-who");
+      if (!it.el.dataset.rpOrig) it.el.dataset.rpOrig = it.el.innerHTML;
+    });
+    next();
+  }
+  function current(){ return S && S.items[S.i]; }
+  function setNow(it){
+    S.items.forEach(function(x){ x.el.classList.remove("rp-now"); });
+    if (!it) return;
+    it.el.classList.add("rp-now");
+    const r = it.el.getBoundingClientRect();
+    if (r.top < 60 || r.bottom > window.innerHeight - 180){
+      const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      it.el.scrollIntoView({ block: "center", behavior: reduce ? "auto" : "smooth" });
+    }
+  }
+  function next(){
+    if (!S) return;
+    clearTimeout(S.auto);
+    S.token++;
+    S.i++;
+    S.blob = null;
+    const it = current();
+    if (!it){ finish(false); return; }
+    setNow(it);
+    if (it.mine){ it.tries = it.tries || 0; listen(); return; }
+    const my = S.token;
+    setPanel('<b>' + esc(roleName(S.script, it.speaker)) + '</b> говорит…', [
+      { act: "skip", label: "Пропустить" }, { act: "stop", label: "Закончить" }]);
+    if (TTS.supported){
+      TTS.play([{ el: it.el, text: it.text, gender: it.gender }], function(){
+        if (!S || S.token !== my) return;
+        setTimeout(function(){ if (S && S.token === my) next(); }, 250);
+      });
+    } else {
+      S.auto = setTimeout(function(){ if (S && S.token === my) next(); }, 900 + it.text.split(" ").length * 320);
+    }
+  }
+  function listen(){
+    const it = current();
+    if (!it) return;
+    clearTimeout(S.auto);
+    TTS.stop();
+    const my = ++S.token;
+    const line = buildLine(it.el, S.names);
+    it.line = line;
+    setPanel('<span class="rp-dot" aria-hidden="true"></span><b>Твоя реплика</b> — говори<span class="rp-live"></span>', [
+      { act: "enough", label: "Готово", main: true }, { act: "model-first", label: "▶ Образец" },
+      { act: "skip", label: "Пропустить" }, { act: "stop", label: "Закончить" }]);
+    const live = pStatus.querySelector(".rp-live");
+    const words = line.target.length;
+    MIC.recognize(S.lang, function(t){ if (S && S.token === my) live.textContent = "«" + t + "»"; }, {
+      continuous: true, maxMs: 6000 + words * 700, silenceMs: 2000,
+      enough: function(t){ return score(line, t).clean; }
+    }).then(function(out){
+      if (!S || S.token !== my) return;
+      let best = null, bestSc = null;
+      out.alts.forEach(function(a){ const sc = score(line, a.t); if (!bestSc || sc.contentOk > bestSc.contentOk){ best = a; bestSc = sc; } });
+      judge(it, line, bestSc, best.t);
+    }).catch(function(err){
+      if (!S || S.token !== my) return;
+      const code = (err && err.code) || "unknown";
+      setPanel('<span class="rp-bad">' + esc(code === "no-speech" ? "Не услышал. Нажми «Сказать» и начинай сразу." : MIC.errorText(code)) + '</span>', [
+        { act: "again", label: "Сказать", main: true }, { act: "model", label: "▶ Образец" },
+        { act: "skip", label: "Дальше" }, { act: "stop", label: "Закончить" }]);
+    });
+  }
+  function judge(it, line, sc, heard){
+    it.tries = (it.tries || 0) + 1;
+    renderLine(it.el, line, sc, heard);
+    if (it.tries === 1){
+      S.done++;
+      if (sc.clean) S.clean++;
+      sc.missed.forEach(function(w){ S.missed[w] = (S.missed[w] || 0) + 1; });
+      S.samples.push({ line: it.text, heard: heard, score: sc.contentOk + "/" + sc.content });
+    } else {
+      sc.ok.forEach(function(w){ if (S.missed[w]) S.fixed[w] = 1; });
+    }
+    sc.ok.forEach(function(w){ S.okWords[w] = (S.okWords[w] || 0) + 1; });
+    const status = sc.clean
+      ? '<span class="rp-good">✓ Чисто' + (sc.content ? " — " + sc.contentOk + " из " + sc.content : "") + '</span>'
+      : '<span class="rp-bad">Узнано ' + sc.contentOk + ' из ' + sc.content + '</span> — красным то, что книга не узнала. Послушай образец и скажи ещё раз.';
+    resultPanel(status);
+    if (sc.clean){
+      const my = S.token;
+      S.auto = setTimeout(function(){ if (S && S.token === my) next(); }, 1200);
+    }
+  }
+  function resultPanel(status){
+    const btns = [{ act: "again", label: "Ещё раз" }, { act: "model", label: "▶ Образец" }];
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder)
+      btns.push({ act: "record", label: "● Записать себя" });
+    if (S.blob) btns.push({ act: "me", label: "▶ Я" });
+    btns.push({ act: "next", label: "Дальше", main: true }, { act: "stop", label: "Закончить" });
+    S.lastStatus = status;
+    setPanel(status, btns);
+  }
+  function model(then){
+    const it = current();
+    if (!it || !TTS.supported) return;
+    clearTimeout(S.auto);
+    const my = S.token;
+    TTS.play([{ el: it.el, text: it.text, gender: it.gender }], function(){
+      if (then && S && S.token === my) setTimeout(function(){ if (S && S.token === my) then(); }, 300);
+    });
+  }
+
+  // ---- записать себя и послушать ----
+  let rec = null;
+  async function recordSelf(){
+    if (rec){ rec.stop(); return; }
+    clearTimeout(S.auto);
+    TTS.stop();
+    let stream;
+    try { stream = await navigator.mediaDevices.getUserMedia({ audio: true }); }
+    catch(e){ setPanel('<span class="rp-bad">Нет доступа к микрофону для записи.</span>', [{ act: "next", label: "Дальше", main: true }, { act: "stop", label: "Закончить" }]); return; }
+    const types = ["audio/webm;codecs=opus", "audio/mp4", "audio/webm"];
+    const type = types.filter(function(t){ return MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(t); })[0] || "";
+    const mr = new MediaRecorder(stream, type ? { mimeType: type } : undefined);
+    const chunks = [];
+    const sess = S;
+    mr.ondataavailable = function(e){ if (e.data && e.data.size) chunks.push(e.data); };
+    const cap = setTimeout(function(){ try { mr.stop(); } catch(e){} }, 12000);
+    rec = { stop: function(){ try { mr.stop(); } catch(e){} } };
+    mr.onstop = function(){
+      clearTimeout(cap);
+      stream.getTracks().forEach(function(t){ t.stop(); });   // отпускаем микрофон сразу — иначе iPhone уводит звук в разговорный динамик
+      rec = null;
+      if (S !== sess) return;
+      S.blob = chunks.length ? new Blob(chunks, { type: mr.mimeType || type || "audio/webm" }) : null;
+      resultPanel(S.lastStatus || "");
+      playMe();
+    };
+    mr.start();
+    setPanel('<span class="rp-dot" aria-hidden="true"></span><b>Запись</b> — скажи реплику и нажми «Стоп»', [{ act: "record", label: "■ Стоп", main: true }]);
+  }
+  function playMe(){
+    if (!S || !S.blob) return;
+    TTS.stop();
+    const url = URL.createObjectURL(S.blob);
+    const a = new Audio(url);
+    a.onended = function(){ URL.revokeObjectURL(url); };
+    const p = a.play();
+    if (p && p.catch) p.catch(function(){});
+  }
+
+  // ---- итог ----
+  function finish(stopped, silent){
+    if (!S) return;
+    const sess = S;
+    clearTimeout(sess.auto);
+    sess.token++;
+    S = null;
+    MIC.stop();
+    if (rec) rec.stop();
+    TTS.stop();
+    sess.items.forEach(function(x){ x.el.classList.remove("rp-now"); });
+    if (sess.done) saveAndSend(sess, stopped);
+    if (silent){ restore(sess); hidePanel(); renderScores(); return; }
+    const words = Object.keys(sess.missed).sort(function(a, b){ return sess.missed[b] - sess.missed[a]; });
+    const status = sess.done
+      ? '<b>' + (stopped ? "Остановлено" : "Готово") + ':</b> чисто с первого раза ' + sess.clean + ' из ' + sess.done + ' ' + (sess.done === 1 ? "реплики" : "реплик") + '.' +
+        (words.length ? ' <span class="rp-bad">Не узнавались: ' + words.slice(0, 8).map(esc).join(", ") + '.</span>' : ' <span class="rp-good">Все слова узнаны.</span>') +
+        ' <span class="rp-note">Отчёт уйдёт мне.</span>'
+      : "Ни одной реплики не прочитано.";
+    pendingRestore = sess;
+    setPanel(status, [{ act: "restart", label: "Ещё раз", main: true }, { act: "close", label: "Закрыть" }]);
+    lastRole = { script: sess.script, role: sess.role };
+    renderScores();
+  }
+  let pendingRestore = null, lastRole = null;
+  function restore(sess){
+    sess.script.classList.remove("rp-on");
+    sess.items.forEach(function(it){
+      it.el.classList.remove("rp-now", "rp-mine");
+      if (it.who) it.who.classList.remove("rp-mine-who");
+      if (it.el.dataset.rpOrig !== undefined){ it.el.innerHTML = it.el.dataset.rpOrig; delete it.el.dataset.rpOrig; }
+    });
+  }
+  function readStats(){ try { return JSON.parse(localStorage.getItem(STATS_KEY) || "{}") || {}; } catch(e){ return {}; } }
+  function saveAndSend(sess, stopped){
+    const st = readStats();
+    st.runs = st.runs || {}; st.w = st.w || {};
+    st.runs[sess.ch + "|" + sess.role] = { d: today(), lines: sess.done, of: sess.lines, clean: sess.clean };
+    Object.keys(sess.missed).forEach(function(w){ st.w[w] = st.w[w] || [0, 0]; st.w[w][0] += sess.missed[w]; });
+    Object.keys(sess.okWords).forEach(function(w){ if (st.w[w]) st.w[w][1] += sess.okWords[w]; });
+    try { localStorage.setItem(STATS_KEY, JSON.stringify(st)); } catch(e){}
+    const words = Object.keys(sess.missed).sort(function(a, b){ return sess.missed[b] - sess.missed[a]; });
+    const num = sess.ch.replace(/\D/g, "");
+    const entry = {
+      sentAt: new Date().toISOString(), kind: "pron", source: "roles", chapter: sess.ch, role: sess.roleName, lang: sess.lang,
+      lines: sess.done, of: sess.lines, clean: sess.clean, stopped: !!stopped, missed: sess.missed,
+      fixed: Object.keys(sess.fixed), samples: sess.samples.filter(function(x){ return x.score.split("/")[0] !== x.score.split("/")[1]; }).slice(0, 8),
+      text: "Произношение · глава " + num + " по ролям (" + sess.roleName + (stopped ? ", не до конца" : "") + "): чисто с первого раза " +
+            sess.clean + " из " + sess.done + " реплик" + (words.length ? "; не узнавались: " + words.map(function(w){ return w + (sess.missed[w] > 1 ? " ×" + sess.missed[w] : ""); }).join(", ") : "; все слова узнаны") +
+            (Object.keys(sess.fixed).length ? "; со второй попытки вышло: " + Object.keys(sess.fixed).join(", ") : "")
+    };
+    MIC.send(entry);
+  }
+
+  // ---- кнопки ролей у каждого диалога ----
+  function renderScores(){
+    const st = readStats().runs || {};
+    document.querySelectorAll(".role-btn").forEach(function(b){
+      const art = b.closest("article.chapter");
+      const run = st[(art ? art.id : "") + "|" + b.dataset.role];
+      const out = b.querySelector(".role-score");
+      out.textContent = run ? run.clean + "/" + run.lines : "";
+      b.title = run ? "Последний раз (" + run.d + "): чисто с первого раза " + run.clean + " из " + run.lines + " реплик" : "";
+    });
+  }
+  document.querySelectorAll(".chapter .script").forEach(function(script){
+    const count = {}, order = [];
+    script.querySelectorAll(".who").forEach(function(w){
+      const k = TTS.speakerOf(w);
+      if (!count[k]){ count[k] = 0; order.push(k); }
+      count[k]++;
+    });
+    const roles = order.filter(function(k){ return count[k] >= 3; });
+    if (!roles.length) return;
+    const bar = document.createElement("div");
+    bar.className = "roles-bar";
+    bar.innerHTML = '<span class="roles-label">По ролям</span>' +
+      roles.map(function(k){
+        return '<button type="button" class="act ghost role-btn" data-role="' + esc(k) + '">' + TTS.micIcon +
+               '<span>' + esc(roleName(script, k)) + '</span><span class="role-score"></span></button>';
+      }).join("") +
+      (MIC.available() ? '<p class="roles-hint">Выбери героя: его реплики читаешь вслух ты, остальные — книга. Слова, которые она не узнала, покажет красным.</p>'
+                       : '<p class="roles-hint">Чтение по ролям работает в браузере с распознаванием речи — Chrome, Яндекс Браузер, Safari. Проверка — кнопка «проверить микрофон» вверху.</p>');
+    if (!MIC.available()) bar.querySelectorAll(".role-btn").forEach(function(b){ b.disabled = true; });
+    script.parentNode.insertBefore(bar, script);
+  });
+  renderScores();
+
+  document.addEventListener("click", function(e){
+    const t = e.target;
+    if (!t || !t.closest) return;
+    const rb = t.closest(".role-btn");
+    if (rb){
+      const script = rb.closest(".roles-bar").nextElementSibling;
+      if (pendingRestore){ restore(pendingRestore); pendingRestore = null; }
+      start(script, rb.dataset.role);
+      return;
+    }
+    const b = t.closest("#rp-panel button[data-act]");
+    if (!b) return;
+    const act = b.dataset.act;
+    if (act === "close"){ if (pendingRestore){ restore(pendingRestore); pendingRestore = null; } hidePanel(); return; }
+    if (act === "restart"){
+      if (pendingRestore){ restore(pendingRestore); pendingRestore = null; }
+      if (lastRole) start(lastRole.script, lastRole.role);
+      return;
+    }
+    if (!S) return;
+    if (act === "stop") finish(true);
+    else if (act === "skip" || act === "next"){ MIC.stop(); next(); }
+    else if (act === "enough") MIC.stop();
+    else if (act === "again") listen();
+    else if (act === "model"){ MIC.stop(); S.token++; model(null); }
+    else if (act === "model-first"){ S.token++; MIC.stop(); model(listen); }
+    else if (act === "record") recordSelf();
+    else if (act === "me") playMe();
+  });
+  // ушёл в другой раздел, закрыл вкладку или нажал «Прочитать диалог» — сессия заканчивается
+  document.addEventListener("click", function(e){
+    if (!S || !e.target.closest) return;
+    if (e.target.closest(".view-tab, .chapter-tab, .listen-all")) finish(true);
+  }, true);
+  document.addEventListener("visibilitychange", function(){ if (document.hidden && S) finish(true); });
 })();
 </script>
 
