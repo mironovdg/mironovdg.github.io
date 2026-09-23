@@ -424,6 +424,7 @@ button.hard:hover{filter:brightness(1.08)}
 button.role-btn{display:inline-flex;align-items:center;gap:7px;padding:7px 13px;font-size:14px;color:var(--ink-soft)}
 button.role-btn svg{color:var(--lamp)}
 .role-score{font-family:var(--mono);font-size:11.5px;color:var(--ok)}
+button.role-all{border-style:dashed}
 .role-score:empty{display:none}
 .roles-hint{flex-basis:100%;font-size:13px;color:var(--rain);margin:2px 0 0}
 .chapter .script .says.rp-mine{background:var(--lamp-soft)}
@@ -664,7 +665,7 @@ td.w.speaking{color:var(--sea)}
       <p>Слова и реплики звучат голосом твоего браузера или телефона — настройки в строке «Озвучка» под меню: британский или американский голос, обычная или медленная скорость. Режим «на слух» тренирует главное для разговора с носителем — узнавать слово ушами, а не глазами. Кнопка «проверить микрофон» там же покажет, может ли книга на этом устройстве записать и распознать твою речь.</p>
 
       <h3>Произношение: по ролям</h3>
-      <p>Над диалогом главы — строка «По ролям». Выбери героя: его реплики читаешь вслух ты, остальные читает книга. Твою реплику книга распознаёт и сверяет с текстом: узнанные слова становятся зелёными, неузнанные — красными; мелкие служебные слова (a, the, to) отмечаются пунктиром и чистоте не мешают, имена в счёт не идут. Если всё узнано — книга сама идёт дальше. Если нет — послушай «Образец», запиши себя («Записать себя», потом «Я») и скажи ещё раз. В конце — сколько реплик вышло чисто с первого раза и какие слова не узнавались; итог приходит мне, и эти слова я вплету в следующие главы.</p>
+      <p>Над диалогом главы — строка «По ролям». Выбери героя: его реплики читаешь вслух ты, остальные читает книга; в конце прогона кнопка «Поменяться ролями» сразу запускает второй прогон за другого героя. «Все реплики» — весь диалог читаешь ты, книга только проверяет. Твою реплику книга распознаёт и сверяет с текстом: узнанные слова становятся зелёными, неузнанные — красными; мелкие служебные слова (a, the, to) отмечаются пунктиром и чистоте не мешают, имена в счёт не идут. Если всё узнано — книга сама идёт дальше. Если нет — послушай «Образец», запиши себя («Записать себя», потом «Я») и скажи ещё раз. В конце — сколько реплик вышло чисто с первого раза и какие слова не узнавались; итог приходит мне, и эти слова я вплету в следующие главы.</p>
       <p>Распознавание проверяет, понятно ли тебя, а не каждый звук отдельно, — поэтому красное слово значит «так не поймут», а зелёное ещё не гарантирует идеального звука. Лучше всего работает в тихой комнате, телефон — сантиметрах в 20–30.</p>
 
       <h3>Почему так</h3>
@@ -2628,7 +2629,9 @@ td.w.speaking{color:var(--sea)}
 
   // ---- сессия ----
   let S = null;
+  const ALL = "*";                     // «Все реплики»: ученик читает весь диалог, книга только проверяет
   function roleName(script, key){
+    if (key === ALL) return "все реплики";
     let name = key;
     script.querySelectorAll(".who").forEach(function(w){ if (TTS.speakerOf(w) === key) name = w.childNodes[0].textContent.trim(); });
     return name;
@@ -2646,7 +2649,7 @@ td.w.speaking{color:var(--sea)}
       if (el.classList.contains("who")){ speaker = TTS.speakerOf(el); whoEl = el; return; }
       if (!el.classList.contains("says") || !speaker) return;
       const text = TTS.lineText(el);
-      if (text) items.push({ el: el, who: whoEl, speaker: speaker, text: text, mine: speaker === role, gender: TTS.genderOf(speaker) });
+      if (text) items.push({ el: el, who: whoEl, speaker: speaker, text: text, mine: role === ALL || speaker === role, gender: TTS.genderOf(speaker) });
       speaker = null;
     });
     const art = script.closest("article.chapter");
@@ -2703,7 +2706,8 @@ td.w.speaking{color:var(--sea)}
     const my = ++S.token;
     const line = buildLine(it.el, S.names);
     it.line = line;
-    setPanel('<span class="rp-dot" aria-hidden="true"></span><b>Твоя реплика</b> — говори<span class="rp-live"></span>', [
+    setPanel('<span class="rp-dot" aria-hidden="true"></span><b>Твоя реплика</b>' + (S.role === ALL ? " за " + esc(roleName(S.script, it.speaker)) : "") +
+             ' — говори<span class="rp-live"></span>', [
       { act: "enough", label: "Готово", main: true }, { act: "model-first", label: "▶ Образец" },
       { act: "skip", label: "Пропустить" }, { act: "stop", label: "Закончить" }]);
     const live = pStatus.querySelector(".rp-live");
@@ -2823,8 +2827,11 @@ td.w.speaking{color:var(--sea)}
         ' <span class="rp-note">Отчёт уйдёт мне.</span>'
       : "Ни одной реплики не прочитано.";
     pendingRestore = sess;
-    setPanel(status, [{ act: "restart", label: "Ещё раз", main: true }, { act: "close", label: "Закрыть" }]);
-    lastRole = { script: sess.script, role: sess.role };
+    const other = otherRole(sess.script, sess.role);
+    setPanel(status, (other ? [{ act: "swap", label: "Поменяться ролями — за " + esc(roleName(sess.script, other)), main: true },
+                                { act: "restart", label: "Ещё раз" }]
+                            : [{ act: "restart", label: "Ещё раз", main: true }]).concat([{ act: "close", label: "Закрыть" }]));
+    lastRole = { script: sess.script, role: sess.role, other: other };
     renderScores();
   }
   let pendingRestore = null, lastRole = null;
@@ -2868,14 +2875,26 @@ td.w.speaking{color:var(--sea)}
       b.title = run ? "Последний раз (" + run.d + "): чисто с первого раза " + run.clean + " из " + run.lines + " реплик" : "";
     });
   }
-  document.querySelectorAll(".chapter .script").forEach(function(script){
+  function rolesOf(script){
     const count = {}, order = [];
     script.querySelectorAll(".who").forEach(function(w){
       const k = TTS.speakerOf(w);
       if (!count[k]){ count[k] = 0; order.push(k); }
       count[k]++;
     });
-    const roles = order.filter(function(k){ return count[k] >= 3; });
+    return { order: order.filter(function(k){ return count[k] >= 3; }), count: count };
+  }
+  // с кем поменяться: герой с наибольшим числом реплик, за которого сегодня ещё не читал
+  function otherRole(script, current){
+    if (current === ALL) return null;
+    const r = rolesOf(script), art = script.closest("article.chapter"), runs = readStats().runs || {};
+    const cand = r.order.filter(function(k){ return k !== current; }).sort(function(a, b){ return r.count[b] - r.count[a]; });
+    if (!cand.length) return null;
+    const fresh = cand.filter(function(k){ const run = runs[(art ? art.id : "") + "|" + k]; return !run || run.d !== today(); });
+    return (fresh[0] || cand[0]);
+  }
+  document.querySelectorAll(".chapter .script").forEach(function(script){
+    const roles = rolesOf(script).order;
     if (!roles.length) return;
     const bar = document.createElement("div");
     bar.className = "roles-bar";
@@ -2884,7 +2903,9 @@ td.w.speaking{color:var(--sea)}
         return '<button type="button" class="act ghost role-btn" data-role="' + esc(k) + '">' + TTS.micIcon +
                '<span>' + esc(roleName(script, k)) + '</span><span class="role-score"></span></button>';
       }).join("") +
-      (MIC.available() ? '<p class="roles-hint">Выбери героя: его реплики читаешь вслух ты, остальные — книга. Слова, которые она не узнала, покажет красным.</p>'
+      '<button type="button" class="act ghost role-btn role-all" data-role="' + ALL + '">' + TTS.micIcon +
+        '<span>Все реплики</span><span class="role-score"></span></button>' +
+      (MIC.available() ? '<p class="roles-hint">Выбери героя: его реплики читаешь вслух ты, остальные — книга. «Все реплики» — весь диалог читаешь ты, книга только проверяет. Слова, которые она не узнала, покажет красным.</p>'
                        : '<p class="roles-hint">Чтение по ролям работает в браузере с распознаванием речи — Chrome, Яндекс Браузер, Safari. Проверка — кнопка «проверить микрофон» вверху.</p>');
     if (!MIC.available()) bar.querySelectorAll(".role-btn").forEach(function(b){ b.disabled = true; });
     script.parentNode.insertBefore(bar, script);
@@ -2905,9 +2926,9 @@ td.w.speaking{color:var(--sea)}
     if (!b) return;
     const act = b.dataset.act;
     if (act === "close"){ if (pendingRestore){ restore(pendingRestore); pendingRestore = null; } hidePanel(); return; }
-    if (act === "restart"){
+    if (act === "restart" || act === "swap"){
       if (pendingRestore){ restore(pendingRestore); pendingRestore = null; }
-      if (lastRole) start(lastRole.script, lastRole.role);
+      if (lastRole) start(lastRole.script, act === "swap" && lastRole.other ? lastRole.other : lastRole.role);
       return;
     }
     if (!S) return;
