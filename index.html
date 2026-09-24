@@ -822,6 +822,29 @@ table.vocab.hidden .us-ru{color:transparent;background:var(--line-soft);border-r
 .fs-sum{font-size:14px;color:var(--rain);margin:10px 0 0}
 .chapter.ear-lock .focus-panel{filter:blur(7px);pointer-events:none;user-select:none}
 
+/* ---------- контрольная запись ---------- */
+.control{margin:0 0 18px}
+.ct-card{border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);padding:14px 16px}
+.ct-head{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:10px 18px}
+.ct-head p{margin:0;max-width:40rem}
+.ct-hist{list-style:none;margin:12px 0 4px;padding:0;display:flex;flex-wrap:wrap;gap:8px 14px}
+.ct-hist li{display:inline-flex;align-items:baseline;gap:6px;border:1px solid var(--line);border-radius:999px;padding:3px 12px;background:var(--field);font-size:14px}
+.ct-hist b{font-family:var(--serif);font-size:17px}
+.ct-hist i{font-style:normal;font-family:var(--mono);font-size:12px}
+.ct-hist i.up{color:var(--ok)}
+.ct-hist i.down{color:var(--no)}
+.ct-m{color:var(--rain)}
+.ct-note{font-size:13.5px;color:var(--rain);margin:8px 0 0;max-width:none}
+.ct-text{border-left:3px solid var(--sea);padding:6px 14px;margin:10px 0;text-align:left}
+.ct-text p{font-family:var(--serif);font-size:18px;line-height:1.55;margin:4px 0;max-width:none}
+.ct-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 16px;margin:10px 0}
+.ct-row button{display:inline-flex;align-items:center;gap:7px}
+.ct-rec.on{background:var(--no);border-color:var(--no)}
+.ct-timer{font-family:var(--mono);font-size:15px;color:var(--no);min-width:3em}
+.ct-audio{width:100%;max-width:26rem;margin:8px auto;display:block}
+.ct-sent{font-family:var(--serif);font-size:21px;line-height:1.5;margin:12px auto 6px;max-width:32rem}
+.ct-sess .lk-res{text-align:center;margin:8px auto 0;max-width:32rem}
+
 /* ---------- план на сегодня ---------- */
 .plan{border:1px solid var(--line);border-left:3px solid var(--lamp);border-radius:var(--radius);background:var(--surface);padding:14px 16px;margin:0 0 26px}
 .srs-on .plan{display:none}
@@ -1053,6 +1076,7 @@ td.w.speaking{color:var(--sea)}
       <h2>Два слова — один звук разницы</h2>
       <p>В каждой паре слова различаются одним звуком: <span class="cue">think — sink</span>, <span class="cue">sheep — ship</span>. Послушай пару, потом скажи слово, которое просит книга, — она распознаёт, какое из двух у тебя прозвучало. Образец — британский английский.</p>
       <p>Первая группа — звуки, которые у русскоговорящих чаще всего выходят не так и мешают тебя понять. Вторая — британские гласные: то, чем оксфордское произношение отличается от американского. Хватает одного набора в день, 3–4 минуты. Итог приходит мне, и трудные звуки я вплету в следующие главы.</p>
+      <div class="control" id="control"></div>
       <div class="gym" id="gym"></div>
       <div class="sounds" id="sounds"></div>
     </section>
@@ -2415,6 +2439,7 @@ td.w.speaking{color:var(--sea)}
             <li><b>Разминка</b> для губ и языка с зеркалом и рисованными губами образца, которые двигаются в такт голосу.</li>
             <li><b>Чтение по ролям</b>: читаешь за героя, остальных озвучивает книга.</li>
             <li><b>Звук в фокусе</b>: трудный для тебя звук вплетается в следующую главу — его слова подчёркнуты в диалоге, под диалогом их можно послушать и сказать.</li>
+            <li><b>Контрольная запись раз в месяц</b>: один и тот же текст — записываешь себя, книга проверяет понятность, и можно сравнить, как звучал месяц, два, полгода назад. Записи хранятся в твоей таблице.</li>
           </ul>
         </div>
 
@@ -2454,7 +2479,6 @@ td.w.speaking{color:var(--sea)}
           <p class="sec-label">Что будет дальше</p>
           <h2>Книга растёт</h2>
           <ul class="rm-points">
-            <li><b>Контрольная запись</b> раз в месяц — услышать, как изменилось произношение.</li>
             <li><b>Живая речь носителей</b> — последняя ступень слушания.</li>
             <li><b>Своя лексика</b> — слова твоей работы и увлечений.</li>
           </ul>
@@ -4674,6 +4698,316 @@ td.w.speaking{color:var(--sea)}
 </script>
 
 <script>
+// ---------- контрольная запись раз в месяц ----------
+// Решение ученика (24.09.2026): раз в месяц — один и тот же текст (≈75 слов со звуками, трудными для
+// русскоговорящих). Три шага: послушать образец → записать себя целиком → прочитать по предложениям для
+// проверки понятности (распознавание). Запись хранится на сервере — лист «recordings» таблицы ученика
+// (recPut / recList / recGet, не входит в синхронизацию); если сервер недоступен — ждёт в браузере и
+// отправляется при следующем открытии. Счёт — blue-suitcase-control (синхронизируется), отчёт — kind: "pron",
+// source: "control". Раздел — «Звуки», пункт в «Плане на сегодня», если в этом месяце записи ещё нет.
+(function(){
+  "use strict";
+  const box = document.getElementById("control");
+  if (!box) return;
+  const TTS = window.bsTTS, MIC = window.bsMic;
+  const KEY = "blue-suitcase-control";
+  const TEXT = [
+    "This Thursday, Victor and his three brothers went to the old village by the river.",
+    "The weather was cold and wet, but they walked for hours.",
+    "They visited a little shop and bought some bread and cheese.",
+    "Then they sat on a bench by the water.",
+    "“Look at that ship!” said Victor. “I think it's leaving.”",
+    "At half past eight they got home, happy, hungry and very tired."
+  ];
+  const NAMES = { victor: 1 };
+  const FUNC = { a: 1, an: 1, the: 1, to: 1, of: 1, and: 1, or: 1, "in": 1, on: 1, at: 1, "for": 1, is: 1, are: 1, am: 1, it: 1, i: 1,
+                 by: 1, but: 1, was: 1, his: 1, they: 1, some: 1, that: 1, this: 1 };
+  const MONTHS = ["январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"];
+  function esc(s){ return String(s == null ? "" : s).replace(/[&<>"]/g, function(c){ return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function day(){ const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  function month(){ return day().slice(0, 7); }
+  function monthName(id){ const p = id.split("-"); return MONTHS[Number(p[1]) - 1] + " " + p[0]; }
+  function load(){ try { return JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch(e){ return {}; } }
+  function save(st){ try { localStorage.setItem(KEY, JSON.stringify(st)); } catch(e){} }
+  function results(){ return (load().m) || {}; }
+  function canRecord(){ return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder); }
+  function canHear(){ return !!(TTS && TTS.supported); }
+  function canSpeak(){ return !!(MIC && MIC.usable && MIC.usable()); }
+
+  // ---- записи: сервер, а если он недоступен — очередь в браузере (IndexedDB) ----
+  function idb(){
+    return new Promise(function(res, rej){
+      if (!window.indexedDB){ rej(new Error("no idb")); return; }
+      const r = indexedDB.open("bs-control", 1);
+      r.onupgradeneeded = function(){ r.result.createObjectStore("pending"); };
+      r.onsuccess = function(){ res(r.result); };
+      r.onerror = function(){ rej(r.error); };
+    });
+  }
+  function idbDo(mode, fn){
+    return idb().then(function(db){ return new Promise(function(res, rej){
+      const tx = db.transaction("pending", mode), st = tx.objectStore("pending");
+      const out = fn(st);
+      tx.oncomplete = function(){ res(out && out.result !== undefined ? out.result : out); };
+      tx.onerror = function(){ rej(tx.error); };
+    }); });
+  }
+  function toB64(blob){ return new Promise(function(res){ const fr = new FileReader(); fr.onload = function(){ res(String(fr.result).split(",")[1] || ""); }; fr.readAsDataURL(blob); }); }
+  function fromB64(b64, mime){ const bin = atob(b64), a = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) a[i] = bin.charCodeAt(i); return new Blob([a], { type: mime || "audio/webm" }); }
+  async function upload(id, blob, dur){
+    const b64 = await toB64(blob);
+    if (!window.bsServer || !window.bsServer.ready) throw new Error("нет связи с таблицей на этом устройстве");
+    return window.bsServer.call({ action: "recPut", id: id, mime: blob.type, dur: dur, data: b64 });
+  }
+  async function keepPending(id, blob, dur){
+    try { await idbDo("readwrite", function(st){ return st.put({ blob: blob, dur: dur, mime: blob.type }, id); }); return true; } catch(e){ return false; }
+  }
+  async function flushPending(){
+    if (!window.bsServer || !window.bsServer.ready) return;
+    let keys = [];
+    try { keys = await idbDo("readonly", function(st){ return st.getAllKeys(); }); } catch(e){ return; }
+    for (let i = 0; i < (keys || []).length; i++){
+      const id = keys[i];
+      try {
+        const rec = await idbDo("readonly", function(st){ return st.get(id); });
+        if (!rec) continue;
+        await upload(id, rec.blob, rec.dur);
+        await idbDo("readwrite", function(st){ return st.delete(id); });
+      } catch(e){ return; }
+    }
+  }
+  async function getRec(id){
+    try { const rec = await idbDo("readonly", function(st){ return st.get(id); }); if (rec && rec.blob) return rec.blob; } catch(e){}
+    if (!window.bsServer || !window.bsServer.ready) throw new Error("нет связи с таблицей на этом устройстве");
+    const r = await window.bsServer.call({ action: "recGet", id: id });
+    return fromB64(r.data, r.mime);
+  }
+  let playing = null;
+  async function play(id, btn){
+    if (playing){ playing.pause(); playing = null; }
+    const label = btn.textContent;
+    btn.disabled = true; btn.textContent = "загружаю…";
+    try {
+      const blob = await getRec(id);
+      const a = new Audio(URL.createObjectURL(blob));
+      playing = a;
+      a.onended = function(){ btn.textContent = label; btn.disabled = false; };
+      await a.play();
+      btn.textContent = "▶ играет";
+      btn.disabled = false;
+      btn.onclick = null;
+    } catch(e){
+      btn.textContent = label; btn.disabled = false;
+      alert("Запись не загрузилась: " + ((e && e.message) || "нет связи"));
+    }
+  }
+
+  // ---- карточка раздела ----
+  function renderHome(){
+    const R = results(), ids = Object.keys(R).sort();
+    const cur = R[month()];
+    const last = ids.length ? R[ids[ids.length - 1]] : null;
+    box.innerHTML =
+      '<div class="ct-card">' +
+        '<div class="ct-head"><div><p class="gym-kicker">Контрольная запись · раз в месяц</p>' +
+        '<p class="gym-lead">Один и тот же текст каждый месяц: запиши себя, сравни с прошлыми месяцами — и книга проверит, насколько понятно звучит. Около 5 минут.</p></div>' +
+        '<div class="gym-actions"><button type="button" class="act ct-start">' + (cur ? "Записать заново" : "Начать") + '</button></div></div>' +
+        (ids.length ? '<ul class="ct-hist">' + ids.slice(-12).map(function(id, k){
+          const r = R[id], prev = k ? R[ids.slice(-12)[k - 1]] : null;
+          const delta = prev && prev.pct != null && r.pct != null ? r.pct - prev.pct : null;
+          return '<li><span class="ct-m">' + esc(monthName(id)) + '</span><b>' + (r.pct != null ? r.pct + "%" : "—") + '</b>' +
+            (delta != null ? '<i class="' + (delta >= 0 ? "up" : "down") + '">' + (delta > 0 ? "+" : "") + delta + '</i>' : "") +
+            (r.rec ? '<button type="button" class="linkish ct-play" data-id="' + id + '">▶ послушать</button>' : "") + '</li>';
+        }).join("") + '</ul><p class="ct-note">Процент — сколько слов текста распознаватель услышал так, как ты их хотел сказать. Записи хранятся в твоей таблице и открываются на любом устройстве.</p>'
+                    : '<p class="ct-note">Записей ещё нет. Первая станет точкой отсчёта.</p>') +
+      '</div>';
+    box.querySelector(".ct-start").addEventListener("click", start);
+    box.querySelectorAll(".ct-play").forEach(function(b){ b.addEventListener("click", function(){ play(b.dataset.id, b); }); });
+    flushPending();
+  }
+
+  // ---- занятие ----
+  let S = null;
+  function textHtml(){ return '<div class="ct-text">' + TEXT.map(function(t){ return '<p>' + esc(t) + '</p>'; }).join("") + '</div>'; }
+  function start(){
+    S = { step: 1, blob: null, dur: 0, first: {}, i: 0, words: {}, hits: 0, total: 0, missed: [], sounds: [] };
+    if (window.bsLog){ window.bsLog.ctx("speak"); window.bsLog.mark("control"); }
+    step1();
+    try { box.scrollIntoView({ block: "start" }); } catch(e){}
+  }
+  function stepHead(n, t){ return '<div class="tr-progress">Контрольная запись · шаг ' + n + ' из 3 · ' + t + '</div>'; }
+  function step1(){
+    box.innerHTML = '<div class="tr-card ct-sess">' + stepHead(1, "послушай образец") +
+      '<p class="td-small">Прочитай текст про себя и послушай, как он звучит. Обрати внимание на th, w и v, долгие и краткие гласные, звонкие окончания.</p>' +
+      textHtml() +
+      '<div class="ct-row">' + (canHear() ? '<div class="lipsync"></div><button type="button" class="act ghost ct-model">' + TTS.icon + '<span>Послушать образец</span></button>' : "") + '</div>' +
+      '<div class="tr-buttons"><button type="button" class="act ct-next">Дальше — записать себя</button><button type="button" class="linkish ct-quit">Выйти</button></div></div>';
+    const m = box.querySelector(".ct-model");
+    if (m) m.addEventListener("click", function(){ TTS.play(TEXT.map(function(t){ return { text: t, gender: TTS.modelGender(), pause: 500 }; })); });
+    box.querySelector(".ct-next").addEventListener("click", function(){ TTS.stop(); canRecord() ? step2() : step3(); });
+    box.querySelector(".ct-quit").addEventListener("click", quit);
+  }
+  let rec = null, stream = null, t0 = 0, tick = null;
+  function stopStream(){ if (stream){ stream.getTracks().forEach(function(t){ t.stop(); }); stream = null; } }
+  function step2(){
+    box.innerHTML = '<div class="tr-card ct-sess">' + stepHead(2, "запиши себя") +
+      '<p class="td-small">Нажми «Записать» и прочитай весь текст вслух в обычном темпе. Потом «Стоп».</p>' +
+      textHtml() +
+      '<div class="ct-row"><button type="button" class="act ct-rec">● Записать</button><span class="ct-timer"></span></div>' +
+      '<div class="ct-after" hidden><audio class="ct-audio" controls></audio><div class="tr-buttons">' +
+        '<button type="button" class="act ct-save">Сохранить и дальше</button><button type="button" class="act ghost ct-again">Записать заново</button></div></div>' +
+      '<p class="lk-res ct-res"></p></div>';
+    const btn = box.querySelector(".ct-rec"), timer = box.querySelector(".ct-timer"), res = box.querySelector(".ct-res");
+    btn.addEventListener("click", async function(){
+      if (rec && rec.state === "recording"){ rec.stop(); return; }
+      TTS.stop();
+      try { stream = await navigator.mediaDevices.getUserMedia({ audio: true }); }
+      catch(e){ res.textContent = MIC && MIC.errorText ? MIC.errorText(e && e.name === "NotAllowedError" ? "not-allowed" : "audio-capture") : "Микрофон не включился."; res.className = "lk-res ct-res no"; return; }
+      const types = ["audio/webm;codecs=opus", "audio/webm", "audio/mp4", "audio/ogg;codecs=opus"];
+      const type = types.filter(function(t){ return MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(t); })[0] || "";
+      const opts = { audioBitsPerSecond: 24000 };
+      if (type) opts.mimeType = type;
+      try { rec = new MediaRecorder(stream, opts); } catch(e){ rec = new MediaRecorder(stream); }
+      const chunks = [];
+      rec.ondataavailable = function(e){ if (e.data && e.data.size) chunks.push(e.data); };
+      rec.onstop = function(){
+        clearInterval(tick); stopStream();
+        S.dur = Math.round((Date.now() - t0) / 1000);
+        S.blob = new Blob(chunks, { type: rec.mimeType || type || "audio/webm" });
+        btn.textContent = "● Записать"; btn.classList.remove("on");
+        const a = box.querySelector(".ct-audio");
+        a.src = URL.createObjectURL(S.blob);
+        box.querySelector(".ct-after").hidden = false;
+      };
+      rec.start();
+      t0 = Date.now();
+      btn.textContent = "■ Стоп"; btn.classList.add("on");
+      box.querySelector(".ct-after").hidden = true;
+      tick = setInterval(function(){
+        const s = Math.round((Date.now() - t0) / 1000);
+        timer.textContent = Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
+        if (s >= 120 && rec.state === "recording") rec.stop();   // больше двух минут не нужно
+      }, 250);
+    });
+    box.querySelector(".ct-again").addEventListener("click", function(){ box.querySelector(".ct-after").hidden = true; S.blob = null; btn.click(); });
+    box.querySelector(".ct-save").addEventListener("click", async function(){
+      const sv = this;
+      sv.disabled = true; sv.textContent = "сохраняю…";
+      S.uploaded = false;
+      try { await upload(month(), S.blob, S.dur); S.uploaded = true; }
+      catch(e){ S.pendingSaved = await keepPending(month(), S.blob, S.dur); S.uploadError = (e && e.message) || ""; }
+      step3();
+    });
+  }
+  function step3(){
+    if (!canSpeak()){ finish(); return; }
+    S.i = 0;
+    sentence();
+  }
+  function want(t){
+    const P = window.bsPron;
+    return P.tokens(t).filter(function(w){ return !FUNC[w] && !NAMES[w]; }).map(function(w){ return { w: w, k: P.key(w) }; });
+  }
+  function sentence(){
+    if (S.i >= TEXT.length){ finish(); return; }
+    const t = TEXT[S.i];
+    box.innerHTML = '<div class="tr-card ct-sess">' + stepHead(3, "проверка понятности · " + (S.i + 1) + " / " + TEXT.length) +
+      (S.uploaded ? '<p class="td-ok">Запись сохранена в твоей таблице.</p>' : S.blob ? '<p class="td-small">' + (S.pendingSaved ? "Таблица сейчас недоступна — запись ждёт в браузере и уйдёт при следующем открытии книги." : "Запись сохранить не удалось.") + '</p>' : "") +
+      '<p class="td-small">Прочитай предложение вслух — книга распознает, какие слова прозвучали понятно.</p>' +
+      '<p class="ct-sent">' + esc(t) + (canHear() ? '<button type="button" class="say-btn" data-say="' + esc(t) + '" aria-label="Образец">' + TTS.icon + '</button>' : "") + '</p>' +
+      '<div class="tr-buttons"><button type="button" class="act td-say ct-say">' + (TTS.micIcon || "") + '<span>Сказать</span></button></div>' +
+      '<p class="rp-live ct-live" aria-live="polite"></p><p class="lk-res ct-res"></p>' +
+      '<div class="ct-after" hidden><div class="tr-buttons"><button type="button" class="act ghost ct-retry">Ещё раз (не в счёт)</button><button type="button" class="act ct-go">Дальше</button></div></div></div>';
+    const btn = box.querySelector(".ct-say"), live = box.querySelector(".ct-live"), res = box.querySelector(".ct-res");
+    const W = want(t);
+    function heardKeys(txt){ return window.bsPron.tokens(txt).map(window.bsPron.key); }
+    function run(){
+      TTS.stop();
+      btn.classList.add("on"); btn.querySelector("span").textContent = "Слушаю…";
+      live.innerHTML = '<span class="rp-dot" aria-hidden="true"></span>читай';
+      let started = Date.now(), retried = false;
+      function go(){
+        started = Date.now();
+        MIC.recognize(MIC.lang(), function(tx){ live.textContent = "«" + tx + "»"; },
+          { continuous: true, silenceMs: 2000, maxMs: 20000, enough: function(tx){ const h = heardKeys(tx); return W.every(function(x){ return h.indexOf(x.k) !== -1; }); } })
+          .then(function(out){
+            btn.classList.remove("on"); btn.querySelector("span").textContent = "Сказать";
+            // лучший вариант распознавания — где больше нужных слов
+            let best = null;
+            out.alts.forEach(function(a){ const h = heardKeys(a.t); const n = W.filter(function(x){ return h.indexOf(x.k) !== -1; }).length; if (!best || n > best.n) best = { n: n, t: a.t, h: h }; });
+            const missed = W.filter(function(x){ return best.h.indexOf(x.k) === -1; });
+            live.textContent = "Услышал: «" + out.alts[0].t + "»";
+            const tips = [];
+            if (window.bsPhon) missed.forEach(function(x){
+              let ex = null;
+              window.bsPron.tokens(best.t).forEach(function(hw){ const e = window.bsPhon.explain(x.w, hw); if (e && (!ex || e.cost < ex.cost)) ex = e; });
+              if (ex) tips.push(x.w + ": " + ex.text);
+            });
+            res.innerHTML = (missed.length ? 'Не узналось: <b>' + esc(missed.map(function(x){ return x.w; }).join(", ")) + '</b>' + (tips.length ? '<br>' + esc(tips.join("; ")) : "") : '✓ Все слова прозвучали понятно');
+            res.className = "lk-res ct-res " + (missed.length ? "no" : "ok");
+            if (S.first[S.i] === undefined){
+              S.first[S.i] = true;
+              S.hits += W.length - missed.length; S.total += W.length;
+              missed.forEach(function(x){ S.missed.push(x.w); });
+              tips.forEach(function(x){ S.sounds.push(x); });
+              if (window.bsLog) window.bsLog.result("speak", "control", W.length, W.length - missed.length);
+            }
+            box.querySelector(".ct-after").hidden = false;
+          })
+          .catch(function(err){
+            if (!retried && err && (err.code === "no-speech" || err.code === "aborted" || err.code === "start-failed") && Date.now() - started < 1500){ retried = true; setTimeout(go, 300); return; }
+            btn.classList.remove("on"); btn.querySelector("span").textContent = "Сказать";
+            live.textContent = "";
+            res.textContent = err && err.code === "no-speech" ? "Не услышал. Нажми «Сказать» и читай после красной точки." : (MIC.errorText ? MIC.errorText((err && err.code) || "unknown") : "Распознавание не сработало.");
+            res.className = "lk-res ct-res warn";
+          });
+      }
+      setTimeout(go, 300);
+    }
+    btn.addEventListener("click", run);
+    box.querySelector(".ct-retry").addEventListener("click", function(){ box.querySelector(".ct-after").hidden = true; run(); });
+    box.querySelector(".ct-go").addEventListener("click", function(){ S.i++; sentence(); });
+  }
+  function finish(){
+    const st = load(); st.m = st.m || {};
+    const id = month(), prevIds = Object.keys(st.m).filter(function(x){ return x < id; }).sort();
+    const prev = prevIds.length ? st.m[prevIds[prevIds.length - 1]] : null;
+    const pct = S.total ? Math.round(S.hits / S.total * 100) : null;
+    const old = st.m[id] || {};
+    st.m[id] = { d: day(), pct: pct, ok: S.hits, n: S.total, missed: S.missed, sounds: S.sounds.slice(0, 12), dur: S.dur || old.dur || 0,
+                 rec: !!(S.uploaded || S.pendingSaved || old.rec) };
+    save(st);
+    if (window.bsLog) window.bsLog.done();
+    const delta = prev && prev.pct != null && pct != null ? pct - prev.pct : null;
+    box.innerHTML = '<div class="tr-result ct-done"><h3>Контрольная запись — ' + esc(monthName(id)) + '</h3>' +
+      (pct != null ? '<p class="big">' + pct + '%</p><p class="tr-stats">слов прозвучало понятно' + (delta != null ? " · " + (delta > 0 ? "+" : "") + delta + " к прошлому месяцу" : " · первая запись — точка отсчёта") + '</p>' : '<p class="tr-stats">Понятность здесь не проверялась: распознавание речи недоступно.</p>') +
+      (S.missed.length ? '<p class="tr-list">Не узнались: ' + esc(S.missed.join(", ")) + '</p>' : "") +
+      (S.sounds.length ? '<p class="tr-list">Что сбилось: ' + esc(S.sounds.slice(0, 6).join("; ")) + '</p>' : "") +
+      '<p class="tr-stats">' + (S.uploaded ? "Запись сохранена в твоей таблице." : S.pendingSaved ? "Запись ждёт в браузере и уйдёт в таблицу при следующем открытии книги." : S.blob ? "Запись сохранить не удалось." : "") +
+      (prev && prev.rec ? ' Сравни: <button type="button" class="linkish ct-play" data-id="' + prevIds[prevIds.length - 1] + '">▶ ' + esc(monthName(prevIds[prevIds.length - 1])) + '</button>' + (st.m[id].rec ? ' и <button type="button" class="linkish ct-play" data-id="' + id + '">▶ ' + esc(monthName(id)) + '</button>' : "") : "") + '</p>' +
+      '<div class="bar"><button type="button" class="act ghost ct-close">Закрыть</button></div></div>';
+    box.querySelectorAll(".ct-play").forEach(function(b){ b.addEventListener("click", function(){ play(b.dataset.id, b); }); });
+    box.querySelector(".ct-close").addEventListener("click", function(){ S = null; renderHome(); });
+    if (window.bsPlan) window.bsPlan.after(box.querySelector(".ct-done"));
+    if (MIC && MIC.send && pct != null) MIC.send({ sentAt: new Date().toISOString(), kind: "pron", source: "control", month: id, pct: pct, ok: S.hits, n: S.total,
+      missed: S.missed, sounds: S.sounds, recorded: !!(S.uploaded || S.pendingSaved), prev: prev ? prev.pct : null,
+      text: "Контрольная запись, " + monthName(id) + ": понятно " + pct + "% слов (" + S.hits + " из " + S.total + ")" + (prev && prev.pct != null ? ", прошлый раз " + prev.pct + "%" : "") +
+            (S.missed.length ? "\nНе узнались: " + S.missed.join(", ") : "") + (S.sounds.length ? "\nЗвуки: " + S.sounds.join("; ") : "") });
+    document.dispatchEvent(new CustomEvent("bs:vocab-changed"));
+  }
+  function quit(){ TTS.stop(); stopStream(); S = null; renderHome(); }
+  // ушёл из раздела — запись и микрофон выключаются
+  document.addEventListener("bs:view", function(e){ if (e.detail !== "sounds" && S){ if (rec && rec.state === "recording") rec.stop(); stopStream(); } if (e.detail === "sounds" && !S) renderHome(); });
+  renderHome();
+  window.bsControl = {
+    start: function(){ if (typeof window.__bsShowView === "function") window.__bsShowView("sounds"); start(); },
+    doneThisMonth: function(){ return !!results()[month()]; },
+    history: function(){ return results(); }
+  };
+})();
+</script>
+
+<script>
 // ---------- звук в фокусе главы ----------
 // Решение ученика (24.09.2026): трудный звук вплетается в главу — 5–6 слов с ним в репликах героев. Глава
 // несёт блок <script type="application/json" class="focus-sound">{"sound": "θ", "set": "th", "words": [...],
@@ -5941,6 +6275,10 @@ td.w.speaking{color:var(--sea)}
       if (sk === "listen" && a.conn) sub.push("слитная речь: " + pct(a.conn.ok, a.conn.n) + "%");
       if (sk === "speak" && a.roles) sub.push("роли: чисто " + pct(a.roles.ok, a.roles.n) + "% реплик из " + a.roles.n);
       if (sk === "speak" && a.sounds) sub.push("«Говорить» в «Звуках»: " + pct(a.sounds.ok, a.sounds.n) + "%");
+      if (sk === "speak" && window.bsControl){
+        const h = window.bsControl.history(), ids = Object.keys(h).sort().slice(-4);
+        if (ids.length) sub.push("контрольная запись: " + ids.map(function(id){ return id.slice(5) + "." + id.slice(2, 4) + " — " + (h[id].pct != null ? h[id].pct + "%" : "—"); }).join(" → "));
+      }
       const delta = now != null && before != null ? now - before : null;
       const m14 = minutes(two.s[sk]);
       return '<div class="pg-card pg-' + sk + '">' +
@@ -6098,6 +6436,14 @@ td.w.speaking{color:var(--sea)}
     return { t: "Глаголы: три формы", d: (v.due ? v.due + " к повторению" : "новые по приоритету") + " — напечатать, сказать, узнать на слух и по написанию",
              min: 7, done: done, more: true, moreLabel: "Ещё", go: function(){ window.bsVerbs.start(8); } };
   }
+  // контрольная запись: раз в месяц, пока в этом месяце её нет
+  function controlItem(){
+    if (!window.bsControl) return null;
+    const done = doneToday(["control"]);
+    if (window.bsControl.doneThisMonth() && !done) return null;
+    return { t: "Контрольная запись — раз в месяц", d: "один и тот же текст: послушать, записать себя, проверить понятность — и сравнить с прошлым месяцем",
+             min: 6, done: done || window.bsControl.doneThisMonth(), go: function(){ window.bsControl.start(); } };
+  }
   // вечерний просмотр: сегодняшние новые и не вспомнившиеся — прочитать, послушать, сказать
   function eveningItem(){
     if (!window.bsSRS || !window.bsSRS.lookCount) return null;
@@ -6120,7 +6466,7 @@ td.w.speaking{color:var(--sea)}
       items.push({ t: "Повторение", d: sum.cards ? (lookFirst ? "сначала просмотр " + lookN + " " + word(lookN, "слова", "слов", "слов") + ", потом " : "") + sum.cards + " " + word(sum.cards, "карточка", "карточки", "карточек") + (sum.over ? " · сегодня без новых слов: к повторению больше 60" : "") : "на сегодня всё повторено",
                    min: sum.cards ? sum.minutes + (lookFirst ? Math.ceil(lookN / 4) : 0) : 0, done: !sum.cards, go: function(){ window.bsSRS.start(); } });
     }
-    [a1Item(), chapterItem(), verbsItem(), earsItem(), mouthItem(), eveningItem()].forEach(function(x){ if (x) items.push(x); });
+    [a1Item(), chapterItem(), verbsItem(), earsItem(), mouthItem(), controlItem(), eveningItem()].forEach(function(x){ if (x) items.push(x); });
     planItems = items;
     const left = items.filter(function(x){ return !x.done; }).reduce(function(t, x){ return t + (x.min || 0); }, 0);
     const doneN = items.filter(function(x){ return x.done; }).length;
@@ -6173,7 +6519,7 @@ td.w.speaking{color:var(--sea)}
       const sum = window.bsSRS.summary();
       if (sum.cards) items.push({ t: "Повторение", d: sum.cards + " " + word(sum.cards, "карточка", "карточки", "карточек"), go: function(){ window.bsSRS.start(); } });
     }
-    [a1Item(), chapterItem(), verbsItem(), earsItem(), mouthItem(), new Date().getHours() >= 17 ? eveningItem() : null].forEach(function(x){ if (x && !x.done) items.push(x); });
+    [a1Item(), chapterItem(), verbsItem(), earsItem(), mouthItem(), controlItem(), new Date().getHours() >= 17 ? eveningItem() : null].forEach(function(x){ if (x && !x.done) items.push(x); });
     afterItems = items;
     const old = el.querySelector(".next-step");
     if (old) old.remove();
@@ -6234,6 +6580,18 @@ td.w.speaking{color:var(--sea)}
     if (m){ rawSet(KEY_KEY, m[1]); location.replace(location.pathname + location.search); }
   });
   const key = ENDPOINT ? (store.getItem(KEY_KEY) || EMBEDDED_KEY || "") : "";   // нет адреса таблицы — синхронизации нет
+  // большие данные (контрольные записи) — отдельными запросами, не через синхронизацию
+  window.bsServer = {
+    ready: !!key,
+    call: async function(body){
+      if (!key) throw new Error("на этом устройстве нет ключа синхронизации");
+      const res = await fetch(ENDPOINT, { method: "POST", body: JSON.stringify(Object.assign({ key: key }, body)) });
+      let data = null;
+      try { data = await res.json(); } catch(e){ data = null; }
+      if (!data || data.ok !== true) throw new Error((data && data.error === "неизвестное действие") ? "скрипт таблицы нужно обновить" : ((data && data.error) || "таблица не ответила"));
+      return data;
+    }
+  };
   if (!key){
     // без ключа учёт не ведём: при подключении всё здешнее станет «самым старым» и не перебьёт общий прогресс
     const off = document.getElementById("sync-line");
