@@ -938,8 +938,8 @@ td.w.speaking{color:var(--sea)}
       <p>Если слово не узналось, книга сразу объясняет, какой звук вышел не так: сравнивает британскую транскрипцию нужного слова и того, что прозвучало (<span class="cue">cold /kəʊld/ → called /kɔːld/: звук [əʊ] прозвучал как [ɔː]</span>), подсказывает, как поставить язык и губы, и медленно произносит слово. «Сказать слово» — повторить только его, пока не выйдет, потом всю реплику.</p>
       <p>В разделе «Звуки» сверху — фонетическая разминка: 8 упражнений для губ и языка, около 4 минут, со схемами, образцом и «Зеркалом» (фронтальная камера, изображение никуда не уходит). Там же шкала «s ↔ th»: пошипи «ссс», потом [θ] с языком между зубами — стрелка покажет, на что похоже.</p>
       <h3>План на сегодня и «Прогресс»</h3>
-      <p>Над «Повторением» — «План на сегодня»: повторение, шаг главы (на слух → чтение и словарь → упражнения и отчёт → по ролям), одно занятие на слух и одно на произношение — то, что слабее или давно не делал; у каждого пункта — «Начать», сделанное вычёркивается само. Если к повторению больше 60 карточек, в этот день новых слов нет — сначала разбираем накопленное. Около 25–30 минут в день; пропустил день — ничего не пропало.</p>
-      <p>«Прогресс» — четыре навыка: чтение (какая доля слов обычного текста тебе знакома), письмо (верно ли пишешь по памяти), слушание (сколько слов слышишь в диктанте), говорение (сколько реплик читаешь чисто). У каждого — график за 8 недель, изменение за две недели и минуты в неделю; сверху — дни с занятиями, серия и баланс времени по навыкам; внизу — словарь с прогнозом. Книга считает минуты, только пока ты занимаешься.</p>
+      <p>Над «Повторением» — «План на сегодня»: повторение, шаг главы (на слух → чтение и словарь → упражнения и отчёт → по ролям), одно занятие на слух и одно на произношение — то, что слабее или давно не делал; пока не все слова A1 подтверждены — ещё «Слова A1»: 20 самых частых в день, в обе стороны. У каждого пункта — «Начать», сделанное вычёркивается само. Если к повторению больше 60 карточек, в этот день новых слов нет — сначала разбираем накопленное. Около 25–30 минут в день; пропустил день — ничего не пропало.</p>
+      <p>«Прогресс» — четыре навыка: чтение (какая доля слов обычного текста тебе знакома — считаются только слова, которые ты подтвердил), письмо (верно ли пишешь по памяти), слушание (сколько слов слышишь в диктанте), говорение (сколько реплик читаешь чисто). У каждого — график за 8 недель, изменение за две недели и минуты в неделю; сверху — дни с занятиями, серия и баланс времени по навыкам; внизу — словарь с прогнозом. Книга считает минуты, только пока ты занимаешься.</p>
 
       <h3>Слушание</h3>
       <p>От простого к сложному. Сначала различать звуки: в «Звуках» кнопка «Слушать» — книга произносит одно слово пары (ship или sheep), ты выбираешь, какое. Потом диктант в разделе «Слушание»: книга читает реплики глав голосом героев, ты печатаешь; три скорости — медленно, обычно, быстро. Когда на скорости слышишь 90% слов и больше — переходи на следующую. Разбор подсказывает, что мешает: окончания, служебные слова, сокращения, похожие звуки.</p>
@@ -5019,12 +5019,14 @@ td.w.speaking{color:var(--sea)}
   }
 
   // ---- словарь: знакомые слова и доля знакомых слов в обычном тексте ----
-  const A1 = {}; readBlock("data-a1").forEach(function(r){ A1[String(r.w).toLowerCase()] = 1; });
+  // Знакомые — только подтверждённые учеником (решение ученика, 24.09.2026): вспомнил в обе стороны
+  // в тренажёре (в «Повторении» со ступени 3) или усвоил в «Повторении». Слова A1 сами по себе не в счёт.
+  const A1LIST = readBlock("data-a1");
   const NGSL = readBlock("data-ngsl-order");
   let H = 0; NGSL.forEach(function(w, i){ H += 1 / (i + 1); });
   function vocab(){
     const srs = readKey("blue-suitcase-srs", { w: {} }) || { w: {} };
-    const known = Object.assign({}, A1);
+    const known = {};
     let mastered = 0, firm = 0;
     Object.keys(srs.w || {}).forEach(function(w){ const e = srs.w[w]; if (e.m) mastered++; if (e.m || (e.b || 0) >= 3){ known[w.toLowerCase()] = 1; firm++; } });
     let c = 0; NGSL.forEach(function(w, i){ if (known[String(w).toLowerCase()]) c += 1 / (i + 1); });
@@ -5081,7 +5083,7 @@ td.w.speaking{color:var(--sea)}
       if (sk === "read"){
         head = "≈" + v.coverage + "%"; unit = "слов обычного текста знакомы";
         if (now != null) sub.push("узнаёшь слова на карточках: " + now + "%");
-        sub.push("знакомых слов: " + v.known + " (A1 + выученные)");
+        sub.push("знакомых слов: " + v.known + " — подтверждены тобой");
       } else if (sk === "listen" && bestSpeed){
         head = lvl[bestSpeed].pct + "%"; unit = "слов слышишь в диктанте · " + SPEED[bestSpeed];
         if (now != null) sub.push("все упражнения на слух: " + now + "% с первой попытки");
@@ -5141,7 +5143,7 @@ td.w.speaking{color:var(--sea)}
         '<p class="pg-pace">' + (pace != null ? "Темп: " + (pace > 0 ? "+" : "") + pace + " " + word(Math.abs(pace), "слово", "слова", "слов") + " в неделю. " : "") + esc(vocabLine) + '</p>' +
       '</div>' +
       '<p class="pg-note">Счёт ведётся с ' + (firstDay ? firstDay.slice(8, 10) + "." + firstDay.slice(5, 7) + "." + firstDay.slice(0, 4) : "сегодняшнего дня") +
-        ': раньше книга хранила только последние результаты. Минуты считаются, пока вкладка открыта и ты занимаешься. «% верно» — ответы с первой попытки; оценка чтения — по частотному списку NGSL, слова A1 считаются известными.</p>';
+        ': раньше книга хранила только последние результаты. Минуты считаются, пока вкладка открыта и ты занимаешься. «% верно» — ответы с первой попытки; оценка чтения — по частотному списку NGSL: знакомыми считаются только слова, которые ты подтвердил — вспомнил в обе стороны в тренажёре или выучил в «Повторении».</p>';
   }
 
   // ---- «План на сегодня» ----
@@ -5226,6 +5228,18 @@ td.w.speaking{color:var(--sea)}
     }
     return null;
   }
+  function a1Item(){
+    if (!window.bsTrainer || !window.bsTrainer.a1) return null;
+    const srs = readKey("blue-suitcase-srs", { w: {} }) || { w: {} };
+    const rank = {};
+    NGSL.forEach(function(w, i){ rank[String(w).toLowerCase()] = i; });
+    const left = A1LIST.map(function(r){ return r.w; }).filter(function(w){ return !(srs.w || {})[w]; });
+    if (!left.length) return null;
+    left.sort(function(a, b){ const ra = rank[a.toLowerCase()], rb = rank[b.toLowerCase()]; return (ra == null ? 1e6 : ra) - (rb == null ? 1e6 : rb); });
+    const pick = left.slice(0, 20);
+    return { t: "Слова A1: " + pick.length + " самых частых", d: "проверь в обе стороны — «Знаю» / «Не знаю»; не подтверждено ещё " + left.length + " из " + A1LIST.length,
+             min: 4, done: doneToday(["trainer-a1"]), go: function(){ show("a1"); window.bsTrainer.a1.start(pick, "both"); } };
+  }
   function score(r){ return r && r.n ? r.ok / r.n + Math.min(daysSince(r.d), 30) * -0.01 : -1; }   // не делал — первым; давно — раньше
 
   let planItems = [];
@@ -5238,7 +5252,7 @@ td.w.speaking{color:var(--sea)}
       items.push({ t: "Повторение", d: sum.cards ? sum.cards + " " + word(sum.cards, "карточка", "карточки", "карточек") + (sum.over ? " · сегодня без новых слов: к повторению больше 60" : "") : "на сегодня всё повторено",
                    min: sum.cards ? sum.minutes : 0, done: !sum.cards, go: function(){ window.bsSRS.start(); } });
     }
-    [chapterItem(), earsItem(), mouthItem()].forEach(function(x){ if (x) items.push(x); });
+    [a1Item(), chapterItem(), earsItem(), mouthItem()].forEach(function(x){ if (x) items.push(x); });
     planItems = items;
     const left = items.filter(function(x){ return !x.done; }).reduce(function(t, x){ return t + (x.min || 0); }, 0);
     const doneN = items.filter(function(x){ return x.done; }).length;
@@ -7866,11 +7880,26 @@ td.w.speaking{color:var(--sea)}
       renderCard();
     });
 
+    // запуск из «Плана на сегодня» с заданными словами (слова A1 — самые частые из неподтверждённых)
+    window.bsTrainer = window.bsTrainer || {};
+    window.bsTrainer[listName] = { start: function(list, mode){
+      const want = {};
+      (list || []).forEach(function(w){ want[w] = 1; });
+      const pool = words.filter(function(x){ return want[x.w]; });
+      if (!pool.length) return false;
+      selDir.value = mode || "both";
+      deck = makeDeck(pool, pool.length, selDir.value);
+      pos = 0; answers = {}; isRetry = false;
+      renderCard();
+      root.scrollIntoView({ block: "start" });
+      return true;
+    } };
+
     function answerCard(ok){
       const card = deck[pos];
       if (!answers[card.item.w]) answers[card.item.w] = {};
       answers[card.item.w][card.side] = ok;
-      if (window.bsLog) window.bsLog.result(card.ear ? "listen" : card.side === "en" ? "read" : "write", "trainer", 1, ok ? 1 : 0);
+      if (window.bsLog) window.bsLog.result(card.ear ? "listen" : card.side === "en" ? "read" : "write", "trainer-" + listName, 1, ok ? 1 : 0);
       pos++;
       renderCard();
     }
