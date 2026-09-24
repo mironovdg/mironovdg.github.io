@@ -795,6 +795,33 @@ table.vocab.hidden .us-ru{color:transparent;background:var(--line-soft);border-r
   .slide-cover h2{font-size:28px}
 }
 
+/* ---------- звук в фокусе ---------- */
+.fs-word{border-bottom:2px dotted var(--lamp)}
+.focus-panel{margin:22px 0 6px;padding:16px 18px;border:1px solid var(--line);border-left:3px solid var(--lamp);border-radius:var(--radius);background:var(--surface)}
+.focus-panel p{max-width:none}
+.fs-title{margin:2px 0 6px;font-family:var(--serif);font-size:24px}
+.fs-title span{font-family:var(--mono);font-size:13px;color:var(--rain);font-weight:400;margin-left:8px}
+.fs-why{font-size:14px;color:var(--rain);margin:0 0 6px}
+.fs-tip{font-size:15px;margin:0 0 10px}
+.fs-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px}
+.fs-words{display:flex;flex-wrap:wrap;gap:8px;flex:1 1 18rem}
+.fs-chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:3px 6px 3px 12px;background:var(--field)}
+.fs-chip b{font-family:var(--serif);font-size:16px}
+.fs-chip i{font-family:var(--mono);font-size:11.5px;font-style:normal;color:var(--rain)}
+.fs-chip .say-btn{width:26px;height:26px;margin-left:2px}
+.fs-chip .say-btn svg{width:13px;height:13px}
+.fs-chip.ok{border-color:var(--ok);background:var(--ok-soft)}
+.fs-chip.no{border-color:var(--no);background:var(--no-soft)}
+.fs-say{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--sea);cursor:pointer;padding:0}
+.fs-say.on{background:var(--no);color:#fff;border-color:var(--no)}
+.fs-say svg{width:13px;height:13px}
+.fs-say span{display:none}
+.fs-res{margin:8px 0 0;min-height:1.2em}
+.fs-btns{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 0}
+.fs-btns button{display:inline-flex;align-items:center;gap:7px}
+.fs-sum{font-size:14px;color:var(--rain);margin:10px 0 0}
+.chapter.ear-lock .focus-panel{filter:blur(7px);pointer-events:none;user-select:none}
+
 /* ---------- план на сегодня ---------- */
 .plan{border:1px solid var(--line);border-left:3px solid var(--lamp);border-radius:var(--radius);background:var(--surface);padding:14px 16px;margin:0 0 26px}
 .srs-on .plan{display:none}
@@ -1882,6 +1909,7 @@ td.w.speaking{color:var(--sea)}
   </article>
   <!-- ================= ГЛАВА 4 ================= -->
   <article class="chapter" id="ch4" hidden data-prev-done="2026-09-21">
+  <script type="application/json" class="focus-sound">{"sound": "θ", "set": "th", "words": ["thirty", "thought", "nothing", "anything", "Thursday", "through"], "why": "Главный трудный звук для русскоговорящих: его часто заменяют на [s] или [f]. «Говорить» в «Звуках» ещё не проходился — начинаем с него."}</script>
   <script type="application/json" class="ex-data">{"choice": [{"q": "Where ___ you keep the key?", "opts": ["did", "do", "were"], "right": 0}, {"q": "Lizzie ___ her keys to Sam on Tuesday.", "opts": ["lended", "lent", "lend"], "right": 1}, {"q": "Sam ___ a bag with warm bread.", "opts": ["holded", "held", "hold"], "right": 1}, {"q": "Anna ___ his ring.", "opts": ["wore", "weared", "wear"], "right": 0}, {"q": "There ___ three things in the box.", "opts": ["was", "were", "did"], "right": 1}, {"q": "The stranger ___ the bill.", "opts": ["paid", "payed", "pay"], "right": 0}, {"q": "The café ___ crowded.", "opts": ["wasn’t", "didn’t", "weren’t"], "right": 0}, {"q": "Lizzie ___ the ring in her bedroom.", "opts": ["hid", "hided", "hide"], "right": 0}], "match": {"words": ["keep", "hold", "guess", "couple", "wedding", "happen", "believe", "stranger", "seat", "bill", "surprised"], "ru": ["хранить, держать (где-то)", "держать (в руках)", "угадывать", "пара", "свадьба", "случаться, происходить", "верить", "незнакомец", "место, сиденье", "счёт (в кафе)", "удивлённый"]}}</script>
     <!-- «сначала на слух»: вопросы о смысле диалога, c — верный вариант -->
     <script type="application/json" class="ear-q">[{"q": "Who is Sam?", "a": ["Lizzie's cousin, a taxi driver", "A guest in room 12", "Mrs Doyle's son"], "c": 0}, {"q": "What did Anna and Peter want thirty years ago?", "a": ["A wedding in October", "A new hotel", "A trip to London"], "c": 0}, {"q": "What did the stranger in the café have in his hand?", "a": ["A small notebook", "A blue suitcase", "A ring"], "c": 0}]</script>
@@ -2386,6 +2414,7 @@ td.w.speaking{color:var(--sea)}
             <li><b>Поправки по звукам</b>: «звук [əʊ] прозвучал как [ɔː]» — и как поставить язык и губы.</li>
             <li><b>Разминка</b> для губ и языка с зеркалом и рисованными губами образца, которые двигаются в такт голосу.</li>
             <li><b>Чтение по ролям</b>: читаешь за героя, остальных озвучивает книга.</li>
+            <li><b>Звук в фокусе</b>: трудный для тебя звук вплетается в следующую главу — его слова подчёркнуты в диалоге, под диалогом их можно послушать и сказать.</li>
           </ul>
         </div>
 
@@ -2425,7 +2454,6 @@ td.w.speaking{color:var(--sea)}
           <p class="sec-label">Что будет дальше</p>
           <h2>Книга растёт</h2>
           <ul class="rm-points">
-            <li><b>Звук в фокусе</b> — трудный для тебя звук вплетается в реплики следующей главы.</li>
             <li><b>Контрольная запись</b> раз в месяц — услышать, как изменилось произношение.</li>
             <li><b>Живая речь носителей</b> — последняя ступень слушания.</li>
             <li><b>Своя лексика</b> — слова твоей работы и увлечений.</li>
@@ -4642,6 +4670,126 @@ td.w.speaking{color:var(--sea)}
     if (ear) startEar(set); else start(set);
   }
   window.bsSounds = { sets: SETS, speak: function(id){ openSet(id, false); }, ear: function(id){ openSet(id, true); } };
+})();
+</script>
+
+<script>
+// ---------- звук в фокусе главы ----------
+// Решение ученика (24.09.2026): трудный звук вплетается в главу — 5–6 слов с ним в репликах героев. Глава
+// несёт блок <script type="application/json" class="focus-sound">{"sound": "θ", "set": "th", "words": [...],
+// "why": "почему этот звук"} (закрывающий тег блока здесь не пишется — он оборвал бы скрипт); книга подчёркивает эти слова в диалоге и под диалогом показывает
+// панель: как ставить звук, губы образца, слова с транскрипцией — послушать и сказать (распознавание).
+// Итог — отчёт kind: "pron", source: "focus" (раз в день на главу), счёт — blue-suitcase-focus (синхронизируется).
+(function(){
+  "use strict";
+  const TTS = window.bsTTS;
+  const KEY = "blue-suitcase-focus";
+  function esc(s){ return String(s == null ? "" : s).replace(/[&<>"]/g, function(c){ return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function day(){ const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  function readKey(k, f){ try { const v = JSON.parse(localStorage.getItem(k) || "null"); return v == null ? f : v; } catch(e){ return f; } }
+  // модуль «Сказать» (bsSayIt) подключается позже — при отрисовке достаточно, что распознавание есть
+  function canSpeak(){ return !!(window.bsMic && window.bsMic.usable && window.bsMic.usable()); }
+  function escRe(s){ return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }
+
+  // подчеркнуть слова звука в репликах (и их формы: -s, -ed, -ing)
+  function highlight(script, words){
+    const rx = new RegExp("\\b(" + words.map(escRe).join("|") + ")(s|es|ed|d|ing)?\\b", "gi");
+    script.querySelectorAll(".says, .stage").forEach(function(line){
+      const walker = document.createTreeWalker(line, NodeFilter.SHOW_TEXT, null);
+      const nodes = [];
+      while (walker.nextNode()) nodes.push(walker.currentNode);
+      nodes.forEach(function(node){
+        const text = node.nodeValue;
+        rx.lastIndex = 0;
+        if (!rx.test(text)) return;
+        rx.lastIndex = 0;
+        const frag = document.createDocumentFragment();
+        let last = 0, m;
+        while ((m = rx.exec(text))){
+          if (m.index > last) frag.appendChild(document.createTextNode(text.slice(last, m.index)));
+          const sp = document.createElement("span");
+          sp.className = "fs-word";
+          sp.textContent = m[0];
+          frag.appendChild(sp);
+          last = m.index + m[0].length;
+        }
+        if (last < text.length) frag.appendChild(document.createTextNode(text.slice(last)));
+        node.parentNode.replaceChild(frag, node);
+      });
+    });
+  }
+
+  document.querySelectorAll("article.chapter").forEach(function(art){
+    const el = art.querySelector("script.focus-sound");
+    const script = art.querySelector(".script");
+    if (!el || !script) return;
+    let d = null;
+    try { d = JSON.parse(el.textContent); } catch(e){ d = null; }
+    if (!d || !d.words || !d.words.length) return;
+    const words = d.words.map(function(w){ return String(w).trim(); }).filter(Boolean);
+    const set = window.bsSounds && window.bsSounds.sets ? window.bsSounds.sets.filter(function(x){ return x.id === d.set; })[0] : null;
+    highlight(script, words);
+    const prev = (readKey(KEY, {}) || {})[art.id];
+    const panel = document.createElement("div");
+    panel.className = "focus-panel";
+    panel.innerHTML =
+      '<p class="sec-label">Звук в фокусе</p>' +
+      '<h3 class="fs-title">[' + esc(d.sound || "") + ']' + (set ? ' <span>' + esc(set.ipa) + '</span>' : "") + '</h3>' +
+      (d.why ? '<p class="fs-why">' + esc(d.why) + '</p>' : "") +
+      (set || d.tip ? '<p class="fs-tip">' + esc(d.tip || set.tip) + '</p>' : "") +
+      '<div class="fs-row">' + (TTS && TTS.supported ? '<div class="lipsync"></div>' : "") +
+        '<div class="fs-words">' + words.map(function(w, i){
+          const ipa = window.bsPhon ? window.bsPhon.phrase(w) : "";
+          return '<span class="fs-chip" data-i="' + i + '"><b>' + esc(w) + '</b>' + (ipa ? '<i>' + esc(ipa) + '</i>' : "") +
+            (TTS && TTS.supported ? '<button type="button" class="say-btn" data-say="' + esc(w) + '" aria-label="Послушать">' + TTS.icon + '</button>' : "") +
+            (canSpeak() ? '<button type="button" class="fs-say" aria-label="Сказать">' + (TTS.micIcon || "") + '<span></span></button>' : "") + '</span>';
+        }).join("") + '</div></div>' +
+      '<p class="lk-res fs-res" aria-live="polite"></p>' +
+      '<div class="fs-btns">' +
+        (TTS && TTS.supported ? '<button type="button" class="act ghost fs-all">' + TTS.icon + '<span>Послушать все медленно</span></button>' : "") +
+        (set ? '<button type="button" class="act ghost fs-set">Потренировать в «Звуках»: ' + esc(set.pairs[0][0]) + ' / ' + esc(set.pairs[0][2]) + '</button>' : "") +
+      '</div>' +
+      '<p class="fs-sum">' + (canSpeak() ? "Скажи каждое слово — книга послушает. " : "") + 'В диалоге эти слова подчёркнуты: читай их по ролям особенно внимательно.' +
+        (prev ? ' В прошлый раз: чисто ' + prev.ok + ' из ' + prev.n + '.' : "") + '</p>';
+    script.parentNode.insertBefore(panel, script.nextSibling);
+
+    const first = {};
+    panel.addEventListener("click", function(e){
+      const t = e.target.closest && e.target.closest("button");
+      if (!t) return;
+      if (t.classList.contains("fs-all")){
+        TTS.play(words.map(function(w){ return { text: w, rate: 0.75, pause: 700 }; }));
+        return;
+      }
+      if (t.classList.contains("fs-set")){ if (window.bsSounds) window.bsSounds.speak(set.id); return; }
+      if (t.classList.contains("fs-say")){
+        const chip = t.closest(".fs-chip"), i = Number(chip.dataset.i), w = words[i];
+        if (!window.bsSayIt) return;
+        if (window.bsLog) window.bsLog.ctx("speak");
+        window.bsSayIt(w, t, panel.querySelector(".fs-res")).then(function(ok){
+          if (ok === null) return;
+          chip.classList.remove("ok", "no"); chip.classList.add(ok ? "ok" : "no");
+          if (first[w] === undefined){
+            first[w] = ok;
+            if (window.bsLog) window.bsLog.result("speak", "focus", 1, ok ? 1 : 0);
+          }
+          if (Object.keys(first).length === words.length) done();
+        });
+      }
+    });
+    function done(){
+      const st = readKey(KEY, {}) || {}, t = day();
+      const ok = words.filter(function(w){ return first[w]; }).length, missed = words.filter(function(w){ return !first[w]; });
+      const already = st[art.id] && st[art.id].d === t;
+      st[art.id] = { d: t, ok: ok, n: words.length, sound: d.sound, missed: missed };
+      try { localStorage.setItem(KEY, JSON.stringify(st)); } catch(e){}
+      panel.querySelector(".fs-sum").textContent = "Чисто с первой попытки: " + ok + " из " + words.length + (missed.length ? ". Не узналось: " + missed.join(", ") + " — послушай медленно и скажи ещё раз." : ". Отлично!");
+      if (already || !window.bsMic || !window.bsMic.send) return;
+      window.bsMic.send({ sentAt: new Date().toISOString(), kind: "pron", source: "focus", chapter: art.id, sound: d.sound, set: d.set || "",
+        ok: ok, n: words.length, missed: missed,
+        text: "Звук в фокусе [" + d.sound + "], " + art.id + ": чисто " + ok + " из " + words.length + (missed.length ? "\nНе узналось: " + missed.join(", ") : "") });
+    }
+  });
 })();
 </script>
 
