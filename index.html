@@ -301,6 +301,7 @@ textarea{
 .tr-table{max-height:none}
 table.vocab{min-width:26rem}
 table.vocab td.w{font-family:var(--serif);font-weight:600}
+td.w .w-ipa{display:block;font-family:var(--sans);font-size:13px;font-weight:400;letter-spacing:0;color:var(--sea);margin-top:1px}
 table.vocab td.meta{font-family:var(--mono);font-size:12px;color:var(--rain);white-space:nowrap}
 table.vocab tr.flagged td.w{color:var(--no)}
 table.vocab.hidden td.ru{color:transparent;background:var(--line-soft);border-radius:var(--radius);user-select:none}
@@ -1116,7 +1117,7 @@ td.w.speaking{color:var(--sea)}
           <tr><td class="w">label</td><td class="ru">бирка, ярлык</td><td class="ex">Max saw an old <b>label</b> on the handle.</td><td class="miss"><label><input type="checkbox" data-miss="label"> ✕</label></td></tr>
           <tr><td class="w">drawer</td><td class="ru">ящик (стола)</td><td class="ex">Kate put the envelope in the <b>drawer</b>.</td><td class="miss"><label><input type="checkbox" data-miss="drawer"> ✕</label></td></tr>
           <tr><td class="w">smell</td><td class="ru">запах</td><td class="ex">The <b>smell</b> was strange.</td><td class="miss"><label><input type="checkbox" data-miss="smell"> ✕</label></td></tr>
-          <tr><td class="w">handwriting</td><td class="ru">почерк</td><td class="ex">I know this <b>handwriting</b>.</td><td class="miss"><label><input type="checkbox" data-miss="handwriting"> ✕</label></td></tr>
+          <tr><td class="w" data-ipa="/ˈhændraɪtɪŋ/">handwriting</td><td class="ru">почерк</td><td class="ex">I know this <b>handwriting</b>.</td><td class="miss"><label><input type="checkbox" data-miss="handwriting"> ✕</label></td></tr>
           <tr><td class="w">worried</td><td class="ru">встревоженный</td><td class="ex">Her face was <b>worried</b>.</td><td class="miss"><label><input type="checkbox" data-miss="worried"> ✕</label></td></tr>
         </table>
       </div>
@@ -2022,6 +2023,8 @@ td.w.speaking{color:var(--sea)}
     afterCancel(next);
   }
 
+  // слово из ячейки мини-словаря — без строки транскрипции
+  function cellWord(c){ const x = c.cloneNode(true); x.querySelectorAll(".w-ipa").forEach(function(n){ n.remove(); }); return x.textContent; }
   // ---- диалоги: кнопка у имени, клик по реплике, «Прочитать диалог» ----
   function lineText(el){
     const c = el.cloneNode(true);
@@ -2096,7 +2099,7 @@ td.w.speaking{color:var(--sea)}
       return;
     }
     const cell = t.closest && t.closest("td.w");
-    if (cell && !(t.closest("label, input, a, button"))){ say(cell.textContent, { el: cell }); }
+    if (cell && !(t.closest("label, input, a, button"))){ say(cellWord(cell), { el: cell }); }
   });
   // уходя со страницы или переключая раздел — замолкаем
   document.addEventListener("visibilitychange", function(){ if (document.hidden) stop(); });
@@ -2753,7 +2756,27 @@ td.w.speaking{color:var(--sea)}
     }
     return { text: text, tip: info.tip || "", set: info.set || "", cost: best.ops.length, target: show(target), heard: show(heard) };
   }
-  window.bsPhon = { show: show, explain: explain, has: function(w){ return variants(w).length > 0; } };
+  // транскрипция оборота: слова по отдельности, частица to у глагола не пишется (to arrive → /əˈraɪv/)
+  function phrase(text){
+    const words = String(text || "").replace(/^\s*to\s+/i, "").replace(/[’`´]/g, "'").replace(/[?!.,;:«»"()]/g, " ").trim().split(/\s+/).filter(Boolean);
+    if (!words.length) return "";
+    const parts = [];
+    for (let i = 0; i < words.length; i++){ const t = show(words[i]); if (!t) return ""; parts.push(t.slice(1, -1)); }
+    return "/" + parts.join(" ") + "/";
+  }
+  window.bsPhon = { show: show, phrase: phrase, explain: explain, has: function(w){ return variants(w).length > 0; } };
+
+  // британская транскрипция под словом в мини-словарях глав (решение ученика, 24.09.2026);
+  // для слова, которого нет в словаре, её можно задать в главе: <td class="w" data-ipa="/…/">
+  document.querySelectorAll(".chapter table td.w").forEach(function(td){
+    if (td.querySelector(".w-ipa")) return;
+    const ipa = td.getAttribute("data-ipa") || phrase(td.textContent);
+    if (!ipa) return;
+    const sp = document.createElement("span");
+    sp.className = "w-ipa";
+    sp.textContent = ipa;
+    td.appendChild(sp);
+  });
 })();
 </script>
 
@@ -5483,7 +5506,9 @@ td.w.speaking{color:var(--sea)}
   document.querySelectorAll(".chapter table tr").forEach(function(tr){
     const w = tr.querySelector("td.w"), ex = tr.querySelector("td.ex");
     if (!w || !ex) return;
-    const key = w.textContent.trim(), text = ex.textContent.trim();
+    const wc = w.cloneNode(true);
+    wc.querySelectorAll(".w-ipa").forEach(function(n){ n.remove(); });
+    const key = wc.textContent.trim(), text = ex.textContent.trim();
     if (!/[a-z]/i.test(text) || /[а-яё]/i.test(text)) return;
     if (!EXAMPLE[key]) EXAMPLE[key] = text;
     const bare = key.replace(/^to /, "");
