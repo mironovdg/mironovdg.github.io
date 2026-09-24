@@ -605,6 +605,67 @@ button.ear-opt:disabled{cursor:default}
 .ear-panel .linkish{display:block;font-size:13px;margin-top:10px}
 button.ear-start{display:inline-flex;align-items:center;gap:8px;color:var(--sea)}
 
+/* ---------- план на сегодня ---------- */
+.plan{border:1px solid var(--line);border-left:3px solid var(--lamp);border-radius:var(--radius);background:var(--surface);padding:14px 16px;margin:0 0 26px}
+.srs-on .plan{display:none}
+.plan-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 14px}
+.plan-head h2{margin:0;font-size:22px}
+.plan-head span{font-family:var(--mono);font-size:12px;color:var(--rain)}
+.plan-list{list-style:none;margin:12px 0 4px;padding:0;display:grid;gap:10px}
+.plan-list li{display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:center}
+.plan-mark{width:26px;height:26px;border-radius:50%;border:1px solid var(--line);display:inline-flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;color:var(--rain)}
+.plan-list li div{display:flex;flex-direction:column}
+.plan-list li b{font-weight:600;color:var(--ink);font-size:15.5px}
+.plan-list li div span{font-size:13px;color:var(--rain)}
+.plan-list li.done b{color:var(--rain);text-decoration:line-through}
+.plan-list li.done .plan-mark{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.plan-list button.plan-go{padding:6px 12px;font-size:13.5px}
+.plan-note{font-size:12.5px;color:var(--rain);margin:10px 0 0;max-width:none}
+.td-over{color:var(--lamp);font-size:14px}
+
+/* ---------- прогресс ---------- */
+.pg-top{display:flex;flex-wrap:wrap;align-items:flex-end;gap:14px 26px;margin:6px 0 22px}
+.pg-stat{display:flex;flex-direction:column}
+.pg-stat b{font-family:var(--serif);font-size:30px;line-height:1;color:var(--ink)}
+.pg-stat span{font-size:12.5px;color:var(--rain);margin-top:4px}
+.pg-week{display:flex;gap:6px;align-items:flex-end;height:54px;margin-left:auto}
+.pg-day{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;width:22px;height:100%}
+.pg-day i{display:block;width:12px;min-height:3px;border-radius:3px;background:var(--line)}
+.pg-day.on i{background:var(--ok)}
+.pg-day span{font-family:var(--mono);font-size:10px;color:var(--rain);margin-top:3px}
+.pg-balance{margin:0 0 22px}
+.pg-bar{display:grid;grid-template-columns:92px 1fr 64px;gap:10px;align-items:center;font-size:13.5px;margin:4px 0}
+.pg-bar div{height:8px;border-radius:4px;background:var(--line-soft);overflow:hidden}
+.pg-bar i{display:block;height:100%;border-radius:4px}
+.pg-bar b{font-family:var(--mono);font-size:12px;font-weight:400;color:var(--rain);text-align:right}
+i.pg-read,.pg-card.pg-read .pg-line{background:var(--sea);stroke:var(--sea)}
+i.pg-write,.pg-card.pg-write .pg-line{background:var(--case);stroke:var(--case)}
+i.pg-listen,.pg-card.pg-listen .pg-line{background:var(--lamp);stroke:var(--lamp)}
+i.pg-speak,.pg-card.pg-speak .pg-line{background:var(--ok);stroke:var(--ok)}
+.pg-hint{font-size:13.5px;color:var(--ink-soft);margin:8px 0 0;max-width:none}
+.pg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(15.5rem,1fr));gap:12px}
+.pg-card{border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);padding:14px 16px}
+.pg-card p{margin:0;max-width:none}
+.pg-skill{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--rain)}
+.pg-head{margin:6px 0 4px!important}
+.pg-head b{font-family:var(--serif);font-size:30px;color:var(--ink)}
+.pg-head span{font-size:13.5px;color:var(--ink-soft)}
+.pg-chart{display:flex;align-items:center;gap:8px;margin:4px 0}
+.pg-chart-l{font-size:11px;color:var(--rain);line-height:1.2}
+.pg-spark .pg-axis{stroke:var(--line);stroke-width:1}
+.pg-spark .pg-line{fill:none;stroke-width:2}
+.pg-card.pg-read .pg-dot{fill:var(--sea)}
+.pg-card.pg-write .pg-dot{fill:var(--case)}
+.pg-card.pg-listen .pg-dot{fill:var(--lamp)}
+.pg-card.pg-speak .pg-dot{fill:var(--ok)}
+.pg-delta{font-size:13.5px;color:var(--ink-soft)}
+.pg-pace{font-size:13.5px;color:var(--ink-soft);margin-top:2px!important}
+.pg-sub{margin:8px 0 0;padding-left:1.1em;font-size:13px;color:var(--ink-soft)}
+.pg-src{font-size:11.5px;color:var(--rain);margin-top:8px!important}
+.pg-vocab{border-top:1px solid var(--line-soft);margin-top:22px;padding-top:6px}
+.pg-note{font-size:12.5px;color:var(--rain);margin-top:18px;max-width:none}
+@media (max-width:640px){ .pg-week{margin-left:0} .pg-bar{grid-template-columns:80px 1fr 56px} .plan-list li{grid-template-columns:26px 1fr} .plan-list button.plan-go{grid-column:2;justify-self:start} }
+
 /* ---------- как учиться ---------- */
 .method h3{font-family:var(--serif);font-size:20px;font-weight:600;margin:34px 0 10px}
 .method-route{margin:0;padding-left:1.4em;display:grid;gap:10px;max-width:var(--measure)}
@@ -710,6 +771,7 @@ td.w.speaking{color:var(--sea)}
         <button type="button" class="view-tab today-tab" data-view="today">Повторение<span class="today-n" id="today-n"></span></button>
         <button type="button" class="view-tab" data-view="sounds">Звуки</button>
         <button type="button" class="view-tab" data-view="listen">Слушание</button>
+        <button type="button" class="view-tab" data-view="progress">Прогресс</button>
         <button type="button" class="view-tab" data-view="method">Как учиться</button>
       </div>
     </div>
@@ -758,7 +820,8 @@ td.w.speaking{color:var(--sea)}
   <!-- ================= ПОВТОРЕНИЕ НА СЕГОДНЯ ================= -->
   <div class="view" id="view-today" hidden>
     <section style="margin-top:34px">
-      <p class="sec-label">Повторение на сегодня</p>
+      <p class="sec-label">Сегодня</p>
+      <div class="plan" id="plan"></div>
       <div class="today" id="today"></div>
     </section>
   </div>
@@ -795,6 +858,15 @@ td.w.speaking{color:var(--sea)}
       <p>Голоса синтезированные: живые люди сокращают ещё сильнее. Когда тема идёт без ошибок на «обычно» — включай «быстро».</p>
       <div class="connected" id="connected"></div>
       </div>
+    </section>
+  </div>
+
+  <!-- ================= ПРОГРЕСС ================= -->
+  <div class="view" id="view-progress" hidden>
+    <section style="margin-top:34px">
+      <p class="sec-label">Прогресс</p>
+      <h2>Четыре навыка</h2>
+      <div class="progress" id="progress"></div>
     </section>
   </div>
 
@@ -865,6 +937,10 @@ td.w.speaking{color:var(--sea)}
       <h3>Произношение: поправки и разминка</h3>
       <p>Если слово не узналось, книга сразу объясняет, какой звук вышел не так: сравнивает британскую транскрипцию нужного слова и того, что прозвучало (<span class="cue">cold /kəʊld/ → called /kɔːld/: звук [əʊ] прозвучал как [ɔː]</span>), подсказывает, как поставить язык и губы, и медленно произносит слово. «Сказать слово» — повторить только его, пока не выйдет, потом всю реплику.</p>
       <p>В разделе «Звуки» сверху — фонетическая разминка: 8 упражнений для губ и языка, около 4 минут, со схемами, образцом и «Зеркалом» (фронтальная камера, изображение никуда не уходит). Там же шкала «s ↔ th»: пошипи «ссс», потом [θ] с языком между зубами — стрелка покажет, на что похоже.</p>
+      <h3>План на сегодня и «Прогресс»</h3>
+      <p>Над «Повторением» — «План на сегодня»: повторение, шаг главы (на слух → чтение и словарь → упражнения и отчёт → по ролям), одно занятие на слух и одно на произношение — то, что слабее или давно не делал; у каждого пункта — «Начать», сделанное вычёркивается само. Если к повторению больше 60 карточек, в этот день новых слов нет — сначала разбираем накопленное. Около 25–30 минут в день; пропустил день — ничего не пропало.</p>
+      <p>«Прогресс» — четыре навыка: чтение (какая доля слов обычного текста тебе знакома), письмо (верно ли пишешь по памяти), слушание (сколько слов слышишь в диктанте), говорение (сколько реплик читаешь чисто). У каждого — график за 8 недель, изменение за две недели и минуты в неделю; сверху — дни с занятиями, серия и баланс времени по навыкам; внизу — словарь с прогнозом. Книга считает минуты, только пока ты занимаешься.</p>
+
       <h3>Слушание</h3>
       <p>От простого к сложному. Сначала различать звуки: в «Звуках» кнопка «Слушать» — книга произносит одно слово пары (ship или sheep), ты выбираешь, какое. Потом диктант в разделе «Слушание»: книга читает реплики глав голосом героев, ты печатаешь; три скорости — медленно, обычно, быстро. Когда на скорости слышишь 90% слов и больше — переходи на следующую. Разбор подсказывает, что мешает: окончания, служебные слова, сокращения, похожие звуки.</p>
       <p>Вкладка «Слитная речь» там же — то, что мешает понимать носителей: слабые формы служебных слов, сокращения, can и can't, связывание и выпадение звуков. А новая глава теперь начинается с ушей: текст закрыт, пока не послушаешь диалог и не ответишь на три вопроса о смысле; потом второе прослушивание — и текст открывается (можно пропустить). Любую главу можно так же пройти кнопкой «Сначала на слух» над диалогом.</p>
@@ -2298,6 +2374,98 @@ td.w.speaking{color:var(--sea)}
 </script>
 
 <script>
+// ---------- журнал занятий: минуты и результаты по четырём навыкам ----------
+// Решение ученика, 24.09.2026: страница «Прогресс» и «План на сегодня». Книга ведёт дневник:
+// по каждому дню — секунды и ответы с первой попытки (n / ok) по навыкам read / write / listen /
+// speak и по занятиям (a.<занятие>), плюс снимок словаря (snap). Время считается, только пока
+// вкладка видна и за последние 45 секунд было действие (или книга говорит / слушает).
+// В хранилище пишется раз в минуту и в конце занятия — синхронизация не захлёбывается.
+// Ключ blue-suitcase-daily (синхронизируется), хранятся последние 200 дней.
+(function(){
+  "use strict";
+  const KEY = "blue-suitcase-daily";
+  const SKILLS = ["read", "write", "listen", "speak"];
+  // навык по разделу, если занятие само его не назвало
+  const VIEW_SKILL = { chapters: "read", sounds: "speak", listen: "listen", learned: "read", phrases: "read", live: "read",
+                       a1: "read", a2: "read", b1w: "read", b2w: "read", c1w: "read", c2w: "read", b1: "read", b2: "read", c1: "read", c2: "read" };
+  function day(d){ d = d || new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  function load(){ try { const j = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; j.d = j.d || {}; return j; } catch(e){ return { d: {} }; } }
+  function save(j){
+    j.v = 1;
+    const days = Object.keys(j.d).sort();
+    while (days.length > 200) delete j.d[days.shift()];
+    try { localStorage.setItem(KEY, JSON.stringify(j)); } catch(e){}
+  }
+  let lastAct = Date.now(), ctx = null, pendSec = {}, pendRes = {}, pendMark = {}, dirty = false;
+  function touch(){ lastAct = Date.now(); }
+  ["click", "keydown", "touchstart", "input"].forEach(function(ev){ document.addEventListener(ev, touch, { capture: true, passive: true }); });
+  window.addEventListener("scroll", touch, { passive: true });
+  function busy(){ return !!(window.speechSynthesis && window.speechSynthesis.speaking); }
+  function typing(){
+    const a = document.activeElement;
+    return !!(a && a.closest && a.closest(".chapter") && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName));
+  }
+  setInterval(function(){
+    if (document.hidden) return;
+    if (busy()) touch();
+    if (Date.now() - lastAct > 45000) return;
+    const view = document.body.dataset.view;
+    let sk = ctx;
+    if (!sk && view === "chapters") sk = typing() ? "write" : busy() ? "listen" : "read";
+    if (!sk) sk = VIEW_SKILL[view];
+    if (!sk) return;
+    pendSec[sk] = (pendSec[sk] || 0) + 10;
+    dirty = true;
+  }, 10000);
+  function flush(){
+    if (!dirty) return;
+    dirty = false;
+    const j = load(), dd = j.d[day()] = j.d[day()] || {};
+    Object.keys(pendSec).forEach(function(sk){ const k = dd[sk] = dd[sk] || { s: 0, n: 0, ok: 0 }; k.s += pendSec[sk]; });
+    Object.keys(pendRes).forEach(function(act){
+      const r = pendRes[act], k = dd[r.sk] = dd[r.sk] || { s: 0, n: 0, ok: 0 };
+      k.n += r.n; k.ok += r.ok;
+      dd.a = dd.a || {};
+      const a = dd.a[act] = dd.a[act] || { n: 0, ok: 0 };
+      a.n += r.n; a.ok += r.ok;
+    });
+    Object.keys(pendMark).forEach(function(act){ dd.a = dd.a || {}; const a = dd.a[act] = dd.a[act] || { n: 0, ok: 0 }; a.c = (a.c || 0) + pendMark[act]; });
+    pendSec = {}; pendRes = {}; pendMark = {};
+    save(j);
+    document.dispatchEvent(new CustomEvent("bs:log"));
+  }
+  setInterval(flush, 60000);
+  document.addEventListener("visibilitychange", function(){ if (document.hidden) flush(); });
+  window.addEventListener("pagehide", flush);
+
+  window.bsLog = {
+    skills: SKILLS, day: day, load: load, flush: flush,
+    // занятие называет свой навык (роли — говорение, диктант — слушание…); null — по разделу
+    ctx: function(sk){ ctx = sk || null; touch(); },
+    // ответы с первой попытки: n всего, ok верно
+    result: function(sk, act, n, ok){
+      if (SKILLS.indexOf(sk) === -1 || !n) return;
+      const r = pendRes[act] = pendRes[act] || { sk: sk, n: 0, ok: 0 };
+      r.n += n; r.ok += ok || 0;
+      dirty = true; touch();
+    },
+    // занятие без счёта ответов (разминка) — просто отметка, что было
+    mark: function(act){ pendMark[act] = (pendMark[act] || 0) + 1; dirty = true; },
+    // конец занятия — сразу в хранилище, чтобы план и «Прогресс» увидели
+    done: function(){ ctx = null; flush(); },
+    // снимок словаря за день (пишется, только если изменился)
+    snap: function(o){
+      const j = load(), dd = j.d[day()] = j.d[day()] || {};
+      const cur = JSON.stringify(dd.snap || {}), next = JSON.stringify(Object.assign({}, dd.snap || {}, o));
+      if (cur === next) return;
+      dd.snap = JSON.parse(next);
+      save(j);
+    }
+  };
+})();
+</script>
+
+<script>
 // ---------- микрофон: проверка записи и распознавания речи ----------
 // Первый шаг к тренировке произношения (решение ученика, 23.09.2026): на каждом устройстве
 // проверить, есть ли запись с микрофона (getUserMedia + MediaRecorder) и распознавание речи
@@ -3090,6 +3258,7 @@ td.w.speaking{color:var(--sea)}
           lines: items.filter(function(x){ return x.mine; }).length, done: 0, clean: 0, missed: {}, fixed: {}, okWords: {},
           samples: [], sounds: [], fixedWords: {}, fix: null, auto: 0, blob: null, token: 0, lang: MIC.lang() };
     script.classList.add("rp-on");
+    if (window.bsLog) window.bsLog.ctx("speak");
     items.forEach(function(it){
       if (!it.mine) return;
       it.el.classList.add("rp-mine");
@@ -3168,6 +3337,7 @@ td.w.speaking{color:var(--sea)}
     if (it.tries === 1){
       S.done++;
       if (sc.clean) S.clean++;
+      if (window.bsLog) window.bsLog.result("speak", "roles", 1, sc.clean ? 1 : 0);
       sc.missed.forEach(function(w){ S.missed[w] = (S.missed[w] || 0) + 1; });
       S.samples.push({ line: it.text, heard: heard, score: sc.contentOk + "/" + sc.content });
     } else {
@@ -3208,6 +3378,7 @@ td.w.speaking{color:var(--sea)}
       if (!S || S.token !== my) return;
       const want = keyOf(f.target);
       const heard = out.alts[0].t, words = tokens(heard);
+      if (window.bsLog) window.bsLog.result("speak", "word", 1, words.map(keyOf).indexOf(want) !== -1 ? 1 : 0);
       if (words.map(keyOf).indexOf(want) !== -1){
         S.fixedWords[f.target] = 1;
         resultPanel('<span class="rp-good">✓ ' + esc(f.target) + ' — получилось.</span> Теперь скажи всю реплику: «Ещё раз».');
@@ -3287,6 +3458,7 @@ td.w.speaking{color:var(--sea)}
   function finish(stopped, silent){
     if (!S) return;
     const sess = S;
+    if (window.bsLog) window.bsLog.done();
     clearTimeout(sess.auto);
     sess.token++;
     S = null;
@@ -3388,6 +3560,14 @@ td.w.speaking{color:var(--sea)}
     script.parentNode.insertBefore(bar, script);
   });
   renderScores();
+  window.bsRoles = { start: function(chId, role){
+    const script = document.querySelector("#" + chId + " .script");
+    if (!script) return;
+    if (!role){ const r = rolesOf(script); role = r.order.slice().sort(function(x, y){ return r.count[y] - r.count[x]; })[0]; }
+    if (!role) return;
+    if (pendingRestore){ restore(pendingRestore); pendingRestore = null; }
+    start(script, role);
+  } };
 
   document.addEventListener("click", function(e){
     const t = e.target;
@@ -3538,6 +3718,7 @@ td.w.speaking{color:var(--sea)}
       if (set.both && (!only || only.indexOf(p[2]) !== -1)) cards.push({ say: p[2], ru: p[3], other: p[0], oru: p[1] });
     });
     S = { set: set, only: !!only, cards: shuffle(cards), i: 0, ok: 0, first: {}, confused: [], missed: [], token: 0, auto: 0 };
+    if (window.bsLog) window.bsLog.ctx("speak");
     renderCard();
     box.scrollIntoView({ block: "start", behavior: "auto" });
   }
@@ -3599,6 +3780,7 @@ td.w.speaking{color:var(--sea)}
     const firstTry = !(c.say in S.first);
     if (firstTry){
       S.first[c.say] = verdict === "ok";
+      if (window.bsLog) window.bsLog.result("speak", "sounds", 1, verdict === "ok" ? 1 : 0);
       if (verdict === "ok") S.ok++;
       else {
         S.missed.push(c.say);
@@ -3629,6 +3811,7 @@ td.w.speaking{color:var(--sea)}
   function nextCard(){ clearTimeout(S.auto); S.token++; S.i++; renderCard(); }
   function finish(){
     const set = S.set, n = S.cards.length;
+    if (window.bsLog) window.bsLog.done();
     const st = readStats();
     const prev = st[set.id];
     if (!S.only){      // счёт набора — только по полному прогону, повтор ошибок его не переписывает
@@ -3659,7 +3842,7 @@ td.w.speaking{color:var(--sea)}
       '</div>';
     S = { set: set, missed: missed, done: true };
   }
-  function quit(){ if (S && !S.done){ clearTimeout(S.auto); S.token++; } MIC.stop(); TTS.stop(); S = null; renderList(); }
+  function quit(){ if (S && !S.done){ clearTimeout(S.auto); S.token++; } MIC.stop(); TTS.stop(); S = null; if (window.bsLog) window.bsLog.done(); renderList(); }
 
   // ---- «Слушать»: книга произносит одно слово пары, ученик выбирает, какое прозвучало ----
   const LKEY = "blue-suitcase-listen";
@@ -3672,6 +3855,7 @@ td.w.speaking{color:var(--sea)}
       });
     });
     S = { ear: true, set: set, only: !!only, cards: shuffle(cards), i: 0, ok: 0, missed: [], tried: false, token: 0, auto: 0 };
+    if (window.bsLog) window.bsLog.ctx("listen");
     renderEar();
     box.scrollIntoView({ block: "start", behavior: "auto" });
   }
@@ -3706,6 +3890,7 @@ td.w.speaking{color:var(--sea)}
     if (!c) return;
     const first = !S.tried;
     S.tried = true;
+    if (first && window.bsLog) window.bsLog.result("listen", "pairs", 1, w === c.say ? 1 : 0);
     box.querySelectorAll(".snd-choice").forEach(function(b){
       b.disabled = true;
       if (b.dataset.w === c.say) b.classList.add("right"); else if (b.dataset.w === w) b.classList.add("wrong");
@@ -3725,6 +3910,7 @@ td.w.speaking{color:var(--sea)}
   function nextEar(){ clearTimeout(S.auto); TTS.stop(); S.i++; renderEar(); }
   function finishEar(){
     const set = S.set, n = S.cards.length;
+    if (window.bsLog) window.bsLog.done();
     if (!S.only){
       const st = readListen();
       st.pairs = st.pairs || {};
@@ -3781,6 +3967,14 @@ td.w.speaking{color:var(--sea)}
     if (S && !S.done && e.target.closest && e.target.closest(".view-tab, .chapter-tab") && !e.target.closest('[data-view="sounds"]')) quit();
   }, true);
   renderList();
+  // запуск из «Плана на сегодня»
+  function openSet(id, ear){
+    if (typeof window.__bsShowView === "function") window.__bsShowView("sounds");
+    const set = SETS.filter(function(x){ return x.id === id; })[0];
+    if (!set) return;
+    if (ear) startEar(set); else start(set);
+  }
+  window.bsSounds = { sets: SETS, speak: function(id){ openSet(id, false); }, ear: function(id){ openSet(id, true); } };
 })();
 </script>
 
@@ -3964,9 +4158,10 @@ td.w.speaking{color:var(--sea)}
       if (!G.left){ clearInterval(G.tick); gym.querySelector(".gym-timer").classList.add("done"); }
     }, 250);
   }
-  function startGym(){ G = { i: 0 }; list.hidden = true; renderStep(); gym.scrollIntoView({ block: "start" }); }
+  function startGym(){ G = { i: 0 }; list.hidden = true; if (window.bsLog) window.bsLog.ctx("speak"); renderStep(); gym.scrollIntoView({ block: "start" }); }
   function stopGym(done){
     if (G) clearInterval(G.tick);
+    if (window.bsLog){ if (done) window.bsLog.mark("gym"); window.bsLog.done(); }
     G = null; meterOff(); mirrorOff(); TTS.stop();
     list.hidden = false;
     renderIntro();
@@ -4009,6 +4204,7 @@ td.w.speaking{color:var(--sea)}
   }, true);
   document.addEventListener("visibilitychange", function(){ if (document.hidden){ meterOff(); mirrorOff(); } });
   renderIntro();
+  window.bsGym = { start: function(){ if (typeof window.__bsShowView === "function") window.__bsShowView("sounds"); startGym(); } };
 })();
 </script>
 
@@ -4195,6 +4391,7 @@ td.w.speaking{color:var(--sea)}
     const st = readStats(); st.lastSpeed = setup.speed; saveStats(st);
     D = { lines: lines, names: names, i: 0, speed: setup.speed, done: 0, clean: 0, words: 0, heard: 0, kinds: {}, missed: {}, samples: [],
           chs: pick.map(function(c){ return c.n; }), tries: 0, auto: 0 };
+    if (window.bsLog) window.bsLog.ctx("listen");
     renderCard();
     box.scrollIntoView({ block: "start" });
   }
@@ -4251,6 +4448,7 @@ td.w.speaking{color:var(--sea)}
       Object.keys(r.kinds).forEach(function(k){ D.kinds[k] = (D.kinds[k] || 0) + r.kinds[k]; });
       r.words.forEach(function(w, k){ if (r.state[k] === "miss" && !w.func) D.missed[w.raw] = (D.missed[w.raw] || 0) + 1; });
       if (!r.clean) D.samples.push({ line: l.text, typed: gaveUp ? "—" : typed, heard: r.allHeard + "/" + r.all });
+      if (window.bsLog) window.bsLog.result("listen", "dict", r.all, r.allHeard);
     }
     const res = box.querySelector(".ls-result");
     res.hidden = false;
@@ -4272,6 +4470,7 @@ td.w.speaking{color:var(--sea)}
   function next(){ clearTimeout(D.auto); TTS.stop(); D.i++; renderCard(); }
   function finish(){
     const d = D;
+    if (window.bsLog) window.bsLog.done();
     const pct = d.words ? Math.round(d.heard / d.words * 100) : 0;
     const st = readStats();
     st.level = st.level || {};
@@ -4327,7 +4526,16 @@ td.w.speaking{color:var(--sea)}
     if (D && e.target.closest && e.target.closest(".view-tab, .chapter-tab") && !e.target.closest('[data-view="listen"]')){ clearTimeout(D.auto); TTS.stop(); }
   }, true);
   renderSetup();
-  window.bsListen = { check: check, chapters: chapters };
+  // запуск из «Плана на сегодня»
+  function startWith(o){
+    if (typeof window.__bsShowView === "function") window.__bsShowView("listen");
+    const tab = document.querySelector('.ls-tab[data-pane="ls-pane-dict"]');
+    if (tab) tab.click();
+    if (!setup) renderSetup();
+    Object.assign(setup, o || {});
+    start();
+  }
+  window.bsListen = { check: check, chapters: chapters, start: startWith };
 })();
 </script>
 
@@ -4444,6 +4652,7 @@ td.w.speaking{color:var(--sea)}
     const items = theme.items.map(function(it, k){ return Object.assign({ k: k }, it); }).filter(function(it){ return !only || only.indexOf(it.k) !== -1; });
     C = { theme: theme, only: !!only, items: shuffle(items), i: 0, ok: 0, missed: [], tried: false, token: 0 };
     C.items.forEach(function(it, k){ it.gender = k % 2 ? "m" : "f"; if (theme.kind === "choose") it.say = Math.random() < 0.5 ? "a" : "b"; });
+    if (window.bsLog) window.bsLog.ctx("listen");
     renderItem();
     box.scrollIntoView({ block: "start" });
   }
@@ -4484,7 +4693,7 @@ td.w.speaking{color:var(--sea)}
   function verdict(ok, it, extra){
     const first = !C.tried;
     C.tried = true;
-    if (first){ if (ok) C.ok++; else C.missed.push(it.k); }
+    if (first){ if (ok) C.ok++; else C.missed.push(it.k); if (window.bsLog) window.bsLog.result("listen", "conn", 1, ok ? 1 : 0); }
     const res = box.querySelector(".cn-result");
     const full = textOf(it);
     const shown = C.theme.kind === "gap" ? esc(full).replace(gapRe(esc(it.gap)), function(m, pre, g){ return pre + '<b>' + g + '</b>'; }) : esc(full);
@@ -4520,6 +4729,7 @@ td.w.speaking{color:var(--sea)}
   function next(){ TTS.stop(); C.i++; renderItem(); }
   function finish(){
     const t = C.theme, n = C.items.length;
+    if (window.bsLog) window.bsLog.done();
     if (!C.only && !C.partial){
       const st = readStats();
       st.conn = st.conn || {};
@@ -4583,7 +4793,13 @@ td.w.speaking{color:var(--sea)}
       TTS.stop();
     });
   });
-  window.bsConnected = { themes: THEMES, keys: keys };
+  window.bsConnected = { themes: THEMES, keys: keys, start: function(id){
+    if (typeof window.__bsShowView === "function") window.__bsShowView("listen");
+    const tab = document.querySelector('.ls-tab[data-pane="ls-pane-conn"]');
+    if (tab) tab.click();
+    const t = THEMES.filter(function(x){ return x.id === id; })[0];
+    if (t) start(t);
+  } };
 })();
 </script>
 
@@ -4641,6 +4857,7 @@ td.w.speaking{color:var(--sea)}
     if (!s) return;
     TTS.stop();
     s.art.classList.remove("ear-lock");
+    if (window.bsLog) window.bsLog.done();
     s.panel.remove();
     const ok = s.answers.filter(Boolean).length;
     save(id, { d: today(), skipped: !!skipped, ok: ok, n: s.qs.length, listens: s.listens });
@@ -4655,10 +4872,12 @@ td.w.speaking{color:var(--sea)}
     const items = TTS.dialogue(s.art.querySelector(".script")).map(function(it){ return { text: it.text, gender: it.gender, pause: it.pause }; });
     s.playing = true;
     render(id);
+    if (window.bsLog) window.bsLog.ctx("listen");
     TTS.play(items, function(){
       if (!E[id] || !s.playing) return;
       s.playing = false;
       s.listens++;
+      if (window.bsLog) window.bsLog.ctx(null);
       if (s.stage === "intro") s.stage = s.qs.length ? "questions" : "result";
       render(id);
     });
@@ -4713,6 +4932,7 @@ td.w.speaking{color:var(--sea)}
     s.picked = s.picked || {};
     s.picked[qi] = oi;
     s.answers[qi] = !!s.qs[qi].opts[oi].ok;
+    if (window.bsLog) window.bsLog.result("listen", "earfirst", 1, s.answers[qi] ? 1 : 0);
     const all = s.qs.every(function(q, i){ return s.answers[i] !== undefined; });
     if (all) s.stage = "result";
     render(id);
@@ -4750,6 +4970,312 @@ td.w.speaking{color:var(--sea)}
     if (!e.target.closest || !e.target.closest(".view-tab, .chapter-tab")) return;
     Object.keys(E).forEach(function(id){ if (E[id].playing){ E[id].playing = false; render(id); } });
   }, true);
+})();
+</script>
+
+<script>
+// ---------- «Прогресс» и «План на сегодня» ----------
+// Решение ученика, 24.09.2026. «Прогресс»: четыре навыка — результат, динамика по неделям,
+// изменение за две недели и темп; словарь с прогнозом; неделя, серия и баланс времени.
+// «План на сегодня» (над «Повторением»): повторение, шаг главы, одно занятие на уши и одно
+// на рот — по слабым местам и по тому, что давно не делал. Данные — журнал bsLog и счёт разделов.
+(function(){
+  "use strict";
+  const L = window.bsLog;
+  const progBox = document.getElementById("progress"), planBox = document.getElementById("plan");
+  if (!L) return;
+  const SK = { read: "Чтение", write: "Письмо", listen: "Слушание", speak: "Говорение" };
+  const SK_NOTE = {
+    read: "главы, карточки с английского, справочники",
+    write: "упражнения глав, печать по памяти в «Повторении», тренажёры с русского",
+    listen: "диктант, «Слитная речь», пары на слух, глава на слух, карточки на слух",
+    speak: "чтение по ролям, «Говорить» в «Звуках», разминка"
+  };
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function readKey(k, f){ try { const v = JSON.parse(localStorage.getItem(k) || "null"); return v == null ? f : v; } catch(e){ return f; } }
+  function readBlock(id){ try { return JSON.parse(document.getElementById(id).textContent) || []; } catch(e){ return []; } }
+  function daysAgo(n){ const d = new Date(); d.setDate(d.getDate() - n); return L.day(d); }
+  function pct(ok, n){ return n ? Math.round(ok / n * 100) : null; }
+  function minutes(s){ return Math.round((s || 0) / 60); }
+  function word(n, a, b, c){ const d = n % 10, h = n % 100; return d === 1 && h !== 11 ? a : d >= 2 && d <= 4 && (h < 12 || h > 14) ? b : c; }
+  function show(view){ if (typeof window.__bsShowView === "function") window.__bsShowView(view); }
+
+  // ---- выборки из журнала ----
+  function range(j, from, to){   // дни [from … to] назад, включительно
+    const r = { s: {}, n: {}, ok: {}, a: {} };
+    for (let i = from; i <= to; i++){
+      const dd = j.d[daysAgo(i)];
+      if (!dd) continue;
+      L.skills.forEach(function(sk){ const k = dd[sk]; if (!k) return; r.s[sk] = (r.s[sk] || 0) + (k.s || 0); r.n[sk] = (r.n[sk] || 0) + (k.n || 0); r.ok[sk] = (r.ok[sk] || 0) + (k.ok || 0); });
+      Object.keys(dd.a || {}).forEach(function(act){ const a = dd.a[act], x = r.a[act] = r.a[act] || { n: 0, ok: 0, c: 0 }; x.n += a.n || 0; x.ok += a.ok || 0; x.c += a.c || 0; });
+    }
+    return r;
+  }
+  function active(dd){ return !!dd && L.skills.some(function(sk){ return dd[sk] && ((dd[sk].s || 0) >= 60 || (dd[sk].n || 0) > 0); }); }
+  function streak(j){
+    let n = 0, i = active(j.d[daysAgo(0)]) ? 0 : 1;
+    while (active(j.d[daysAgo(i)])){ n++; i++; }
+    return n;
+  }
+
+  // ---- словарь: знакомые слова и доля знакомых слов в обычном тексте ----
+  const A1 = {}; readBlock("data-a1").forEach(function(r){ A1[String(r.w).toLowerCase()] = 1; });
+  const NGSL = readBlock("data-ngsl-order");
+  let H = 0; NGSL.forEach(function(w, i){ H += 1 / (i + 1); });
+  function vocab(){
+    const srs = readKey("blue-suitcase-srs", { w: {} }) || { w: {} };
+    const known = Object.assign({}, A1);
+    let mastered = 0, firm = 0;
+    Object.keys(srs.w || {}).forEach(function(w){ const e = srs.w[w]; if (e.m) mastered++; if (e.m || (e.b || 0) >= 3){ known[w.toLowerCase()] = 1; firm++; } });
+    let c = 0; NGSL.forEach(function(w, i){ if (known[String(w).toLowerCase()]) c += 1 / (i + 1); });
+    // NGSL покрывает около 92% слов обычного текста; частые слова весят больше редких (закон Ципфа)
+    return { known: Object.keys(known).length, mastered: mastered, firm: firm, coverage: H ? Math.round(c / H * 92) : 0 };
+  }
+
+  // ---- мелкая графика ----
+  function spark(vals, w, h){
+    const pts = vals.map(function(v, i){ return v == null ? null : [Math.round(i * (w - 8) / Math.max(1, vals.length - 1)) + 4, Math.round(h - 4 - v / 100 * (h - 8))]; });
+    let path = "", pen = false;
+    pts.forEach(function(p){ if (!p){ pen = false; return; } path += (pen ? "L" : "M") + p[0] + " " + p[1] + " "; pen = true; });
+    return '<svg class="pg-spark" viewBox="0 0 ' + w + ' ' + h + '" width="' + w + '" height="' + h + '" aria-hidden="true">' +
+      '<line x1="4" y1="' + (h - 4) + '" x2="' + (w - 4) + '" y2="' + (h - 4) + '" class="pg-axis"/>' +
+      (path ? '<path d="' + path + '" class="pg-line"/>' : "") +
+      pts.map(function(p){ return p ? '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="2.5" class="pg-dot"/>' : ""; }).join("") + '</svg>';
+  }
+
+  // ---- «Прогресс» ----
+  function weekly(j, sk){
+    const acc = [], mins = [];
+    for (let w = 7; w >= 0; w--){ const r = range(j, w * 7, w * 7 + 6); acc.push(pct(r.ok[sk] || 0, r.n[sk] || 0)); mins.push(minutes(r.s[sk])); }
+    return { acc: acc, mins: mins };
+  }
+  function renderProgress(){
+    if (!progBox) return;
+    L.flush();
+    const j = L.load();
+    const wk = range(j, 0, 6), two = range(j, 0, 13), prev = range(j, 14, 27);
+    const dayStrip = [];
+    let weekMin = 0, weekDays = 0;
+    for (let i = 6; i >= 0; i--){
+      const dd = j.d[daysAgo(i)] || {};
+      const m = L.skills.reduce(function(t, sk){ return t + minutes(dd[sk] && dd[sk].s); }, 0);
+      weekMin += m; if (active(dd)) weekDays++;
+      const dt = new Date(); dt.setDate(dt.getDate() - i);
+      dayStrip.push('<div class="pg-day' + (active(dd) ? " on" : "") + '"><i style="height:' + Math.min(100, m * 3) + '%"></i><span>' + ["вс","пн","вт","ср","чт","пт","сб"][dt.getDay()] + '</span></div>');
+    }
+    const st = streak(j);
+    const total14 = L.skills.reduce(function(t, sk){ return t + (two.s[sk] || 0); }, 0);
+    const shares = L.skills.map(function(sk){ return { sk: sk, m: minutes(two.s[sk]), p: total14 ? Math.round((two.s[sk] || 0) / total14 * 100) : 0 }; });
+    const low = total14 ? shares.slice().sort(function(a, b){ return a.m - b.m; })[0] : null;
+    const v = vocab();
+    const lv = readKey("blue-suitcase-listen", {}) || {};
+    const lvl = lv.level || {};
+    const bestSpeed = ["fast", "normal", "slow"].filter(function(s){ return lvl[s]; })[0];
+    const SPEED = { slow: "медленно", normal: "обычно", fast: "быстро" };
+    const firstDay = Object.keys(j.d).sort()[0];
+
+    function card(sk){
+      const w = weekly(j, sk);
+      const now = pct(two.ok[sk] || 0, two.n[sk] || 0), before = pct(prev.ok[sk] || 0, prev.n[sk] || 0);
+      let head, unit, sub = [];
+      if (sk === "read"){
+        head = "≈" + v.coverage + "%"; unit = "слов обычного текста знакомы";
+        if (now != null) sub.push("узнаёшь слова на карточках: " + now + "%");
+        sub.push("знакомых слов: " + v.known + " (A1 + выученные)");
+      } else if (sk === "listen" && bestSpeed){
+        head = lvl[bestSpeed].pct + "%"; unit = "слов слышишь в диктанте · " + SPEED[bestSpeed];
+        if (now != null) sub.push("все упражнения на слух: " + now + "% с первой попытки");
+      } else {
+        head = now == null ? "—" : now + "%";
+        unit = sk === "write" ? "верно по памяти, с первой попытки" : sk === "speak" ? "чисто с первой попытки" : "верно с первой попытки";
+      }
+      const a = two.a;
+      if (sk === "write" && a["srs-type"]) sub.push("печать в «Повторении»: " + pct(a["srs-type"].ok, a["srs-type"].n) + "% из " + a["srs-type"].n);
+      if (sk === "write" && a["chapter-ex"]) sub.push("упражнения глав: " + pct(a["chapter-ex"].ok, a["chapter-ex"].n) + "% из " + a["chapter-ex"].n);
+      if (sk === "listen" && a.pairs) sub.push("пары на слух: " + pct(a.pairs.ok, a.pairs.n) + "%");
+      if (sk === "listen" && a.conn) sub.push("слитная речь: " + pct(a.conn.ok, a.conn.n) + "%");
+      if (sk === "speak" && a.roles) sub.push("роли: чисто " + pct(a.roles.ok, a.roles.n) + "% реплик из " + a.roles.n);
+      if (sk === "speak" && a.sounds) sub.push("«Говорить» в «Звуках»: " + pct(a.sounds.ok, a.sounds.n) + "%");
+      const delta = now != null && before != null ? now - before : null;
+      const m14 = minutes(two.s[sk]);
+      return '<div class="pg-card pg-' + sk + '">' +
+        '<p class="pg-skill">' + SK[sk] + '</p>' +
+        '<p class="pg-head"><b>' + head + '</b> <span>' + unit + '</span></p>' +
+        '<div class="pg-chart">' + spark(w.acc, 170, 44) + '<span class="pg-chart-l">8 недель, % верно</span></div>' +
+        '<p class="pg-delta">' + (delta == null ? "Изменение появится через две недели занятий." : (delta > 0 ? "▲ +" : delta < 0 ? "▼ " : "= ") + delta + " п. п. за две недели") + '</p>' +
+        '<p class="pg-pace">Темп: ' + Math.round(m14 / 2) + ' мин в неделю' + (w.mins[7] ? " · на этой неделе " + w.mins[7] + " мин" : "") + '</p>' +
+        (sub.length ? '<ul class="pg-sub">' + sub.map(function(x){ return "<li>" + esc(x) + "</li>"; }).join("") + '</ul>' : "") +
+        '<p class="pg-src">' + SK_NOTE[sk] + '</p>' +
+      '</div>';
+    }
+
+    // словарь: темп и прогноз по снимкам
+    const snaps = Object.keys(j.d).sort().filter(function(d){ return j.d[d].snap && j.d[d].snap.known != null; });
+    let pace = null;
+    if (snaps.length >= 2){
+      const first = snaps.filter(function(d){ return d >= daysAgo(14); })[0] || snaps[0], last = snaps[snaps.length - 1];
+      const days = Math.max(1, Math.round((new Date(last) - new Date(first)) / 86400000));
+      if (days >= 3) pace = Math.round((j.d[last].snap.known - j.d[first].snap.known) / days * 7);
+    }
+    const goals = [[1360, "словарь A2 книги (A1 + A2)"], [2507, "+ B1"], [3405, "+ B2"]];
+    const goal = goals.filter(function(g){ return g[0] > v.known; })[0];
+    const vocabLine = goal
+      ? (pace && pace > 0 ? "До " + goal[0] + " слов (" + goal[1] + ") — ≈" + Math.ceil((goal[0] - v.known) / pace) + " " + word(Math.ceil((goal[0] - v.known) / pace), "неделя", "недели", "недель") + " при нынешнем темпе."
+                         : "Цель — " + goal[0] + " слов (" + goal[1] + "); прогноз появится через несколько дней занятий.")
+      : "Словарь книги до B2 пройден.";
+
+    progBox.innerHTML =
+      '<div class="pg-top">' +
+        '<div class="pg-stat"><b>' + weekDays + '</b><span>' + word(weekDays, "день", "дня", "дней") + ' из 7 с занятиями</span></div>' +
+        '<div class="pg-stat"><b>' + weekMin + '</b><span>' + word(weekMin, "минута", "минуты", "минут") + ' за неделю</span></div>' +
+        '<div class="pg-stat"><b>' + st + '</b><span>' + word(st, "день", "дня", "дней") + ' подряд</span></div>' +
+        '<div class="pg-week">' + dayStrip.join("") + '</div>' +
+      '</div>' +
+      '<div class="pg-balance"><p class="ls-label">Баланс за две недели · время по навыкам</p>' +
+        shares.map(function(x){ return '<div class="pg-bar"><span>' + SK[x.sk] + '</span><div><i class="pg-' + x.sk + '" style="width:' + x.p + '%"></i></div><b>' + x.m + ' мин</b></div>'; }).join("") +
+        (low && low.m < (total14 / 60) / 8 ? '<p class="pg-hint">Меньше всего — ' + SK[low.sk].toLowerCase() + '. «План на сегодня» подбирает занятия так, чтобы выровнять.</p>' : "") +
+      '</div>' +
+      '<div class="pg-grid">' + L.skills.map(card).join("") + '</div>' +
+      '<div class="pg-vocab"><p class="ls-label">Словарь</p>' +
+        '<p class="pg-head"><b>' + v.known + '</b> <span>' + word(v.known, "знакомое слово", "знакомых слова", "знакомых слов") + ' · ' + v.mastered + ' усвоено в «Повторении»</span></p>' +
+        '<p class="pg-pace">' + (pace != null ? "Темп: " + (pace > 0 ? "+" : "") + pace + " " + word(Math.abs(pace), "слово", "слова", "слов") + " в неделю. " : "") + esc(vocabLine) + '</p>' +
+      '</div>' +
+      '<p class="pg-note">Счёт ведётся с ' + (firstDay ? firstDay.slice(8, 10) + "." + firstDay.slice(5, 7) + "." + firstDay.slice(0, 4) : "сегодняшнего дня") +
+        ': раньше книга хранила только последние результаты. Минуты считаются, пока вкладка открыта и ты занимаешься. «% верно» — ответы с первой попытки; оценка чтения — по частотному списку NGSL, слова A1 считаются известными.</p>';
+  }
+
+  // ---- «План на сегодня» ----
+  const arts = Array.prototype.slice.call(document.querySelectorAll("article.chapter"));
+  const lastN = arts.reduce(function(m, a){ return Math.max(m, Number(a.id.replace(/\D/g, "")) || 0); }, 0);
+  function chDone(n){ if (n < lastN) return true; try { return !!localStorage.getItem("blue-suitcase-done-ch" + n); } catch(e){ return false; } }
+  function chStarted(id){
+    const vals = (readKey("blue-suitcase-v1", {}) || {}).vals || {};
+    return Object.keys(vals).some(function(k){ return k.indexOf(id + ".") === 0 && String(vals[k] || "").trim() !== ""; });
+  }
+  function doneToday(acts){
+    const dd = L.load().d[L.day()] || {};
+    return acts.some(function(a){ return dd.a && dd.a[a] && ((dd.a[a].n || 0) > 0 || (dd.a[a].c || 0) > 0); });
+  }
+  function readToday(){ const dd = L.load().d[L.day()] || {}; return (dd.read && dd.read.s) || 0; }
+  function daysSince(d){ return d ? Math.round((new Date(L.day()) - new Date(d)) / 86400000) : 999; }
+  function dayIndex(){ return Math.floor(Date.now() / 86400000); }
+
+  function chapterItem(){
+    const ch = "ch" + lastN, art = document.getElementById(ch);
+    if (!art) return null;
+    const go = function(){ const t = document.querySelector('.chapter-tab[data-chapter="' + ch + '"]'); if (t) t.click(); };
+    if (!chDone(lastN)){
+      const ear = (readKey("blue-suitcase-earfirst", {}) || {})[ch];
+      if (!ear && !chStarted(ch) && art.querySelector("script.ear-q"))
+        return { t: "Глава " + lastN + ": сначала на слух", d: "послушай диалог, не читая, и ответь на 3 вопроса", min: 6, done: doneToday(["earfirst"]), go: go };
+      if (!chStarted(ch))
+        return { t: "Глава " + lastN + ": диалог и словарь", d: "прочитай диалог, потом мини-словарь", min: 12, done: readToday() >= 600, go: go };
+      return { t: "Глава " + lastN + ": упражнения и отчёт", d: "допиши упражнения и нажми «Отправить отчёт»", min: 15, done: doneToday(["chapter-ex"]), go: go };
+    }
+    // глава пройдена, следующая пишется — работаем с её материалом ушами и ртом
+    const runs = (readKey("blue-suitcase-pron", {}) || {}).runs || {};
+    const rolesDone = Object.keys(runs).some(function(k){ return k.indexOf(ch + "|") === 0 && daysSince(runs[k].d) <= 3; });
+    if (!rolesDone && window.bsRoles) return { t: "Глава " + lastN + ": по ролям", d: "прочитай вслух реплики героя — книга проверит", min: 6, done: doneToday(["roles"]),
+      go: function(){ go(); window.bsRoles.start(ch); } };
+    return null;
+  }
+  function earsItem(){
+    const lst = readKey("blue-suitcase-listen", {}) || {};
+    const kinds = ["dict", "conn", "pairs"];
+    const start = dayIndex() % 3;
+    for (let k = 0; k < 3; k++){
+      const kind = kinds[(start + k) % 3];
+      if (kind === "dict" && window.bsListen){
+        const runs = lst.runs || [];
+        const lastRun = runs.length ? runs[runs.length - 1] : null;
+        if (lastRun && daysSince(lastRun.d) < 2 && k === 0) continue;
+        const speed = lst.lastSpeed || "slow";
+        const chN = arts.filter(function(a){ return chDone(Number(a.id.replace(/\D/g, ""))); }).map(function(a){ return Number(a.id.replace(/\D/g, "")); }).pop();
+        if (!chN) continue;
+        return { t: "Уши: диктант, глава " + chN, d: "10 реплик, скорость «" + ({ slow: "медленно", normal: "обычно", fast: "быстро" }[speed]) + "»", min: 6, done: doneToday(["dict"]),
+                 go: function(){ window.bsListen.start({ ch: String(chN), speed: speed, size: 10 }); } };
+      }
+      if (kind === "conn" && window.bsConnected){
+        const st = lst.conn || {};
+        const t = window.bsConnected.themes.slice().sort(function(a, b){ return score(st[a.id]) - score(st[b.id]); })[0];
+        if (!t || (st[t.id] && st[t.id].ok === st[t.id].n && daysSince(st[t.id].d) < 7)) continue;
+        return { t: "Уши: слитная речь — " + t.title.toLowerCase(), d: "8 фраз: " + t.lead.split(":")[0].toLowerCase(), min: 5, done: doneToday(["conn"]),
+                 go: function(){ window.bsConnected.start(t.id); } };
+      }
+      if (kind === "pairs" && window.bsSounds){
+        const st = lst.pairs || {};
+        const s = window.bsSounds.sets.slice().sort(function(a, b){ return score(st[a.id]) - score(st[b.id]); })[0];
+        if (!s || (st[s.id] && st[s.id].ok === st[s.id].n && daysSince(st[s.id].d) < 7)) continue;
+        return { t: "Уши: пары на слух — " + s.pairs[0][0] + " / " + s.pairs[0][2], d: "какое слово прозвучало, " + s.ipa, min: 4, done: doneToday(["pairs"]),
+                 go: function(){ window.bsSounds.ear(s.id); } };
+      }
+    }
+    return null;
+  }
+  function mouthItem(){
+    const dl = L.load().d;
+    let gymLast = null;
+    Object.keys(dl).sort().forEach(function(d){ if (dl[d].a && dl[d].a.gym) gymLast = d; });
+    const snd = readKey("blue-suitcase-sounds", {}) || {};
+    if (window.bsSounds){
+      const s = window.bsSounds.sets.slice().sort(function(a, b){ return score(snd[a.id]) - score(snd[b.id]); })[0];
+      const gymFirst = daysSince(gymLast) >= 3 && window.bsGym;
+      return { t: "Рот: " + (gymFirst ? "разминка и " : "") + "«Говорить» — " + s.pairs[0][0] + " / " + s.pairs[0][2],
+               d: (gymFirst ? "4 минуты разминки для губ и языка, потом " : "") + "скажи слова пары " + s.ipa, min: gymFirst ? 8 : 4,
+               done: doneToday(["sounds"]), go: function(){ if (gymFirst) window.bsGym.start(); else window.bsSounds.speak(s.id); } };
+    }
+    return null;
+  }
+  function score(r){ return r && r.n ? r.ok / r.n + Math.min(daysSince(r.d), 30) * -0.01 : -1; }   // не делал — первым; давно — раньше
+
+  let planItems = [];
+  function renderPlan(){
+    if (!planBox) return;
+    L.flush();
+    const items = [];
+    if (window.bsSRS && window.bsSRS.summary){
+      const sum = window.bsSRS.summary();
+      items.push({ t: "Повторение", d: sum.cards ? sum.cards + " " + word(sum.cards, "карточка", "карточки", "карточек") + (sum.over ? " · сегодня без новых слов: к повторению больше 60" : "") : "на сегодня всё повторено",
+                   min: sum.cards ? sum.minutes : 0, done: !sum.cards, go: function(){ window.bsSRS.start(); } });
+    }
+    [chapterItem(), earsItem(), mouthItem()].forEach(function(x){ if (x) items.push(x); });
+    planItems = items;
+    const left = items.filter(function(x){ return !x.done; }).reduce(function(t, x){ return t + (x.min || 0); }, 0);
+    const doneN = items.filter(function(x){ return x.done; }).length;
+    planBox.innerHTML =
+      '<div class="plan-head"><h2>План на сегодня</h2><span>' + (doneN === items.length ? "всё сделано ✓" : doneN + " из " + items.length + " · осталось ≈" + left + " мин") + '</span></div>' +
+      '<ol class="plan-list">' + items.map(function(x, i){
+        return '<li class="' + (x.done ? "done" : "") + '"><span class="plan-mark" aria-hidden="true">' + (x.done ? "✓" : i + 1) + '</span>' +
+          '<div><b>' + esc(x.t) + '</b><span>' + esc(x.d) + (x.min ? " · ≈" + x.min + " мин" : "") + '</span></div>' +
+          (x.done ? "" : '<button type="button" class="act ghost plan-go" data-i="' + i + '">Начать</button>') + '</li>';
+      }).join("") + '</ol>' +
+      '<p class="plan-note">План собирается сам: повторение каждый день, шаг главы, одно занятие на слух и одно на произношение — то, что слабее или давно не делал.</p>';
+  }
+  if (planBox) planBox.addEventListener("click", function(e){
+    const b = e.target.closest && e.target.closest(".plan-go");
+    if (!b) return;
+    const it = planItems[Number(b.dataset.i)];
+    if (it && it.go) it.go();
+  });
+
+  // перерисовка при открытии разделов и после занятий
+  document.addEventListener("click", function(e){
+    const t = e.target.closest && e.target.closest(".view-tab");
+    if (!t) return;
+    if (t.dataset.view === "progress") setTimeout(renderProgress, 0);
+    if (t.dataset.view === "today") setTimeout(renderPlan, 0);
+  });
+  ["bs:log", "bs:vocab-changed", "bs:report-sent", "bs:sync-ready"].forEach(function(ev){
+    document.addEventListener(ev, function(){
+      if (document.body.dataset.view === "today" && !document.body.classList.contains("srs-on")) renderPlan();
+      if (document.body.dataset.view === "progress") renderProgress();
+    });
+  });
+  // снимок словаря за день — для темпа и прогноза
+  function snap(){ const v = vocab(); L.snap({ known: v.known, mastered: v.mastered, firm: v.firm, coverage: v.coverage }); }
+  setTimeout(function(){ snap(); if (document.body.dataset.view === "progress") renderProgress(); renderPlan(); }, 1500);
+  document.addEventListener("bs:vocab-changed", snap);
+  window.bsProgress = { render: renderProgress, plan: renderPlan, vocab: vocab };
 })();
 </script>
 
@@ -5650,8 +6176,14 @@ td.w.speaking{color:var(--sea)}
 
   document.querySelectorAll("[data-check]").forEach(function(btn){
     btn.addEventListener("click", function(){
-      checkBlock(btn.closest(".ex-block"));
+      const block = btn.closest(".ex-block");
+      checkBlock(block);
       buildTotals();
+      // в журнал — только первая проверка блока; поля ввода — письмо, выбор — чтение
+      if (window.bsLog && block && !block.dataset.logged){
+        const ok = block.querySelectorAll(".verdict.ok").length, bad = block.querySelectorAll(".verdict.bad").length;
+        if (ok + bad){ block.dataset.logged = "1"; window.bsLog.result(block.querySelector('input[type=text], textarea') ? "write" : "read", "chapter-ex", ok + bad, ok); window.bsLog.done(); }
+      }
     });
   });
 
@@ -6651,7 +7183,9 @@ td.w.speaking{color:var(--sea)}
         if (kind === "w" && e.a === t && (e.s === "ch" || e.s === "new")) r.newToday++;
       });
     });
-    r.room = Math.max(0, NEW_PER_DAY - r.newToday);
+    // нагрузка: больше 60 карточек к повторению — в этот день без новых слов (решение ученика, 24.09.2026)
+    r.over = r.dueW + r.dueP > 60;
+    r.room = r.over ? 0 : Math.max(0, NEW_PER_DAY - r.newToday);
     r.fresh = nextNew(r.room, s);
     r.cards = r.dueW + r.dueP + r.fresh.length * 2;   // новое слово — показ и сразу вспоминание
     r.minutes = Math.max(1, Math.round(r.cards * SEC_PER_CARD / 60));
@@ -6691,7 +7225,8 @@ td.w.speaking{color:var(--sea)}
     });
     if (changed){ saveSrs(s); document.dispatchEvent(new CustomEvent("bs:vocab-changed")); }
   }
-  window.bsSRS = { fromTrainer: fromTrainer };
+  window.bsSRS = { fromTrainer: fromTrainer, summary: function(){ return srsSummary(); },
+                   start: function(){ showView("today"); if (!T || T.over){ T = null; startSession(); } } };
   const methodGo = document.querySelector(".method-go");
   if (methodGo) methodGo.addEventListener("click", function(){ showView("today"); });
 
@@ -6738,6 +7273,7 @@ td.w.speaking{color:var(--sea)}
         '<span><b>' + sum.fresh.length + '</b> ' + (sum.fresh.length === 1 ? "новое слово" : "новых слов") + '</span>' +
         (sum.cards ? '<span>≈ <b>' + sum.minutes + '</b> мин</span>' : "") +
       '</p>' +
+      (sum.over ? '<p class="td-over">Сегодня без новых слов: к повторению больше 60 карточек — сначала разберём их.</p>' : "") +
       (sum.cards ? '<div class="bar"><button class="act td-start" type="button">Начать</button></div>' : "") +
       '<p class="td-next">Завтра — ' + sum.day1 + ", послезавтра — " + sum.day2 + " к повторению.</p>" +
       '<p class="td-total">Усвоено: <b>' + sum.masteredW + "</b> " + wordsWord(sum.masteredW) + ", <b>" + sum.masteredP + "</b> " + phrasesWord(sum.masteredP) +
@@ -6751,6 +7287,7 @@ td.w.speaking{color:var(--sea)}
 
   function startSession(){
     ensureChapterWords();
+    document.body.classList.add("srs-on");
     const s = loadSrs(), t = todayStr();
     const due = [];
     ["w", "p"].forEach(function(kind){
@@ -6784,6 +7321,7 @@ td.w.speaking{color:var(--sea)}
     if (T.pos >= T.cards.length){ finishSession(); return; }
     const c = T.cards[T.pos], it = ITEM[c.kind][c.w];
     if (!it){ T.pos++; renderCard(); return; }
+    if (window.bsLog) window.bsLog.ctx(c.type === "ear" ? "listen" : c.type === "en" ? "read" : "write");
     const head = '<div class="tr-progress">' + (T.pos + 1) + " / " + T.cards.length + " · " + TYPE_LABEL[c.type] +
                  (c.kind === "p" ? " · оборот" : "") + '</div>';
     const ex = exampleOf(c.kind, it);
@@ -6831,6 +7369,8 @@ td.w.speaking{color:var(--sea)}
     if (!c.graded || T.graded[key] !== undefined) return;
     T.graded[key] = g;
     T.stats["g" + g]++;
+    if (window.bsLog && c.type !== "practice")
+      window.bsLog.result(c.type === "ear" ? "listen" : c.type === "en" ? "read" : "write", "srs-" + c.type, 1, g >= 1 ? 1 : 0);
     const r = gradeSrs(c.kind, c.w, g, typed);
     if (r.mastered) T.mastered[c.kind].push(c.w);
     if (g === 0){
@@ -6948,6 +7488,8 @@ td.w.speaking{color:var(--sea)}
 
   function finishSession(){
     const box = todayBox();
+    document.body.classList.remove("srs-on");
+    if (window.bsLog) window.bsLog.done();
     T.over = true;
     const st = T.stats, list = function(a){ return a.map(esc).join(", "); };
     const mastered = T.mastered.w.concat(T.mastered.p);
@@ -7328,6 +7870,7 @@ td.w.speaking{color:var(--sea)}
       const card = deck[pos];
       if (!answers[card.item.w]) answers[card.item.w] = {};
       answers[card.item.w][card.side] = ok;
+      if (window.bsLog) window.bsLog.result(card.ear ? "listen" : card.side === "en" ? "read" : "write", "trainer", 1, ok ? 1 : 0);
       pos++;
       renderCard();
     }
@@ -7335,6 +7878,7 @@ td.w.speaking{color:var(--sea)}
     function renderCard(){
       if (pos >= deck.length){ renderResult(); return; }
       const card = deck[pos], item = card.item;
+      if (window.bsLog) window.bsLog.ctx(card.ear ? "listen" : card.side === "en" ? "read" : "write");
       const front = card.side === "en" ? item.w : item.t;
       const back  = card.side === "en" ? item.t : item.w;
       const frontHtml = card.ear
@@ -7385,6 +7929,7 @@ td.w.speaking{color:var(--sea)}
     const recheckRule = isReference;   // все справочники: A1, A2, B1 (слова и обороты), обороты B2
 
     function renderResult(){
+      if (window.bsLog) window.bsLog.done();
       const asked = Object.keys(answers);
       const bothWays = (selDir.value === "both");
       const day = today();
