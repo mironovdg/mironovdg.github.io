@@ -568,6 +568,43 @@ button.ls-chip[aria-pressed="true"]{border-color:var(--sea);background:var(--sea
 .ls-notes{margin:0 0 10px;padding-left:1.2em;font-size:14px;color:var(--ink-soft)}
 .ls-card .linkish{display:block;margin:10px auto 0;font-size:13px}
 
+/* ---------- слитная речь ---------- */
+.ls-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 18px}
+.ls-speed{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 14px}
+.ls-speed .ls-label{margin:0 4px 0 0}
+.cn-sentence{font-family:var(--serif);font-size:22px;line-height:1.45;margin:14px auto 4px;max-width:none}
+.cn-choices{display:grid;gap:8px;max-width:28rem;margin:14px auto 4px}
+button.cn-choice{background:var(--field);border:1px solid var(--line);border-radius:var(--radius);padding:12px;font-family:var(--serif);font-size:19px;color:var(--ink);cursor:pointer}
+.cn-count{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:14px 0 4px}
+button.cn-num{width:48px;height:48px;border-radius:50%;border:1px solid var(--line);background:var(--field);font-family:var(--mono);font-size:18px;color:var(--ink);cursor:pointer}
+button.cn-choice:hover:not(:disabled),button.cn-num:hover:not(:disabled){border-color:var(--sea)}
+button.cn-choice.right,button.cn-num.right{border-color:var(--ok);background:var(--ok-soft)}
+button.cn-choice.wrong,button.cn-num.wrong{border-color:var(--no);background:var(--no-soft)}
+button.cn-choice:disabled,button.cn-num:disabled{cursor:default}
+.cn-note{font-size:14.5px;color:var(--ink-soft);margin:0 0 10px;max-width:none}
+.ls-line b{color:var(--sea)}
+
+/* ---------- глава сначала на слух ---------- */
+.chapter.ear-lock .script,.chapter.ear-lock > section ~ section{filter:blur(7px);pointer-events:none;user-select:none}
+.chapter.ear-lock .listen-bar,.chapter.ear-lock .roles-bar{display:none}
+.ear-panel{border:1px solid var(--line);border-left:3px solid var(--sea);border-radius:var(--radius);background:var(--surface);padding:14px 16px;margin:0 0 20px}
+.ear-kicker{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--sea);margin:0 0 8px}
+.ear-text{font-size:15px;line-height:1.5;margin:0 0 10px;max-width:none}
+.ear-q{margin:12px 0}
+.ear-qt{font-family:var(--serif);font-size:17px;margin:0 0 6px;max-width:none}
+.ear-opts{display:grid;gap:6px}
+button.ear-opt{text-align:left;background:var(--field);border:1px solid var(--line);border-radius:var(--radius);padding:8px 12px;font-family:var(--sans);font-size:15px;color:var(--ink);cursor:pointer}
+button.ear-opt:hover:not(:disabled){border-color:var(--sea)}
+button.ear-opt.right{border-color:var(--ok);background:var(--ok-soft)}
+button.ear-opt.wrong{border-color:var(--no);background:var(--no-soft)}
+button.ear-opt:disabled{cursor:default}
+.ear-sum{font-size:14px;margin:2px 0;max-width:none}
+.ear-sum.ok{color:var(--ok)}
+.ear-sum.no{color:var(--no)}
+.ear-panel .snd-btns{justify-content:flex-start;margin-top:6px}
+.ear-panel .linkish{display:block;font-size:13px;margin-top:10px}
+button.ear-start{display:inline-flex;align-items:center;gap:8px;color:var(--sea)}
+
 /* ---------- как учиться ---------- */
 .method h3{font-family:var(--serif);font-size:20px;font-weight:600;margin:34px 0 10px}
 .method-route{margin:0;padding-left:1.4em;display:grid;gap:10px;max-width:var(--measure)}
@@ -742,10 +779,22 @@ td.w.speaking{color:var(--sea)}
   <div class="view" id="view-listen" hidden>
     <section style="margin-top:34px">
       <p class="sec-label">Слушание</p>
+      <div class="ls-tabs" role="tablist">
+        <button type="button" class="ls-chip ls-tab" data-pane="ls-pane-dict" aria-pressed="true">Диктант</button>
+        <button type="button" class="ls-chip ls-tab" data-pane="ls-pane-conn" aria-pressed="false">Слитная речь</button>
+      </div>
+      <div id="ls-pane-dict">
       <h2>Диктант по репликам глав</h2>
       <p>Книга читает реплику голосом героя — ты печатаешь, что услышал. Сверка по словам: зелёное — услышал, красное — нет, пунктир — служебное слово, оранжевое — услышал, но с опечаткой. Под репликой — что помешало: окончание, служебное слово, сокращение, перепутанный звук. Трудную реплику слушай «медленно» или «по кусочкам».</p>
       <p>Начни с медленной скорости. Когда услышанных слов 90% и больше — переходи на следующую: так слух растёт от простого к сложному. Различать отдельные звуки на слух — в «Звуках», кнопка «Слушать» у каждого набора.</p>
       <div class="listen" id="listen"></div>
+      </div>
+      <div id="ls-pane-conn" hidden>
+      <h2>Слитная речь</h2>
+      <p>То, что мешает понимать носителей больше всего: служебные слова звучат слабо (to — [tə]), сокращения сливаются в одно слово (they'll, didn't), can и can't различаются одной гласной, слова цепляются друг за друга (pick it up) и теряют звуки (next day). Книга говорит фразу — впиши пропуск, выбери, что прозвучало, или посчитай слова. После ответа — что происходит в речи.</p>
+      <p>Голоса синтезированные: живые люди сокращают ещё сильнее. Когда тема идёт без ошибок на «обычно» — включай «быстро».</p>
+      <div class="connected" id="connected"></div>
+      </div>
     </section>
   </div>
 
@@ -818,6 +867,7 @@ td.w.speaking{color:var(--sea)}
       <p>В разделе «Звуки» сверху — фонетическая разминка: 8 упражнений для губ и языка, около 4 минут, со схемами, образцом и «Зеркалом» (фронтальная камера, изображение никуда не уходит). Там же шкала «s ↔ th»: пошипи «ссс», потом [θ] с языком между зубами — стрелка покажет, на что похоже.</p>
       <h3>Слушание</h3>
       <p>От простого к сложному. Сначала различать звуки: в «Звуках» кнопка «Слушать» — книга произносит одно слово пары (ship или sheep), ты выбираешь, какое. Потом диктант в разделе «Слушание»: книга читает реплики глав голосом героев, ты печатаешь; три скорости — медленно, обычно, быстро. Когда на скорости слышишь 90% слов и больше — переходи на следующую. Разбор подсказывает, что мешает: окончания, служебные слова, сокращения, похожие звуки.</p>
+      <p>Вкладка «Слитная речь» там же — то, что мешает понимать носителей: слабые формы служебных слов, сокращения, can и can't, связывание и выпадение звуков. А новая глава теперь начинается с ушей: текст закрыт, пока не послушаешь диалог и не ответишь на три вопроса о смысле; потом второе прослушивание — и текст открывается (можно пропустить). Любую главу можно так же пройти кнопкой «Сначала на слух» над диалогом.</p>
       <p>Распознавание проверяет, понятно ли тебя, а не каждый звук отдельно, — поэтому красное слово значит «так не поймут», а зелёное ещё не гарантирует идеального звука. Лучше всего работает в тихой комнате, телефон — сантиметрах в 20–30.</p>
 
       <h3>Почему так</h3>
@@ -834,6 +884,8 @@ td.w.speaking{color:var(--sea)}
 
   <!-- ================= ГЛАВА 1 ================= -->
   <article class="chapter" id="ch1">
+    <!-- «сначала на слух»: вопросы о смысле диалога, c — верный вариант -->
+    <script type="application/json" class="ear-q">[{"q": "Where does Max work?", "a": ["In a small hotel in Brighton", "In a café near the sea", "At the railway station"], "c": 0}, {"q": "Who comes in at midnight?", "a": ["A wet man with a big blue suitcase", "Kate with two cups of coffee", "A woman with a small bag"], "c": 0}, {"q": "What does the man not have?", "a": ["His passport", "His suitcase", "Money for the room"], "c": 0}]</script>
     <div class="chapter-head">
       <p class="eyebrow">Глава 1</p>
       <h1>The Night Shift</h1>
@@ -1077,6 +1129,8 @@ td.w.speaking{color:var(--sea)}
   </article>
   <!-- ================= ГЛАВА 2 ================= -->
   <article class="chapter" id="ch2" hidden>
+    <!-- «сначала на слух»: вопросы о смысле диалога, c — верный вариант -->
+    <script type="application/json" class="ear-q">[{"q": "What is inside the suitcase?", "a": ["A notebook, a photo and a key", "Clothes, a towel and shoes", "Money and a passport"], "c": 0}, {"q": "Whose handwriting is in the notebook?", "a": ["Kate's mother's", "Mr Bell's", "Max's"], "c": 0}, {"q": "What is on the small piece of paper?", "a": ["Brighton Station. 14.", "A telephone number", "An address in London"], "c": 0}]</script>
     <div class="chapter-head">
       <p class="eyebrow">Глава 2</p>
       <h1>What Was Inside</h1>
@@ -1299,6 +1353,8 @@ td.w.speaking{color:var(--sea)}
   <!-- ================= ОТЧЁТ: считает открытую главу ================= -->
   <!-- ================= ГЛАВА 3 ================= -->
   <article class="chapter" id="ch3" hidden data-prev-done="2026-09-20" data-gate-passed="1">
+    <!-- «сначала на слух»: вопросы о смысле диалога, c — верный вариант -->
+    <script type="application/json" class="ear-q">[{"q": "What do Kate and Max find in locker 14?", "a": ["A box with a ring, a stamp and a letter", "The blue suitcase", "Mr Bell's passport"], "c": 0}, {"q": "What does the letter say?", "a": ["I came back. You were not there.", "Wait for me at the station.", "The key is in the hotel."], "c": 0}, {"q": "What is wrong when they return to the hotel?", "a": ["The notebook is not there", "The suitcase is not there", "Mr Bell is at the desk"], "c": 0}]</script>
     <div class="chapter-head">
       <p class="eyebrow">Глава 3</p>
       <h1>Locker 14</h1>
@@ -1529,6 +1585,8 @@ td.w.speaking{color:var(--sea)}
   </article>
   <!-- ================= ГЛАВА 4 ================= -->
   <article class="chapter" id="ch4" hidden data-prev-done="2026-09-21">
+    <!-- «сначала на слух»: вопросы о смысле диалога, c — верный вариант -->
+    <script type="application/json" class="ear-q">[{"q": "Who is Sam?", "a": ["Kate's cousin, a taxi driver", "A guest in room 12", "Mrs Doyle's son"], "c": 0}, {"q": "What did Anna and Peter want thirty years ago?", "a": ["A wedding in October", "A new hotel", "A trip to London"], "c": 0}, {"q": "What did the stranger in the café have in his hand?", "a": ["A small notebook", "A blue suitcase", "A ring"], "c": 0}]</script>
     <div class="chapter-head">
       <p class="eyebrow">Глава 4</p>
       <h1>The Café Across the Street</h1>
@@ -2235,7 +2293,7 @@ td.w.speaking{color:var(--sea)}
 
   window.bsTTS = { supported: supported, say: say, stop: stop, play: play, icon: ICON, micIcon: MIC_ICON,
                    modelGender: function(){ return prefs.model === "m" ? "m" : "f"; },
-                   lineText: lineText, speakerOf: speakerOf, genderOf: function(name){ return GENDER[name]; } };
+                   lineText: lineText, speakerOf: speakerOf, genderOf: function(name){ return GENDER[name]; }, dialogue: dialogueItems };
 })();
 </script>
 
@@ -4270,6 +4328,428 @@ td.w.speaking{color:var(--sea)}
   }, true);
   renderSetup();
   window.bsListen = { check: check, chapters: chapters };
+})();
+</script>
+
+<script>
+// ---------- слушание: слитная речь ----------
+// Шаг 4 лестницы слушания (решение ученика, 24.09.2026): то, что больше всего мешает понимать
+// носителей, — слабые формы служебных слов, сокращения, похожие пары (can / can't), связывание,
+// выпадение и слияние звуков. Книга произносит фразу (голоса чередуются), ученик вписывает
+// пропуск, выбирает услышанный вариант или считает слова; после ответа — что происходит в речи.
+// Итог темы — отчёт kind: "listen", source: "connected"; счёт — blue-suitcase-listen → conn.
+(function(){
+  "use strict";
+  const TTS = window.bsTTS, P = window.bsPron, MIC = window.bsMic;
+  const box = document.getElementById("connected");
+  if (!TTS || !P || !box) return;
+  const KEY = "blue-suitcase-listen";
+  const THEMES = [
+    { id: "weak", kind: "gap", title: "Слабые формы", lead: "Служебные слова в речи звучат коротко и безударно: to — [tə], for — [fə], of — [əv], and — [ən], can — [kən].",
+      items: [
+        { s: "I'm going to the station.", gap: "to", note: "to перед согласным — короткое [tə]" },
+        { s: "This coffee is for you.", gap: "for", note: "for — [fə], почти «фə»" },
+        { s: "A cup of tea, please.", gap: "of", note: "of — [əv], в быстрой речи просто [ə]: «э капə ти»" },
+        { s: "Kate and Max are here.", gap: "and", note: "and — [ən], а то и [n]: «Кейт н Макс»" },
+        { s: "Can you help me?", gap: "Can", note: "can в вопросе — слабое [kən]" },
+        { s: "He was very tired.", gap: "was", note: "was — [wəz], коротко, без ударения" },
+        { s: "Give them the key.", gap: "them", note: "them — [ðəm], иногда просто [əm]" },
+        { s: "Look at the sea.", gap: "at", note: "at — [ət], сливается с look: «лукэт»" }
+      ] },
+    { id: "contr", kind: "gap", title: "Сокращения", lead: "I'm, she's, they'll, didn't — в речи это одно короткое слово, а не два.",
+      items: [
+        { s: "I'm late again.", gap: "I'm", note: "I'm — одно слово [aɪm]" },
+        { s: "She's in room five.", gap: "She's", note: "she's = she is — [ʃiːz]" },
+        { s: "We've got a problem.", gap: "We've", note: "we've = we have — [wiːv], v почти не слышно" },
+        { s: "They'll come tomorrow.", gap: "They'll", note: "they'll = they will — [ðeɪl]" },
+        { s: "I'd like a coffee.", gap: "I'd", note: "I'd = I would — от would остаётся только [d]" },
+        { s: "It isn't my suitcase.", gap: "isn't", note: "isn't — [ˈɪznt], t на конце едва слышно" },
+        { s: "He didn't have a passport.", gap: "didn't", note: "didn't — [ˈdɪdnt], отрицание прячется в конце" },
+        { s: "You won't believe it.", gap: "won't", note: "won't [wəʊnt] — не путай с want [wɒnt]" }
+      ] },
+    { id: "pairs", kind: "choose", title: "Что прозвучало?", lead: "Пары, которые на слух различаются одним звуком или слогом: can и can't, I'd и I, it's и it was.",
+      items: [
+        { a: "I can see the sea.", b: "I can't see the sea.", note: "can в утверждении — слабое [kən], can't — долгое ударное [kɑːnt]: в британском разница прежде всего в гласной" },
+        { a: "You can go now.", b: "You can't go now.", note: "[kən] — коротко и без ударения; [kɑːnt] — долго и с ударением" },
+        { a: "He can open it.", b: "He can't open it.", note: "ищи долгое [ɑː] — оно выдаёт can't" },
+        { a: "I'd like tea.", b: "I like tea.", note: "'d — едва слышный [d] перед like" },
+        { a: "She'll call you.", b: "She'd call you.", note: "'ll — тёмное [l], 'd — короткое [d]" },
+        { a: "They're here.", b: "They were here.", note: "they're [ðeə] — один слог; they were — два" },
+        { a: "It's cold.", b: "It was cold.", note: "it's [ɪts]; it was — [ɪt wəz]" },
+        { a: "We'll wait.", b: "We'd wait.", note: "we'll [wiːl]; we'd [wiːd]" }
+      ] },
+    { id: "link", kind: "gap", title: "Связывание", lead: "Согласный на конце слова цепляется за гласную следующего: pick it up звучит как одно слово.",
+      items: [
+        { s: "Pick it up, please.", gap: "it up", note: "pick it up → «пи-ки-тап»" },
+        { s: "Turn it off, Max.", gap: "it off", note: "turn it off → «тёр-ни-тоф»" },
+        { s: "Not at all.", gap: "at all", note: "not at all → «но-тэ-тол»" },
+        { s: "An apple and an orange.", gap: "an orange", note: "an orange → «э-нориндж»: n переходит к гласной" },
+        { s: "It's far away.", gap: "far away", note: "британское r на конце звучит, только когда дальше гласная: far away → «фа-рэ-уэй»" },
+        { s: "Come in, please.", gap: "Come in", note: "come in → «ка-мин»" },
+        { s: "Get off the bus.", gap: "Get off", note: "get off → «ге-тоф»" },
+        { s: "Is it open?", gap: "Is it", note: "is it → «и-зит»" }
+      ] },
+    { id: "elision", kind: "gap", title: "Слияние и выпадение", lead: "want to → wanna, did you → «диджу», next day → «некс дэй». Пиши полную форму — разговорная тоже засчитывается.",
+      items: [
+        { s: "I want to sleep.", gap: "want to", alts: ["wanna"], note: "want to в быстрой речи — wanna [ˈwɒnə]" },
+        { s: "I'm going to call Kate.", gap: "going to", alts: ["gonna"], note: "going to → gonna [ˈɡʌnə], когда речь о планах" },
+        { s: "I've got to go.", gap: "got to", alts: ["gotta"], note: "got to → gotta [ˈɡɒtə]" },
+        { s: "Did you see him?", gap: "Did you", alts: ["didja"], note: "d + y сливаются в [dʒ]: did you → «диджу»" },
+        { s: "Would you like some tea?", gap: "Would you", alts: ["wouldja"], note: "would you → «вуджу»" },
+        { s: "I don't know.", gap: "don't know", alts: ["dunno"], note: "don't know → «дəнəʊ», в разговоре dunno" },
+        { s: "Next day he left.", gap: "Next day", note: "t между согласными выпадает: next day → «некс дэй»" },
+        { s: "Last night it rained.", gap: "Last night", note: "last night → «ласнайт»" }
+      ] },
+    { id: "count", kind: "count", title: "Сколько слов?", lead: "Быстрая фраза — сколько в ней слов? Сокращение (what's, I've) — одно слово.",
+      items: [
+        { s: "What's he doing?", n: 3, note: "what's he → «вотсиː»: h в he выпадает" },
+        { s: "Where are you going?", n: 4, note: "where are → «уэ-ра»: британское r звучит перед гласной" },
+        { s: "I'd like to go.", n: 4, note: "I'd like to → «айд лайк тə»" },
+        { s: "Do you want some?", n: 4, note: "do you → «дью», some — [səm]" },
+        { s: "Let's have a look.", n: 4, note: "have a → «хэвə»" },
+        { s: "What do you mean?", n: 4, note: "what do you → «вотəджə»" },
+        { s: "Is there any milk?", n: 4, note: "is there → «изðə», any — [ˈeni]" },
+        { s: "I've no idea.", n: 3, note: "I've no — v почти не слышно" }
+      ] }
+  ];
+  const RATE = { normal: 0.95, fast: 1.15 };
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function today(){ const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  function shuffle(a){ a = a.slice(); for (let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); const t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  function readStats(){ try { return JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch(e){ return {}; } }
+  function keys(x){ return P.tokens(x).map(P.key).join(" "); }
+  function plain(x){ return String(x || "").toLowerCase().replace(/[’'`´]/g, "").replace(/[^a-z0-9 ]+/g, " ").replace(/\s+/g, " ").trim(); }
+  function escRe(x){ return x.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }
+  function gapRe(g){ return new RegExp("(^|[^A-Za-z'’])(" + escRe(g).replace(/'/g, "['’]") + ")(?=$|[^A-Za-z'’])", "i"); }
+
+  let speed = "normal", C = null;
+  function renderList(){
+    const st = (readStats().conn) || {};
+    box.innerHTML =
+      '<div class="ls-speed"><span class="ls-label">Скорость</span>' +
+        '<button type="button" class="ls-chip cn-speed" data-val="normal" aria-pressed="' + (speed === "normal") + '">обычно</button>' +
+        '<button type="button" class="ls-chip cn-speed" data-val="fast" aria-pressed="' + (speed === "fast") + '">быстро</button></div>' +
+      '<div class="snd-sets">' + THEMES.map(function(t){
+        const r = st[t.id];
+        return '<div class="snd-set">' +
+          '<p class="snd-ipa">' + (t.kind === "gap" ? "впиши пропуск" : t.kind === "choose" ? "выбери услышанное" : "посчитай слова") + '</p>' +
+          '<p class="snd-title">' + esc(t.title) + '</p>' +
+          '<p class="snd-pairs">' + esc(t.lead) + '</p>' +
+          '<div class="snd-foot"><button type="button" class="act cn-start" data-theme="' + t.id + '">Начать</button>' +
+          '<span class="snd-last">' + (r ? r.ok + '/' + r.n + ' · ' + r.d.slice(8, 10) + '.' + r.d.slice(5, 7) : "") + '</span></div>' +
+        '</div>';
+      }).join("") + '</div>';
+  }
+  function start(theme, only){
+    const items = theme.items.map(function(it, k){ return Object.assign({ k: k }, it); }).filter(function(it){ return !only || only.indexOf(it.k) !== -1; });
+    C = { theme: theme, only: !!only, items: shuffle(items), i: 0, ok: 0, missed: [], tried: false, token: 0 };
+    C.items.forEach(function(it, k){ it.gender = k % 2 ? "m" : "f"; if (theme.kind === "choose") it.say = Math.random() < 0.5 ? "a" : "b"; });
+    renderItem();
+    box.scrollIntoView({ block: "start" });
+  }
+  function item(){ return C && C.items ? C.items[C.i] : null; }
+  function textOf(it){ return it.s || (it.say === "a" ? it.a : it.b); }
+  function play(rate){ const it = item(); if (it) TTS.play([{ text: textOf(it), gender: it.gender, rate: rate || RATE[speed] }]); }
+  function renderItem(){
+    const it = item();
+    if (!it){ finish(); return; }
+    const t = C.theme;
+    let task = "";
+    if (t.kind === "gap"){
+      const shown = it.s.replace(gapRe(it.gap), function(m, pre, g){ return pre + g.split(/\s+/).map(function(){ return "____"; }).join(" "); });
+      task = '<p class="cn-sentence">' + esc(shown) + '</p>' +
+        '<form class="ls-form cn-form" autocomplete="off"><input class="tr-input cn-input" type="text" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Пропущенное">' +
+        '<button class="act" type="submit">Проверить</button></form>' +
+        '<button type="button" class="linkish cn-giveup">Не расслышал — показать</button>';
+    } else if (t.kind === "choose"){
+      task = '<div class="cn-choices">' + shuffle(["a", "b"]).map(function(v){ return '<button type="button" class="cn-choice" data-v="' + v + '">' + esc(it[v]) + '</button>'; }).join("") + '</div>';
+    } else {
+      task = '<div class="cn-count">' + [2, 3, 4, 5, 6, 7].map(function(n){ return '<button type="button" class="cn-num" data-n="' + n + '">' + n + '</button>'; }).join("") + '</div>';
+    }
+    box.innerHTML =
+      '<div class="tr-card ls-card">' +
+        '<div class="tr-progress">' + (C.i + 1) + ' / ' + C.items.length + ' · ' + esc(t.title) + ' · ' + (speed === "fast" ? "быстро" : "обычно") + '</div>' +
+        '<p class="ls-ask">' + (t.kind === "gap" ? "Впиши, что пропущено" : t.kind === "choose" ? "Что прозвучало?" : "Сколько слов прозвучало?") + '</p>' +
+        '<div class="snd-btns"><button type="button" class="act ghost cn-play">' + TTS.icon + '<span>Ещё раз</span></button></div>' +
+        task +
+        '<div class="ls-result cn-result" hidden></div>' +
+        '<button type="button" class="linkish cn-quit">Закончить</button>' +
+      '</div>';
+    C.tried = false;
+    const my = ++C.token;
+    setTimeout(function(){ if (C && C.token === my) play(); }, 250);
+    const inp = box.querySelector(".cn-input");
+    if (inp) try { inp.focus({ preventScroll: true }); } catch(e){}
+  }
+  function verdict(ok, it, extra){
+    const first = !C.tried;
+    C.tried = true;
+    if (first){ if (ok) C.ok++; else C.missed.push(it.k); }
+    const res = box.querySelector(".cn-result");
+    const full = textOf(it);
+    const shown = C.theme.kind === "gap" ? esc(full).replace(gapRe(esc(it.gap)), function(m, pre, g){ return pre + '<b>' + g + '</b>'; }) : esc(full);
+    res.hidden = false;
+    res.innerHTML =
+      '<p class="ls-score ' + (ok ? "ok" : "no") + '">' + (ok ? "✓ Верно" : "Не так") + (extra ? " — " + esc(extra) : "") + '</p>' +
+      '<p class="ls-line">' + shown + '</p>' +
+      '<p class="cn-note">' + esc(it.note) + '</p>' +
+      '<div class="snd-btns"><button type="button" class="act ghost cn-play">' + TTS.icon + '<span>Ещё раз</span></button>' +
+        '<button type="button" class="act ghost cn-slow">' + TTS.icon + '<span>Медленно</span></button>' +
+        (C.theme.kind === "choose" ? '<button type="button" class="act ghost cn-both">' + TTS.icon + '<span>Оба варианта</span></button>' : "") +
+        '<button type="button" class="act cn-next">Дальше</button></div>';
+    box.querySelectorAll(".cn-form, .cn-giveup").forEach(function(el){ el.hidden = true; });
+    box.querySelectorAll(".cn-choice, .cn-num").forEach(function(b){ b.disabled = true; });
+  }
+  function checkGap(ans, gaveUp){
+    const it = item(); if (!it) return;
+    if (gaveUp){ verdict(false, it, "пропущено «" + it.gap + "»"); return; }
+    const want = [it.gap].concat(it.alts || []);
+    const ok = want.some(function(w){ return keys(w) === keys(ans) || plain(w) === plain(ans); });
+    verdict(ok, it, ok ? "" : "ты написал «" + ans + "», прозвучало «" + it.gap + "»");
+  }
+  function checkChoose(v){
+    const it = item(); if (!it) return;
+    box.querySelectorAll(".cn-choice").forEach(function(b){ if (b.dataset.v === it.say) b.classList.add("right"); else if (b.dataset.v === v) b.classList.add("wrong"); });
+    verdict(v === it.say, it, "");
+  }
+  function checkCount(n){
+    const it = item(); if (!it) return;
+    box.querySelectorAll(".cn-num").forEach(function(b){ const k = Number(b.dataset.n); if (k === it.n) b.classList.add("right"); else if (k === n) b.classList.add("wrong"); });
+    verdict(n === it.n, it, n === it.n ? "" : "слов " + it.n);
+  }
+  function next(){ TTS.stop(); C.i++; renderItem(); }
+  function finish(){
+    const t = C.theme, n = C.items.length;
+    if (!C.only && !C.partial){
+      const st = readStats();
+      st.conn = st.conn || {};
+      st.conn[t.id] = { d: today(), ok: C.ok, n: n, speed: speed };
+      try { localStorage.setItem(KEY, JSON.stringify(st)); } catch(e){}
+    }
+    const missed = C.missed.slice();
+    const missedText = missed.map(function(k){ const it = t.items[k]; return it.s || it.a + " / " + it.b; });
+    if (MIC && MIC.send) MIC.send({ sentAt: new Date().toISOString(), kind: "listen", source: "connected", theme: t.id, title: t.title, speed: speed, ok: C.ok, n: n, redo: C.only, partial: !!C.partial, missed: missedText,
+      text: "Слушание · слитная речь «" + t.title + "»" + (C.only ? ", повтор ошибок" : "") + (C.partial ? ", не до конца" : "") + ", скорость «" + (speed === "fast" ? "быстро" : "обычно") + "»: с первого раза " + C.ok + " из " + n + (missedText.length ? "; не расслышал: " + missedText.join("; ") : "") });
+    box.innerHTML =
+      '<div class="tr-card ls-card ls-done">' +
+        '<div class="tr-progress">' + esc(t.title) + ' · ' + (speed === "fast" ? "быстро" : "обычно") + '</div>' +
+        '<p class="snd-sum">С первого раза: <b>' + C.ok + ' из ' + n + '</b></p>' +
+        (missedText.length ? '<p class="ls-typed">Не расслышал: ' + esc(missedText.join(" · ")) + '</p>' : '<p class="ls-score ok">Всё услышал.</p>') +
+        '<p class="ls-advice">' + (C.ok === n && speed === "normal" ? "Попробуй эту тему на скорости «быстро»." : missedText.length ? "Повтори ошибки — и послушай их «медленно», чтобы услышать полную форму." : "Отлично.") + '</p>' +
+        '<div class="snd-btns">' + (missed.length ? '<button type="button" class="act cn-redo">Ещё раз по ошибкам</button>' : "") +
+          '<button type="button" class="act ghost cn-restart">Вся тема заново</button><button type="button" class="act ghost cn-list">К темам</button></div>' +
+      '</div>';
+    C = { theme: t, missed: missed, done: true };
+  }
+  // закончил посередине — итог по отвеченным фразам, счёт полной темы не переписывается
+  function quit(){
+    if (C && !C.done && C.items){
+      const answered = C.i + (C.tried ? 1 : 0);
+      if (answered > 0){ TTS.stop(); C.items = C.items.slice(0, answered); C.partial = true; finish(); return; }
+    }
+    C = null; TTS.stop(); renderList();
+  }
+
+  box.addEventListener("click", function(e){
+    const b = e.target.closest && e.target.closest("button");
+    if (!b) return;
+    if (b.classList.contains("cn-speed")){ speed = b.dataset.val; renderList(); return; }
+    if (b.classList.contains("cn-start")){ const t = THEMES.filter(function(x){ return x.id === b.dataset.theme; })[0]; if (t) start(t); return; }
+    if (!C) return;
+    const it = item();
+    if (b.classList.contains("cn-play")) play();
+    else if (b.classList.contains("cn-slow")) play(0.6);
+    else if (b.classList.contains("cn-both") && it) TTS.play([{ text: it.a, gender: it.gender, rate: RATE[speed], pause: 700 }, { text: it.b, gender: it.gender, rate: RATE[speed] }]);
+    else if (b.classList.contains("cn-choice")) checkChoose(b.dataset.v);
+    else if (b.classList.contains("cn-num")) checkCount(Number(b.dataset.n));
+    else if (b.classList.contains("cn-giveup")) checkGap("", true);
+    else if (b.classList.contains("cn-next")) next();
+    else if (b.classList.contains("cn-quit")) quit();
+    else if (b.classList.contains("cn-redo")) start(C.theme, C.missed);
+    else if (b.classList.contains("cn-restart")) start(C.theme);
+    else if (b.classList.contains("cn-list")){ C = null; renderList(); }
+  });
+  box.addEventListener("submit", function(e){
+    if (!e.target.classList.contains("cn-form")) return;
+    e.preventDefault();
+    const v = box.querySelector(".cn-input").value.trim();
+    if (v) checkGap(v, false);
+  });
+  renderList();
+  const tabs = document.querySelectorAll(".ls-tab");
+  tabs.forEach(function(t){
+    t.addEventListener("click", function(){
+      tabs.forEach(function(x){ const on = x === t; x.setAttribute("aria-pressed", on ? "true" : "false"); document.getElementById(x.dataset.pane).hidden = !on; });
+      TTS.stop();
+    });
+  });
+  window.bsConnected = { themes: THEMES, keys: keys };
+})();
+</script>
+
+<script>
+// ---------- новая глава сначала на слух ----------
+// Шаг 5 лестницы слушания (решение ученика, 24.09.2026): текст новой главы закрыт, пока ученик
+// не послушает диалог и не ответит на 3 вопроса о смысле (вопросы — в самой главе, блок
+// <script type="application/json" class="ear-q">). Потом — второе прослушивание «на детали»
+// и текст открывается. Можно пропустить. Любую главу можно так же пройти «вслепую» кнопкой
+// «Сначала на слух». Состояние — blue-suitcase-earfirst; итог — отчёт kind: "listen", source: "chapter".
+(function(){
+  "use strict";
+  const TTS = window.bsTTS, MIC = window.bsMic;
+  if (!TTS || !TTS.dialogue) return;
+  const KEY = "blue-suitcase-earfirst";
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function today(){ const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  function shuffle(a){ a = a.slice(); for (let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); const t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  function read(){ try { return JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch(e){ return {}; } }
+  function save(id, v){ const st = read(); st[id] = v; try { localStorage.setItem(KEY, JSON.stringify(st)); } catch(e){} }
+  const arts = Array.prototype.slice.call(document.querySelectorAll("article.chapter"));
+  const last = arts.reduce(function(m, a){ return Math.max(m, Number(a.id.replace(/\D/g, "")) || 0); }, 0);
+  function num(a){ return Number(a.id.replace(/\D/g, "")) || 0; }
+  function passed(a){
+    if (num(a) < last) return true;
+    try { return !!localStorage.getItem("blue-suitcase-done-ch" + num(a)); } catch(e){ return false; }
+  }
+  // глава уже начата: есть ответ в упражнениях — её не закрываем
+  function started(a){
+    try {
+      const vals = (JSON.parse(localStorage.getItem("blue-suitcase-v1") || "{}") || {}).vals || {};
+      return Object.keys(vals).some(function(k){ return k.indexOf(a.id + ".") === 0 && String(vals[k] || "").trim() !== ""; });
+    } catch(e){ return false; }
+  }
+  function questions(a){ const el = a.querySelector("script.ear-q"); try { return el ? JSON.parse(el.textContent) || [] : []; } catch(e){ return []; } }
+
+  const E = {};   // состояние по главам: { art, panel, qs, answers, listens, playing, auto }
+  function lock(a, auto){
+    if (E[a.id]) return;
+    const script = a.querySelector(".script");
+    if (!script) return;
+    const qs = questions(a);
+    a.classList.add("ear-lock");
+    const panel = document.createElement("div");
+    panel.className = "ear-panel";
+    panel.setAttribute("role", "region");
+    panel.setAttribute("aria-label", "Сначала на слух");
+    script.parentNode.insertBefore(panel, script);
+    E[a.id] = { art: a, panel: panel, qs: shuffle(qs).map(function(q){ return { q: q.q, opts: shuffle(q.a.map(function(t, i){ return { t: t, ok: i === (q.c || 0) }; })) }; }),
+                answers: [], listens: 0, playing: false, auto: !!auto, stage: "intro" };
+    render(a.id);
+  }
+  function unlock(id, skipped){
+    const s = E[id];
+    if (!s) return;
+    TTS.stop();
+    s.art.classList.remove("ear-lock");
+    s.panel.remove();
+    const ok = s.answers.filter(Boolean).length;
+    save(id, { d: today(), skipped: !!skipped, ok: ok, n: s.qs.length, listens: s.listens });
+    if (MIC && MIC.send && (s.listens || skipped)) MIC.send({ sentAt: new Date().toISOString(), kind: "listen", source: "chapter", chapter: id, skipped: !!skipped,
+      ok: ok, n: s.qs.length, listens: s.listens,
+      text: "Слушание · глава " + num(s.art) + (skipped ? " — «сначала на слух» пропущено" : " сначала на слух: понял " + ok + " из " + s.qs.length + " вопросов, прослушиваний " + s.listens) });
+    delete E[id];
+  }
+  function listen(id){
+    const s = E[id];
+    if (!s) return;
+    const items = TTS.dialogue(s.art.querySelector(".script")).map(function(it){ return { text: it.text, gender: it.gender, pause: it.pause }; });
+    s.playing = true;
+    render(id);
+    TTS.play(items, function(){
+      if (!E[id] || !s.playing) return;
+      s.playing = false;
+      s.listens++;
+      if (s.stage === "intro") s.stage = s.qs.length ? "questions" : "result";
+      render(id);
+    });
+  }
+  function stopListen(id){
+    const s = E[id];
+    if (!s) return;
+    s.playing = false;
+    TTS.stop();
+    s.listens++;
+    if (s.stage === "intro") s.stage = s.qs.length ? "questions" : "result";
+    render(id);
+  }
+  function render(id){
+    const s = E[id];
+    if (!s) return;
+    let body = "";
+    if (s.playing){
+      body = '<p class="ear-text"><span class="rp-dot" aria-hidden="true"></span>Слушаю диалог… ' + (s.stage === "intro" ? "Главное — кто, где и что случилось." : "Теперь — детали.") + '</p>' +
+             '<div class="snd-btns"><button type="button" class="act ghost ear-stop">■ Стоп</button></div>';
+    } else if (s.stage === "intro"){
+      body = '<p class="ear-text">Послушай диалог целиком, не читая. Не старайся понять каждое слово — только главное: кто, где и что случилось. Потом ' +
+             (s.qs.length ? s.qs.length + " вопроса о смысле" : "откроется текст") + '.</p>' +
+             '<div class="snd-btns"><button type="button" class="act ear-play">' + TTS.icon + '<span>Слушать диалог</span></button></div>';
+    } else if (s.stage === "questions"){
+      body = '<p class="ear-text">Ответь по услышанному:</p>' +
+        s.qs.map(function(q, qi){
+          const a = s.answers[qi];
+          return '<div class="ear-q"><p class="ear-qt">' + (qi + 1) + '. ' + esc(q.q) + '</p><div class="ear-opts">' +
+            q.opts.map(function(o, oi){
+              const cls = a === undefined ? "" : o.ok ? " right" : (a === false && s.picked && s.picked[qi] === oi ? " wrong" : "");
+              return '<button type="button" class="ear-opt' + cls + '" data-q="' + qi + '" data-o="' + oi + '"' + (a !== undefined ? " disabled" : "") + '>' + esc(o.t) + '</button>';
+            }).join("") + '</div></div>';
+        }).join("") +
+        '<div class="snd-btns"><button type="button" class="act ghost ear-play">' + TTS.icon + '<span>Послушать ещё раз</span></button></div>';
+    } else {
+      const ok = s.answers.filter(Boolean).length;
+      body = s.qs.map(function(q, i){
+               return '<p class="ear-sum ' + (s.answers[i] ? "ok" : "no") + '">' + (s.answers[i] ? "✓ " : "✗ ") + esc(q.q) + ' — ' + esc(q.opts.filter(function(o){ return o.ok; })[0].t) + '</p>';
+             }).join("") +
+             (s.qs.length ? '<p class="ls-score ' + (ok === s.qs.length ? "ok" : "no") + '">Понял на слух: ' + ok + ' из ' + s.qs.length + '</p>' : "") +
+             '<p class="ear-text">' + (s.listens < 2 ? "Теперь послушай ещё раз — уже детали. Потом открой текст и проверь себя." : "Открой текст и прочитай диалог — теперь он знаком на слух.") + '</p>' +
+             '<div class="snd-btns">' + (s.listens < 2 ? '<button type="button" class="act ghost ear-play">' + TTS.icon + '<span>Слушать ещё раз</span></button>' : "") +
+             '<button type="button" class="act ear-open">Открыть текст</button></div>';
+    }
+    s.panel.innerHTML = '<p class="ear-kicker">Сначала на слух</p>' + body +
+      (s.stage === "result" ? "" : '<button type="button" class="linkish ear-skip">' + (s.auto ? "Пропустить — читать сразу" : "Выйти — открыть текст") + '</button>');
+  }
+  function answer(id, qi, oi){
+    const s = E[id];
+    if (!s || s.answers[qi] !== undefined) return;
+    s.picked = s.picked || {};
+    s.picked[qi] = oi;
+    s.answers[qi] = !!s.qs[qi].opts[oi].ok;
+    const all = s.qs.every(function(q, i){ return s.answers[i] !== undefined; });
+    if (all) s.stage = "result";
+    render(id);
+  }
+
+  // кнопка «Сначала на слух» у каждой главы; новая непройденная глава закрывается сама
+  arts.forEach(function(a){
+    const bar = a.querySelector(".listen-bar");
+    if (bar && TTS.supported){
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "act ghost ear-start";
+      b.innerHTML = TTS.icon + "<span>Сначала на слух</span>";
+      bar.insertBefore(b, bar.querySelector(".listen-hint"));
+    }
+    if (TTS.supported && !passed(a) && !read()[a.id] && !started(a) && questions(a).length) lock(a, true);
+  });
+
+  document.addEventListener("click", function(e){
+    const b = e.target.closest && e.target.closest("button");
+    if (!b) return;
+    const a = b.closest("article.chapter");
+    if (!a) return;
+    if (b.classList.contains("ear-start")){ lock(a, false); a.querySelector(".ear-panel").scrollIntoView({ block: "center" }); return; }
+    const s = E[a.id];
+    if (!s || !s.panel.contains(b)) return;
+    if (b.classList.contains("ear-play")) listen(a.id);
+    else if (b.classList.contains("ear-stop")) stopListen(a.id);
+    else if (b.classList.contains("ear-opt")) answer(a.id, Number(b.dataset.q), Number(b.dataset.o));
+    else if (b.classList.contains("ear-open")) unlock(a.id, false);
+    else if (b.classList.contains("ear-skip")) unlock(a.id, s.listens === 0);
+  });
+  // другой раздел или глава — чтение вслух останавливается, прослушивание засчитывается как прерванное
+  document.addEventListener("click", function(e){
+    if (!e.target.closest || !e.target.closest(".view-tab, .chapter-tab")) return;
+    Object.keys(E).forEach(function(id){ if (E[id].playing){ E[id].playing = false; render(id); } });
+  }, true);
 })();
 </script>
 
