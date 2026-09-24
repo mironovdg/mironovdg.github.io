@@ -529,6 +529,45 @@ video.mirror{display:block;width:100%;max-width:320px;border-radius:var(--radius
 .meter-dot.on{background:var(--sea);opacity:1}
 .meter-read{font-size:14px;color:var(--ink);margin:10px 0 8px;max-width:none;min-height:1.4em}
 
+/* ---------- «Слушать» в «Звуках» ---------- */
+.snd-go{display:inline-flex;gap:6px;flex-wrap:wrap}
+.snd-last{text-align:right;line-height:1.35}
+.snd-choices{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:6px 0 14px}
+button.snd-choice{background:var(--field);border:1px solid var(--line);border-radius:var(--radius);padding:14px 8px;cursor:pointer;
+  font-family:var(--serif);font-size:26px;font-weight:600;color:var(--ink)}
+button.snd-choice:hover:not(:disabled){border-color:var(--sea)}
+button.snd-choice small{display:block;font-family:var(--sans);font-size:13px;font-weight:400;color:var(--rain);margin-top:2px}
+button.snd-choice.right{border-color:var(--ok);background:var(--ok-soft)}
+button.snd-choice.wrong{border-color:var(--no);background:var(--no-soft)}
+button.snd-choice:disabled{cursor:default}
+
+/* ---------- слушание: диктант ---------- */
+.ls-label{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--rain);margin:18px 0 8px}
+.ls-chips{display:flex;flex-wrap:wrap;gap:8px}
+button.ls-chip{display:inline-flex;align-items:baseline;gap:6px;background:var(--field);border:1px solid var(--line);border-radius:999px;
+  padding:6px 14px;font-family:var(--sans);font-size:14px;color:var(--ink-soft);cursor:pointer}
+button.ls-chip small{font-size:11px;color:var(--lamp)}
+button.ls-chip .ch-n{font-family:var(--mono);font-size:12px;color:var(--rain)}
+button.ls-chip[aria-pressed="true"]{border-color:var(--sea);background:var(--sea-soft);color:var(--ink)}
+.ls-go{margin:20px 0 0}
+.ls-warn{color:var(--no);font-size:14px}
+.ls-level{margin-top:22px;border-top:1px solid var(--line-soft);padding-top:4px}
+.ls-level ul{margin:0;padding-left:1.2em;font-size:14.5px}
+.ls-advice{font-size:14px;color:var(--ink-soft);margin:10px 0 0}
+.ls-card{text-align:center}
+.ls-ask{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--rain);margin:10px auto 12px;max-width:none}
+.ls-form{display:flex;gap:8px;max-width:32rem;margin:16px auto 8px}
+.ls-form .ls-input{flex:1;min-width:0}
+.ls-result{margin-top:14px;text-align:left;max-width:34rem;margin-left:auto;margin-right:auto}
+.ls-line{font-family:var(--serif);font-size:19px;line-height:1.6;margin:0 0 6px;max-width:none}
+.rp-w.ls-spell{color:var(--lamp);text-decoration:underline dotted;text-underline-offset:4px}
+.ls-typed{font-size:14px;color:var(--rain);margin:0 0 6px;max-width:none}
+.ls-score{font-size:15px;margin:0 0 6px}
+.ls-score.ok{color:var(--ok)}
+.ls-score.no{color:var(--no)}
+.ls-notes{margin:0 0 10px;padding-left:1.2em;font-size:14px;color:var(--ink-soft)}
+.ls-card .linkish{display:block;margin:10px auto 0;font-size:13px}
+
 /* ---------- как учиться ---------- */
 .method h3{font-family:var(--serif);font-size:20px;font-weight:600;margin:34px 0 10px}
 .method-route{margin:0;padding-left:1.4em;display:grid;gap:10px;max-width:var(--measure)}
@@ -633,6 +672,7 @@ td.w.speaking{color:var(--sea)}
       <div class="views-items">
         <button type="button" class="view-tab today-tab" data-view="today">Повторение<span class="today-n" id="today-n"></span></button>
         <button type="button" class="view-tab" data-view="sounds">Звуки</button>
+        <button type="button" class="view-tab" data-view="listen">Слушание</button>
         <button type="button" class="view-tab" data-view="method">Как учиться</button>
       </div>
     </div>
@@ -695,6 +735,17 @@ td.w.speaking{color:var(--sea)}
       <p>Первая группа — звуки, которые у русскоговорящих чаще всего выходят не так и мешают тебя понять. Вторая — британские гласные: то, чем оксфордское произношение отличается от американского. Хватает одного набора в день, 3–4 минуты. Итог приходит мне, и трудные звуки я вплету в следующие главы.</p>
       <div class="gym" id="gym"></div>
       <div class="sounds" id="sounds"></div>
+    </section>
+  </div>
+
+  <!-- ================= СЛУШАНИЕ ================= -->
+  <div class="view" id="view-listen" hidden>
+    <section style="margin-top:34px">
+      <p class="sec-label">Слушание</p>
+      <h2>Диктант по репликам глав</h2>
+      <p>Книга читает реплику голосом героя — ты печатаешь, что услышал. Сверка по словам: зелёное — услышал, красное — нет, пунктир — служебное слово, оранжевое — услышал, но с опечаткой. Под репликой — что помешало: окончание, служебное слово, сокращение, перепутанный звук. Трудную реплику слушай «медленно» или «по кусочкам».</p>
+      <p>Начни с медленной скорости. Когда услышанных слов 90% и больше — переходи на следующую: так слух растёт от простого к сложному. Различать отдельные звуки на слух — в «Звуках», кнопка «Слушать» у каждого набора.</p>
+      <div class="listen" id="listen"></div>
     </section>
   </div>
 
@@ -765,6 +816,8 @@ td.w.speaking{color:var(--sea)}
       <h3>Произношение: поправки и разминка</h3>
       <p>Если слово не узналось, книга сразу объясняет, какой звук вышел не так: сравнивает британскую транскрипцию нужного слова и того, что прозвучало (<span class="cue">cold /kəʊld/ → called /kɔːld/: звук [əʊ] прозвучал как [ɔː]</span>), подсказывает, как поставить язык и губы, и медленно произносит слово. «Сказать слово» — повторить только его, пока не выйдет, потом всю реплику.</p>
       <p>В разделе «Звуки» сверху — фонетическая разминка: 8 упражнений для губ и языка, около 4 минут, со схемами, образцом и «Зеркалом» (фронтальная камера, изображение никуда не уходит). Там же шкала «s ↔ th»: пошипи «ссс», потом [θ] с языком между зубами — стрелка покажет, на что похоже.</p>
+      <h3>Слушание</h3>
+      <p>От простого к сложному. Сначала различать звуки: в «Звуках» кнопка «Слушать» — книга произносит одно слово пары (ship или sheep), ты выбираешь, какое. Потом диктант в разделе «Слушание»: книга читает реплики глав голосом героев, ты печатаешь; три скорости — медленно, обычно, быстро. Когда на скорости слышишь 90% слов и больше — переходи на следующую. Разбор подсказывает, что мешает: окончания, служебные слова, сокращения, похожие звуки.</p>
       <p>Распознавание проверяет, понятно ли тебя, а не каждый звук отдельно, — поэтому красное слово значит «так не поймут», а зелёное ещё не гарантирует идеального звука. Лучше всего работает в тихой комнате, телефон — сантиметрах в 20–30.</p>
 
       <h3>Почему так</h3>
@@ -3400,7 +3453,7 @@ td.w.speaking{color:var(--sea)}
 
   // ---- список наборов ----
   function renderList(){
-    const st = readStats();
+    const st = readStats(), ears = readListen().pairs || {};
     box.innerHTML = GROUPS.map(function(g){
       return '<h3 class="snd-group">' + g[1] + '</h3><p class="snd-group-note">' + g[2] + '</p><div class="snd-sets">' +
         SETS.filter(function(s){ return s.group === g[0]; }).map(function(s){
@@ -3409,8 +3462,9 @@ td.w.speaking{color:var(--sea)}
             '<p class="snd-ipa">' + esc(s.ipa) + '</p>' +
             '<p class="snd-title">' + esc(title(s)) + '</p>' +
             '<p class="snd-pairs">' + s.pairs.slice(1, 4).map(function(p){ return esc(p[0] + " — " + p[2]); }).join(" · ") + '</p>' +
-            '<div class="snd-foot"><button type="button" class="act snd-start" data-set="' + s.id + '">Начать</button>' +
-            (r ? '<span class="snd-last">' + r.ok + '/' + r.n + ' · ' + esc(r.d.slice(8, 10) + "." + r.d.slice(5, 7)) + '</span>' : "") + '</div>' +
+            '<div class="snd-foot"><span class="snd-go"><button type="button" class="act snd-start" data-set="' + s.id + '">Говорить</button>' +
+            '<button type="button" class="act ghost snd-ear" data-set="' + s.id + '">Слушать</button></span>' +
+            '<span class="snd-last">' + (r ? 'говорю ' + r.ok + '/' + r.n : "") + (ears[s.id] ? (r ? '<br>' : "") + 'слышу ' + ears[s.id].ok + '/' + ears[s.id].n : "") + '</span></div>' +
           '</div>';
         }).join("") + '</div>';
     }).join("") +
@@ -3549,13 +3603,111 @@ td.w.speaking{color:var(--sea)}
   }
   function quit(){ if (S && !S.done){ clearTimeout(S.auto); S.token++; } MIC.stop(); TTS.stop(); S = null; renderList(); }
 
+  // ---- «Слушать»: книга произносит одно слово пары, ученик выбирает, какое прозвучало ----
+  const LKEY = "blue-suitcase-listen";
+  function readListen(){ try { return JSON.parse(localStorage.getItem(LKEY) || "{}") || {}; } catch(e){ return {}; } }
+  function startEar(set, only){
+    const cards = [];
+    set.pairs.forEach(function(p){
+      [[p[0], p[1], p[2], p[3]], [p[2], p[3], p[0], p[1]]].forEach(function(c){
+        if (!only || only.indexOf(c[0]) !== -1) cards.push({ say: c[0], ru: c[1], other: c[2], oru: c[3] });
+      });
+    });
+    S = { ear: true, set: set, only: !!only, cards: shuffle(cards), i: 0, ok: 0, missed: [], tried: false, token: 0, auto: 0 };
+    renderEar();
+    box.scrollIntoView({ block: "start", behavior: "auto" });
+  }
+  function renderEar(){
+    const c = card();
+    if (!c){ finishEar(); return; }
+    const opts = shuffle([[c.say, c.ru], [c.other, c.oru]]);
+    box.innerHTML =
+      '<div class="tr-card snd-card">' +
+        '<div class="tr-progress">' + (S.i + 1) + ' / ' + S.cards.length + ' · на слух · ' + esc(S.set.ipa) + '</div>' +
+        '<p class="snd-say">Какое слово прозвучало?</p>' +
+        '<div class="snd-choices">' + opts.map(function(o){
+          return '<button type="button" class="snd-choice" data-w="' + esc(o[0]) + '">' + esc(o[0]) + '<em class="snd-tr">' + esc(tr(o[0])) + '</em><small>' + esc(o[1]) + '</small></button>';
+        }).join("") + '</div>' +
+        '<div class="snd-btns"><button type="button" class="act ghost snd-ear-again">' + TTS.icon + '<span>Ещё раз</span></button>' +
+          '<button type="button" class="act ghost snd-ear-slow">' + TTS.icon + '<span>Медленно</span></button></div>' +
+        '<p class="snd-res" aria-live="polite"></p>' +
+        '<div class="snd-after" hidden><button type="button" class="act ghost snd-ear-pair">' + TTS.icon + '<span>Пару ещё раз</span></button>' +
+          '<button type="button" class="act snd-ear-next">Дальше</button></div>' +
+        '<button type="button" class="linkish snd-quit">Закончить</button>' +
+      '</div>';
+    S.tried = false;
+    const my = ++S.token;
+    setTimeout(function(){ if (S && S.token === my) TTS.play([{ text: c.say, gender: TTS.modelGender() }]); }, 250);
+  }
+  function playPair(c, rate){
+    const g = TTS.modelGender();
+    TTS.play([{ text: c.say, gender: g, rate: rate, pause: 600 }, { text: c.other, gender: g, rate: rate, pause: 600 }, { text: c.say, gender: g, rate: rate }]);
+  }
+  function answerEar(w){
+    const c = card();
+    if (!c) return;
+    const first = !S.tried;
+    S.tried = true;
+    box.querySelectorAll(".snd-choice").forEach(function(b){
+      b.disabled = true;
+      if (b.dataset.w === c.say) b.classList.add("right"); else if (b.dataset.w === w) b.classList.add("wrong");
+    });
+    const my = S.token;
+    if (w === c.say){
+      if (first) S.ok++;
+      setRes("✓ Да, прозвучало «" + c.say + "» " + tr(c.say), "ok");
+      S.auto = setTimeout(function(){ if (S && S.token === my) nextEar(); }, 900);
+    } else {
+      if (first) S.missed.push(c.say + " → " + c.other);
+      setRes("Прозвучало «" + c.say + "» " + tr(c.say) + ", а не «" + c.other + "» " + tr(c.other) + ". Послушай пару медленно.", "no");
+      box.querySelector(".snd-after").hidden = false;
+      S.auto = setTimeout(function(){ if (S && S.token === my) playPair(c, 0.7); }, 400);
+    }
+  }
+  function nextEar(){ clearTimeout(S.auto); TTS.stop(); S.i++; renderEar(); }
+  function finishEar(){
+    const set = S.set, n = S.cards.length;
+    if (!S.only){
+      const st = readListen();
+      st.pairs = st.pairs || {};
+      st.pairs[set.id] = { d: today(), ok: S.ok, n: n };
+      try { localStorage.setItem(LKEY, JSON.stringify(st)); } catch(e){}
+    }
+    MIC.send({ sentAt: new Date().toISOString(), kind: "listen", source: "pairs", set: set.id, title: set.ipa + " " + title(set), ok: S.ok, n: n, redo: S.only, confused: S.missed,
+               text: "Слушание · пары " + set.ipa + " (" + title(set) + (S.only ? ", повтор ошибок" : "") + "): на слух с первого раза " + S.ok + " из " + n +
+                     (S.missed.length ? "; путал: " + S.missed.join(", ") : "") });
+    const missed = S.missed.map(function(x){ return x.split(" → ")[0]; });
+    box.innerHTML =
+      '<div class="tr-card snd-card snd-done">' +
+        '<div class="tr-progress">на слух · ' + esc(set.ipa) + ' · ' + esc(title(set)) + '</div>' +
+        '<p class="snd-sum">С первого раза: <b>' + S.ok + ' из ' + n + '</b></p>' +
+        (S.missed.length ? '<p class="snd-res no">Путал: ' + esc(S.missed.join(", ")) + '</p><p class="snd-tip">' + esc(set.tip) + '</p>'
+                         : '<p class="snd-res ok">Все слова различил на слух.</p>') +
+        '<p class="snd-note">' + (S.missed.length ? "Слух различает звук раньше, чем язык его выговаривает: сначала добейся «слышу», потом «Говорить»." : "Теперь попробуй «Говорить» — сказать эти слова самому.") + '</p>' +
+        '<div class="snd-btns">' +
+          (missed.length ? '<button type="button" class="act snd-ear-redo">Ещё раз по ошибкам</button>' : "") +
+          '<button type="button" class="act ghost snd-ear-restart">Весь набор заново</button>' +
+          '<button type="button" class="act ghost snd-list">К списку</button>' +
+        '</div>' +
+      '</div>';
+    S = { ear: true, set: set, missed: missed, done: true };
+  }
+
   box.addEventListener("click", function(e){
     const t = e.target.closest && e.target.closest("button");
     if (!t) return;
     if (t.classList.contains("snd-start")){ const set = SETS.filter(function(s){ return s.id === t.dataset.set; })[0]; if (set) start(set); return; }
+    if (t.classList.contains("snd-ear")){ const set = SETS.filter(function(s){ return s.id === t.dataset.set; })[0]; if (set) startEar(set); return; }
     if (!S) return;
     const c = card();
     const g = TTS.modelGender();
+    if (t.classList.contains("snd-choice")){ answerEar(t.dataset.w); return; }
+    if (t.classList.contains("snd-ear-again") && c){ TTS.play([{ text: c.say, gender: g }]); return; }
+    if (t.classList.contains("snd-ear-slow") && c){ TTS.play([{ text: c.say, gender: g, rate: 0.6 }]); return; }
+    if (t.classList.contains("snd-ear-pair") && c){ playPair(c, 0.7); return; }
+    if (t.classList.contains("snd-ear-next")){ nextEar(); return; }
+    if (t.classList.contains("snd-ear-redo")){ startEar(S.set, S.missed); return; }
+    if (t.classList.contains("snd-ear-restart")){ startEar(S.set); return; }
     if (t.classList.contains("snd-hear") && c){ MIC.stop(); TTS.play([{ text: c.say, gender: g }]); }
     else if (t.classList.contains("snd-pair") && c){ MIC.stop(); TTS.play([{ text: c.say, gender: g, pause: 500 }, { text: c.other, gender: g, pause: 500 }, { text: c.say, gender: g }]); }
     else if (t.classList.contains("snd-speak")) speak();
@@ -3799,6 +3951,325 @@ td.w.speaking{color:var(--sea)}
   }, true);
   document.addEventListener("visibilitychange", function(){ if (document.hidden){ meterOff(); mirrorOff(); } });
   renderIntro();
+})();
+</script>
+
+<script>
+// ---------- слушание: диктант по репликам глав ----------
+// Решение ученика, 24.09.2026: слушание от простого к сложному. Книга читает реплику главы голосом
+// героя, ученик печатает услышанное; сверка по словам (как в чтении по ролям) и разбор: окончание,
+// служебное слово в слабой форме, сокращение, перепутанный звук, опечатка. Три скорости; книга
+// помнит, какую долю слов ученик слышит на каждой (blue-suitcase-listen). Отчёт — kind: "listen".
+(function(){
+  "use strict";
+  const TTS = window.bsTTS, P = window.bsPron, PH = window.bsPhon, MIC = window.bsMic;
+  const box = document.getElementById("listen");
+  if (!TTS || !P || !box) return;
+  const KEY = "blue-suitcase-listen";
+  const SPEEDS = [["slow", "медленно", 0.7], ["normal", "обычно", 0.95], ["fast", "быстро", 1.15]];
+  const SIZES = [[10, "10"], [20, "20"], [0, "все"]];
+  const FUNC = { a: 1, an: 1, the: 1, to: 1, of: 1, and: 1, or: 1, "in": 1, on: 1, at: 1, "for": 1, is: 1, are: 1, am: 1,
+                 it: 1, i: 1, you: 1, "do": 1, did: 1, be: 1, as: 1, but: 1, so: 1, was: 1, were: 1, have: 1, has: 1, can: 1,
+                 not: 1, he: 1, she: 1, we: 1, they: 1, me: 1, him: 1, her: 1, us: 1, them: 1, my: 1, your: 1, his: 1, our: 1, their: 1, that: 1, this: 1, will: 1, would: 1 };
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function today(){ const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  function shuffle(a){ a = a.slice(); for (let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); const t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  function readStats(){ try { return JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch(e){ return {}; } }
+  function saveStats(st){ try { localStorage.setItem(KEY, JSON.stringify(st)); } catch(e){} }
+  function linesWord(n){ const t = n % 10, h = n % 100; return t === 1 && h !== 11 ? "реплика" : t >= 2 && t <= 4 && (h < 12 || h > 14) ? "реплики" : "реплик"; }
+  function speedOf(id){ return SPEEDS.filter(function(s){ return s[0] === id; })[0] || SPEEDS[1]; }
+  // расстояние между словами; перестановка соседних букв (cmae → came) — одна ошибка
+  function lev(a, b){
+    const m = a.length, n = b.length, D = [];
+    for (let i = 0; i <= m; i++) D.push([i]);
+    for (let j = 0; j <= n; j++) D[0][j] = j;
+    for (let i = 1; i <= m; i++) for (let j = 1; j <= n; j++){
+      D[i][j] = Math.min(D[i - 1][j] + 1, D[i][j - 1] + 1, D[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+      if (i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) D[i][j] = Math.min(D[i][j], D[i - 2][j - 2] + 1);
+    }
+    return D[m][n];
+  }
+
+  // ---- реплики глав ----
+  function chapterDone(n, last){
+    if (n < last) return true;
+    try { return !!localStorage.getItem("blue-suitcase-done-ch" + n); } catch(e){ return false; }
+  }
+  function chapters(){
+    const arts = Array.prototype.slice.call(document.querySelectorAll("article.chapter"));
+    const last = arts.reduce(function(m, a){ return Math.max(m, Number(a.id.replace(/\D/g, "")) || 0); }, 0);
+    return arts.map(function(a){
+      const n = Number(a.id.replace(/\D/g, "")) || 0;
+      const h = a.querySelector("h1");
+      const lines = [], names = {};
+      const script = a.querySelector(".script");
+      if (script){
+        let who = null;
+        Array.prototype.forEach.call(script.children, function(el){
+          if (el.classList.contains("who")){ who = el; TTS.speakerOf(el).split(/\s+/).forEach(function(x){ if (x !== "man" && x !== "woman") names[x] = 1; }); return; }
+          if (!el.classList.contains("says") || !who) return;
+          const text = TTS.lineText(el), sp = TTS.speakerOf(who);
+          if (text.split(/\s+/).length >= 3) lines.push({ text: text, speaker: sp, name: who.childNodes[0].textContent.trim(), gender: TTS.genderOf(sp), ch: n });
+          who = null;
+        });
+      }
+      return { n: n, id: a.id, title: h ? h.textContent.trim() : a.id, lines: lines, names: names, done: chapterDone(n, last) };
+    }).sort(function(x, y){ return x.n - y.n; });
+  }
+
+  // ---- сверка написанного с репликой ----
+  function align(target, heard){
+    const n = target.length, m = heard.length, dp = [];
+    for (let i = 0; i <= n; i++) dp.push(new Array(m + 1).fill(0));
+    for (let i = n - 1; i >= 0; i--) for (let j = m - 1; j >= 0; j--)
+      dp[i][j] = target[i] === heard[j] ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1]);
+    const hit = {};
+    let i = 0, j = 0;
+    while (i < n && j < m){
+      if (target[i] === heard[j]){ hit[i] = j + 1; i++; j++; }
+      else if (dp[i + 1][j] >= dp[i][j + 1]) i++;
+      else j++;
+    }
+    return hit;
+  }
+  function check(line, typed, names){
+    const words = [];
+    let start = true;
+    line.text.split(/\s+/).filter(Boolean).forEach(function(w){
+      const bare = w.replace(/^[^A-Za-z0-9]+|[^A-Za-z0-9']+$/g, ""), low = bare.toLowerCase().replace(/[’]/g, "'");
+      const toks = P.tokens(w);
+      const cap = /^[A-Z][a-z]/.test(bare);
+      const name = cap && (names[low] || (!start && !/^I('|$)/.test(bare)));
+      words.push({ word: w, raw: low, toks: toks, name: name, func: toks.length > 0 && toks.every(function(t){ return FUNC[t]; }) });
+      start = /[.!?…]["”’)]*$/.test(w);
+    });
+    const target = [], owner = [], rawT = [];
+    words.forEach(function(w, k){ if (!w.name) w.toks.forEach(function(t){ target.push(P.key(t)); rawT.push(t); owner.push(k); }); });
+    const typedRaw = P.tokens(typed), typedKeys = typedRaw.map(P.key);
+    const hit = align(target, typedKeys);
+    const state = words.map(function(w){ return w.name || !w.toks.length ? "name" : "ok"; });
+    target.forEach(function(t, i){ if (!hit[i]) state[owner[i]] = "miss"; });
+    const notes = [], kinds = {};
+    function note(kind, text){ notes.push(text); kinds[kind] = (kinds[kind] || 0) + 1; }
+    words.forEach(function(w, k){
+      if (state[k] !== "miss") return;
+      const idx = []; owner.forEach(function(o, i){ if (o === k) idx.push(i); });
+      let lo = -1, hi = typedRaw.length;
+      for (let i = idx[0] - 1; i >= 0; i--) if (hit[i]){ lo = hit[i] - 1; break; }
+      for (let i = idx[idx.length - 1] + 1; i < target.length; i++) if (hit[i]){ hi = hit[i] - 1; break; }
+      const cand = typedRaw.slice(lo + 1, hi);
+      const partly = idx.some(function(i){ return hit[i]; });
+      if (partly && /n't$/.test(w.raw)){ note("contr", "«" + w.word.replace(/[.,!?;:]+$/, "") + "» — не расслышал отрицание n't: в речи оно звучит коротко, почти одним [nt]"); return; }
+      if (partly && /'(ll|d|s|re|ve|m)$/.test(w.raw)){ note("contr", "«" + w.word.replace(/[.,!?;:]+$/, "") + "» — не расслышал сокращение: 'll, 'd, 's, 're, 've звучат одним согласным"); return; }
+      const t = rawT[idx[0]];
+      if (idx.length === 1){
+        for (let c = 0; c < cand.length; c++){
+          const h = cand[c];
+          if (t.length >= 4 && lev(t, h) === 1 && !(PH && PH.has(h) && h !== t && PH.explain(t, h))){
+            state[k] = "spell"; note("spell", "опечатка: «" + h + "» — пишется «" + t + "»"); return;
+          }
+          if (t !== h && t.indexOf(h) === 0 && /^(e?d|e?s|ing)$/.test(t.slice(h.length))){
+            note("ending", "«" + t + "» — не расслышал окончание -" + t.slice(h.length) + (/d$/.test(t) ? ": прошедшее время звучит коротким [d] / [t] / [ɪd]" : "")); return;
+          }
+          const ex = PH && PH.explain(t, h);
+          if (ex){ note("sound", "«" + h + "» вместо «" + t + "» " + PH.show(t) + ": " + ex.text); return; }
+        }
+      }
+      if (w.func){ note("weak", "пропущено «" + t + "» — служебное слово в речи звучит слабо и быстро" + (PH && PH.show(t) ? ", примерно " + PH.show(t) : "")); return; }
+      note("word", "не расслышал «" + w.word.replace(/[.,!?;:]+$/, "") + "»" + (PH && PH.phrase(w.word) ? " " + PH.phrase(w.word) : ""));
+    });
+    let content = 0, heard = 0, all = 0, allHeard = 0;
+    words.forEach(function(w, k){
+      if (state[k] === "name") return;
+      all++; if (state[k] !== "miss") allHeard++;
+      if (!w.func){ content++; if (state[k] !== "miss") heard++; }
+    });
+    return { words: words, state: state, notes: notes, kinds: kinds, content: content, heard: heard, all: all, allHeard: allHeard,
+             clean: allHeard === all };
+  }
+
+  // ---- экран выбора ----
+  let setup = null, D = null;
+  function renderSetup(){
+    const chs = chapters(), st = readStats();
+    if (!setup){
+      const passed = chs.filter(function(c){ return c.done; });
+      setup = { ch: passed.length ? String(passed[passed.length - 1].n) : (chs[0] ? String(chs[0].n) : "all"),
+                speed: st.lastSpeed || "slow", size: 10 };
+    }
+    const chip = function(group, val, label, on){ return '<button type="button" class="ls-chip" data-group="' + group + '" data-val="' + esc(val) + '" aria-pressed="' + (on ? "true" : "false") + '">' + label + '</button>'; };
+    const lvl = st.level || {};
+    const levels = SPEEDS.filter(function(s){ return lvl[s[0]]; }).map(function(s){
+      const r = lvl[s[0]]; return '<li><b>' + s[1] + '</b>: слышишь ' + r.pct + '% слов · ' + r.d.slice(8, 10) + "." + r.d.slice(5, 7) + '</li>';
+    }).join("");
+    box.innerHTML =
+      '<div class="ls-setup">' +
+        '<p class="ls-label">Глава</p><div class="ls-chips">' +
+          chs.map(function(c){ return chip("ch", String(c.n), '<span class="ch-n">' + c.n + '</span>' + esc(c.title) + (c.done ? "" : ' <small>новая</small>'), setup.ch === String(c.n)); }).join("") +
+          chip("ch", "all", "Все пройденные", setup.ch === "all") + '</div>' +
+        '<p class="ls-label">Скорость</p><div class="ls-chips">' +
+          SPEEDS.map(function(s){ return chip("speed", s[0], s[1], setup.speed === s[0]); }).join("") + '</div>' +
+        '<p class="ls-label">Сколько реплик</p><div class="ls-chips">' +
+          SIZES.map(function(s){ return chip("size", String(s[0]), s[1], setup.size === s[0]); }).join("") + '</div>' +
+        '<div class="ls-go"><button type="button" class="act ls-start">Начать диктант</button></div>' +
+        (levels ? '<div class="ls-level"><p class="ls-label">Как ты слышишь</p><ul>' + levels + '</ul>' + advice(lvl) + '</div>' : "") +
+      '</div>';
+  }
+  function advice(lvl){
+    const order = ["slow", "normal", "fast"];
+    for (let i = order.length - 1; i >= 0; i--){
+      const r = lvl[order[i]];
+      if (r && r.pct >= 90) return '<p class="ls-advice">' + (i < 2 ? "На скорости «" + speedOf(order[i])[1] + "» уже 90% и больше — переходи на «" + speedOf(order[i + 1])[1] + "»." : "Быстрая речь даётся — дальше живая речь носителей.") + '</p>';
+    }
+    return '<p class="ls-advice">Цель — 90% слов на скорости: тогда переходи на следующую.</p>';
+  }
+
+  // ---- диктант ----
+  function start(){
+    const chs = chapters();
+    const pick = setup.ch === "all" ? chs.filter(function(c){ return c.done; }) : chs.filter(function(c){ return String(c.n) === setup.ch; });
+    let lines = [];
+    const names = {};
+    pick.forEach(function(c){ lines = lines.concat(c.lines); Object.keys(c.names).forEach(function(k){ names[k] = 1; }); });
+    if (!lines.length){ box.querySelector(".ls-go").insertAdjacentHTML("beforeend", '<p class="ls-warn">В этих главах пока нет реплик.</p>'); return; }
+    lines = shuffle(lines);
+    if (setup.size) lines = lines.slice(0, setup.size);
+    const st = readStats(); st.lastSpeed = setup.speed; saveStats(st);
+    D = { lines: lines, names: names, i: 0, speed: setup.speed, done: 0, clean: 0, words: 0, heard: 0, kinds: {}, missed: {}, samples: [],
+          chs: pick.map(function(c){ return c.n; }), tries: 0, auto: 0 };
+    renderCard();
+    box.scrollIntoView({ block: "start" });
+  }
+  function line(){ return D && D.lines[D.i]; }
+  function play(rate){
+    const l = line(); if (!l) return;
+    if (MIC) MIC.stop();
+    TTS.play([{ text: l.text, gender: l.gender, rate: rate || speedOf(D.speed)[2] }]);
+  }
+  // по кусочкам: по знакам препинания, длинные куски — пополам
+  function chunks(text){
+    const parts = [];
+    text.replace(/([,.!?;:—])\s+/g, "$1\u0001").split("\u0001").forEach(function(p){
+      const w = p.split(/\s+/);
+      if (w.length > 6){ const h = Math.ceil(w.length / 2); parts.push(w.slice(0, h).join(" ")); parts.push(w.slice(h).join(" ")); }
+      else if (p.trim()) parts.push(p);
+    });
+    return parts;
+  }
+  function playChunks(){
+    const l = line(); if (!l) return;
+    TTS.play(chunks(l.text).map(function(p){ return { text: p, gender: l.gender, rate: Math.min(0.85, speedOf(D.speed)[2]), pause: 900 }; }));
+  }
+  function renderCard(){
+    const l = line();
+    if (!l){ finish(); return; }
+    D.tries = 0;
+    box.innerHTML =
+      '<div class="tr-card ls-card">' +
+        '<div class="tr-progress">' + (D.i + 1) + ' / ' + D.lines.length + ' · глава ' + l.ch + ' · ' + esc(l.name) + ' · ' + speedOf(D.speed)[1] + '</div>' +
+        '<p class="ls-ask">Напиши, что услышал</p>' +
+        '<div class="snd-btns">' +
+          '<button type="button" class="act ghost ls-play">' + TTS.icon + '<span>Ещё раз</span></button>' +
+          '<button type="button" class="act ghost ls-slow">' + TTS.icon + '<span>Медленно</span></button>' +
+          '<button type="button" class="act ghost ls-chunks">' + TTS.icon + '<span>По кусочкам</span></button>' +
+        '</div>' +
+        '<form class="ls-form" autocomplete="off"><input class="tr-input ls-input" type="text" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Что услышал">' +
+          '<button class="act" type="submit">Проверить</button></form>' +
+        '<button type="button" class="linkish ls-giveup">Не расслышал — показать</button>' +
+        '<div class="ls-result" hidden></div>' +
+        '<button type="button" class="linkish ls-quit">Закончить</button>' +
+      '</div>';
+    const inp = box.querySelector(".ls-input");
+    try { inp.focus({ preventScroll: true }); } catch(e){}
+    setTimeout(function(){ if (D && line() === l) play(); }, 250);
+  }
+  function judge(typed, gaveUp){
+    const l = line(); if (!l) return;
+    D.tries++;
+    const r = check(l, gaveUp ? "" : typed, D.names);
+    if (D.tries === 1){
+      D.done++; if (r.clean) D.clean++;
+      D.words += r.all; D.heard += r.allHeard;
+      Object.keys(r.kinds).forEach(function(k){ D.kinds[k] = (D.kinds[k] || 0) + r.kinds[k]; });
+      r.words.forEach(function(w, k){ if (r.state[k] === "miss" && !w.func) D.missed[w.raw] = (D.missed[w.raw] || 0) + 1; });
+      if (!r.clean) D.samples.push({ line: l.text, typed: gaveUp ? "—" : typed, heard: r.allHeard + "/" + r.all });
+    }
+    const res = box.querySelector(".ls-result");
+    res.hidden = false;
+    res.innerHTML =
+      '<p class="ls-line">' + r.words.map(function(w, k){
+        const s = r.state[k];
+        const cls = s === "name" ? "rp-name" : s === "ok" ? "rp-ok" : s === "spell" ? "ls-spell" : w.func ? "rp-soft" : "rp-miss";
+        return '<span class="rp-w ' + cls + '">' + esc(w.word) + '</span>';
+      }).join(" ") + '</p>' +
+      (gaveUp ? "" : '<p class="ls-typed">Ты написал: «' + esc(typed) + '»</p>') +
+      '<p class="ls-score ' + (r.clean ? "ok" : "no") + '">' + (r.clean ? "✓ Всё услышал" : "Услышано " + r.allHeard + " из " + r.all + " слов") + '</p>' +
+      (r.notes.length ? '<ul class="ls-notes">' + r.notes.slice(0, 4).map(function(n){ return '<li>' + esc(n) + '</li>'; }).join("") + '</ul>' : "") +
+      '<div class="snd-btns"><button type="button" class="act ghost ls-play">' + TTS.icon + '<span>Послушать ещё раз</span></button>' +
+      '<button type="button" class="act ls-next">Дальше</button></div>';
+    box.querySelector(".ls-form").hidden = true;
+    box.querySelector(".ls-giveup").hidden = true;
+    if (r.clean){ const my = D; D.auto = setTimeout(function(){ if (D === my && line() === l) next(); }, 1300); }
+  }
+  function next(){ clearTimeout(D.auto); TTS.stop(); D.i++; renderCard(); }
+  function finish(){
+    const d = D;
+    const pct = d.words ? Math.round(d.heard / d.words * 100) : 0;
+    const st = readStats();
+    st.level = st.level || {};
+    if (d.done >= 5) st.level[d.speed] = { d: today(), pct: pct, lines: d.done };
+    st.runs = (st.runs || []).concat([{ d: today(), speed: d.speed, ch: d.chs, lines: d.done, clean: d.clean, pct: pct }]).slice(-30);
+    saveStats(st);
+    const KIND = { ending: "окончания", weak: "служебные слова", contr: "сокращения", sound: "перепутанные звуки", word: "слова целиком", spell: "опечатки" };
+    const kinds = Object.keys(d.kinds).sort(function(a, b){ return d.kinds[b] - d.kinds[a]; }).map(function(k){ return KIND[k] + " — " + d.kinds[k]; });
+    const missed = Object.keys(d.missed).sort(function(a, b){ return d.missed[b] - d.missed[a]; });
+    if (d.done && MIC && MIC.send) MIC.send({ sentAt: new Date().toISOString(), kind: "listen", source: "dict", chapters: d.chs, speed: d.speed,
+      lines: d.done, clean: d.clean, pct: pct, kinds: d.kinds, missed: d.missed, samples: d.samples.slice(0, 8),
+      text: "Слушание · диктант, глава " + d.chs.join(", ") + ", скорость «" + speedOf(d.speed)[1] + "»: " + d.done + " " + linesWord(d.done) + ", без ошибок " + d.clean + ", услышано " + pct + "% слов" +
+            (kinds.length ? "; трудности: " + kinds.join(", ") : "") + (missed.length ? "; не расслышал: " + missed.slice(0, 10).join(", ") : "") });
+    D = null;
+    box.innerHTML =
+      '<div class="tr-card ls-card ls-done">' +
+        '<div class="tr-progress">Диктант · ' + speedOf(d.speed)[1] + '</div>' +
+        '<p class="snd-sum">Услышано <b>' + pct + '%</b> слов · без ошибок ' + d.clean + ' из ' + d.done + ' реплик</p>' +
+        (kinds.length ? '<p class="ls-typed">Что мешало: ' + esc(kinds.join(", ")) + '</p>' : "") +
+        (missed.length ? '<p class="ls-typed">Не расслышал: ' + esc(missed.slice(0, 10).join(", ")) + '</p>' : "") +
+        '<p class="ls-advice">' + (pct >= 90 && d.speed !== "fast" ? "90% и больше — в следующий раз попробуй скорость «" + speedOf(d.speed === "slow" ? "normal" : "fast")[1] + "»." : pct >= 90 ? "Отлично. Дальше — живая речь носителей." : "Цель — 90% слов на этой скорости. Трудные реплики слушай «по кусочкам».") + '</p>' +
+        '<p class="snd-note">Итог уйдёт мне — то, что трудно даётся на слух, я вплету в следующие главы.</p>' +
+        '<div class="snd-btns"><button type="button" class="act ls-again">Ещё раз</button><button type="button" class="act ghost ls-back">К выбору</button></div>' +
+      '</div>';
+  }
+  function quit(){ if (D){ clearTimeout(D.auto); if (D.done) { finish(); return; } } D = null; TTS.stop(); renderSetup(); }
+
+  box.addEventListener("click", function(e){
+    const b = e.target.closest && e.target.closest("button");
+    if (!b) return;
+    if (b.classList.contains("ls-chip")){
+      const g = b.dataset.group, v = b.dataset.val;
+      if (g === "ch") setup.ch = v; else if (g === "speed") setup.speed = v; else if (g === "size") setup.size = Number(v);
+      renderSetup(); return;
+    }
+    if (b.classList.contains("ls-start") || b.classList.contains("ls-again")){ start(); return; }
+    if (b.classList.contains("ls-back")){ renderSetup(); return; }
+    if (!D) return;
+    if (b.classList.contains("ls-play")) play();
+    else if (b.classList.contains("ls-slow")) play(0.6);
+    else if (b.classList.contains("ls-chunks")) playChunks();
+    else if (b.classList.contains("ls-giveup")) judge("", true);
+    else if (b.classList.contains("ls-next")) next();
+    else if (b.classList.contains("ls-quit")) quit();
+  });
+  box.addEventListener("submit", function(e){
+    if (!e.target.classList.contains("ls-form")) return;
+    e.preventDefault();
+    const v = box.querySelector(".ls-input").value.trim();
+    if (v) judge(v, false);
+  });
+  document.addEventListener("click", function(e){
+    if (D && e.target.closest && e.target.closest(".view-tab, .chapter-tab") && !e.target.closest('[data-view="listen"]')){ clearTimeout(D.auto); TTS.stop(); }
+  }, true);
+  renderSetup();
+  window.bsListen = { check: check, chapters: chapters };
 })();
 </script>
 
