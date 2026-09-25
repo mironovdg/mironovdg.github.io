@@ -2854,7 +2854,7 @@ td.w.speaking{color:var(--sea)}
     const exact = local.filter(function(v){ return langOf(v) === want; });
     const ua = navigator.userAgent;
     const how = /Android/i.test(ua)
-      ? "Android: Настройки → Синтез речи → Google → Установить голосовые данные → English (" + (want === "en-us" ? "US" : "United Kingdom") + ")"
+      ? "Android: в Настройках найди поиском «синтез речи» или «текст в речь» (Samsung: Общие настройки → Язык и ввод; Xiaomi: Дополнительные настройки → Язык и ввод) → модуль «Речевые сервисы Google» → ⚙ → Установить голосовые данные → English (" + (want === "en-us" ? "US" : "United Kingdom") + ")"
       : /iPhone|iPad/.test(ua)
         ? "iPhone: Настройки → Универсальный доступ → Устный контент → Голоса → English → " + (want === "en-us" ? "США" : "Великобритания") + " → скачать голос"
         : /Mac OS X/.test(ua)
@@ -2894,7 +2894,7 @@ td.w.speaking{color:var(--sea)}
     if (!m || m === f || !hasGender("m")){
       const ua = navigator.userAgent;
       how = /Android/i.test(ua)
-        ? "Мужского " + acc + " голоса браузер не даёт — мужские роли звучат тем же голосом, ниже тоном. Добавить: Настройки Android → Синтез речи (в «Специальных возможностях» или «Язык и ввод») → Google → Установить голосовые данные → English (" + (prefs.accent === "us" ? "US" : "United Kingdom") + ") → выбери мужской голос. Книга возьмёт тот, что выбран там."
+        ? "Мужского " + acc + " голоса браузер не даёт — мужские роли звучат тем же голосом, ниже тоном. Добавить: в Настройках Android найди поиском «синтез речи» или «текст в речь» (Samsung: Общие настройки → Язык и ввод; Xiaomi: Дополнительные настройки → Язык и ввод) → модуль «Речевые сервисы Google» → ⚙ → Установить голосовые данные → English (" + (prefs.accent === "us" ? "US" : "United Kingdom") + ") → выбери мужской голос. Книга возьмёт тот, что выбран там."
         : /iPhone|iPad/.test(ua)
           ? "Мужского " + acc + " голоса нет — добавь его: Настройки → Универсальный доступ → Устная речь → Голоса → English → " + (prefs.accent === "us" ? "США — Tom, Evan или Nathan" : "Великобритания — Daniel или Arthur") + " (лучше «улучшенного качества»), затем обнови страницу."
           : /Edg\//.test(ua)
