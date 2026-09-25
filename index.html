@@ -938,6 +938,8 @@ button.linkish{background:none;border:0;padding:0;font:inherit;color:var(--sea);
 .tts-offline.warn b{color:var(--no)}
 .offline-note{background:var(--lamp-soft);border:1px solid var(--lamp);border-radius:var(--radius);padding:12px 16px;margin:14px 0 0;font-size:14.5px;line-height:1.5;color:var(--ink-soft)}
 .offline-note b{color:var(--ink)}
+.offline-view-note{background:var(--lamp-soft);border:1px solid var(--lamp);border-radius:var(--radius);padding:10px 14px;margin:0 0 16px;font-size:14px;line-height:1.5;color:var(--ink-soft)}
+.offline-view-note b{color:var(--ink)}
 .tts-how{font-family:var(--sans);font-size:12.5px;line-height:1.45;color:var(--ink-soft);text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:8px 10px}
 .say-btn{
   display:inline-flex;align-items:center;justify-content:center;gap:8px;width:32px;height:32px;margin-left:10px;
@@ -3139,6 +3141,7 @@ td.w.speaking{color:var(--sea)}
     return new Promise(function(resolve, reject){
       const C = Recognition();
       if (!C){ reject(fail("none")); return; }
+      if (navigator.onLine === false){ reject(fail("offline")); return; }   // распознавание идёт через интернет
       let r;
       try { r = new C(); } catch(e){ reject(fail("start-failed", e)); return; }
       r.lang = lng; r.interimResults = true; r.maxAlternatives = 5; r.continuous = !!o.continuous;
@@ -3189,6 +3192,8 @@ td.w.speaking{color:var(--sea)}
     return { hit: hit, miss: miss };
   }
   function errorText(code){
+    if (code === "offline" || (code === "network" && navigator.onLine === false))
+      return "Без сети распознавание речи не работает: оно идёт через интернет (Google или Apple). Это задание — когда появится связь, а пока всё остальное.";
     if (inFrame && (code === "not-allowed" || code === "service-not-allowed" || code === "audio-capture"))
       return "Эта копия книги открыта внутри claude.ai — там микрофон закрыт. Открой сайт mironovdg.github.io.";
     return srErrorText(code);
@@ -3209,7 +3214,7 @@ td.w.speaking{color:var(--sea)}
   }
   window.bsMic = { recognize: recognize, compare: compare, lang: lang, errorText: errorText, send: sendEntry,
                    stop: function(){ if (srStop) srStop(); }, available: function(){ return !!Recognition(); },
-                   usable: function(){ return !!Recognition() && !inFrame; } };
+                   usable: function(){ return !!Recognition() && !inFrame && navigator.onLine !== false; } };
 
   // ---- панель проверки ----
   const R = { rec: null, sr: null, sentSig: "", note: "" };
@@ -11135,10 +11140,44 @@ td.w.speaking{color:var(--sea)}
     const off = navigator.onLine === false;
     note.hidden = !off;
     if (!off) return;
-    note.innerHTML = "<b>Нет сети.</b> Книга работает с копии на этом устройстве: главы, упражнения, «Повторение», тренажёры и всё на слух. " +
-      "Не работает только распознавание речи — чтение по ролям, «Говорить» и контрольная запись. " +
-      "Результаты сохраняются здесь и уйдут сами, когда связь появится.";
+    note.innerHTML = "<b>Нет сети.</b> Книга работает с копии на этом устройстве. Не работает только распознавание речи — " +
+      "что именно пропадает, написано в каждом разделе. Результаты сохраняются здесь и уйдут сами, когда связь появится.";
   }
+  // чего нет без сети — в разделах, где это заметно (решение ученика, 25.09.2026)
+  const TRAINER = "<b>Без сети</b> в режиме «По 4 навыкам» шаг «скажи вслух» пропускается — распознавание речи идёт через интернет. " +
+    "Письмо, слух и чтение работают как обычно.";
+  const VIEW_NOTES = {
+    "view-chapters": "<b>Без сети не работает чтение по ролям</b> — распознавание речи идёт через интернет. " +
+      "Диалог, «Сначала на слух», «Прочитать диалог», словарь и упражнения работают. Отчёт по главе сохранится здесь и уйдёт сам, когда появится связь.",
+    "view-today": "<b>Без сети</b> карточки «скажи вслух» пропускаются, а кнопка «Сказать» в просмотре слов не сработает — распознавание речи идёт через интернет. " +
+      "Чтение, слух и письмо работают, расписание сохраняется здесь.",
+    "view-sounds": "<b>Без сети не работают «Говорить»</b> и проверка контрольной записи по предложениям — распознавание речи идёт через интернет; " +
+      "прошлые записи с сервера тоже не загрузятся. Работают «Слушать», фонетическая разминка, зеркало и шкала «s ↔ th». " +
+      "Саму контрольную запись сделать можно: она подождёт здесь и уйдёт на сервер, когда появится связь.",
+    "view-verbs": "<b>Без сети</b> шаг «скажи три формы вслух» пропускается — распознавание речи идёт через интернет. Остальные шаги работают.",
+    "view-progress": "<b>Без сети</b> здесь прогресс этого устройства. Занятия с других устройств подтянутся, когда появится связь.",
+    "view-welcome": "<b>Без сети</b> в тесте нет говорения — распознавание речи идёт через интернет. Итог сохранится здесь и уйдёт, когда появится связь."
+  };
+  ["view-learned", "view-phrases", "view-a1", "view-a2", "view-b1w", "view-b2w", "view-c1w", "view-c2w",
+   "view-b1", "view-b2", "view-c1", "view-c2", "view-live", "view-poly"].forEach(function(id){ VIEW_NOTES[id] = TRAINER; });
+  const viewNotes = [];
+  Object.keys(VIEW_NOTES).forEach(function(id){
+    const view = document.getElementById(id);
+    if (!view) return;
+    const n = document.createElement("div");
+    n.className = "offline-view-note";
+    n.hidden = true;
+    n.innerHTML = VIEW_NOTES[id];
+    view.insertBefore(n, view.firstChild);
+    viewNotes.push(n);
+  });
+  function renderViews(){
+    const off = navigator.onLine === false;
+    viewNotes.forEach(function(n){ n.hidden = !off; });
+  }
+  window.addEventListener("online", renderViews);
+  window.addEventListener("offline", renderViews);
+  renderViews();
   window.addEventListener("online", render);
   window.addEventListener("offline", render);
   render();
