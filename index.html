@@ -770,6 +770,22 @@ table.vocab.hidden .us-ru{color:transparent;background:var(--line-soft);border-r
 .wc-gram{font-size:22px}
 .no-chapters{margin:34px 0 20px}
 
+/* ---------- «₽» — документы проекта (только у автора книги: блок data-owner-docs) ---------- */
+.book-subrow{display:flex;align-items:center;gap:10px;margin:0 0 8px}
+.book-subrow .book-sub{margin:0}
+.owner-docs-btn{font:600 12px/1 var(--mono);color:var(--rain);background:transparent;border:1px solid var(--line);border-radius:999px;min-width:24px;height:22px;padding:0 7px;cursor:pointer}
+.owner-docs-btn:hover,.owner-docs-btn[aria-current="true"]{color:var(--lamp);border-color:var(--lamp)}
+.docs-list{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:12px}
+.docs-list li{border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);padding:16px 18px;max-width:none}
+.docs-list .t{font-family:var(--serif);font-size:20px;font-weight:600;line-height:1.25;margin:0 0 4px}
+.docs-list .d{color:var(--ink-soft);margin:0 0 12px}
+.docs-list .m{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;font-family:var(--mono);font-size:12px;color:var(--rain)}
+.docs-list a.doc-open,.docs-list a.doc-pdf{display:inline-flex;align-items:center;border-radius:var(--radius);padding:8px 16px;font-family:var(--sans);font-size:14.5px;text-decoration:none}
+.docs-list a.doc-open{background:var(--lamp);color:var(--paper)}
+.docs-list a.doc-pdf{color:var(--ink-soft);border:1px solid var(--line)}
+.docs-list a.doc-pdf:hover{border-color:var(--lamp);color:var(--lamp)}
+.docs-note{color:var(--rain);font-size:14px;margin-top:18px}
+
 /* ---------- README: презентация ---------- */
 .tab-readme{font-family:var(--mono);letter-spacing:.06em}
 .deck{border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);padding:28px 30px 24px;min-height:26rem;outline:none}
@@ -1021,7 +1037,7 @@ td.w.speaking{color:var(--sea)}
         <path d="M12 41.5 v1.2 M36 41.5 v1.2" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
       </svg>
       <div>
-        <p class="book-sub">Учебная книга · уровень A2</p>
+        <div class="book-subrow"><p class="book-sub">Учебная книга · уровень A2</p><button type="button" class="owner-docs-btn" id="owner-docs-btn" hidden title="Документы проекта" aria-label="Документы проекта">₽</button></div>
         <h1 class="book-title">The Blue Suitcase</h1>
       </div>
     </div>
@@ -2531,6 +2547,16 @@ td.w.speaking{color:var(--sea)}
     </section>
   </div>
 
+  <!-- ================= ДОКУМЕНТЫ ПРОЕКТА («₽» в шапке; только у автора книги) ================= -->
+  <div class="view" id="view-docs" hidden>
+    <section style="margin-top:34px">
+      <p class="sec-label">Документы проекта</p>
+      <h2>Документы</h2>
+      <ul class="docs-list"></ul>
+      <p class="docs-note">Документы открываются на сайте книги отдельными страницами, у каждого есть PDF. Страницы доступны по прямой ссылке, поисковики их не индексируют; кнопка «₽» видна только на устройствах с синхронизацией и в закрытой копии книги. <a class="docs-all" href="#" target="_blank" rel="noopener">Все документы одним списком</a></p>
+    </section>
+  </div>
+
   <!-- ================= МНОГОЗНАЧНЫЕ ГЛАГОЛЫ ================= -->
   <div class="view" id="view-poly" hidden>
     <section style="margin-top:34px">
@@ -2566,6 +2592,7 @@ td.w.speaking{color:var(--sea)}
   <script type="application/json" id="data-verbs">[{"v":"be","p":"was/were","pp":"been","t":"быть","pr":1,"st":"learning"},{"v":"come","p":"came","pp":"come","t":"приходить","pr":1,"st":"learning"},{"v":"go","p":"went","pp":"gone","t":"идти, ехать","pr":1,"st":"learning"},{"v":"get","p":"got","pp":"got","t":"получать, добираться","pr":1,"st":"learning"},{"v":"take","p":"took","pp":"taken","t":"брать","pr":1,"st":"learning"},{"v":"find","p":"found","pp":"found","t":"находить","pr":1,"st":"learning"},{"v":"see","p":"saw","pp":"seen","t":"видеть","pr":1,"st":"learning"},{"v":"eat","p":"ate","pp":"eaten","t":"есть","pr":1,"st":"learning"},{"v":"give","p":"gave","pp":"given","t":"давать","pr":1,"st":"learning"},{"v":"leave","p":"left","pp":"left","t":"уходить, оставлять","pr":1,"st":"learning"},{"v":"put","p":"put","pp":"put","t":"класть","pr":1,"st":"learning"},{"v":"tell","p":"told","pp":"told","t":"сказать (кому-то)","pr":1,"st":"learning"},{"v":"have","p":"had","pp":"had","t":"иметь","pr":1,"st":"learning"},{"v":"write","p":"wrote","pp":"written","t":"писать","pr":1,"st":"learning"},{"v":"do","p":"did","pp":"done","t":"делать","pr":2,"st":"learning"},{"v":"make","p":"made","pp":"made","t":"делать, создавать","pr":2,"st":"learning"},{"v":"say","p":"said","pp":"said","t":"говорить","pr":2,"st":"not_started"},{"v":"know","p":"knew","pp":"known","t":"знать","pr":2,"st":"learning"},{"v":"think","p":"thought","pp":"thought","t":"думать","pr":2,"st":"learning"},{"v":"buy","p":"bought","pp":"bought","t":"покупать","pr":2,"st":"for_review"},{"v":"bring","p":"brought","pp":"brought","t":"приносить","pr":2,"st":"not_started"},{"v":"drink","p":"drank","pp":"drunk","t":"пить","pr":2,"st":"learning"},{"v":"sleep","p":"slept","pp":"slept","t":"спать","pr":2,"st":"not_started"},{"v":"speak","p":"spoke","pp":"spoken","t":"говорить, разговаривать","pr":2,"st":"not_started"},{"v":"read","p":"read","pp":"read","t":"читать","pr":2,"st":"not_started"},{"v":"meet","p":"met","pp":"met","t":"встречать","pr":2,"st":"not_started"},{"v":"lose","p":"lost","pp":"lost","t":"терять","pr":2,"st":"not_started"},{"v":"forget","p":"forgot","pp":"forgotten","t":"забывать","pr":2,"st":"learning"},{"v":"hear","p":"heard","pp":"heard","t":"слышать","pr":2,"st":"not_started"},{"v":"feel","p":"felt","pp":"felt","t":"чувствовать","pr":2,"st":"not_started"},{"v":"pay","p":"paid","pp":"paid","t":"платить","pr":2,"st":"learning"},{"v":"send","p":"sent","pp":"sent","t":"отправлять","pr":2,"st":"learning"},{"v":"run","p":"ran","pp":"run","t":"бежать","pr":3,"st":"not_started"},{"v":"sit","p":"sat","pp":"sat","t":"сидеть","pr":3,"st":"learning"},{"v":"stand","p":"stood","pp":"stood","t":"стоять","pr":3,"st":"learning"},{"v":"win","p":"won","pp":"won","t":"выигрывать","pr":3,"st":"not_started"},{"v":"begin","p":"began","pp":"begun","t":"начинать","pr":3,"st":"not_started"},{"v":"break","p":"broke","pp":"broken","t":"ломать","pr":3,"st":"not_started"},{"v":"understand","p":"understood","pp":"understood","t":"понимать","pr":3,"st":"not_started"},{"v":"wear","p":"wore","pp":"worn","t":"носить (одежду)","pr":3,"st":"learning"},{"v":"drive","p":"drove","pp":"driven","t":"водить (машину)","pr":3,"st":"learning"},{"v":"fly","p":"flew","pp":"flown","t":"летать","pr":3,"st":"not_started"},{"v":"catch","p":"caught","pp":"caught","t":"ловить","pr":3,"st":"not_started"},{"v":"teach","p":"taught","pp":"taught","t":"учить (кого-то)","pr":3,"st":"not_started"},{"v":"choose","p":"chose","pp":"chosen","t":"выбирать","pr":3,"st":"not_started"},{"v":"keep","p":"kept","pp":"kept","t":"хранить, держать","pr":3,"st":"learning"},{"v":"hide","p":"hid","pp":"hidden","t":"прятать","pr":2,"st":"learning"},{"v":"hold","p":"held","pp":"held","t":"держать (в руках)","pr":2,"st":"learning"},{"v":"lend","p":"lent","pp":"lent","t":"давать взаймы","pr":2,"st":"learning"},{"v":"swim","p":"swam","pp":"swum","t":"плавать","pr":4,"st":""},{"v":"sell","p":"sold","pp":"sold","t":"продавать","pr":4,"st":""},{"v":"cost","p":"cost","pp":"cost","t":"стоить","pr":4,"st":""},{"v":"show","p":"showed","pp":"shown","t":"показывать","pr":4,"st":""},{"v":"draw","p":"drew","pp":"drawn","t":"рисовать","pr":4,"st":""},{"v":"sing","p":"sang","pp":"sung","t":"петь","pr":4,"st":""},{"v":"become","p":"became","pp":"become","t":"становиться","pr":4,"st":""},{"v":"build","p":"built","pp":"built","t":"строить","pr":4,"st":""},{"v":"cut","p":"cut","pp":"cut","t":"резать","pr":4,"st":""},{"v":"fall","p":"fell","pp":"fallen","t":"падать","pr":4,"st":""},{"v":"fight","p":"fought","pp":"fought","t":"драться, бороться","pr":4,"st":""},{"v":"forgive","p":"forgave","pp":"forgiven","t":"прощать","pr":4,"st":""},{"v":"grow","p":"grew","pp":"grown","t":"расти, выращивать","pr":4,"st":""},{"v":"hang","p":"hung","pp":"hung","t":"вешать, висеть","pr":4,"st":""},{"v":"hit","p":"hit","pp":"hit","t":"ударять","pr":4,"st":""},{"v":"hurt","p":"hurt","pp":"hurt","t":"причинять боль, болеть","pr":4,"st":""},{"v":"let","p":"let","pp":"let","t":"позволять","pr":4,"st":""},{"v":"lie","p":"lay","pp":"lain","t":"лежать","pr":4,"st":""},{"v":"mean","p":"meant","pp":"meant","t":"значить, иметь в виду","pr":4,"st":""},{"v":"ride","p":"rode","pp":"ridden","t":"ездить (верхом, на велосипеде)","pr":4,"st":""},{"v":"shut","p":"shut","pp":"shut","t":"закрывать","pr":4,"st":""},{"v":"spend","p":"spent","pp":"spent","t":"тратить (деньги, время)","pr":4,"st":""},{"v":"steal","p":"stole","pp":"stolen","t":"красть","pr":4,"st":""},{"v":"throw","p":"threw","pp":"thrown","t":"бросать","pr":4,"st":""},{"v":"wake","p":"woke","pp":"woken","t":"будить, просыпаться","pr":4,"st":""},{"v":"set","p":"set","pp":"set","t":"ставить, устанавливать, набор","pr":4,"st":""},{"v":"deal","p":"dealt","pp":"dealt","t":"иметь дело, сделка","pr":4,"st":""},{"v":"seek","p":"sought","pp":"sought","t":"искать, стремиться","pr":4,"st":""},{"v":"strike","p":"struck","pp":"struck","t":"ударять, бастовать, забастовка","pr":4,"st":""}]</script>
   <script type="application/json" id="data-learner">{"id":"main","name":"","title":"The Blue Suitcase","study":"A2","determined":null,"since":"2026-08-26","theme":"детектив: синий чемодан, Брайтон","status":"active"}</script>
   <script type="application/json" id="data-cast">{"lizzie": "f", "kate": "f", "max": "m", "mr bell": "m", "peter bell": "m", "peter": "m", "mrs doyle": "f", "sam": "m", "anna": "f"}</script>
+  <script type="application/json" id="data-owner-docs">{"base":"https://mironovdg.github.io/docs/","title":"Бизнес-план и продвижение","docs":[{"id":"business-plan","title":"Бизнес-план «Своя история»","desc":"этапы, экономика подписчика, рынок России, сравнение моделей, русский для иностранцев","updated":"2026-09-26"},{"id":"promo-plan","title":"Продвижение: план работ до запуска","desc":"от решений и аккаунтов до «дня 0» и шести недель проверки интереса","updated":"2026-09-26"},{"id":"day0-checklist","title":"Что должно быть готово до «дня 0»","desc":"снять, смонтировать и подготовить к публикации — по категориям, с отметками","updated":"2026-09-26"}]}</script>
 
   <div class="foot">
     <p class="sync-line" id="sync-line"></p>
@@ -5609,9 +5636,6 @@ td.w.speaking{color:var(--sea)}
     const target = [], owner = [], rawT = [];
     words.forEach(function(w, k){ if (!w.name) w.toks.forEach(function(t){ target.push(P.key(t)); rawT.push(t); owner.push(k); }); });
     const typedRaw = P.tokens(typed), typedKeys = typedRaw.map(P.key);
-    // слова как напечатаны (с апострофами) — чтобы отличить ошибку написания от нерасслышанного (решение ученика, 25.09.2026)
-    const typedWords = String(typed || "").toLowerCase().replace(/[’]/g, "'").split(/\s+/)
-      .map(function(x){ return x.replace(/^[^a-z0-9'|]+|[^a-z0-9'|]+$/g, ""); }).filter(Boolean);
     const hit = align(target, typedKeys);
     const state = words.map(function(w){ return w.name || !w.toks.length ? "name" : "ok"; });
     target.forEach(function(t, i){ if (!hit[i]) state[owner[i]] = "miss"; });
@@ -5625,20 +5649,6 @@ td.w.speaking{color:var(--sea)}
       for (let i = idx[idx.length - 1] + 1; i < target.length; i++) if (hit[i]){ hi = hit[i] - 1; break; }
       const cand = typedRaw.slice(lo + 1, hi);
       const partly = idx.some(function(i){ return hit[i]; });
-      // апостроф лишний или пропущен: your's вместо yours, its вместо it's — услышал верно, ошибся в написании
-      const flat = w.raw.replace(/'/g, "");
-      const apo = typedWords.filter(function(x){ return x !== w.raw && x.replace(/'/g, "") === flat; })[0];
-      if (apo){
-        state[k] = "spell";
-        note("spell", "написание: «" + apo + "» — пишется «" + w.raw + "»" + (/'/.test(w.raw)
-          ? " — с апострофом: это сокращение (" + w.raw + " = " + ({ "it's": "it is", "you're": "you are", "they're": "they are", "we're": "we are", "he's": "he is", "she's": "she is", "i'm": "I am" }[w.raw] || "два слова вместе") + ")"
-          : " — без апострофа: yours, hers, ours, theirs, its пишутся без него"));
-        return;
-      }
-      // «1», «l» или «|» вместо местоимения I — опечатка, а не нерасслышанное слово
-      if (w.raw === "i" && typedWords.slice(Math.max(0, lo + 1), hi).concat(typedWords).some(function(x){ return x === "1" || x === "l" || x === "|"; })){
-        state[k] = "spell"; note("spell", "опечатка: «I» (я) — одна заглавная буква I, не цифра 1"); return;
-      }
       if (partly && /n't$/.test(w.raw)){ note("contr", "«" + w.word.replace(/[.,!?;:]+$/, "") + "» — не расслышал отрицание n't: в речи оно звучит коротко, почти одним [nt]"); return; }
       if (partly && /'(ll|d|s|re|ve|m)$/.test(w.raw)){ note("contr", "«" + w.word.replace(/[.,!?;:]+$/, "") + "» — не расслышал сокращение: 'll, 'd, 's, 're, 've звучат одним согласным"); return; }
       const t = rawT[idx[0]];
@@ -5655,8 +5665,7 @@ td.w.speaking{color:var(--sea)}
           if (ex){ note("sound", "«" + h + "» вместо «" + t + "» " + PH.show(t) + ": " + ex.text); return; }
         }
       }
-      // «I» не бывает слабым: всегда полное /aɪ/ — его пропуск объясняем как обычное слово
-      if (w.func && t !== "i"){ note("weak", "пропущено «" + t + "» — служебное слово в речи звучит слабо и быстро" + (PH && PH.show(t) ? ", примерно " + PH.show(t) : "")); return; }
+      if (w.func){ note("weak", "пропущено «" + t + "» — служебное слово в речи звучит слабо и быстро" + (PH && PH.show(t) ? ", примерно " + PH.show(t) : "")); return; }
       note("word", "не расслышал «" + w.word.replace(/[.,!?;:]+$/, "") + "»" + (PH && PH.phrase(w.word) ? " " + PH.phrase(w.word) : ""));
     });
     let content = 0, heard = 0, all = 0, allHeard = 0;
@@ -11353,6 +11362,7 @@ td.w.speaking{color:var(--sea)}
       "Саму контрольную запись сделать можно: она подождёт здесь и уйдёт на сервер, когда появится связь.",
     "view-verbs": "<b>Без сети</b> шаг «скажи три формы вслух» пропускается — распознавание речи идёт через интернет. Остальные шаги работают.",
     "view-progress": "<b>Без сети</b> здесь прогресс этого устройства. Занятия с других устройств подтянутся, когда появится связь.",
+    "view-docs": "<b>Без сети</b> откроются только документы, которые уже открывались на этом устройстве; PDF — только скачанные.",
     "view-welcome": "<b>Без сети</b> в тесте нет говорения — распознавание речи идёт через интернет. Итог сохранится здесь и уйдёт, когда появится связь."
   };
   ["view-learned", "view-phrases", "view-a1", "view-a2", "view-b1w", "view-b2w", "view-c1w", "view-c2w",
@@ -11427,5 +11437,39 @@ td.w.speaking{color:var(--sea)}
     e.preventDefault();
     list[list.length - 1].click();
   });
+})();
+</script>
+
+<script>
+// ---------- «₽» — документы проекта (решение ученика, 26.09.2026) ----------
+// Список — блок data-owner-docs (собирает tools/build_docs.py; в движке он пустой — кнопки нет).
+// На публичном сайте кнопка видна только на своих устройствах, где подключена синхронизация.
+(function(){
+  "use strict";
+  let cfg = {};
+  try { cfg = JSON.parse(document.getElementById("data-owner-docs").textContent) || {}; } catch(e){}
+  const docs = cfg.docs || [], base = cfg.base || "";
+  const btn = document.getElementById("owner-docs-btn"), view = document.getElementById("view-docs");
+  if (!btn || !view || !docs.length || !base) return;
+  let own = !/\.github\.io$/i.test(location.hostname);
+  try { if (localStorage.getItem("bs-sync-key")) own = true; } catch(e){}
+  if (!own) return;
+  btn.hidden = false;
+  const esc = function(x){ return String(x == null ? "" : x).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]; }); };
+  const day = function(d){ return d ? d.slice(8, 10) + "." + d.slice(5, 7) + "." + d.slice(0, 4) : ""; };
+  const h = view.querySelector("h2");
+  if (h && cfg.title) h.textContent = cfg.title;
+  view.querySelector(".docs-list").innerHTML = docs.map(function(d){
+    return '<li><p class="t">' + esc(d.title) + '</p><p class="d">' + esc(d.desc) + '</p><div class="m">' +
+      '<a class="doc-open" href="' + esc(base + d.id + ".html") + '" target="_blank" rel="noopener">Открыть</a>' +
+      '<a class="doc-pdf" href="' + esc(base + d.id + ".pdf") + '" target="_blank" rel="noopener">PDF</a>' +
+      '<span>обновлён ' + day(d.updated) + '</span></div></li>';
+  }).join("");
+  const all = view.querySelector(".docs-all");
+  if (all) all.href = base;
+  function mark(v){ if (v === "docs") btn.setAttribute("aria-current", "true"); else btn.removeAttribute("aria-current"); }
+  btn.addEventListener("click", function(){ if (window.__bsShowView) window.__bsShowView("docs"); });
+  document.addEventListener("bs:view", function(e){ mark(e.detail); });
+  mark(document.body.dataset.view);
 })();
 </script>

@@ -3,9 +3,10 @@
 // книга открывается из сохранённой копии, а свежая докачивается в фоне и пригодится в следующий раз.
 // Запросы к таблице (синхронизация, отчёты) сюда не попадают — их книга копит сама и досылает.
 // Сборка сайта ставит в BUILD время выпуска: новый файл — новая установка и свежая копия книги.
-const BUILD = "2026-09-25T21:22:45";
+const BUILD = "2026-09-26T00:21:58";
 const PAGE_CACHE = "bs-book";
 const FONT_CACHE = "bs-fonts";
+const DOC_CACHE = "bs-docs";        // документы проекта (site/docs/) — копия тех, что уже открывались
 const WAIT_MS = 4000;
 
 function pageKey() { return new URL("./", self.registration.scope).href; }
@@ -43,15 +44,22 @@ self.addEventListener("fetch", function (e) {
   if (req.method !== "GET") return;
   const url = new URL(req.url);
   if (req.mode === "navigate" && isBookPage(url)) { e.respondWith(page(e)); return; }
+  if (req.mode === "navigate" && isDocPage(url)) { e.respondWith(netFirst(e, url.origin + url.pathname, DOC_CACHE, null)); return; }
   if (url.hostname === "fonts.googleapis.com" || url.hostname === "fonts.gstatic.com") e.respondWith(font(req));
 });
 
-function page(e) {
-  const key = pageKey();
+function isDocPage(url) {
+  const scope = new URL(self.registration.scope);
+  return url.origin === scope.origin && url.pathname.indexOf(scope.pathname + "docs/") === 0 && !/\.pdf$/i.test(url.pathname);
+}
+
+function page(e) { return netFirst(e, pageKey(), PAGE_CACHE, notify); }
+
+function netFirst(e, key, cacheName, after) {
   const net = fetch(e.request).then(function (r) {
     if (r.ok) {
       const copy = r.clone();
-      e.waitUntil(caches.open(PAGE_CACHE).then(function (c) { return c.put(key, copy); }).then(notify));
+      e.waitUntil(caches.open(cacheName).then(function (c) { return c.put(key, copy); }).then(after || function () {}));
     }
     return r;
   });

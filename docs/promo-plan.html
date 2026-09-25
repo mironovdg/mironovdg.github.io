@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Продвижение: план работ до запуска</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Serif:wght@500;600&display=swap">
+<style>
+:root{
+  --ground:#F5F7F8; --surface:#FFFFFF; --ink:#18222D; --ink-soft:#3D4957; --muted:#667385;
+  --rule:#DCE2E7; --accent:#0E6B6A; --accent-soft:#E2F0EF; --warn:#9A5B12; --warn-soft:#F7ECDD; --good:#2F6B3A;
+  --serif:"IBM Plex Serif",Georgia,"Times New Roman",serif; --sans:"IBM Plex Sans","Segoe UI",Roboto,Arial,sans-serif;
+  --mono:"IBM Plex Mono",Consolas,"Courier New",monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#10161C; --surface:#172029; --ink:#E4E9EF; --ink-soft:#BAC4CF; --muted:#8C99A8;
+    --rule:#2A3541; --accent:#56B9B5; --accent-soft:#16302F; --warn:#E0A55A; --warn-soft:#33261A; --good:#7CC48A;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#10161C; --surface:#172029; --ink:#E4E9EF; --ink-soft:#BAC4CF; --muted:#8C99A8;
+  --rule:#2A3541; --accent:#56B9B5; --accent-soft:#16302F; --warn:#E0A55A; --warn-soft:#33261A; --good:#7CC48A;
+  color-scheme:dark;
+}
+body{background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;padding-inline:20px;padding-block:28px 64px}
+.page{max-width:52rem;margin:0 auto}
+h1,h2,h3{font-family:var(--serif);font-weight:600;text-wrap:balance;line-height:1.25;color:var(--ink)}
+h1{font-size:34px;margin:6px 0 10px}
+h2{font-size:24px;margin:44px 0 12px;padding-top:18px;border-top:1px solid var(--rule)}
+h3{font-size:18px;margin:26px 0 8px}
+p,li{max-width:68ch}
+p{margin:0 0 12px}
+ul,ol{margin:0 0 14px;padding-left:1.3em}
+li{margin:5px 0}
+a{color:var(--accent)}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0}
+.lead{font-size:18px;color:var(--ink-soft)}
+.meta{font-size:13.5px;color:var(--muted)}
+.summary{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:18px 20px;margin:22px 0}
+.summary h2{margin:0 0 10px;padding:0;border:0;font-size:20px}
+.summary ol{margin:0}
+.note{background:var(--warn-soft);border-left:3px solid var(--warn);border-radius:6px;padding:12px 16px;margin:16px 0;color:var(--ink)}
+.note b{color:var(--warn)}
+.key{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:6px;padding:12px 16px;margin:16px 0}
+.scroll{overflow-x:auto;margin:12px 0 16px;border:1px solid var(--rule);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500;background:var(--ground)}
+tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.total td{font-weight:600}
+.stage{font-family:var(--mono);font-size:12px;color:var(--accent);white-space:nowrap}
+.pos{color:var(--good)}
+.neg{color:var(--warn)}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:12px;margin:14px 0}
+.cols > div{background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:12px 14px}
+.cols h3{margin:0 0 6px;font-size:16px}
+.cols p{font-size:14.5px;margin:0;color:var(--ink-soft)}
+.sources li{font-size:14px;color:var(--ink-soft)}
+.sources a{word-break:break-word}
+@media (max-width:560px){ h1{font-size:28px} h2{font-size:21px} body{font-size:15.5px} }
+
+.docbar{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px;max-width:52rem;margin:0 auto 22px;font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;color:var(--muted)}
+.docbar a{text-decoration:none}
+.docbar a:hover{text-decoration:underline}
+.docbar .sp{flex:1}
+code{font-family:var(--mono);font-size:.88em;background:var(--accent-soft);padding:0 4px;border-radius:4px;word-break:break-word}
+hr{border:0;border-top:1px solid var(--rule);margin:24px 0}
+ul.check{list-style:none;padding-left:0}
+ul.check li{display:flex;gap:10px;align-items:baseline}
+.box{display:inline-block;width:12px;height:12px;border:1.4px solid var(--accent);border-radius:3px;flex:none;position:relative;top:1px}
+.box.on{background:var(--accent)}
+td .box{top:3px}
+.doclist{list-style:none;padding:0;margin:18px 0}
+.doclist li{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:14px 16px;margin:0 0 12px;max-width:none}
+.doclist a.t{font-family:var(--serif);font-size:19px;font-weight:600;text-decoration:none}
+.doclist p{margin:4px 0 0;color:var(--ink-soft);font-size:14.5px}
+.doclist .m{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:8px}
+@page{size:A4;margin:15mm 14mm}
+@media print{
+  :root:not([data-theme="none"]){--ground:#fff;--surface:#fff;--ink:#16202a;--ink-soft:#3d4957;--muted:#5d6977;--rule:#d5dbe0;
+    --accent:#0e6b6a;--accent-soft:#e6f2f1;--warn:#8a500f;--warn-soft:#f8efe2;--good:#2f6b3a;color-scheme:light}
+  body{padding:0;font-size:10.5pt;line-height:1.5}
+  .docbar{display:none}
+  h1{font-size:22pt} h2{font-size:15pt;margin-top:22px;break-after:avoid} h3{break-after:avoid}
+  .scroll{overflow:visible;border:0}
+  tr,.cols>div,.note,.key,.summary,ul.check li{break-inside:avoid}
+  a{color:inherit;text-decoration:none}
+}
+</style>
+</head><body>
+<nav class="docbar"><a href="../">← Книга</a><a href="./">Все документы</a><span class="sp"></span><span>обновлён 26.09.2026</span><a href="promo-plan.pdf">PDF</a></nav>
+<div class="page">
+<p class="eyebrow">Продвижение · план работ · обновлён 26.09.2026</p>
+<h1>Продвижение: план работ до запуска</h1>
+<p>Направление начато 25.09.2026. Стартовые идеи — <code>Загрузки\promotion-summary.md</code> (пересчитаны под нынешнюю книгу). Бюджет времени — 1–3 часа в неделю на старте, дальше меньше. Рамка: <b>«месяц учился на прототипе своей книги — теперь начинаю заново на готовой версии»</b>. Цель первых 6 недель после запуска — <b>проверить интерес</b>, без обещаний сроков платной версии.</p>
+<p>Кто что делает: <b>Д</b> — Дмитрий, <b>C</b> — Claude.</p>
+<hr>
+<h2>Этап 0. Решения (неделя 1: 28.09–04.10)</h2>
+<div class="scroll"><table><thead><tr><th>#</th><th>Что</th><th>Кто</th><th>Готово</th></tr></thead><tbody><tr><td>0.1</td><td>Название канала (я-канал: «Дмитрий учит английский по своей книге» или своё)</td><td>Д, варианты — C</td><td><span class="box"></span></td></tr><tr><td>0.2</td><td>Площадки: Telegram (дом) · ВК Клипы и ВК Видео · Rutube · YouTube (Shorts и длинные). Дзен, Хабр, vc.ru — позже, под статьи</td><td>Д</td><td><span class="box"></span></td></tr><tr><td>0.3</td><td>Порог «интерес есть» через 6 недель: например, 50 «хочу такую книгу» или 300 подписчиков в Telegram</td><td>Д + C</td><td><span class="box"></span></td></tr><tr><td>0.4</td><td>Кто монтирует: сам (CapCut / VN / редактор ВК) или помощник</td><td>Д</td><td><span class="box"></span></td></tr><tr><td>0.5</td><td>Оборудование: телефон, петличный микрофон (≈1–2 тыс. ₽, по желанию), дневной свет у окна</td><td>Д</td><td><span class="box"></span></td></tr><tr><td>0.6</td><td>Юридическое: маркировка рекламы собственного продукта и реестр блогеров РКН (обязателен при аудитории &gt; 10 тыс.) — спросить у юриста до первой рекламы</td><td>Д</td><td><span class="box"></span></td></tr></tbody></table></div>
+<h2>Этап 1. Аккаунты и оформление (неделя 1–2)</h2>
+<div class="scroll"><table><thead><tr><th>#</th><th>Что</th><th>Кто</th><th>Готово</th></tr></thead><tbody><tr><td>1.1</td><td>Проверить, что имя свободно на всех площадках</td><td>Д</td><td><span class="box"></span></td></tr><tr><td>1.2</td><td>Отдельная почта проекта (по желанию)</td><td>Д</td><td><span class="box"></span></td></tr><tr><td>1.3</td><td>Telegram-канал + чат для комментариев</td><td>Д</td><td><span class="box"></span></td></tr><tr><td>1.4</td><td>ВК: сообщество + ВК Видео; Rutube-канал; YouTube-канал</td><td>Д</td><td><span class="box"></span></td></tr><tr><td>1.5</td><td>Тексты: описание канала, «о себе», закреплённый пост, подписи ссылок</td><td>C</td><td><span class="box"></span></td></tr><tr><td>1.6</td><td>Аватар и обложки (фото + простая плашка с названием)</td><td>Д, эскизы — C</td><td><span class="box"></span></td></tr></tbody></table></div>
+<p>Аккаунты создаёт только Д (пароли и входы — не через Claude).</p>
+<h2>Этап 2. Съёмка на прототипе — до обновления книги (неделя 2: 05.10–11.10)</h2>
+<p>Всё, что показывает нынешнюю книгу, снимаем <b>до перезапуска</b> — это архив «первого месяца». Запись экрана: телефон — встроенная, компьютер — Win+Alt+R (Xbox Game Bar) или OBS.</p>
+<div class="scroll"><table><thead><tr><th>#</th><th>Кадр</th><th>Где</th><th>Готово</th></tr></thead><tbody><tr><td>2.1</td><td><b>Главный ролик: «книга помнит мои ошибки».</b> Пройти главу 4 на камеру → отчёт → через несколько часов глава 5, где стоят вчерашние невспомненные слова</td><td>экран + лицо</td><td><span class="box"></span></td></tr><tr><td>2.2</td><td>«План на сегодня» и «Повторение»: просмотр со «Слушать всё» (подсветка, пауза), карточки четырёх навыков, печать по образцу после «Не знаю»</td><td>телефон</td><td><span class="box"></span></td></tr><tr><td>2.3</td><td>Глава: «Сначала на слух» → диалог → чтение по ролям (зелёные и красные слова) → мини-словарь с транскрипцией → упражнения</td><td>компьютер</td><td><span class="box"></span></td></tr><tr><td>2.4</td><td>«Звуки»: разминка, губы образца, шкала «s ↔ th», «Говорить»</td><td>телефон</td><td><span class="box"></span></td></tr><tr><td>2.5</td><td>«Слушание»: цветной диктант, отметки глав, «Слитная речь»</td><td>компьютер</td><td><span class="box"></span></td></tr><tr><td>2.6</td><td>«Прогресс»: неделя, баланс навыков, словарь</td><td>любой</td><td><span class="box"></span></td></tr><tr><td>2.7</td><td>Без сети: режим полёта — книга работает</td><td>телефон</td><td><span class="box"></span></td></tr><tr><td>2.8</td><td><b>Контрольная запись месяца 1</b> — база для «было / стало»</td><td>телефон</td><td><span class="box"></span></td></tr><tr><td>2.9</td><td>История «со школы и института» (10 вопросов) — лицом в камеру, 2–3 дубля</td><td>камера</td><td><span class="box"></span></td></tr><tr><td>2.10</td><td>Страница сравнения ИИ-моделей — для «технической» истории</td><td>компьютер</td><td><span class="box"></span></td></tr></tbody></table></div>
+<p>Сырьё складывать: <code>promotion/raw/ГГГГ-ММ-ДД_тема</code> (имена файлов — по кадрам 2.1–2.10).</p>
+<h2>Этап 3. Запас контента (недели 3–4: 12.10–25.10)</h2>
+<div class="scroll"><table><thead><tr><th>#</th><th>Что</th><th>Кто</th><th>Готово</th></tr></thead><tbody><tr><td>3.1</td><td>Ответы на 10 вопросов об истории изучения → сценарий ролика «эпизод 0» (60–90 с) и закреплённый пост</td><td>Д → C</td><td><span class="box"></span></td></tr><tr><td>3.2</td><td>Сценарии 8–10 коротких роликов по кадрам этапа 2</td><td>C</td><td><span class="box"></span></td></tr><tr><td>3.3</td><td>10 постов для Telegram (слово дня, «как бы вы сказали», статус недели)</td><td>C</td><td><span class="box"></span></td></tr><tr><td>3.4</td><td>Монтаж 8–10 роликов, субтитры обязательно (смотрят без звука)</td><td>Д</td><td><span class="box"></span></td></tr><tr><td>3.5</td><td>Статья «Как ИИ пишет мне учебник английского» (Хабр / vc.ru) — черновик</td><td>C</td><td><span class="box"></span></td></tr></tbody></table></div>
+<p>Правило: к запуску в запасе не меньше 8 роликов — ежедневный режим без запаса срывается на первой болезни.</p>
+<h2>Этап 4. Перезапуск книги — «день 0» (конец октября, дата — по готовности этапов 0–3)</h2>
+<div class="scroll"><table><thead><tr><th>#</th><th>Что</th><th>Кто</th><th>Готово</th></tr></thead><tbody><tr><td>4.1</td><td>Движок: книга другого ученика на том же адресе начинает с чистого листа, старое — в архив (не стирая)</td><td>C</td><td><span class="box"></span></td></tr><tr><td>4.2</td><td>Архив старой книги: автоматика «Синего чемодана» — стоп, снимок прогресса — в проект, книга остаётся на claude.ai</td><td>C</td><td><span class="box"></span></td></tr><tr><td>4.3</td><td>Установка движка на компьютере как нового ученика (≈1–1,5 ч вместе): своя Google Таблица, своя автоматика глав</td><td>Д + C</td><td><span class="box"></span></td></tr><tr><td>4.4</td><td><b>Съёмка «дня 0»:</b> знакомство, выбор истории, входной тест по четырём навыкам, первая глава</td><td>Д</td><td><span class="box"></span></td></tr></tbody></table></div>
+<h2>Этап 5. Запуск и ритм (6 недель проверки интереса)</h2>
+<ul><li><b>Каждую неделю:</b> 1–2 коротких ролика (из запаса + свежие), 2–3 поста в Telegram (черновики — C, правка — Д, ≈10 минут), статус недели с цифрами из «Прогресса».</li><li><b>Раз в две недели:</b> одна съёмка на 40–60 минут → 3–4 ролика.</li><li><b>Раз в месяц:</b> контрольная запись и ролик «было / стало».</li><li><b>Метрики (раз в неделю, таблица):</b> подписчики по площадкам, просмотры, сохранения и комментарии, число «хочу такую книгу»; учёба — главы в неделю, слова в словаре.</li><li><b>Через 6 недель — решение:</b> порог 0.3 достигнут → этап «лист ожидания + демо-книга»; нет → меняем подачу или ставим на паузу.</li></ul>
+<h2>Время Д по неделям (оценка)</h2>
+<div class="scroll"><table><thead><tr><th>Неделя</th><th>Что</th><th>Часы</th></tr></thead><tbody><tr><td>1</td><td>решения, аккаунты</td><td>2–3</td></tr><tr><td>2</td><td>съёмка прототипа (2 сессии), история</td><td>2–3</td></tr><tr><td>3–4</td><td>ответы на вопросы, монтаж</td><td>2–3</td></tr><tr><td>запуск</td><td>«день 0», дальше ритм</td><td>1,5–2</td></tr></tbody></table></div>
+</div>
+</body></html>

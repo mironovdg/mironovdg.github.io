@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Что должно быть готово до «дня 0»</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Serif:wght@500;600&display=swap">
+<style>
+:root{
+  --ground:#F5F7F8; --surface:#FFFFFF; --ink:#18222D; --ink-soft:#3D4957; --muted:#667385;
+  --rule:#DCE2E7; --accent:#0E6B6A; --accent-soft:#E2F0EF; --warn:#9A5B12; --warn-soft:#F7ECDD; --good:#2F6B3A;
+  --serif:"IBM Plex Serif",Georgia,"Times New Roman",serif; --sans:"IBM Plex Sans","Segoe UI",Roboto,Arial,sans-serif;
+  --mono:"IBM Plex Mono",Consolas,"Courier New",monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#10161C; --surface:#172029; --ink:#E4E9EF; --ink-soft:#BAC4CF; --muted:#8C99A8;
+    --rule:#2A3541; --accent:#56B9B5; --accent-soft:#16302F; --warn:#E0A55A; --warn-soft:#33261A; --good:#7CC48A;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#10161C; --surface:#172029; --ink:#E4E9EF; --ink-soft:#BAC4CF; --muted:#8C99A8;
+  --rule:#2A3541; --accent:#56B9B5; --accent-soft:#16302F; --warn:#E0A55A; --warn-soft:#33261A; --good:#7CC48A;
+  color-scheme:dark;
+}
+body{background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;padding-inline:20px;padding-block:28px 64px}
+.page{max-width:52rem;margin:0 auto}
+h1,h2,h3{font-family:var(--serif);font-weight:600;text-wrap:balance;line-height:1.25;color:var(--ink)}
+h1{font-size:34px;margin:6px 0 10px}
+h2{font-size:24px;margin:44px 0 12px;padding-top:18px;border-top:1px solid var(--rule)}
+h3{font-size:18px;margin:26px 0 8px}
+p,li{max-width:68ch}
+p{margin:0 0 12px}
+ul,ol{margin:0 0 14px;padding-left:1.3em}
+li{margin:5px 0}
+a{color:var(--accent)}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0}
+.lead{font-size:18px;color:var(--ink-soft)}
+.meta{font-size:13.5px;color:var(--muted)}
+.summary{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:18px 20px;margin:22px 0}
+.summary h2{margin:0 0 10px;padding:0;border:0;font-size:20px}
+.summary ol{margin:0}
+.note{background:var(--warn-soft);border-left:3px solid var(--warn);border-radius:6px;padding:12px 16px;margin:16px 0;color:var(--ink)}
+.note b{color:var(--warn)}
+.key{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:6px;padding:12px 16px;margin:16px 0}
+.scroll{overflow-x:auto;margin:12px 0 16px;border:1px solid var(--rule);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500;background:var(--ground)}
+tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.total td{font-weight:600}
+.stage{font-family:var(--mono);font-size:12px;color:var(--accent);white-space:nowrap}
+.pos{color:var(--good)}
+.neg{color:var(--warn)}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:12px;margin:14px 0}
+.cols > div{background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:12px 14px}
+.cols h3{margin:0 0 6px;font-size:16px}
+.cols p{font-size:14.5px;margin:0;color:var(--ink-soft)}
+.sources li{font-size:14px;color:var(--ink-soft)}
+.sources a{word-break:break-word}
+@media (max-width:560px){ h1{font-size:28px} h2{font-size:21px} body{font-size:15.5px} }
+
+.docbar{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px;max-width:52rem;margin:0 auto 22px;font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;color:var(--muted)}
+.docbar a{text-decoration:none}
+.docbar a:hover{text-decoration:underline}
+.docbar .sp{flex:1}
+code{font-family:var(--mono);font-size:.88em;background:var(--accent-soft);padding:0 4px;border-radius:4px;word-break:break-word}
+hr{border:0;border-top:1px solid var(--rule);margin:24px 0}
+ul.check{list-style:none;padding-left:0}
+ul.check li{display:flex;gap:10px;align-items:baseline}
+.box{display:inline-block;width:12px;height:12px;border:1.4px solid var(--accent);border-radius:3px;flex:none;position:relative;top:1px}
+.box.on{background:var(--accent)}
+td .box{top:3px}
+.doclist{list-style:none;padding:0;margin:18px 0}
+.doclist li{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:14px 16px;margin:0 0 12px;max-width:none}
+.doclist a.t{font-family:var(--serif);font-size:19px;font-weight:600;text-decoration:none}
+.doclist p{margin:4px 0 0;color:var(--ink-soft);font-size:14.5px}
+.doclist .m{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:8px}
+@page{size:A4;margin:15mm 14mm}
+@media print{
+  :root:not([data-theme="none"]){--ground:#fff;--surface:#fff;--ink:#16202a;--ink-soft:#3d4957;--muted:#5d6977;--rule:#d5dbe0;
+    --accent:#0e6b6a;--accent-soft:#e6f2f1;--warn:#8a500f;--warn-soft:#f8efe2;--good:#2f6b3a;color-scheme:light}
+  body{padding:0;font-size:10.5pt;line-height:1.5}
+  .docbar{display:none}
+  h1{font-size:22pt} h2{font-size:15pt;margin-top:22px;break-after:avoid} h3{break-after:avoid}
+  .scroll{overflow:visible;border:0}
+  tr,.cols>div,.note,.key,.summary,ul.check li{break-inside:avoid}
+  a{color:inherit;text-decoration:none}
+}
+</style>
+</head><body>
+<nav class="docbar"><a href="../">← Книга</a><a href="./">Все документы</a><span class="sp"></span><span>обновлён 26.09.2026</span><a href="day0-checklist.pdf">PDF</a></nav>
+<div class="page">
+<p class="eyebrow">Продвижение · перечень · обновлён 26.09.2026</p>
+<h1>Что должно быть готово до «дня 0»</h1>
+<p>К старту — <b>запас контента на 2 недели</b>, снятый, смонтированный и разложенный по готовым пакетам (видео + обложка + тексты под каждую площадку). Общий план по неделям — <code>promotion/plan.md</code>. <b>Д</b> — Дмитрий, <b>C</b> — Claude.</p>
+<hr>
+<h2>1. Решения (до всего остального)</h2>
+<ul class="check"><li><span class="box"></span><span>Название канала — одно на все площадки (Д; варианты — C)</span></li><li><span class="box"></span><span>Короткое описание в одну строку: кто я и что делаю (C → Д)</span></li><li><span class="box"></span><span>Рамка истории: «месяц учился на прототипе своей книги, теперь начинаю заново на готовой версии» (Д)</span></li><li><span class="box"></span><span>Площадки старта: Telegram, ВК Клипы / ВК Видео, Rutube, YouTube (Д)</span></li><li><span class="box"></span><span>Порог «интерес есть» через 6 недель после старта (Д + C)</span></li><li><span class="box"></span><span>Кто монтирует и в чём: сам (CapCut / VN / редактор ВК) или помощник (Д)</span></li><li><span class="box"></span><span>Бюджет: 0 ₽ или небольшой (микрофон, штатив, свет) (Д)</span></li></ul>
+<h2>2. Аккаунты и оформление</h2>
+<p>Создаёт и входит только Д.</p>
+<ul class="check"><li><span class="box"></span><span>Имя свободно на всех площадках (Д)</span></li><li><span class="box"></span><span>Почта проекта, если нужна (Д)</span></li><li><span class="box"></span><span>Telegram: канал + чат для комментариев + ссылка-приглашение (Д)</span></li><li><span class="box"></span><span>ВК: сообщество, раздел Клипы, ВК Видео (Д)</span></li><li><span class="box"></span><span>Rutube: канал (Д)</span></li><li><span class="box"></span><span>YouTube: канал (Д)</span></li><li><span class="box"></span><span>Аватар: одно фото лица, одинаковое везде (Д)</span></li><li><span class="box"></span><span>Обложки каналов: фото + название (эскизы C, фото Д)</span></li><li><span class="box"></span><span>Тексты: описание канала под каждую площадку, «о себе», ссылки на Telegram (C)</span></li><li><span class="box"></span><span>Закреплённый пост в Telegram: кто я, что за книга, что будет, как следить (C → Д)</span></li></ul>
+<h2>3. Техника и рабочее место</h2>
+<ul class="check"><li><span class="box"></span><span>Телефон: свободно 10+ ГБ, режим «Не беспокоить» на время съёмки (Д)</span></li><li><span class="box"></span><span>Звук: петличный микрофон или тихая комната без эха (Д)</span></li><li><span class="box"></span><span>Свет: дневной у окна, лицо к окну (Д)</span></li><li><span class="box"></span><span>Штатив или упор для телефона на уровне глаз (Д)</span></li><li><span class="box"></span><span>Запись экрана: телефон — встроенная; компьютер — Win+Alt+R (Game Bar) или OBS (Д)</span></li><li><span class="box"></span><span><b>Чистый экран для съёмки:</b> отдельный профиль браузера без закладок и истории; в кадре нет уведомлений, почты, личных закладок (Д)</span></li><li><span class="box"></span><span><b>Не показывать в кадре:</b> ссылку синхронизации (#sync=…), адрес Google Таблицы, ключи, адреса артефактов claude.ai, <code>.env.models</code> (Д; C проверяет черновики)</span></li><li><span class="box"></span><span>Папки: <code>promotion/raw</code> (сырьё), <code>promotion/edit</code> (монтаж), <code>promotion/ready</code> (готовые пакеты) (C)</span></li></ul>
+<h2>4. Съёмка — сырьё</h2>
+<p>Всё на нынешней книге, до перезапуска.</p>
+<p><b>Лицом в камеру</b></p>
+<ul class="check"><li><span class="box"></span><span>История «со школы и института» (10 вопросов, 2–3 дубля) (Д)</span></li><li><span class="box"></span><span>«Почему я начинаю заново» — мост к «дню 0», 30–60 с (Д)</span></li><li><span class="box"></span><span>Короткие реакции для вставок: «я это не вспомнил», «вот это меня удивило» (Д)</span></li></ul>
+<p><b>Запись экрана</b></p>
+<ul class="check"><li><span class="box"></span><span>Глава 4: прохождение → отчёт → глава 5, где стоят мои невспомненные слова (Д)</span></li><li><span class="box"></span><span>«Повторение»: просмотр со «Слушать всё», карточки четырёх навыков, печать по образцу после «Не знаю» (Д)</span></li><li><span class="box"></span><span>Чтение по ролям: зелёные и красные слова (Д)</span></li><li><span class="box"></span><span>«Звуки»: разминка, губы, шкала «s ↔ th» (Д)</span></li><li><span class="box"></span><span>Диктант с цветной проверкой и отметками глав (Д)</span></li><li><span class="box"></span><span>«Сначала на слух» новой главы (Д)</span></li><li><span class="box"></span><span>«Прогресс»: неделя, баланс навыков, словарь (Д)</span></li><li><span class="box"></span><span>Режим полёта — книга работает без сети (Д)</span></li><li><span class="box"></span><span><b>Контрольная запись месяца 1</b> — база для «было / стало» (Д)</span></li><li><span class="box"></span><span>Страница сравнения ИИ-моделей (Д)</span></li></ul>
+<h2>5. Тексты</h2>
+<ul class="check"><li><span class="box"></span><span>Ответы на 10 вопросов → сценарий «эпизода 0» (Д → C)</span></li><li><span class="box"></span><span>Сценарии коротких роликов: первая фраза-крючок (2 секунды), суть, вопрос зрителю в конце (C)</span></li><li><span class="box"></span><span>Заголовок, описание и хэштеги к каждому ролику — отдельно для ВК, Rutube, YouTube (C)</span></li><li><span class="box"></span><span>Первый комментарий-вопрос к каждому ролику («а вы как бы сказали…?») (C)</span></li><li><span class="box"></span><span>10 постов для Telegram (C)</span></li><li><span class="box"></span><span>Статья «Как ИИ пишет мне учебник английского» для Хабра / vc.ru — черновик (C)</span></li></ul>
+<h2>6. Монтаж и обработка</h2>
+<ul class="check"><li><span class="box"></span><span>Формат 9:16, 1080×1920, 30–60 с (длинное — отдельно, 16:9) (Д)</span></li><li><span class="box"></span><span>Крючок в первые 2 секунды, без долгого вступления (Д)</span></li><li><span class="box"></span><span>Субтитры на каждом ролике — смотрят без звука (Д; тексты — C)</span></li><li><span class="box"></span><span>Звук: голос громче фона; музыка — только из библиотек площадок (без нарушения прав) (Д)</span></li><li><span class="box"></span><span>Концовка: «Следи в Telegram» + название канала (Д)</span></li><li><span class="box"></span><span>Обложка к каждому ролику: кадр + 3–5 слов крупно (Д; тексты обложек — C)</span></li><li><span class="box"></span><span>Проверка перед выпуском: нет личных данных и ключей в кадре, нет ошибок в субтитрах (C смотрит кадры, Д финально)</span></li></ul>
+<h2>7. Готовые пакеты к «дню 0» (минимум)</h2>
+<p>Каждый пакет — папка <code>promotion/ready/NN_название/</code>: <code>video.mp4</code>, <code>cover.jpg</code>, <code>text.md</code> (заголовки, описания, хэштеги, первый комментарий под каждую площадку).</p>
+<div class="scroll"><table><thead><tr><th>№</th><th>Ролик</th><th>Сырьё</th></tr></thead><tbody><tr><td>01</td><td>«Учил английский со школы — и застрял» (эпизод 0)</td><td>история</td></tr><tr><td>02</td><td>«Моя книга помнит мои ошибки»</td><td>глава 4 → отчёт → глава 5</td></tr><tr><td>03</td><td>«Слово засчитывается только через неделю»</td><td>«Повторение»</td></tr><tr><td>04</td><td>«Книга слушает, как я говорю»</td><td>чтение по ролям</td></tr><tr><td>05</td><td>«Звук th мне не даётся»</td><td>«Звуки»</td></tr><tr><td>06</td><td>«Диктант показал, что я не слышу окончания»</td><td>диктант</td></tr><tr><td>07</td><td>«Английский в поезде без интернета»</td><td>режим полёта</td></tr><tr><td>08</td><td>«Сначала на слух — потом текст»</td><td>«Сначала на слух»</td></tr><tr><td>09</td><td>«Месяц в цифрах»</td><td>«Прогресс» + контрольная запись</td></tr><tr><td>10</td><td>«Я сравнил 10 ИИ: кто напишет мне урок»</td><td>сравнение моделей</td></tr><tr><td>11</td><td>«Почему я начинаю заново» — анонс «дня 0»</td><td>лицо</td></tr></tbody></table></div>
+<p>Плюс: закреплённый пост, 10 постов для Telegram, черновик статьи.</p>
+<h2>8. Календарь публикаций (первые 2 недели)</h2>
+<ul class="check"><li><span class="box"></span><span>Расписание: какой пакет, куда, в какой день (C)</span></li><li><span class="box"></span><span>Ролик 11 («Почему я начинаю заново») — накануне «дня 0» (C)</span></li><li><span class="box"></span><span>«День 0»: знакомство, выбор истории, входной тест — снимается в сам день перезапуска и выходит через 1–2 дня (Д)</span></li></ul>
+<h2>9. Книга (к «дню 0»)</h2>
+<ul class="check"><li><span class="box"></span><span>Движок: книга другого ученика на том же адресе начинает с чистого листа, старое — в архив (C)</span></li><li><span class="box"></span><span>Архив старой книги: стоп автоматики, снимок прогресса в проект (C, по команде Д)</span></li><li><span class="box"></span><span>Установка новой книги на компьютере (≈1–1,5 ч вместе) (Д + C)</span></li></ul>
+<h2>10. Юридическое и безопасность</h2>
+<ul class="check"><li><span class="box"></span><span>Консультация: маркировка рекламы собственного продукта, реестр блогеров РКН (при аудитории &gt; 10 тыс.) (Д)</span></li><li><span class="box"></span><span>Не обещать публично платную версию и сроки (Д + C)</span></li><li><span class="box"></span><span>Чужие люди в кадре — только с согласия (Д)</span></li></ul>
+<h2>11. Учёт</h2>
+<ul class="check"><li><span class="box"></span><span>Таблица метрик: подписчики по площадкам, просмотры, сохранения, комментарии, «хочу такую книгу»; учёба — главы в неделю, слова в словаре (C)</span></li><li><span class="box"></span><span>Раз в неделю — 10 минут на заполнение (Д)</span></li></ul>
+</div>
+</body></html>
