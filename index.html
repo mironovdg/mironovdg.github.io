@@ -933,6 +933,11 @@ button.linkish{background:none;border:0;padding:0;font:inherit;color:var(--sea);
 .tts-test:hover{border-color:var(--sea)}
 .tts-warn{color:var(--no)}
 .tts-note{color:var(--rain);font-size:11px;flex-basis:100%;text-align:right}
+.tts-offline{font-family:var(--sans);font-size:12.5px;line-height:1.45;color:var(--ink-soft);flex-basis:100%;text-align:right}
+.tts-offline b{color:var(--sea)}
+.tts-offline.warn b{color:var(--no)}
+.offline-note{background:var(--lamp-soft);border:1px solid var(--lamp);border-radius:var(--radius);padding:12px 16px;margin:14px 0 0;font-size:14.5px;line-height:1.5;color:var(--ink-soft)}
+.offline-note b{color:var(--ink)}
 .tts-how{font-family:var(--sans);font-size:12.5px;line-height:1.45;color:var(--ink-soft);text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:8px 10px}
 .say-btn{
   display:inline-flex;align-items:center;justify-content:center;gap:8px;width:32px;height:32px;margin-left:10px;
@@ -1057,6 +1062,7 @@ td.w.speaking{color:var(--sea)}
     </div>
   </nav>
   <div class="tts-bar" id="tts-bar"></div>
+  <div class="offline-note" id="offline-note" hidden></div>
   <div class="mic-check" id="mic-check" hidden></div>
   <div class="sync-banner" id="sync-banner" hidden></div>
 
@@ -2461,7 +2467,8 @@ td.w.speaking{color:var(--sea)}
             <div><b>≈5 мин</b><span>уши или рот: диктант, пары, звуки, глаголы</span></div>
             <div><b>вечером</b><span>просмотр слов дня — перед сном они лучше держатся</span></div>
           </div>
-          <p class="rm-note">После каждого упражнения — «Дальше по плану». Пропустил день — ничего не пропало: книга соберёт план заново. Прогресс общий на телефоне и компьютере.</p>
+          <p class="rm-note">После каждого упражнения — «Дальше по плану». Пропустил день — ничего не пропало: книга соберёт план заново. Прогресс общий на телефоне и компьютере.
+            В дороге без сети книга открывается с копии на устройстве: работает всё, кроме распознавания речи, а результаты уйдут, когда связь появится.</p>
         </div>
 
         <div class="slide">
@@ -2594,6 +2601,14 @@ td.w.speaking{color:var(--sea)}
   const FEMALE = /female|zira|hazel|susan|libby|sonia|maisie|mia\b|samantha|karen|serena|kate|martha|fiona|moira|tessa|victoria|allison|ava\b|jenny|aria|emma|natasha|clara|joanna|kendra|kimberly|salli|amy\b|nicole|olivia|michelle|sara|zoe|jane|elizabeth|bella|eva\b|libby|abbi|hollie|ellie|bella/i;
   const MALE = /\bmale|david|mark|george|ryan|thomas|daniel|arthur|oliver|guy\b|christopher|eric|alex\b|fred\b|rishi|brian|matthew|joey|justin|russell|james|william|andrew|roger|brandon|jacob|tony|aaron|evan|nathan|tom\b|reed|gordon|alfie|elliot|ethan|noah|ollie/i;
   function langOf(v){ return String(v.lang || "").replace("_", "-").toLowerCase(); }
+  // Без сети сетевые голоса (Google в Chrome, «Online» в Edge) молчат — тогда первым идёт голос самого устройства.
+  // Сетевой голос, который не ответил, до появления сети больше не берём.
+  let remoteFailed = false;
+  function isLocal(v){ return v.localService !== false; }
+  function isOffline(){ return navigator.onLine === false || remoteFailed; }
+  window.addEventListener("online", function(){ remoteFailed = false; renderBar(); });
+  window.addEventListener("offline", function(){ renderBar(); });
+  document.addEventListener("bs:offline", function(){ renderBar(); });
   function quality(v){
     const n = v.name || ""; let q = 0;
     if (/natural|neural|online|premium|enhanced/i.test(n)) q += 4;
@@ -2605,7 +2620,9 @@ td.w.speaking{color:var(--sea)}
     const want = prefs.accent === "us" ? "en-us" : "en-gb";
     let list = voices.filter(function(v){ return langOf(v) === want; });
     if (!list.length) list = voices.filter(function(v){ return langOf(v).indexOf("en") === 0; });
-    return list.slice().sort(function(a, b){ return quality(b) - quality(a); });
+    const sorted = list.slice().sort(function(a, b){ return quality(b) - quality(a); });
+    if (isOffline()) sorted.sort(function(a, b){ return (isLocal(b) ? 1 : 0) - (isLocal(a) ? 1 : 0); });
+    return sorted;
   }
   function pickVoice(gender){
     const list = englishVoices();
@@ -2651,7 +2668,7 @@ td.w.speaking{color:var(--sea)}
     unmark();
     if (onStop){ const f = onStop; onStop = null; f(); }
   }
-  function utter(text, gender, cb, rate){
+  function utter(text, gender, cb, rate, retried){
     const u = new SpeechSynthesisUtterance(clean(text));
     const v = pickVoice(gender);
     if (v){ u.voice = v; u.lang = v.lang; } else u.lang = prefs.accent === "us" ? "en-US" : "en-GB";
@@ -2661,7 +2678,16 @@ td.w.speaking{color:var(--sea)}
     u.onstart = function(){ emit("start", { text: clean(text), rate: u.rate }); };
     u.onboundary = function(ev){ if (!ev.name || ev.name === "word") emit("word", { charIndex: ev.charIndex }); };
     u.onend = function(){ emit("end"); if (cb) cb(true); };
-    u.onerror = function(){ emit("end"); if (cb) cb(false); };
+    u.onerror = function(ev){
+      const err = ev && ev.error;
+      if (v && !isLocal(v) && !retried && err !== "interrupted" && err !== "canceled"){
+        const first = !remoteFailed;
+        remoteFailed = true;                 // сетевой голос не ответил — повторяем голосом устройства
+        const lv = pickVoice(gender);
+        if (lv && isLocal(lv)){ if (first) renderBar(); utter(text, gender, cb, rate, true); return; }
+      }
+      emit("end"); if (cb) cb(false);
+    };
     synth.speak(u);
   }
   function emit(phase, o){ try { document.dispatchEvent(new CustomEvent("bs:tts", { detail: Object.assign({ phase: phase }, o || {}) })); } catch(e){} }
@@ -2806,7 +2832,7 @@ td.w.speaking{color:var(--sea)}
       '</select></label>' +
       '<button type="button" class="tts-test" data-say="Hello! Welcome to the Anchor Hotel.">' + ICON + '<span>проверить</span></button>' +
       MIC_BTN +
-      voicesNote() +
+      voicesNote() + offlineNote() +
       (none ? '<span class="tts-warn">на устройстве нет английского голоса — добавьте его в настройках системы</span>' : "") +
       (fallback ? '<span class="tts-note">' + (prefs.accent === "us" ? "американского" : "британского") +
                   ' голоса на устройстве нет, звучит ' + (v ? v.lang : "другой") +
@@ -2819,6 +2845,40 @@ td.w.speaking{color:var(--sea)}
       prefs.model = this.value; savePrefs(); renderBar();
       say(this.value === "m" ? "Hello! I am the male voice." : "Hello! I am the female voice.", { gender: this.value });
     });
+  }
+  // готова ли книга к дороге без сети: сохранена ли страница и каким голосом она заговорит без интернета
+  function offlineNote(){
+    const off = window.bsOffline || {};
+    const want = prefs.accent === "us" ? "en-us" : "en-gb";
+    const local = voices.filter(function(v){ return isLocal(v) && langOf(v).indexOf("en") === 0; });
+    const exact = local.filter(function(v){ return langOf(v) === want; });
+    const ua = navigator.userAgent;
+    const how = /Android/i.test(ua)
+      ? "Android: Настройки → Синтез речи → Google → Установить голосовые данные → English (" + (want === "en-us" ? "US" : "United Kingdom") + ")"
+      : /iPhone|iPad/.test(ua)
+        ? "iPhone: Настройки → Универсальный доступ → Устный контент → Голоса → English → " + (want === "en-us" ? "США" : "Великобритания") + " → скачать голос"
+        : /Mac OS X/.test(ua)
+          ? "Mac: Системные настройки → Универсальный доступ → Устный контент → Системный голос → Управлять голосами → English"
+          : "Windows: Параметры → Время и язык → Речь → Добавить голоса → English (" + (want === "en-us" ? "United States" : "United Kingdom") + ")";
+    let page, voice, warn = false;
+    if (off.saved){
+      const at = off.at ? " " + off.at.toLocaleDateString("ru-RU", { day: "2-digit", month: "2-digit" }) + " в " + off.at.toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" }) : "";
+      page = "<b>✓ книга сохранена на устройстве" + at + "</b>";
+    } else if (off.supported){
+      page = "книга сохраняется на устройство…";
+    } else {
+      page = "<b>эта копия без сети не откроется</b> — для дороги открой книгу на своём сайте";
+      warn = true;
+    }
+    if (exact.length || local.length){
+      const lv = (exact[0] || local[0]);
+      voice = "голос без сети — " + lv.name + (exact.length ? "" : " (" + lv.lang + ")") +
+        (/Android/i.test(ua) ? " (если голосовые данные English скачаны: " + how.replace(/^Android: /, "") + ")" : "");
+    } else if (voices.length){
+      voice = "<b>английского голоса без сети на устройстве нет</b> — скачай: " + how;
+      warn = true;
+    } else voice = "";
+    return '<span class="tts-offline' + (warn ? " warn" : "") + '">Без сети: ' + page + (voice ? " · " + voice : "") + "</span>";
   }
   // какие голоса звучат на этом устройстве; если мужского (или женского) нет — где его взять
   function hasGender(g){
@@ -11041,5 +11101,46 @@ td.w.speaking{color:var(--sea)}
     catch(e){ ta.focus(); ta.select(); return "отчёт выделен в поле ниже — скопируй его и вставь в чат"; }
   }
 
+})();
+</script>
+<script>
+// ---------- без сети (решение ученика, 25.09.2026) ----------
+// На сайте книга сохраняется на устройстве сервис-воркером (sw.js рядом со страницей) и открывается без интернета.
+// Результаты копятся здесь и уходят сами, когда связь появится (это делают синхронизация и очередь отчётов).
+// Без сети не работает только распознавание речи — его делает сервер Google или Apple.
+// На claude.ai сервис-воркера нет (рядом со страницей нет sw.js): там книга без сети не откроется.
+(function(){
+  const st = window.bsOffline = { supported: false, saved: false, at: null };
+  const note = document.getElementById("offline-note");
+  function fire(){ try { document.dispatchEvent(new CustomEvent("bs:offline")); } catch(e){} }
+  function check(){
+    if (!window.caches) return;
+    caches.match(new URL("./", location.href).href).then(function(r){
+      st.saved = !!r;
+      const d = r && r.headers.get("date");
+      st.at = d ? new Date(d) : null;
+      fire();
+    }).catch(function(){});
+  }
+  // на claude.ai файла sw.js нет — регистрация не удастся, и строка «Без сети» скажет, что эта копия в дороге не откроется
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")){
+    st.supported = true;
+    try {
+      navigator.serviceWorker.register("sw.js").then(check, function(){ st.supported = false; fire(); });
+    } catch(e){ st.supported = false; }
+    navigator.serviceWorker.addEventListener("message", function(e){ if (e.data && e.data.type === "bs-cached") check(); });
+  }
+  function render(){
+    if (!note) return;
+    const off = navigator.onLine === false;
+    note.hidden = !off;
+    if (!off) return;
+    note.innerHTML = "<b>Нет сети.</b> Книга работает с копии на этом устройстве: главы, упражнения, «Повторение», тренажёры и всё на слух. " +
+      "Не работает только распознавание речи — чтение по ролям, «Говорить» и контрольная запись. " +
+      "Результаты сохраняются здесь и уйдут сами, когда связь появится.";
+  }
+  window.addEventListener("online", render);
+  window.addEventListener("offline", render);
+  render();
 })();
 </script>
