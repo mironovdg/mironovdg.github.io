@@ -5609,6 +5609,9 @@ td.w.speaking{color:var(--sea)}
     const target = [], owner = [], rawT = [];
     words.forEach(function(w, k){ if (!w.name) w.toks.forEach(function(t){ target.push(P.key(t)); rawT.push(t); owner.push(k); }); });
     const typedRaw = P.tokens(typed), typedKeys = typedRaw.map(P.key);
+    // слова как напечатаны (с апострофами) — чтобы отличить ошибку написания от нерасслышанного (решение ученика, 25.09.2026)
+    const typedWords = String(typed || "").toLowerCase().replace(/[’]/g, "'").split(/\s+/)
+      .map(function(x){ return x.replace(/^[^a-z0-9'|]+|[^a-z0-9'|]+$/g, ""); }).filter(Boolean);
     const hit = align(target, typedKeys);
     const state = words.map(function(w){ return w.name || !w.toks.length ? "name" : "ok"; });
     target.forEach(function(t, i){ if (!hit[i]) state[owner[i]] = "miss"; });
@@ -5622,6 +5625,20 @@ td.w.speaking{color:var(--sea)}
       for (let i = idx[idx.length - 1] + 1; i < target.length; i++) if (hit[i]){ hi = hit[i] - 1; break; }
       const cand = typedRaw.slice(lo + 1, hi);
       const partly = idx.some(function(i){ return hit[i]; });
+      // апостроф лишний или пропущен: your's вместо yours, its вместо it's — услышал верно, ошибся в написании
+      const flat = w.raw.replace(/'/g, "");
+      const apo = typedWords.filter(function(x){ return x !== w.raw && x.replace(/'/g, "") === flat; })[0];
+      if (apo){
+        state[k] = "spell";
+        note("spell", "написание: «" + apo + "» — пишется «" + w.raw + "»" + (/'/.test(w.raw)
+          ? " — с апострофом: это сокращение (" + w.raw + " = " + ({ "it's": "it is", "you're": "you are", "they're": "they are", "we're": "we are", "he's": "he is", "she's": "she is", "i'm": "I am" }[w.raw] || "два слова вместе") + ")"
+          : " — без апострофа: yours, hers, ours, theirs, its пишутся без него"));
+        return;
+      }
+      // «1», «l» или «|» вместо местоимения I — опечатка, а не нерасслышанное слово
+      if (w.raw === "i" && typedWords.slice(Math.max(0, lo + 1), hi).concat(typedWords).some(function(x){ return x === "1" || x === "l" || x === "|"; })){
+        state[k] = "spell"; note("spell", "опечатка: «I» (я) — одна заглавная буква I, не цифра 1"); return;
+      }
       if (partly && /n't$/.test(w.raw)){ note("contr", "«" + w.word.replace(/[.,!?;:]+$/, "") + "» — не расслышал отрицание n't: в речи оно звучит коротко, почти одним [nt]"); return; }
       if (partly && /'(ll|d|s|re|ve|m)$/.test(w.raw)){ note("contr", "«" + w.word.replace(/[.,!?;:]+$/, "") + "» — не расслышал сокращение: 'll, 'd, 's, 're, 've звучат одним согласным"); return; }
       const t = rawT[idx[0]];
@@ -5638,7 +5655,8 @@ td.w.speaking{color:var(--sea)}
           if (ex){ note("sound", "«" + h + "» вместо «" + t + "» " + PH.show(t) + ": " + ex.text); return; }
         }
       }
-      if (w.func){ note("weak", "пропущено «" + t + "» — служебное слово в речи звучит слабо и быстро" + (PH && PH.show(t) ? ", примерно " + PH.show(t) : "")); return; }
+      // «I» не бывает слабым: всегда полное /aɪ/ — его пропуск объясняем как обычное слово
+      if (w.func && t !== "i"){ note("weak", "пропущено «" + t + "» — служебное слово в речи звучит слабо и быстро" + (PH && PH.show(t) ? ", примерно " + PH.show(t) : "")); return; }
       note("word", "не расслышал «" + w.word.replace(/[.,!?;:]+$/, "") + "»" + (PH && PH.phrase(w.word) ? " " + PH.phrase(w.word) : ""));
     });
     let content = 0, heard = 0, all = 0, allHeard = 0;
