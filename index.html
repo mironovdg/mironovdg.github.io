@@ -5836,7 +5836,12 @@ td.w.speaking{color:var(--sea)}
     if (!b) return;
     if (b.classList.contains("ls-chip")){
       const g = b.dataset.group, v = b.dataset.val;
-      if (g === "ch") setup.ch = v; else if (g === "speed") setup.speed = v; else if (g === "size") setup.size = Number(v);
+      if (g === "ch") setup.ch = v;
+      else if (g === "speed"){   // скорость запоминается сразу при выборе — до следующей смены (решение ученика, 25.09.2026)
+        setup.speed = v;
+        const st = readStats(); st.lastSpeed = v; saveStats(st);
+      }
+      else if (g === "size") setup.size = Number(v);
       renderSetup(); return;
     }
     if (b.classList.contains("ls-start") || b.classList.contains("ls-again")){ start(); return; }
@@ -9414,6 +9419,16 @@ td.w.speaking{color:var(--sea)}
   document.addEventListener("bs:vocab-changed", renderVocabCount);
   const vcEl = document.getElementById("vocab-count");
   if (vcEl) vcEl.addEventListener("click", function(){ showView("today"); });
+  // слова, снятые с повторения по решению ученика (25.09.2026): kate — имя героини до переименования в Лиззи.
+  // Удаляем после первой синхронизации — иначе запись с другого устройства вернула бы слово.
+  const RETIRED = ["kate", "Kate"];
+  function retire(){
+    const s = loadSrs(); let changed = false;
+    RETIRED.forEach(function(w){ if (s.w && s.w[w]){ delete s.w[w]; changed = true; } });
+    if (changed){ saveSrs(s); renderDashboard(); }
+  }
+  document.addEventListener("bs:sync-ready", retire);
+  if (window.__bsSyncReady === true || !(function(){ try { return localStorage.getItem("bs-sync-key"); } catch(e){ return null; } })()) retire();
   renderVocabCount();
   renderDashboard();
   document.addEventListener("click", function(e){
