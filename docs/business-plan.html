@@ -88,6 +88,22 @@ td .box{top:3px}
   tr,.cols>div,.note,.key,.summary,ul.check li{break-inside:avoid}
   a{color:inherit;text-decoration:none}
 }
+
+details.changes{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:6px;padding:10px 16px;margin:0 0 22px}
+details.changes > summary{cursor:pointer;font-family:var(--mono);font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);font-weight:600}
+details.changes ul{margin:8px 0 4px;padding-left:1.1em;font-size:14.5px}
+details.changes li{margin:3px 0;max-width:none}
+details.changes li.cadd::marker{content:"+ ";color:var(--accent)}
+details.changes li.cchg::marker{content:"~ ";color:var(--accent)}
+details.changes li.cdel{text-decoration:line-through;opacity:.75}
+details.changes .cleg{font-size:13px;margin:6px 0 0;opacity:.8}
+details.changes .cv{font-family:var(--mono);font-size:12px;margin:10px 0 0;opacity:.8}
+details.older{margin-top:6px}
+details.older > summary{cursor:pointer;font-size:13px}
+.fresh{box-shadow:inset 3px 0 0 var(--accent);background:var(--accent-soft)}
+p.fresh,li.fresh,h2.fresh,h3.fresh{padding-left:10px;border-radius:3px}
+tr.fresh td{background:var(--accent-soft)}
+@media print{details.changes{break-inside:avoid}}
 </style>
 </head><body>
 <nav class="docbar"><a href="../">← Книга</a><a href="./">Все документы</a><span class="sp"></span><span>обновлён 26.09.2026</span><a href="business-plan.pdf">PDF</a></nav>
@@ -97,6 +113,7 @@ td .box{top:3px}
   <p class="lead">Книга, которая учит английскому через личную историю, растёт из проекта для одного ученика в сервис. Здесь — этапы, прикидка экономики, место на рынке России и направление «русский для иностранцев».</p>
   <p class="meta">Рабочее название — «Своя история» (по слайдам README). Все цифры — прикидка на открытых данных сентября 2026 года; допущения названы рядом с цифрами.</p>
 
+  <details class="changes" open><summary>Что изменилось · 26.09.2026</summary><ul><li class="cchg">Изменено · Сравнение моделей для платной версии: 3 · 26.09 · Открытые модели через Cloud.ru с оплатой в рублях. Kimi K2.6 и GLM-5.2 — 33 из 33 с первой попытки, как Claude; DeepSeek V4-Pro — 31, после правки 32 (≈ 7,6 ₽ за главу, самый живой сюжет)…</li></ul><p class="cleg">Новое и изменённое подсвечено в тексте.</p></details>
   <div class="summary">
     <h2>Коротко</h2>
     <ol>
@@ -215,7 +232,7 @@ td .box{top:3px}
     <tbody>
       <tr><td class="stage">1 · 25.09</td><td>Главу с первого раза пишет только Claude Opus (33 из 33, и эталон, и слепой прогон); Claude Haiku 4.5 — 29 из 33. Из моделей, доступных в России, ближе всех Qwen3 235B (Yandex AI Studio, ≈11 ₽ за главу) и GigaChat 3 Ultra (бесплатно в Freemium). YandexGPT Pro, gpt-oss, GigaChat 2 Lite / Pro / Max, GigaChat 3 Pro / Lightning не годятся.</td></tr>
       <tr><td class="stage">2 · 25.09</td><td>Модель исправляет свой ответ по списку ошибок автопроверки (до двух правок). GigaChat 3 Ultra: 8 ошибок → 3; Qwen3 не сходится (3 → 2 → 4). Смысловые ошибки (путаница героев, методика внутри сюжета) список не ловит.</td></tr>
-      <tr><td class="stage">3 · ждёт ключа</td><td>Китайские модели через Cloud.ru с оплатой в рублях: DeepSeek V4-Pro (размещена в России), V4-Flash, GLM-5.1, Kimi K2.6 — на том же задании.</td></tr>
+      <tr class="fresh"><td class="stage">3 · 26.09</td><td>Открытые модели через Cloud.ru с оплатой в рублях. Kimi K2.6 и GLM-5.2 — 33 из 33 с первой попытки, как Claude; DeepSeek V4-Pro — 31, после правки 32 (≈ 7,6 ₽ за главу, самый живой сюжет); V4.1-Flash взяла сюжет из образца разметки. По правилам модели для сервиса есть — дальше их различает качество сюжета.</td></tr>
     </tbody>
   </table></div>
   <div class="key"><b>Вывод — конвейер.</b> Половину ошибок дают упражнения: ключи, совпадения ответов выбора и пропусков, сопоставление. Их надёжнее строить кодом из готового диалога и словаря. Модели остаются история, диалог, словарь и грамматическая заметка — это проверяется отдельно, и требования к модели ниже. Первый шаг — перевести на конвейер книгу автора (идёт как доработка книги).</div>

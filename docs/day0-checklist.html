@@ -88,12 +88,29 @@ td .box{top:3px}
   tr,.cols>div,.note,.key,.summary,ul.check li{break-inside:avoid}
   a{color:inherit;text-decoration:none}
 }
+
+details.changes{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:6px;padding:10px 16px;margin:0 0 22px}
+details.changes > summary{cursor:pointer;font-family:var(--mono);font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);font-weight:600}
+details.changes ul{margin:8px 0 4px;padding-left:1.1em;font-size:14.5px}
+details.changes li{margin:3px 0;max-width:none}
+details.changes li.cadd::marker{content:"+ ";color:var(--accent)}
+details.changes li.cchg::marker{content:"~ ";color:var(--accent)}
+details.changes li.cdel{text-decoration:line-through;opacity:.75}
+details.changes .cleg{font-size:13px;margin:6px 0 0;opacity:.8}
+details.changes .cv{font-family:var(--mono);font-size:12px;margin:10px 0 0;opacity:.8}
+details.older{margin-top:6px}
+details.older > summary{cursor:pointer;font-size:13px}
+.fresh{box-shadow:inset 3px 0 0 var(--accent);background:var(--accent-soft)}
+p.fresh,li.fresh,h2.fresh,h3.fresh{padding-left:10px;border-radius:3px}
+tr.fresh td{background:var(--accent-soft)}
+@media print{details.changes{break-inside:avoid}}
 </style>
 </head><body>
 <nav class="docbar"><a href="../">← Книга</a><a href="./">Все документы</a><span class="sp"></span><span>обновлён 26.09.2026</span><a href="day0-checklist.pdf">PDF</a></nav>
 <div class="page">
 <p class="eyebrow">Продвижение · перечень · обновлён 26.09.2026</p>
 <h1>Что должно быть готово до «дня 0»</h1>
+
 <p>К старту — <b>запас контента на 2 недели</b>, снятый, смонтированный и разложенный по готовым пакетам (видео + обложка + тексты под каждую площадку). Общий план по неделям — <code>promotion/plan.md</code>. <b>Д</b> — Дмитрий, <b>C</b> — Claude.</p>
 <hr>
 <h2>1. Решения (до всего остального)</h2>

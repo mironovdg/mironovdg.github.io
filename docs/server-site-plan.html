@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Серверная часть и сайт: план работ</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Serif:wght@500;600&display=swap">
+<style>
+:root{
+  --ground:#F5F7F8; --surface:#FFFFFF; --ink:#18222D; --ink-soft:#3D4957; --muted:#667385;
+  --rule:#DCE2E7; --accent:#0E6B6A; --accent-soft:#E2F0EF; --warn:#9A5B12; --warn-soft:#F7ECDD; --good:#2F6B3A;
+  --serif:"IBM Plex Serif",Georgia,"Times New Roman",serif; --sans:"IBM Plex Sans","Segoe UI",Roboto,Arial,sans-serif;
+  --mono:"IBM Plex Mono",Consolas,"Courier New",monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#10161C; --surface:#172029; --ink:#E4E9EF; --ink-soft:#BAC4CF; --muted:#8C99A8;
+    --rule:#2A3541; --accent:#56B9B5; --accent-soft:#16302F; --warn:#E0A55A; --warn-soft:#33261A; --good:#7CC48A;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#10161C; --surface:#172029; --ink:#E4E9EF; --ink-soft:#BAC4CF; --muted:#8C99A8;
+  --rule:#2A3541; --accent:#56B9B5; --accent-soft:#16302F; --warn:#E0A55A; --warn-soft:#33261A; --good:#7CC48A;
+  color-scheme:dark;
+}
+body{background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;padding-inline:20px;padding-block:28px 64px}
+.page{max-width:52rem;margin:0 auto}
+h1,h2,h3{font-family:var(--serif);font-weight:600;text-wrap:balance;line-height:1.25;color:var(--ink)}
+h1{font-size:34px;margin:6px 0 10px}
+h2{font-size:24px;margin:44px 0 12px;padding-top:18px;border-top:1px solid var(--rule)}
+h3{font-size:18px;margin:26px 0 8px}
+p,li{max-width:68ch}
+p{margin:0 0 12px}
+ul,ol{margin:0 0 14px;padding-left:1.3em}
+li{margin:5px 0}
+a{color:var(--accent)}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0}
+.lead{font-size:18px;color:var(--ink-soft)}
+.meta{font-size:13.5px;color:var(--muted)}
+.summary{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:18px 20px;margin:22px 0}
+.summary h2{margin:0 0 10px;padding:0;border:0;font-size:20px}
+.summary ol{margin:0}
+.note{background:var(--warn-soft);border-left:3px solid var(--warn);border-radius:6px;padding:12px 16px;margin:16px 0;color:var(--ink)}
+.note b{color:var(--warn)}
+.key{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:6px;padding:12px 16px;margin:16px 0}
+.scroll{overflow-x:auto;margin:12px 0 16px;border:1px solid var(--rule);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500;background:var(--ground)}
+tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.total td{font-weight:600}
+.stage{font-family:var(--mono);font-size:12px;color:var(--accent);white-space:nowrap}
+.pos{color:var(--good)}
+.neg{color:var(--warn)}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:12px;margin:14px 0}
+.cols > div{background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:12px 14px}
+.cols h3{margin:0 0 6px;font-size:16px}
+.cols p{font-size:14.5px;margin:0;color:var(--ink-soft)}
+.sources li{font-size:14px;color:var(--ink-soft)}
+.sources a{word-break:break-word}
+@media (max-width:560px){ h1{font-size:28px} h2{font-size:21px} body{font-size:15.5px} }
+
+.docbar{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px;max-width:52rem;margin:0 auto 22px;font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;color:var(--muted)}
+.docbar a{text-decoration:none}
+.docbar a:hover{text-decoration:underline}
+.docbar .sp{flex:1}
+code{font-family:var(--mono);font-size:.88em;background:var(--accent-soft);padding:0 4px;border-radius:4px;word-break:break-word}
+hr{border:0;border-top:1px solid var(--rule);margin:24px 0}
+ul.check{list-style:none;padding-left:0}
+ul.check li{display:flex;gap:10px;align-items:baseline}
+.box{display:inline-block;width:12px;height:12px;border:1.4px solid var(--accent);border-radius:3px;flex:none;position:relative;top:1px}
+.box.on{background:var(--accent)}
+td .box{top:3px}
+.doclist{list-style:none;padding:0;margin:18px 0}
+.doclist li{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:14px 16px;margin:0 0 12px;max-width:none}
+.doclist a.t{font-family:var(--serif);font-size:19px;font-weight:600;text-decoration:none}
+.doclist p{margin:4px 0 0;color:var(--ink-soft);font-size:14.5px}
+.doclist .m{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:8px}
+@page{size:A4;margin:15mm 14mm}
+@media print{
+  :root:not([data-theme="none"]){--ground:#fff;--surface:#fff;--ink:#16202a;--ink-soft:#3d4957;--muted:#5d6977;--rule:#d5dbe0;
+    --accent:#0e6b6a;--accent-soft:#e6f2f1;--warn:#8a500f;--warn-soft:#f8efe2;--good:#2f6b3a;color-scheme:light}
+  body{padding:0;font-size:10.5pt;line-height:1.5}
+  .docbar{display:none}
+  h1{font-size:22pt} h2{font-size:15pt;margin-top:22px;break-after:avoid} h3{break-after:avoid}
+  .scroll{overflow:visible;border:0}
+  tr,.cols>div,.note,.key,.summary,ul.check li{break-inside:avoid}
+  a{color:inherit;text-decoration:none}
+}
+
+details.changes{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:6px;padding:10px 16px;margin:0 0 22px}
+details.changes > summary{cursor:pointer;font-family:var(--mono);font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);font-weight:600}
+details.changes ul{margin:8px 0 4px;padding-left:1.1em;font-size:14.5px}
+details.changes li{margin:3px 0;max-width:none}
+details.changes li.cadd::marker{content:"+ ";color:var(--accent)}
+details.changes li.cchg::marker{content:"~ ";color:var(--accent)}
+details.changes li.cdel{text-decoration:line-through;opacity:.75}
+details.changes .cleg{font-size:13px;margin:6px 0 0;opacity:.8}
+details.changes .cv{font-family:var(--mono);font-size:12px;margin:10px 0 0;opacity:.8}
+details.older{margin-top:6px}
+details.older > summary{cursor:pointer;font-size:13px}
+.fresh{box-shadow:inset 3px 0 0 var(--accent);background:var(--accent-soft)}
+p.fresh,li.fresh,h2.fresh,h3.fresh{padding-left:10px;border-radius:3px}
+tr.fresh td{background:var(--accent-soft)}
+@media print{details.changes{break-inside:avoid}}
+</style>
+</head><body>
+<nav class="docbar"><a href="../">← Книга</a><a href="./">Все документы</a><span class="sp"></span><span>обновлён 26.09.2026</span><a href="server-site-plan.pdf">PDF</a></nav>
+<div class="page">
+<p class="eyebrow">Сервер и сайт · план работ · обновлён 26.09.2026</p>
+<h1>Серверная часть и сайт: план работ</h1>
+<details class="changes" open><summary>Что изменилось · 26.09.2026</summary><ul><li class="cchg">Изменено · Что уже есть — на этом строим: Сравнение моделей: раунды 1–2 (Yandex, GigaChat); раунд 3 (Cloud.ru, 26.09) — Kimi K2.6 и GLM-5.2 прошли 33 проверки из 33 с первой попытки, DeepSeek V4-Pro — 32 после правки. Модели для сервиса есть.</li><li class="cchg">Изменено · Этап 0. Сейчас, до решения — доработка книги: 0.3 · Раунд 3 сравнения моделей (Cloud.ru: DeepSeek V4-Pro и V4.1-Flash, GLM-5.2, Kimi K2.6): Kimi и GLM — 33/33, DeepSeek V4-Pro — 32/33 · C · 26.09 · ☑</li><li class="cchg">Изменено · Риски: Качество моделей в России: по автопроверкам риск снят (раунд 3: две модели — 33 из 33), остаётся качество сюжета и естественность английского — их проверяет методист в бете; без этого режим «Сервис» …</li></ul><p class="cleg">Новое и изменённое подсвечено в тексте.</p></details>
+<p>Черновик от 26.09.2026. Основа — ТЗ продукта (<code>strategy/tz_1_product.md</code>, режим «Сервис») и ТЗ сайта (<code>strategy/tz_3_site.md</code>). Этап 0 идёт уже сейчас как доработка книги; этапы 1–6 — <b>только после решения Дмитрия</b>.</p>
+<p>Кто что делает: <b>Д</b> — Дмитрий, <b>C</b> — Claude, <b>П</b> — подрядчик, юрист или бухгалтер.</p>
+<hr>
+<h2>Что уже есть — на этом строим</h2>
+<ul><li><b>Книга и движок:</b> одна страница <code>book.html</code> (главы, «Повторение», звуки, слушание, прогресс, офлайн-режим), шаблон и справочники для учеников в закрытом репозитории движка.</li><li><b>Сайт книги:</b> GitHub Pages (mironovdg.github.io) — публичная копия без ключей и отчётов, документы проекта.</li><li><b>Хранилище:</b> у каждого ученика своя Google Таблица (Apps Script) — отчёты, синхронизация между устройствами, записи голоса.</li><li><b>Трекеры</b> первого ученика — база SQLite (с 26.09.2026), у учеников движка — CSV.</li><li><b>Конвейер главы</b> — в работе: разбор отчётов и трекеры кодом, упражнения кодом, 33 автопроверки.</li><li class="fresh"><b>Сравнение моделей:</b> раунды 1–2 (Yandex, GigaChat); раунд 3 (Cloud.ru, 26.09) — Kimi K2.6 и GLM-5.2 прошли 33 проверки из 33 с первой попытки, DeepSeek V4-Pro — 32 после правки. Модели для сервиса есть.</li></ul>
+<h2>Архитектура, к которой идём</h2>
+<div class="scroll"><table><thead><tr><th>Часть</th><th>Что делает</th><th>Где (всё — в России, 152-ФЗ)</th></tr></thead><tbody><tr><td>Сайт</td><td>лендинг, методика, демо-глава, справочные SEO-страницы, блог</td><td>статический хостинг + CDN (Yandex Object Storage)</td></tr><tr><td>Приложение книги</td><td>нынешняя <code>book.html</code> из движка; синхронизация и отчёты — через наш API вместо Google Таблицы</td><td>там же, отдаётся с сайта</td></tr><tr><td>API</td><td>вход, профиль, синхронизация, отчёты, записи голоса, подписки</td><td>Python (FastAPI), Yandex Cloud (ВМ или Serverless Containers)</td></tr><tr><td>База</td><td>ученики, состояние книги, отчёты, трекеры, главы, подписки</td><td>Yandex Managed PostgreSQL</td></tr><tr><td>Файлы</td><td>записи голоса, PDF, резервные копии</td><td>Yandex Object Storage</td></tr><tr><td>Конвейер глав</td><td>очередь «написать главу» → исполнитель: разбор, задание модели, упражнения кодом, проверки, правки, сборка</td><td>воркер рядом с API</td></tr><tr><td>Модели</td><td>пишут историю, диалог, словарь, заметку по грамматике</td><td>Cloud.ru / Yandex AI Studio по API, оплата в рублях</td></tr><tr><td>Админка</td><td>ученики, подписки, очередь ручной проверки глав, метрики</td><td>часть API</td></tr><tr><td>Почта</td><td>вход по ссылке, уведомления о новой главе</td><td>транзакционная почта (российский сервис)</td></tr></tbody></table></div>
+<p>Claude — для разработки (код, тексты, проверка), в работе сервиса главы пишут модели, доступные в России.</p>
+<hr>
+<h2>Этап 0. Сейчас, до решения — доработка книги</h2>
+<div class="scroll"><table><thead><tr><th>#</th><th>Что</th><th>Кто</th><th>Срок</th><th>Готово</th></tr></thead><tbody><tr><td>0.1</td><td>Трекеры из Excel в базу SQLite, запись одной транзакцией, ежедневные копии</td><td>C</td><td>26.09</td><td><span class="box on"></span></td></tr><tr><td>0.2</td><td>Конвейер главы «сначала код» для своей книги: разбор отчётов и трекеры без модели, упражнения кодом, 33 проверки, короткое задание модели</td><td>C</td><td>1–2 недели</td><td><span class="box"></span></td></tr><tr class="fresh"><td>0.3</td><td>Раунд 3 сравнения моделей (Cloud.ru: DeepSeek V4-Pro и V4.1-Flash, GLM-5.2, Kimi K2.6): Kimi и GLM — 33/33, DeepSeek V4-Pro — 32/33</td><td>C</td><td>26.09</td><td><span class="box on"></span></td></tr><tr><td>0.4</td><td>Сторож автоматики: завис или упал запуск — сообщение (зависание 23.09 три дня оставалось незамеченным)</td><td>C</td><td>1 день</td><td><span class="box"></span></td></tr><tr><td>0.5</td><td>Сухой прогон: глава своей книги на модели из раунда 3 через конвейер, без выкладки, сравнение с главой Claude</td><td>C, проверка — Д</td><td>после 0.2–0.3</td><td><span class="box"></span></td></tr></tbody></table></div>
+<h2>Этап 1. Решения (неделя 1 после старта)</h2>
+<div class="scroll"><table><thead><tr><th>#</th><th>Что решить</th><th>Кто</th><th>Готово</th></tr></thead><tbody><tr><td>1.1</td><td>Название и домен: отдельный домен (рекомендую) или поддомен skills4u — подробно в ТЗ сайта, раздел 2</td><td>Д</td><td><span class="box"></span></td></tr><tr><td>1.2</td><td>Облако: Yandex Cloud для сервера (рекомендую) + модели через Cloud.ru или Yandex AI Studio по итогам раунда 3</td><td>Д, варианты — C</td><td><span class="box"></span></td></tr><tr><td>1.3</td><td>Кто разрабатывает: Claude + Дмитрий (рекомендую для прототипа) или подрядчик</td><td>Д</td><td><span class="box"></span></td></tr><tr><td>1.4</td><td>Бюджет прототипа: ориентир 15–25 тыс. ₽ в месяц (этап 1 бизнес-плана)</td><td>Д</td><td><span class="box"></span></td></tr><tr><td>1.5</td><td>Форма работы: самозанятость к приёму оплаты; политика персональных данных и уведомление Роскомнадзора — до открытия регистрации и листа ожидания</td><td>Д + П</td><td><span class="box"></span></td></tr></tbody></table></div>
+<h2>Этап 2. Лендинг и справочные страницы (2–3 недели)</h2>
+<div class="scroll"><table><thead><tr><th>#</th><th>Что</th><th>Кто</th><th>Готово</th></tr></thead><tbody><tr><td>2.1</td><td>Домен, DNS, HTTPS, статический хостинг</td><td>Д (покупка), C (настройка)</td><td><span class="box"></span></td></tr><tr><td>2.2</td><td>Страницы: главная, как это работает, методика, уровни, FAQ</td><td>C тексты и вёрстка, Д правка</td><td><span class="box"></span></td></tr><tr><td>2.3</td><td>Демо-глава без регистрации</td><td>C</td><td><span class="box"></span></td></tr><tr><td>2.4</td><td>Лист ожидания (почта) — только после политики ПДн (1.5)</td><td>C</td><td><span class="box"></span></td></tr><tr><td>2.5</td><td>Справочные страницы из данных книги: неправильные глаголы со звуком, частотные слова по уровням, британское произношение трудных звуков</td><td>C</td><td><span class="box"></span></td></tr><tr><td>2.6</td><td>Поиск: sitemap, разметка schema.org, <code>llms.txt</code>, Яндекс Вебмастер и Google Search Console, Яндекс Метрика с согласием</td><td>C, аккаунты — Д</td><td><span class="box"></span></td></tr></tbody></table></div>
+<p><b>Готово, когда:</b> страницы открываются на телефоне быстрее 1,5 с, лист ожидания собирает адреса, страницы видны в поиске.</p>
+<h2>Этап 3. Сервер: своё хранилище вместо Google Таблицы (3–4 недели)</h2>
+<div class="scroll"><table><thead><tr><th>#</th><th>Что</th><th>Кто</th><th>Готово</th></tr></thead><tbody><tr><td>3.1</td><td>Аккаунт и проект в облаке, окружения «тест» и «работа», ключи — только в хранилище секретов</td><td>Д (аккаунт, оплата), C</td><td><span class="box"></span></td></tr><tr><td>3.2</td><td>База PostgreSQL: ученики, состояние книги (как лист <code>sync</code>), отчёты, трекеры (схема <code>trackers.sqlite</code>), главы</td><td>C</td><td><span class="box"></span></td></tr><tr><td>3.3</td><td>API: вход по ссылке на почту, профиль, синхронизация, отчёты, записи голоса в хранилище файлов</td><td>C</td><td><span class="box"></span></td></tr><tr><td>3.4</td><td>Книга: адрес нашего API вместо Google Таблицы — переключателем в движке, чтобы «свои» ученики на Google Таблицах работали как раньше</td><td>C</td><td><span class="box"></span></td></tr><tr><td>3.5</td><td>Перенос первого ученика (Д): данные из таблицы в базу; таблица остаётся запасной 2 недели</td><td>C, проверка — Д</td><td><span class="box"></span></td></tr><tr><td>3.6</td><td>Резервные копии базы, мониторинг, журнал ошибок, оповещение о сбоях</td><td>C</td><td><span class="box"></span></td></tr></tbody></table></div>
+<p><b>Готово, когда:</b> книга работает с нашего сервера на телефоне и ноутбуке; синхронизация и офлайн — не хуже нынешних; копия базы восстанавливается.</p>
+<h2>Этап 4. Главы на сервере — режим «Сервис» (3–4 недели)</h2>
+<div class="scroll"><table><thead><tr><th>#</th><th>Что</th><th>Кто</th><th>Готово</th></tr></thead><tbody><tr><td>4.1</td><td>Очередь заданий: отчёт по главе → задание «написать главу»</td><td>C</td><td><span class="box"></span></td></tr><tr><td>4.2</td><td>Исполнитель конвейера (из этапа 0.2): разбор, трекеры, задание модели, ответ, упражнения кодом, 33 проверки, до 2 правок, сборка, выкладка ученику</td><td>C</td><td><span class="box"></span></td></tr><tr><td>4.3</td><td>Очередь ручной проверки в админке: глава не прошла проверки — ученик получает её позже, но без ошибок</td><td>C, проверяет — Д или методист</td><td><span class="box"></span></td></tr><tr><td>4.4</td><td>Учёт расхода: токены и цена главы на ученика, предел расхода в день</td><td>C</td><td><span class="box"></span></td></tr><tr><td>4.5</td><td>Бета: 1–3 ученика без Claude, потом 30–50 (этап 1 бизнес-плана)</td><td>Д приглашает, C сопровождает</td><td><span class="box"></span></td></tr></tbody></table></div>
+<p><b>Готово, когда:</b> не меньше 95% глав проходят проверки без человека; глава готова за 30 минут после отчёта; цена главы — не больше 15 ₽.</p>
+<h2>Этап 5. Кабинеты и подписки без оплаты (2–3 недели)</h2>
+<div class="scroll"><table><thead><tr><th>#</th><th>Что</th><th>Кто</th><th>Готово</th></tr></thead><tbody><tr><td>5.1</td><td>Регистрация, кабинет: моя книга, прогресс, настройки, смена истории</td><td>C</td><td><span class="box"></span></td></tr><tr><td>5.2</td><td>Подписки: пробный период (бета — месяц бесплатно, дальше 390 ₽), статусы, продление, промокоды, история</td><td>C</td><td><span class="box"></span></td></tr><tr><td>5.3</td><td>Место для платёжного модуля: события «оплачено / возврат / отмена» — подключение оплаты станет заменой одного модуля</td><td>C</td><td><span class="box"></span></td></tr><tr><td>5.4</td><td>Админка: ученики, подписки, метрики — сколько дошли от главы 1 до главы 5, кто занимается через месяц</td><td>C</td><td><span class="box"></span></td></tr></tbody></table></div>
+<h2>Этап 6. Приём оплаты (отдельный проект)</h2>
+<div class="scroll"><table><thead><tr><th>#</th><th>Что</th><th>Кто</th><th>Готово</th></tr></thead><tbody><tr><td>6.1</td><td>Самозанятость или ИП, оферта, чеки</td><td>Д + П</td><td><span class="box"></span></td></tr><tr><td>6.2</td><td>Эквайринг: ЮKassa или CloudPayments (СБП и карты «Мир»), рекуррентные платежи</td><td>Д (договор), C (подключение)</td><td><span class="box"></span></td></tr><tr><td>6.3</td><td>Оплата из-за рубежа — только после консультации юриста и бухгалтера (ТЗ сайта, раздел 7)</td><td>Д + П</td><td><span class="box"></span></td></tr></tbody></table></div>
+<hr>
+<h2>Сроки и деньги (ориентир)</h2>
+<div class="scroll"><table><thead><tr><th>Этап</th><th>Длительность</th><th>Расходы</th></tr></thead><tbody><tr><td>0. Доработка книги</td><td>идёт</td><td>модели для тестов — сотни рублей</td></tr><tr><td>1. Решения</td><td>1 неделя</td><td>—</td></tr><tr><td>2. Лендинг и справочные страницы</td><td>2–3 недели</td><td>домен 0,2–2 тыс. ₽ в год, хостинг статики — до 0,5 тыс. ₽ в месяц</td></tr><tr><td>3. Сервер и хранилище</td><td>3–4 недели</td><td>облако ≈ 5–10 тыс. ₽ в месяц (сервер, база, файлы)</td></tr><tr><td>4. Главы на сервере</td><td>3–4 недели</td><td>модели ≈ 8–15 ₽ за главу (≈ 100–180 ₽ на ученика в месяц)</td></tr><tr><td>5. Кабинеты и подписки</td><td>2–3 недели</td><td>—</td></tr><tr><td>6. Оплата</td><td>по договору с эквайером</td><td>≈ 0,5–3% платежа</td></tr></tbody></table></div>
+<p>До беты с подпиской без оплаты — <b>≈ 3–4 месяца</b> при разработке Claude и 1–3 часах Дмитрия в неделю. Этапы 2 и 3 можно вести параллельно.</p>
+<h2>Риски</h2>
+<ul><li class="fresh"><b>Качество моделей в России:</b> по автопроверкам риск снят (раунд 3: две модели — 33 из 33), остаётся качество сюжета и естественность английского — их проверяет методист в бете; без этого режим «Сервис» держится на ручной проверке.</li><li><b>Персональные данные:</b> почта, прогресс и записи голоса — только в российском облаке; политика и уведомление Роскомнадзора — до сбора первого адреса.</li><li><b>Время Дмитрия:</b> решения, проверка глав и текстов; разработка не должна съедать занятия по книге и съёмки.</li><li><b>Одно облако:</b> резервные копии — в отдельное хранилище, восстановление проверять раз в месяц.</li></ul>
+<h2>Что решить Дмитрию</h2>
+<ul><li>Стартовать ли этапы 1–2 (решения и лендинг) — они не требуют сервера и начинают работать на поиск раньше всего остального.</li><li>Облако для сервера и бюджет прототипа.</li><li>Кто методист выборочной проверки глав в бете.</li></ul>
+</div>
+</body></html>

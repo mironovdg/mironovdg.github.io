@@ -88,13 +88,29 @@ td .box{top:3px}
   tr,.cols>div,.note,.key,.summary,ul.check li{break-inside:avoid}
   a{color:inherit;text-decoration:none}
 }
+
+details.changes{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:6px;padding:10px 16px;margin:0 0 22px}
+details.changes > summary{cursor:pointer;font-family:var(--mono);font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);font-weight:600}
+details.changes ul{margin:8px 0 4px;padding-left:1.1em;font-size:14.5px}
+details.changes li{margin:3px 0;max-width:none}
+details.changes li.cadd::marker{content:"+ ";color:var(--accent)}
+details.changes li.cchg::marker{content:"~ ";color:var(--accent)}
+details.changes li.cdel{text-decoration:line-through;opacity:.75}
+details.changes .cleg{font-size:13px;margin:6px 0 0;opacity:.8}
+details.changes .cv{font-family:var(--mono);font-size:12px;margin:10px 0 0;opacity:.8}
+details.older{margin-top:6px}
+details.older > summary{cursor:pointer;font-size:13px}
+.fresh{box-shadow:inset 3px 0 0 var(--accent);background:var(--accent-soft)}
+p.fresh,li.fresh,h2.fresh,h3.fresh{padding-left:10px;border-radius:3px}
+tr.fresh td{background:var(--accent-soft)}
+@media print{details.changes{break-inside:avoid}}
 </style>
 </head><body>
 <nav class="docbar"><a href="../">← Книга</a></nav>
 <div class="page">
 <p class="eyebrow">«Своя история» · документы</p>
 <h1>Документы проекта</h1>
-<p class="lead">Бизнес-план и продвижение — актуальные версии; в каждом документе есть PDF.</p>
-<ul class="doclist"><li><a class="t" href="business-plan.html">Бизнес-план «Своя история»</a><p>этапы, экономика подписчика, рынок России, сравнение моделей, русский для иностранцев</p><div class="m">обновлён 26.09.2026 · <a href="business-plan.pdf">PDF</a></div></li><li><a class="t" href="promo-plan.html">Продвижение: план работ до запуска</a><p>от решений и аккаунтов до «дня 0» и шести недель проверки интереса</p><div class="m">обновлён 26.09.2026 · <a href="promo-plan.pdf">PDF</a></div></li><li><a class="t" href="day0-checklist.html">Что должно быть готово до «дня 0»</a><p>снять, смонтировать и подготовить к публикации — по категориям, с отметками</p><div class="m">обновлён 26.09.2026 · <a href="day0-checklist.pdf">PDF</a></div></li></ul>
+<p class="lead">Бизнес-план, продвижение, сервер и сайт — актуальные версии; в каждом документе есть PDF.</p>
+<ul class="doclist"><li><a class="t" href="business-plan.html">Бизнес-план «Своя история»</a><p>этапы, экономика подписчика, рынок России, сравнение моделей, русский для иностранцев</p><div class="m">обновлён 26.09.2026 · <a href="business-plan.pdf">PDF</a></div></li><li><a class="t" href="promo-plan.html">Продвижение: план работ до запуска</a><p>от решений и аккаунтов до «дня 0» и шести недель проверки интереса</p><div class="m">обновлён 26.09.2026 · <a href="promo-plan.pdf">PDF</a></div></li><li><a class="t" href="day0-checklist.html">Что должно быть готово до «дня 0»</a><p>снять, смонтировать и подготовить к публикации — по категориям, с отметками</p><div class="m">обновлён 26.09.2026 · <a href="day0-checklist.pdf">PDF</a></div></li><li><a class="t" href="server-site-plan.html">Серверная часть и сайт: план работ</a><p>архитектура, этапы от лендинга до сервера, глав на сервере и подписок, сроки, деньги, решения</p><div class="m">обновлён 26.09.2026 · <a href="server-site-plan.pdf">PDF</a></div></li><li><a class="t" href="model-compare.html">Сравнение моделей: кто напишет главу</a><p>одно задание для Claude и моделей, доступных в России: 33 автопроверки, правка по списку, цена главы, главы рядом</p><div class="m">обновлён 26.09.2026 · <a href="model-compare.pdf">PDF</a></div></li></ul>
 </div>
 </body></html>
