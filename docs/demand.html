@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Спрос по темам: Вордстат</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Serif:wght@500;600&display=swap">
+<style>
+:root{
+  --ground:#F5F7F8; --surface:#FFFFFF; --ink:#18222D; --ink-soft:#3D4957; --muted:#667385;
+  --rule:#DCE2E7; --accent:#0E6B6A; --accent-soft:#E2F0EF; --warn:#9A5B12; --warn-soft:#F7ECDD; --good:#2F6B3A;
+  --serif:"IBM Plex Serif",Georgia,"Times New Roman",serif; --sans:"IBM Plex Sans","Segoe UI",Roboto,Arial,sans-serif;
+  --mono:"IBM Plex Mono",Consolas,"Courier New",monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#10161C; --surface:#172029; --ink:#E4E9EF; --ink-soft:#BAC4CF; --muted:#8C99A8;
+    --rule:#2A3541; --accent:#56B9B5; --accent-soft:#16302F; --warn:#E0A55A; --warn-soft:#33261A; --good:#7CC48A;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#10161C; --surface:#172029; --ink:#E4E9EF; --ink-soft:#BAC4CF; --muted:#8C99A8;
+  --rule:#2A3541; --accent:#56B9B5; --accent-soft:#16302F; --warn:#E0A55A; --warn-soft:#33261A; --good:#7CC48A;
+  color-scheme:dark;
+}
+body{background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;padding-inline:20px;padding-block:28px 64px}
+.page{max-width:52rem;margin:0 auto}
+h1,h2,h3{font-family:var(--serif);font-weight:600;text-wrap:balance;line-height:1.25;color:var(--ink)}
+h1{font-size:34px;margin:6px 0 10px}
+h2{font-size:24px;margin:44px 0 12px;padding-top:18px;border-top:1px solid var(--rule)}
+h3{font-size:18px;margin:26px 0 8px}
+p,li{max-width:68ch}
+p{margin:0 0 12px}
+ul,ol{margin:0 0 14px;padding-left:1.3em}
+li{margin:5px 0}
+a{color:var(--accent)}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0}
+.lead{font-size:18px;color:var(--ink-soft)}
+.meta{font-size:13.5px;color:var(--muted)}
+.summary{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:18px 20px;margin:22px 0}
+.summary h2{margin:0 0 10px;padding:0;border:0;font-size:20px}
+.summary ol{margin:0}
+.note{background:var(--warn-soft);border-left:3px solid var(--warn);border-radius:6px;padding:12px 16px;margin:16px 0;color:var(--ink)}
+.note b{color:var(--warn)}
+.key{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:6px;padding:12px 16px;margin:16px 0}
+.scroll{overflow-x:auto;margin:12px 0 16px;border:1px solid var(--rule);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500;background:var(--ground)}
+tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.total td{font-weight:600}
+.stage{font-family:var(--mono);font-size:12px;color:var(--accent);white-space:nowrap}
+.pos{color:var(--good)}
+.neg{color:var(--warn)}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:12px;margin:14px 0}
+.cols > div{background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:12px 14px}
+.cols h3{margin:0 0 6px;font-size:16px}
+.cols p{font-size:14.5px;margin:0;color:var(--ink-soft)}
+.sources li{font-size:14px;color:var(--ink-soft)}
+.sources a{word-break:break-word}
+@media (max-width:560px){ h1{font-size:28px} h2{font-size:21px} body{font-size:15.5px} }
+
+.docbar{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px;max-width:52rem;margin:0 auto 22px;font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;color:var(--muted)}
+.docbar a{text-decoration:none}
+.docbar a:hover{text-decoration:underline}
+.docbar .sp{flex:1}
+code{font-family:var(--mono);font-size:.88em;background:var(--accent-soft);padding:0 4px;border-radius:4px;word-break:break-word}
+hr{border:0;border-top:1px solid var(--rule);margin:24px 0}
+ul.check{list-style:none;padding-left:0}
+ul.check li{display:flex;gap:10px;align-items:baseline}
+.box{display:inline-block;width:12px;height:12px;border:1.4px solid var(--accent);border-radius:3px;flex:none;position:relative;top:1px}
+.box.on{background:var(--accent)}
+td .box{top:3px}
+.doclist{list-style:none;padding:0;margin:18px 0}
+.doclist li{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:14px 16px;margin:0 0 12px;max-width:none}
+.doclist a.t{font-family:var(--serif);font-size:19px;font-weight:600;text-decoration:none}
+.doclist p{margin:4px 0 0;color:var(--ink-soft);font-size:14.5px}
+.doclist .m{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:8px}
+@page{size:A4;margin:15mm 14mm}
+@media print{
+  :root:not([data-theme="none"]){--ground:#fff;--surface:#fff;--ink:#16202a;--ink-soft:#3d4957;--muted:#5d6977;--rule:#d5dbe0;
+    --accent:#0e6b6a;--accent-soft:#e6f2f1;--warn:#8a500f;--warn-soft:#f8efe2;--good:#2f6b3a;color-scheme:light}
+  body{padding:0;font-size:10.5pt;line-height:1.5}
+  .docbar{display:none}
+  h1{font-size:22pt} h2{font-size:15pt;margin-top:22px;break-after:avoid} h3{break-after:avoid}
+  .scroll{overflow:visible;border:0}
+  tr,.cols>div,.note,.key,.summary,ul.check li{break-inside:avoid}
+  a{color:inherit;text-decoration:none}
+}
+
+details.changes{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:6px;padding:10px 16px;margin:0 0 22px}
+details.changes > summary{cursor:pointer;font-family:var(--mono);font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);font-weight:600}
+details.changes ul{margin:8px 0 4px;padding-left:1.1em;font-size:14.5px}
+details.changes li{margin:3px 0;max-width:none}
+details.changes li.cadd::marker{content:"+ ";color:var(--accent)}
+details.changes li.cchg::marker{content:"~ ";color:var(--accent)}
+details.changes li.cdel{text-decoration:line-through;opacity:.75}
+details.changes .cleg{font-size:13px;margin:6px 0 0;opacity:.8}
+details.changes .cv{font-family:var(--mono);font-size:12px;margin:10px 0 0;opacity:.8}
+details.older{margin-top:6px}
+details.older > summary{cursor:pointer;font-size:13px}
+.fresh{box-shadow:inset 3px 0 0 var(--accent);background:var(--accent-soft)}
+p.fresh,li.fresh,h2.fresh,h3.fresh{padding-left:10px;border-radius:3px}
+tr.fresh td{background:var(--accent-soft)}
+@media print{details.changes{break-inside:avoid}}
+</style>
+</head><body>
+<nav class="docbar"><a href="../">← Книга</a><a href="./">Все документы</a><span class="sp"></span><span>обновлён 26.09.2026, 23:18</span><a href="demand.pdf">PDF</a></nav>
+<div class="page">
+<p class="eyebrow">Продвижение · спрос · обновлён 26.09.2026, 23:18</p>
+<h1>Спрос по темам: Вордстат</h1>
+
+<p>Утверждено 26.09.2026. Цель — порядок тематических наборов книги, страницы сайта и время запуска. Данные собраны 26.09.2026 автоматически — официальный API Вордстата в Yandex AI Studio (<code>python tools/wordstat.py run</code>, ≈ 2 коп. за запрос, весь сбор ≈ 1,5 ₽; лимит — 100 обращений в час). Сырые данные — <code>strategy/wordstat/2026-09-26.json</code>: число показов за 30 дней по всей России и всем устройствам, 10 похожих запросов, ассоциации, динамика по месяцам за 2 года.</p>
+<p><b>Как читать цифры.</b> Вордстат считает все запросы, где встречаются слова фразы в любом порядке и форме. Поэтому часть цифр — шум, это видно по похожим запросам: «английский для работы» — это «тетрадь для работ по английскому» (точная фраза — 25 показов), «английский по песням» — поиск самих песен, «по сериалам» — сериал «Развод по-английски», «произношение английских слов» и «неправильные глаголы» — школьники и справки. Ниже — сырые цифры, выводы — по очищенным.</p>
+<div class="scroll"><table><thead><tr><th>#</th><th>Тема</th><th>Запрос</th><th>Показов в месяц</th></tr></thead><tbody><tr><td>1</td><td>общее</td><td>разговорный английский</td><td>40 810</td></tr><tr><td>2</td><td>общее</td><td>английский для начинающих</td><td>87 378</td></tr><tr><td>3</td><td>общее</td><td>английский с нуля для взрослых</td><td>3 625</td></tr><tr><td>4</td><td>общее</td><td>английский самостоятельно</td><td>47 159</td></tr><tr><td>5</td><td>общее</td><td>учить английские слова</td><td>18 177</td></tr><tr><td>6</td><td>общее</td><td>приложение для изучения английского</td><td>14 014</td></tr><tr><td>7</td><td>общее</td><td>английский с нейросетью</td><td>1 728</td></tr><tr><td>8</td><td>путешествия</td><td>английский для путешествий</td><td>5 114</td></tr><tr><td>9</td><td>путешествия</td><td>английский для туристов</td><td>2 772</td></tr><tr><td>10</td><td>путешествия</td><td>английский в аэропорту</td><td>4 170</td></tr><tr><td>11</td><td>путешествия</td><td>английский в отеле</td><td>5 577</td></tr><tr><td>12</td><td>отдых</td><td>английские слова на тему отдых</td><td>54</td></tr><tr><td>13</td><td>отдых</td><td>английский для горнолыжного курорта</td><td>2</td></tr><tr><td>14</td><td>переезд</td><td>английский для переезда</td><td>470</td></tr><tr><td>15</td><td>работа</td><td>английский для программистов</td><td>1 328</td></tr><tr><td>16</td><td>работа</td><td>английский для it</td><td>2 677</td></tr><tr><td>17</td><td>работа</td><td>деловой английский</td><td>10 084</td></tr><tr><td>18</td><td>работа</td><td>английский для собеседования</td><td>908</td></tr><tr><td>19</td><td>работа</td><td>английский для работы</td><td>34 606</td></tr><tr><td>20</td><td>работа</td><td>английский для врачей</td><td>744</td></tr><tr><td>21</td><td>работа</td><td>английский для бизнеса</td><td>1 849</td></tr><tr><td>22</td><td>навыки</td><td>понимать английский на слух</td><td>784</td></tr><tr><td>23</td><td>навыки</td><td>британское произношение</td><td>2 488</td></tr><tr><td>24</td><td>навыки</td><td>произношение английских слов</td><td>34 386</td></tr><tr><td>25</td><td>навыки</td><td>индийский акцент английский</td><td>126</td></tr><tr><td>26</td><td>навыки</td><td>практика английского с носителем</td><td>109</td></tr><tr><td>27</td><td>медиа</td><td>английский по сериалам</td><td>5 010</td></tr><tr><td>28</td><td>медиа</td><td>английский по песням</td><td>34 603</td></tr><tr><td>29</td><td>грамматика</td><td>неправильные глаголы английский</td><td>82 185</td></tr><tr><td>30</td><td>уровень</td><td>английский a2</td><td>12 138</td></tr></tbody></table></div>
+<h2>Уточняющие запросы</h2>
+<div class="scroll"><table><thead><tr><th>Запрос</th><th>Показов</th><th>Что внутри</th></tr></thead><tbody><tr><td>"английский для работы" (точная фраза)</td><td>25</td><td>про работу так почти не ищут — ищут «деловой», «бизнес»</td></tr><tr><td>бизнес английский</td><td>13 734</td><td>из них ≈ 2,7 тыс. — перевод слова «бизнес»</td></tr><tr><td>business english</td><td>10 448</td><td>учебники, чтение</td></tr><tr><td>деловое письмо на английском</td><td>1 397</td><td>фразы и ответы на письма</td></tr><tr><td>деловая переписка на английском</td><td>651</td><td></td></tr><tr><td>английский для менеджеров</td><td>1 079</td><td>учебник Колесниковой</td></tr><tr><td>английский за границей</td><td>4 533</td><td>много перевода «за границей»</td></tr><tr><td>английский для поездки</td><td>854</td><td></td></tr><tr><td>английский для отдыха</td><td>775</td><td></td></tr><tr><td>английский для отпуска</td><td>216</td><td></td></tr><tr><td>английский для айтишников</td><td>213</td><td></td></tr><tr><td>учить английский по песням</td><td>637</td><td>песни как способ учить — мало</td></tr><tr><td>английский по фильмам</td><td>15 516</td><td>в основном поиск фильмов; «английский язык по фильмам» — 1 548</td></tr><tr><td>британский акцент</td><td>3 483</td><td></td></tr></tbody></table></div>
+<h2>Итоги</h2>
+<p><b>Спрос по наборам</b> (очищенные цифры, показов в месяц; вложенные запросы — «деловое письмо» внутри «делового», «для бизнеса» внутри «бизнес английский» — не складывались):</p>
+<div class="scroll"><table><thead><tr><th>Набор</th><th>Запросы</th><th>≈ показов</th><th>Год к году</th></tr></thead><tbody><tr><td>Работа и деловой английский</td><td>деловой, бизнес, business english, деловое письмо и переписка, для менеджеров, для бизнеса, собеседование</td><td>≈ 30–35 тыс.</td><td>деловой −26%, для бизнеса 0%</td></tr><tr><td>Путешествия</td><td>для путешествий, для туристов, в аэропорту, в отеле, для поездки, для отдыха, для отпуска</td><td>≈ 20 тыс.</td><td>путешествия +5%, отель +15%</td></tr><tr><td>IT</td><td>для IT, для программистов, для айтишников</td><td>≈ 4 тыс.</td><td>для IT +49%, для программистов −36%</td></tr><tr><td>Летний и зимний отдых отдельно</td><td>слова на тему отдых, для горнолыжного курорта</td><td>&lt; 100</td><td>—</td></tr><tr><td>Врачи · переезд</td><td>для врачей, для переезда</td><td>0,7 и 0,5 тыс.</td><td>+61% и +39%</td></tr></tbody></table></div>
+<p><b>Что это значит:</b></p>
+<p>1. <b>Самый большой тематический спрос — работа и деловой английский</b> (≈ 30–35 тыс.), и это взрослые, готовые платить. Но называют его «деловой / бизнес английский», а не «для работы», и спрос за год упал на четверть. 2. <b>Путешествия — второе место</b> (≈ 20 тыс.), спрос ровный и растёт; это естественная тема уровня A2. 3. <b>Летний и зимний отдых отдельными наборами не ищут</b> (горнолыжный курорт — 2 показа в месяц). Лучше сделать их главами внутри «Путешествий», а не отдельными наборами. 4. <b>IT — маленький, но растущий</b> спрос (≈ 4 тыс., «для IT» +49%). 5. <b>Общие запросы в разы больше тематических:</b> «для начинающих» — 87 тыс., «самостоятельно» — 47 тыс., «разговорный» — 41 тыс., «учить слова» — 18 тыс., «приложение» — 14 тыс., «A2» — 12 тыс. (+19%). Главный посыл лендинга — «английский самостоятельно, с нуля, разговорный», а темы — вторым слоем. 6. <b>Разговорный трек стоит называть «разговорный английский»</b> (41 тыс., разговорный клуб — 4 тыс.), а не «практика с носителем» (≈ 100 показов). 7. <b>Национальные акценты — спроса почти нет</b> (индийский акцент — 126), а британское произношение и акцент ищут (2,5 + 3,5 тыс., +24%): в продвижении — «британское произношение», акценты — внутри книги, не в рекламе. 8. <b>«Нейросеть» в посыле не нужна:</b> «английский с нейросетью» — 1,7 тыс., почти всё — перевод, и −34% за год. 9. <b>Песни</b> — «учить английский по песням» 637 показов: отложить было верно. 10. <b>Магниты для сайта:</b> «неправильные глаголы» — 82 тыс. и «произношение английских слов» — 34 тыс. — в основном школьники и справки, но в книге уже есть оба тренажёра; бесплатные открытые страницы с ними могут приводить людей на сайт.</p>
+<p><b>Сезонность</b> (среднее за 2 года, 1,00 — средний месяц):</p>
+<div class="scroll"><table><thead><tr><th>Месяц</th><th>01</th><th>02</th><th>03</th><th>04</th><th>05</th><th>06</th><th>07</th><th>08</th><th>09</th><th>10</th><th>11</th><th>12</th></tr></thead><tbody><tr><td>Общие запросы</td><td>1,14</td><td>1,03</td><td>0,95</td><td>0,93</td><td>0,78</td><td>0,76</td><td>0,85</td><td>0,87</td><td>1,25</td><td>1,27</td><td>1,19</td><td>0,98</td></tr><tr><td>Путешествия</td><td>1,03</td><td>1,09</td><td>1,06</td><td>1,05</td><td>0,91</td><td>0,78</td><td>0,85</td><td>0,83</td><td>1,02</td><td>1,29</td><td>1,18</td><td>0,91</td></tr><tr><td>Работа</td><td>0,96</td><td>1,10</td><td>1,10</td><td>0,95</td><td>0,82</td><td>0,71</td><td>0,63</td><td>0,61</td><td>1,41</td><td>1,33</td><td>1,26</td><td>1,11</td></tr><tr><td>IT</td><td>0,98</td><td>1,04</td><td>1,10</td><td>1,39</td><td>0,93</td><td>0,53</td><td>0,51</td><td>0,55</td><td>1,37</td><td>1,34</td><td>1,19</td><td>1,07</td></tr></tbody></table></div>
+<p>Учить английский начинают в сентябре–ноябре и в январе; лето — самый слабый сезон, даже для путешествий. Запуск и челлендж — на сентябрь–ноябрь или январь, не на лето.</p>
+<p><b>Google Trends.</b> По России у всех узких запросов («для путешествий», «для программистов», «деловой») в Trends нет данных почти ни в одну неделю — объём в Google слишком мал; данные есть только у «разговорного английского». Сверять с ним нечего: решения — по Вордстату.</p>
+<p><b>Рекомендации (ждут решения Дмитрия):</b></p>
+<ul><li>порядок наборов: 1) «Работа и деловой английский» (деловая переписка, собеседование), 2) «Путешествия» с главами «летний отдых» и «зимний отдых» внутри, 3) «IT»;</li><li>открытые страницы сайта «Неправильные глаголы» и «Британское произношение» — как вход на сайт;</li><li>старт челленджа — январь 2027, если бета на сервере успеет, иначе сентябрь 2027;</li><li>в продвижении: «самостоятельно, разговорный, британское произношение» вместо «нейросеть» и «с носителем».</li></ul>
+</div>
+</body></html>
