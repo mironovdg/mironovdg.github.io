@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Сайт: план (SEO и ИИ-поиск)</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Serif:wght@500;600&display=swap">
+<style>
+:root{
+  --ground:#F5F7F8; --surface:#FFFFFF; --ink:#18222D; --ink-soft:#3D4957; --muted:#667385;
+  --rule:#DCE2E7; --accent:#0E6B6A; --accent-soft:#E2F0EF; --warn:#9A5B12; --warn-soft:#F7ECDD; --good:#2F6B3A;
+  --serif:"IBM Plex Serif",Georgia,"Times New Roman",serif; --sans:"IBM Plex Sans","Segoe UI",Roboto,Arial,sans-serif;
+  --mono:"IBM Plex Mono",Consolas,"Courier New",monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#10161C; --surface:#172029; --ink:#E4E9EF; --ink-soft:#BAC4CF; --muted:#8C99A8;
+    --rule:#2A3541; --accent:#56B9B5; --accent-soft:#16302F; --warn:#E0A55A; --warn-soft:#33261A; --good:#7CC48A;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#10161C; --surface:#172029; --ink:#E4E9EF; --ink-soft:#BAC4CF; --muted:#8C99A8;
+  --rule:#2A3541; --accent:#56B9B5; --accent-soft:#16302F; --warn:#E0A55A; --warn-soft:#33261A; --good:#7CC48A;
+  color-scheme:dark;
+}
+body{background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;padding-inline:20px;padding-block:28px 64px}
+.page{max-width:52rem;margin:0 auto}
+h1,h2,h3{font-family:var(--serif);font-weight:600;text-wrap:balance;line-height:1.25;color:var(--ink)}
+h1{font-size:34px;margin:6px 0 10px}
+h2{font-size:24px;margin:44px 0 12px;padding-top:18px;border-top:1px solid var(--rule)}
+h3{font-size:18px;margin:26px 0 8px}
+p,li{max-width:68ch}
+p{margin:0 0 12px}
+ul,ol{margin:0 0 14px;padding-left:1.3em}
+li{margin:5px 0}
+a{color:var(--accent)}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0}
+.lead{font-size:18px;color:var(--ink-soft)}
+.meta{font-size:13.5px;color:var(--muted)}
+.summary{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:18px 20px;margin:22px 0}
+.summary h2{margin:0 0 10px;padding:0;border:0;font-size:20px}
+.summary ol{margin:0}
+.note{background:var(--warn-soft);border-left:3px solid var(--warn);border-radius:6px;padding:12px 16px;margin:16px 0;color:var(--ink)}
+.note b{color:var(--warn)}
+.key{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:6px;padding:12px 16px;margin:16px 0}
+.scroll{overflow-x:auto;margin:12px 0 16px;border:1px solid var(--rule);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500;background:var(--ground)}
+tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.total td{font-weight:600}
+.stage{font-family:var(--mono);font-size:12px;color:var(--accent);white-space:nowrap}
+.pos{color:var(--good)}
+.neg{color:var(--warn)}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:12px;margin:14px 0}
+.cols > div{background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:12px 14px}
+.cols h3{margin:0 0 6px;font-size:16px}
+.cols p{font-size:14.5px;margin:0;color:var(--ink-soft)}
+.sources li{font-size:14px;color:var(--ink-soft)}
+.sources a{word-break:break-word}
+@media (max-width:560px){ h1{font-size:28px} h2{font-size:21px} body{font-size:15.5px} }
+
+.docbar{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px;max-width:52rem;margin:0 auto 22px;font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;color:var(--muted)}
+.docbar a{text-decoration:none}
+.docbar a:hover{text-decoration:underline}
+.docbar .sp{flex:1}
+code{font-family:var(--mono);font-size:.88em;background:var(--accent-soft);padding:0 4px;border-radius:4px;word-break:break-word}
+hr{border:0;border-top:1px solid var(--rule);margin:24px 0}
+ul.check{list-style:none;padding-left:0}
+ul.check li{display:flex;gap:10px;align-items:baseline}
+.box{display:inline-block;width:12px;height:12px;border:1.4px solid var(--accent);border-radius:3px;flex:none;position:relative;top:1px}
+.box.on{background:var(--accent)}
+td .box{top:3px}
+.doclist{list-style:none;padding:0;margin:18px 0}
+.doclist li{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:14px 16px;margin:0 0 12px;max-width:none}
+.doclist a.t{font-family:var(--serif);font-size:19px;font-weight:600;text-decoration:none}
+.doclist p{margin:4px 0 0;color:var(--ink-soft);font-size:14.5px}
+.doclist .m{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:8px}
+@page{size:A4;margin:15mm 14mm}
+@media print{
+  :root:not([data-theme="none"]){--ground:#fff;--surface:#fff;--ink:#16202a;--ink-soft:#3d4957;--muted:#5d6977;--rule:#d5dbe0;
+    --accent:#0e6b6a;--accent-soft:#e6f2f1;--warn:#8a500f;--warn-soft:#f8efe2;--good:#2f6b3a;color-scheme:light}
+  body{padding:0;font-size:10.5pt;line-height:1.5}
+  .docbar{display:none}
+  h1{font-size:22pt} h2{font-size:15pt;margin-top:22px;break-after:avoid} h3{break-after:avoid}
+  .scroll{overflow:visible;border:0}
+  tr,.cols>div,.note,.key,.summary,ul.check li{break-inside:avoid}
+  a{color:inherit;text-decoration:none}
+}
+
+details.changes{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:6px;padding:10px 16px;margin:0 0 22px}
+details.changes > summary{cursor:pointer;font-family:var(--mono);font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);font-weight:600}
+details.changes ul{margin:8px 0 4px;padding-left:1.1em;font-size:14.5px}
+details.changes li{margin:3px 0;max-width:none}
+details.changes li.cadd::marker{content:"+ ";color:var(--accent)}
+details.changes li.cchg::marker{content:"~ ";color:var(--accent)}
+details.changes li.cdel{text-decoration:line-through;opacity:.75}
+details.changes .cleg{font-size:13px;margin:6px 0 0;opacity:.8}
+details.changes .cv{font-family:var(--mono);font-size:12px;margin:10px 0 0;opacity:.8}
+details.older{margin-top:6px}
+details.older > summary{cursor:pointer;font-size:13px}
+.fresh{box-shadow:inset 3px 0 0 var(--accent);background:var(--accent-soft)}
+p.fresh,li.fresh,h2.fresh,h3.fresh{padding-left:10px;border-radius:3px}
+tr.fresh td{background:var(--accent-soft)}
+@media print{details.changes{break-inside:avoid}}
+</style>
+</head><body>
+<nav class="docbar"><a href="../">← Книга</a><a href="./">Все документы</a><span class="sp"></span><span>обновлён 27.09.2026, 00:19</span><a href="site-plan.pdf">PDF</a></nav>
+<div class="page">
+<p class="eyebrow">Сайт · план · обновлён 27.09.2026, 00:19</p>
+<h1>Сайт: план (SEO и ИИ-поиск)</h1>
+
+<p>Решение Дмитрия 26.09.2026: сделать полностью готовый боевой сайт проекта с большим числом страниц, оптимизированный под поисковики (Яндекс, Google) и под ИИ-ответы (Яндекс Нейро и Алиса, ChatGPT, Perplexity, Claude, Gemini). <b>Статус: 🟡 план ждёт правок Дмитрия; работы — после утверждения.</b> Этот документ подробно раскрывает этапы 1–2 плана «Сервер и сайт» (решения, лендинг и справочные страницы).</p>
+<p>Методика — по навыкам marketingskills (site-architecture, programmatic-seo, ai-seo, seo-audit, schema, copywriting, free-tools), дизайн-система — ui-ux-pro-max, проверки каждой сборки — Playwright.</p>
+<h2>1. Зачем сайт и что он должен делать</h2>
+<div class="scroll"><table><thead><tr><th>Цель</th><th>Как измеряем</th></tr></thead><tbody><tr><td>Приводить людей из поиска по запросам об изучении английского</td><td>показы и клики в Яндекс Вебмастере и Google Search Console, визиты из поиска в Метрике</td></tr><tr><td>Попадать в ответы ИИ (Нейро, Алиса, ChatGPT, Perplexity)</td><td>раз в месяц — 20 главных запросов, по 3 прогона на платформу: цитируют ли нас</td></tr><tr><td>Превращать посетителя в ученика</td><td>демо-глава → лист ожидания / Telegram-канал → бета (челлендж)</td></tr><tr><td>Показывать метод и автора</td><td>страницы «Как это работает», «Методика», дневник Дмитрия</td></tr></tbody></table></div>
+<p>Главная мысль сайта: <b>английский для взрослых, самостоятельно — по книге, которая написана под тебя и помнит твои ошибки.</b> Посыл — утверждённый 26.09: «самостоятельно, разговорный, с нуля, британское произношение»; «нейросеть» и «с носителем» в заголовки не выносим. По данным 27.09 к нему добавляется «для взрослых» (24 тыс. показов в месяц) — это наша аудитория.</p>
+<h2>2. Откуда ключевые слова</h2>
+<ul><li><b>До запуска — Вордстат</b> через API (<code>tools/wordstat.py</code>): у Метрики данных о запросах нет, пока нет сайта и посетителей. Данные 26–27.09.2026 (≈ 150 запросов) — в документе «Спрос по темам» и в таблице страниц ниже; сырые — <code>strategy/wordstat/</code>.</li><li><b>После запуска — Яндекс Вебмастер</b> («Поисковые запросы»: по каким запросам показали и кликнули) и <b>Метрика</b> (поведение, конверсии, источники, в том числе из ИИ-сервисов). Раз в месяц — сверка: запросы, которых нет в плане, → новые страницы или разделы; страницы без показов → переписать или объединить.</li><li>Одна страница — один основной запрос и его хвосты; два раздела на один запрос не делаем (иначе они отнимают друг у друга место в выдаче).</li></ul>
+<h2>3. Структура сайта</h2>
+<p>``` Главная (/) ├── Как это работает (/kak-eto-rabotaet) ├── Методика (/metodika) ├── Демо-глава (/demo) ├── Бета и цена (/beta) ├── Тест на уровень (/test-urovnya)                      ← бесплатный инструмент ├── Уровни английского (/urovni) │   └── A1 · A2 · B1 · B2 · C1 (/urovni/a1 …) ├── Самостоятельно (/anglijskij-samostoyatelno)          ← опорные страницы по главным запросам ├── Для начинающих и с нуля (/anglijskij-dlya-nachinayushchih) ├── Разговорный английский (/razgovornyj-anglijskij) ├── Как учить слова (/kak-uchit-slova) ├── Английский на слух и диктант (/anglijskij-na-sluh) ├── Неправильные глаголы (/nepravilnye-glagoly)            ← таблица + тренажёр │   └── каждый глагол (/nepravilnye-glagoly/go …) ├── Произношение (/proiznoshenie) │   ├── Транскрипция: знаки со звуком (/proiznoshenie/transkripciya) │   ├── Британское и американское (/proiznoshenie/britanskoe) │   └── каждый трудный звук (/proiznoshenie/zvuk-th …) ├── Слова (/slova) │   ├── по уровням (/slova/a1 … /slova/c2) │   ├── по темам (/slova/temy/…) │   └── каждое слово (/slova/…) — этап 3 ├── Фразовые глаголы и обороты (/oboroty) │   ├── глагол со всеми значениями (/oboroty/get …) │   └── живая речь (/oboroty/zhivaya-rech) ├── Грамматика (/grammatika) │   ├── Таблица времён (/grammatika/vremena) │   └── каждая тема (/grammatika/present-perfect …) ├── Темы │   ├── Деловой английский (/delovoj-anglijskij) │   │   └── письмо · переписка · собеседование · для менеджеров │   ├── Английский для путешествий (/anglijskij-dlya-puteshestvij) │   │   └── в аэропорту · в отеле · для туристов · летний отдых · зимний отдых │   └── Английский для IT (/anglijskij-dlya-it) ├── Диалоги (/dialogi) │   └── диалог по теме, с озвучкой по ролям (/dialogi/v-aeroportu …) ├── Сравнение приложений (/prilozheniya-dlya-anglijskogo) ├── Дневник: учу английский по своей книге (/dnevnik) │   └── запись (/dnevnik/…) ├── О проекте и авторе (/o-proekte) ├── Вопросы и ответы (/voprosy) └── Правовое: политика данных, согласие, cookies (/politika, /soglasie, /cookies)</p>
+<p>Для машин: /robots.txt · /sitemap.xml (по разделам) · /llms.txt · /llms-full.txt · /beta.md (цена и условия) ```</p>
+<p>Адреса — латиницей по транслиту, строчные, через дефис, без дат и номеров; без «/» в конце; любая смена адреса — только с 301-перенаправлением.</p>
+<h2>4. Страницы, запросы и спрос</h2>
+<p>Цифры — показы в месяц по всей России, широкое соответствие (что в них шум — видно по похожим запросам, разбор — в документе «Спрос по темам»). Не вошли как шум: «going to» (1,1 млн — формы глагола go и песни), «английский онлайн бесплатно» (203 тыс. — переводчики), «английский с носителем» (6 тыс. — уроки с носителем, такой услуги у нас нет), «челлендж английский» (перевод слова).</p>
+<div class="scroll"><table><thead><tr><th>Страница</th><th>Адрес</th><th>Запросы — показов в месяц (Вордстат, 26–27.09.2026)</th><th>Этап</th><th>Приоритет</th></tr></thead><tbody><tr><td>Главная</td><td><code>/</code></td><td>английский для взрослых — 24 247; английский язык самоучитель — 8 880; учебник английского для взрослых — 2 225</td><td>2</td><td>высокий</td></tr><tr><td>Как это работает · Методика</td><td><code>/kak-eto-rabotaet, /metodika</code></td><td>как выучить английский — 56 843; как быстро выучить английский — 22 503; интервальное повторение — 1 505</td><td>2</td><td>высокий</td></tr><tr><td>Демо-глава</td><td><code>/demo</code></td><td>книги на английском для начинающих — 3 897; адаптированные книги на английском — 2 232</td><td>2</td><td>высокий</td></tr><tr><td>Бета и цена</td><td><code>/beta</code></td><td>курсы английского онлайн — 11 590</td><td>2</td><td>высокий</td></tr><tr><td>Тест на уровень — бесплатный инструмент</td><td><code>/test-urovnya</code></td><td>тест на уровень английского — 47 155</td><td>2</td><td>высокий</td></tr><tr><td>Уровни английского + A1…C1</td><td><code>/urovni, /urovni/a1 …</code></td><td>уровни английского языка — 164 308; уровень b1 английский — 14 714; английский a2 — 12 138; уровень a1 английский — 3 387</td><td>2</td><td>высокий</td></tr><tr><td>Английский самостоятельно</td><td><code>/anglijskij-samostoyatelno</code></td><td>английский самостоятельно — 47 159; как начать учить английский — 1 583</td><td>2</td><td>высокий</td></tr><tr><td>Для начинающих и с нуля</td><td><code>/anglijskij-dlya-nachinayushchih</code></td><td>английский для начинающих — 87 378; английский с нуля для взрослых — 3 625</td><td>2</td><td>высокий</td></tr><tr><td>Разговорный английский</td><td><code>/razgovornyj-anglijskij</code></td><td>разговорный английский — 40 810; разговорный клуб английский — 4 377; разговорные фразы на английском — 1 680</td><td>2</td><td>высокий</td></tr><tr><td>Как учить слова</td><td><code>/kak-uchit-slova</code></td><td>учить английские слова — 18 177; как запоминать английские слова — 2 986</td><td>2</td><td>высокий</td></tr><tr><td>Неправильные глаголы: таблица + тренажёр</td><td><code>/nepravilnye-glagoly</code></td><td>неправильные глаголы английский — 82 185; неправильные глаголы таблица с переводом — 5 661; тренажер неправильных глаголов — 1 190</td><td>2</td><td>высокий</td></tr><tr><td>Глагол: три формы, звук, примеры (≈ 150)</td><td><code>/nepravilnye-glagoly/go …</code></td><td>3 формы глагола — 200 917; формы глагола be — 67 470; формы глагола go — 16 574; прошедшее время глагола английский — 5 226</td><td>2</td><td>высокий</td></tr><tr><td>Произношение (хаб)</td><td><code>/proiznoshenie</code></td><td>произношение английских слов — 34 386; как читается слово по английски — 8 776; фонетика английского языка — 6 402</td><td>2</td><td>высокий</td></tr><tr><td>Транскрипция: знаки со звуком</td><td><code>/proiznoshenie/transkripciya</code></td><td>транскрипция английских слов — 107 151; английские слова с транскрипцией — 19 832</td><td>2</td><td>высокий</td></tr><tr><td>Британское и американское произношение</td><td><code>/proiznoshenie/britanskoe</code></td><td>британский акцент — 3 483; британский и американский английский — 3 173; американский акцент — 2 715; британское произношение — 2 488</td><td>2</td><td>высокий</td></tr><tr><td>Трудные звуки (13)</td><td><code>/proiznoshenie/zvuk-th …</code></td><td>как произносится th — 605; звук th в английском — 569</td><td>2</td><td>средний</td></tr><tr><td>Грамматика: хаб и таблица времён</td><td><code>/grammatika, /grammatika/vremena</code></td><td>времена в английском — 252 033</td><td>2</td><td>высокий</td></tr><tr><td>Грамматика: главные темы (6 в v1, 22 всего)</td><td><code>/grammatika/present-perfect …</code></td><td>present perfect — 265 498; past simple — 246 141; артикли в английском — 32 404</td><td>2</td><td>высокий</td></tr><tr><td>Фразовые и многозначные глаголы (хаб + 10)</td><td><code>/oboroty, /oboroty/get …</code></td><td>фразовые глаголы — 60 682; фразовый глагол get — 4 581</td><td>2</td><td>высокий</td></tr><tr><td>Слова: хаб, уровни A1–C2</td><td><code>/slova, /slova/a1 …</code></td><td>1000 английских слов — 3 038; английские слова для начинающих — 2 435; слова b1 английский — 1 718; слова a1 английский — 760; самые частые английские слова — 256</td><td>3</td><td>высокий</td></tr><tr><td>Слова по темам (≈ 40)</td><td><code>/slova/temy/…</code></td><td>английские слова по темам — 13 941</td><td>3</td><td>высокий</td></tr><tr><td>Английский на слух + диктант</td><td><code>/anglijskij-na-sluh</code></td><td>аудирование английский — 59 298; диктант по английскому — 9 269; понимать английский на слух — 784</td><td>3</td><td>средний</td></tr><tr><td>Диалоги по темам (≈ 15)</td><td><code>/dialogi/…</code></td><td>диалоги на английском — 40 986; тексты на английском для начинающих — 3 335; рассказы на английском для начинающих — 1 483; диалоги на английском для начинающих — 1 421</td><td>3</td><td>высокий</td></tr><tr><td>Деловой английский + письмо, переписка, собеседование, менеджеры</td><td><code>/delovoj-anglijskij …</code></td><td>бизнес английский — 13 734; business english — 10 448; деловой английский — 10 084; деловое письмо на английском — 1 397; английский для менеджеров — 1 079</td><td>3</td><td>высокий</td></tr><tr><td>Английский для путешествий + аэропорт, отель, туристы, отдых</td><td><code>/anglijskij-dlya-puteshestvij …</code></td><td>английский в отеле — 5 577; английский для путешествий — 5 114; английский в аэропорту — 4 170; английский для туристов — 2 772; английский для поездки — 854; английский для отдыха — 775</td><td>3</td><td>высокий</td></tr><tr><td>Английский для IT</td><td><code>/anglijskij-dlya-it</code></td><td>английский для it — 2 677; английский для программистов — 1 328</td><td>3</td><td>средний</td></tr><tr><td>Сравнение приложений</td><td><code>/prilozheniya-dlya-anglijskogo</code></td><td>приложение для изучения английского — 14 014; онлайн тренажер английского — 4 982</td><td>3</td><td>средний</td></tr><tr><td>Дневник: учу английский по своей книге</td><td><code>/dnevnik</code></td><td>английский за 30 дней — 426</td><td>3</td><td>средний</td></tr><tr><td>Страницы слов: звук, транскрипция, примеры (670 → 2 800)</td><td><code>/slova/…</code></td><td>английские слова с транскрипцией — 19 832</td><td>4</td><td>по данным</td></tr></tbody></table></div>
+<p><b>Что поменяли цифры:</b></p>
+<ul><li><b>Грамматика и транскрипция — самые большие поля:</b> «времена в английском» — 252 тыс., «present perfect» и «past simple» — по 250 тыс., «транскрипция английских слов» — 107 тыс. Много школьников, но и взрослых. Хаб грамматики с таблицей времён, 6 главных тем и страница транскрипции переходят в первый выпуск.</li><li><b>Формы глаголов — 200 тыс.</b> («3 формы глагола», «формы глагола be» — 67 тыс., «go» — 17 тыс.): страница на каждый глагол оправдана.</li><li><b>Бесплатный тест уровня — 47 тыс.</b>, «уровни английского» — 164 тыс.: это главный инструмент для входа на сайт.</li><li><b>Фразовые глаголы — 61 тыс.</b>: 10 глаголов со всеми значениями уже есть в книге («Многозначные глаголы») — тоже в первый выпуск.</li><li><b>«Английский для взрослых» — 24 тыс.</b>, это наша аудитория: на него работает главная.</li><li><b>Диалоги — 41 тыс., слова по темам — 14 тыс., слова с транскрипцией — 20 тыс.</b> — второй выпуск.</li></ul>
+<h2>5. Шаблоны массовых страниц — чтобы не было «пустых»</h2>
+<p>Массовые страницы делаем только там, где у каждой есть свои данные, а не подставленное слово в одинаковый текст (иначе Яндекс помечает их как малополезные).</p>
+<div class="scroll"><table><thead><tr><th>Раздел</th><th>Что уникального на каждой странице</th><th>Источник данных</th></tr></thead><tbody><tr><td>Глагол (<code>/nepravilnye-glagoly/go</code>)</td><td>три формы с транскрипцией и звуком, перевод, по примеру на каждую форму, частотность (ранг NGSL), группа по образцу (sing — sang — sung), типичная ошибка русскоговорящих, мини-тренажёр этого глагола</td><td>лист <code>irregular_verbs</code>, справочники A1–B2, Britfone, <code>data/usage.csv</code></td></tr><tr><td>Звук (<code>/proiznoshenie/zvuk-th</code>)</td><td>как ставить язык и губы, рисованные губы образца, пары слов с озвучкой, проверка микрофоном, частые путаницы</td><td>модуль «Звуки» книги</td></tr><tr><td>Уровень слов (<code>/slova/a2</code>)</td><td>слова уровня по темам, часть речи, транскрипция, звук, пример</td><td>справочники A1–C2, NGSL</td></tr><tr><td>Тема слов (<code>/slova/temy/puteshestviya</code>)</td><td>30–150 слов темы с примерами и звуком, мини-тренажёр</td><td>справочники по темам</td></tr><tr><td>Оборот / значение глагола (<code>/oboroty/get</code>)</td><td>все значения с примерами, звук, тренажёр</td><td><code>data/polysemy.csv</code>, обороты B1–C2</td></tr><tr><td>Грамматика (<code>/grammatika/past-simple</code>)</td><td>правило по-русски, таблица форм, ошибки русскоговорящих, упражнение с проверкой</td><td>план тем <code>grammar</code>, примеры из глав</td></tr><tr><td>Диалог (<code>/dialogi/v-otele</code>)</td><td>диалог по ролям с озвучкой, словарь, 3 вопроса на понимание</td><td>пишу для сайта отдельно (не из глав ученика)</td></tr><tr><td>Слово (<code>/slova/…</code>, этап 3)</td><td>транскрипция, звук, часть речи, значения с примерами, формы, уровень</td><td>только слова с примером в <code>data/usage.csv</code></td></tr></tbody></table></div>
+<p>На каждой массовой странице — «хлебные крошки», 5–10 ссылок на соседние страницы (группа глагола, тот же звук, та же тема), ссылка на опорную страницу раздела и призыв «попробовать свою книгу».</p>
+<h2>6. Оптимизация под ИИ-ответы</h2>
+<ul><li><b>Ответ сразу:</b> под каждым заголовком H2, сформулированным как вопрос, — ответ в 40–60 слов, который понятен без остальной страницы; дальше подробности, таблицы, примеры.</li><li><b>Таблицы и списки</b> вместо сплошного текста: формы глаголов, сравнения, шаги.</li><li><b>Факты и источники:</b> NGSL (частотность), Britfone (британская транскрипция), шкала CEFR (Совет Европы), собственные данные книги (сколько слов за месяц, какие ошибки чаще) — с датами.</li><li><b>Автор и свежесть:</b> на каждой странице — автор (Дмитрий: учится по своей книге с августа 2026), дата «обновлено»; страница «О проекте» с первым опытом.</li><li><b>Разметка schema.org:</b> Organization, WebSite, BreadcrumbList на всех; Article — дневник и статьи; FAQPage — вопросы; HowTo — «как поставить звук», «как учить слова»; DefinedTerm — глаголы и слова; Course — книга; Quiz — тест уровня.</li><li><b>Файлы для ИИ:</b> <code>llms.txt</code> (что за проект и главные страницы), <code>llms-full.txt</code> (текст ключевых страниц), <code>beta.md</code> (цена и условия беты).</li><li><b>Доступ роботам:</b> разрешены YandexBot и YandexAdditional (Нейро), Googlebot и Google-Extended, GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, Claude-SearchBot, PerplexityBot, Bingbot.</li><li><b>Весь текст — в HTML</b> без обязательного JavaScript: озвучка и тренажёры — поверх готового текста.</li><li><b>Присутствие вне сайта:</b> статьи на Хабре, vc.ru и Дзене со ссылками, Telegram-канал, описания роликов — ИИ-сервисы часто цитируют сторонние площадки.</li></ul>
+<h2>7. Технические требования</h2>
+<ul><li>Статический сайт: страницы собирает Python из данных книги (как документы «₽»), без базы и CMS; сборка и проверка — одной командой.</li><li>Скорость: страница на телефоне — быстрее 1,5 с (LCP ≤ 2,5 с, CLS ≤ 0,1), шрифты — свои, картинки — WebP/AVIF с размерами.</li><li>Телефон прежде всего: ширина 375 px без горизонтальной прокрутки, кнопки ≥ 44 px, тёмная тема.</li><li>Доступность: семантическая разметка, подписи кнопок, контраст AA, клавиатура.</li><li>SEO-основа: уникальные title и description, один H1, canonical, Open Graph, sitemap по разделам, robots.txt, страница 404, перенаправление www → без www и http → https.</li><li>Без сети: сервис-воркер — открытые страницы и тренажёры работают без интернета (как книга).</li></ul>
+<h2>8. Дизайн</h2>
+<p>ui-ux-pro-max подбирает дизайн-систему под «обучение языку»: стиль, палитру, пары шрифтов, правила UX. Предлагаю взять за основу стиль книги (Literata + IBM Plex, «чемодан», спокойные цвета), чтобы сайт и книга выглядели одним продуктом, и проверить его правилами ui-ux-pro-max (контраст, размеры, состояния, анти-паттерны).</p>
+<h2>9. Проверки перед каждой выкладкой (Playwright)</h2>
+<p>Скрипт проходит все страницы сборки и падает, если что-то не так:</p>
+<ul><li>каждая страница отвечает, внутренние ссылки не битые, нет страниц без входящих ссылок;</li><li>title 30–65 знаков и description 70–160 — уникальные; один H1; canonical на себя; разметка schema.org разбирается;</li><li>на 375, 768 и 1280 px нет горизонтальной прокрутки; снимки ключевых шаблонов в светлой и тёмной теме — для просмотра глазами;</li><li>текст виден с выключенным JavaScript; LCP и CLS в пределах нормы;</li><li>у картинок есть alt, у кнопок — подписи; <code>lang="ru"</code>;</li><li>sitemap совпадает со списком страниц, robots.txt не закрывает нужное.</li></ul>
+<p>Перед запуском — ещё аудит по чек-листу seo-audit и ai-seo, отчёт — в документы «₽».</p>
+<h2>10. Хостинг, формы, аналитика, право</h2>
+<ul><li><b>Хостинг — Yandex Cloud</b> (у вас уже есть): Object Storage как сайт + сертификат HTTPS (Certificate Manager), при росте — CDN. Всё в России, стоимость на старте — десятки рублей в месяц.</li><li><b>Лист ожидания:</b> на старте — подписка на Telegram-канал (сайт не собирает персональные данные). Сбор почты — только после политики обработки данных и уведомления Роскомнадзора; данные — в Yandex Cloud (функция + база), по закону о локализации.</li><li><b>Аналитика:</b> Яндекс Метрика (с согласием на cookies), Яндекс Вебмастер, Google Search Console; цели — «открыл демо», «прошёл тест», «перешёл в Telegram», «записался в лист ожидания».</li><li><b>Право:</b> политика обработки персональных данных, согласие, баннер cookies; маркировка рекламы — вопрос юристу (уже в плане продвижения).</li></ul>
+<h2>11. Этапы</h2>
+<div class="scroll"><table><thead><tr><th>Этап</th><th>Что</th><th>Страниц</th><th>Кто</th><th>Срок после решения</th></tr></thead><tbody><tr><td>0</td><td>Решения: название и домен, хостинг, лист ожидания, аккаунты (Вебмастер, Метрика, Search Console, бакет Yandex Cloud), фото и пара фраз об авторе</td><td>—</td><td>Д</td><td>1 неделя</td></tr><tr><td>1</td><td>Инструменты: marketingskills и ui-ux-pro-max — в навыки проекта (после просмотра файлов), Playwright; дизайн-система; шаблоны страниц; сборщик и проверки</td><td>—</td><td>C</td><td>2–3 дня</td></tr><tr><td>2</td><td>Запуск v1: главная, как это работает, методика, демо, бета, тест уровня, уровни, 5 опорных страниц, неправильные глаголы (таблица + тренажёр + ≈ 150 глаголов), произношение (хаб, транскрипция, британское, 13 звуков), грамматика (хаб, таблица времён, 6 тем), фразовые глаголы (хаб + 10), правовые, 404, файлы для ИИ</td><td>≈ 230</td><td>C, правка текстов — Д</td><td>2 недели</td></tr><tr><td>3</td><td>Расширение: слова по уровням и темам, остальная грамматика, на слух и диктант, диалоги, темы (деловой, путешествия, IT), сравнение приложений, дневник</td><td>+ ≈ 150</td><td>C</td><td>2–3 недели</td></tr><tr><td>4</td><td>Страницы слов (сначала ≈ 670 с примерами, потом до 2 800 по NGSL — по мере примеров), дневник раз в неделю, сверка с Вебмастером раз в месяц</td><td>+ 700–2 800</td><td>C</td><td>постоянно</td></tr></tbody></table></div>
+<h2>12. Деньги</h2>
+<p>Домен — 200–1 500 ₽ в год; хостинг Yandex Cloud — десятки рублей в месяц на старте; API Вордстата — копейки; marketingskills, ui-ux-pro-max, Playwright — бесплатные (MIT, Apache-2.0).</p>
+<h2>13. Вопросы к Дмитрию</h2>
+<p>Мои рекомендации — первыми; нужен ответ или правка по каждому.</p>
+<p>1. <b>Название и домен.</b> Рабочее имя сервиса — «Своя история». Нужны имя сайта и домен (.ru), покупаете вы. Рекомендую короткое латинское имя, которое читается по-русски, — варианты предложу после вашего выбора имени. 2. <b>Хостинг.</b> Рекомендую Yandex Cloud (Object Storage + HTTPS): всё в России, у вас уже есть аккаунт. Альтернатива — GitHub Pages (бесплатно, но за рубежом; формы всё равно пришлось бы держать в России). 3. <b>Лист ожидания на старте.</b> Рекомендую подписку на Telegram-канал: сайт не собирает персональные данные, и можно запускаться без юриста. Сбор почты — позже, после политики и уведомления Роскомнадзора. 4. <b>Объём первого выпуска.</b> Рекомендую v1 ≈ 230 страниц (ядро, тест уровня, глаголы, произношение и транскрипция, грамматика, фразовые глаголы), дальше — по 100–200 страниц за этап по данным Вебмастера. Альтернатива — сразу всё (≈ 380 страниц без страниц слов), но тогда позже увидим, что работает. 5. <b>Дизайн.</b> Рекомендую стиль книги (шрифты, цвета, «чемодан»), проверенный правилами ui-ux-pro-max: сайт и книга — один продукт. Альтернатива — новый стиль от ui-ux-pro-max. 6. <b>Автор на сайте.</b> Для доверия поисковиков и ИИ нужен настоящий автор: имя, фото, короткая история, цифры своего обучения (слова, главы, дни). Согласны ли вы показывать имя, фото и свои цифры? 7. <b>Роботы ИИ.</b> Рекомендую пустить всех, кто ищет и цитирует (Нейро, ChatGPT, Claude, Perplexity, Gemini), и робота обучения Common Crawl тоже — это увеличивает шанс, что модели знают проект. 8. <b>Порядок работ.</b> Рекомендую вести сайт параллельно с конвейером: пока вы решаете пункты 1–7, я ставлю инструменты и делаю дизайн-систему и шаблоны. 9. <b>Что скачать и поставить</b> (как вы просили) — подтвердите: marketingskills (github.com/coreyhaines31/marketingskills, MIT, ≈ 3 МБ) — нужные навыки в папку навыков этого проекта; ui-ux-pro-max (github.com/nextlevelbuilder/ui-ux-pro-max-skill, MIT, ≈ 8 МБ, скрипты на Python без сети) — туда же; Playwright (npm-пакет Microsoft, Apache-2.0) и браузер Chromium для проверок, ≈ 150–200 МБ. Перед установкой просмотрю файлы навыков: это инструкции, которые будут подгружаться в работу.</p>
+</div>
+</body></html>
