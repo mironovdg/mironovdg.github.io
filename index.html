@@ -612,7 +612,8 @@ button.ear-opt:disabled{cursor:default}
 .ear-sum{font-size:14px;margin:2px 0;max-width:none}
 .ear-sum.ok{color:var(--ok)}
 .ear-sum.no{color:var(--no)}
-.ear-panel .snd-btns{justify-content:flex-start;margin-top:6px}
+.ear-panel .snd-btns{justify-content:flex-start;align-items:center;margin-top:6px}
+.ear-speed{display:inline-flex;align-items:center;gap:6px;margin-left:auto}
 .ear-panel .linkish{display:block;font-size:13px;margin-top:10px}
 button.ear-start{display:inline-flex;align-items:center;gap:8px;color:var(--sea)}
 
@@ -1267,7 +1268,7 @@ td.w.speaking{color:var(--sea)}
 
       <h3>Слушание</h3>
       <p>От простого к сложному. Сначала различать звуки: в «Звуках» кнопка «Слушать» — книга произносит одно слово пары (ship или sheep), ты выбираешь, какое. Потом диктант в разделе «Слушание»: книга читает реплики глав голосом героев, ты печатаешь; три скорости — медленно, обычно, быстро. Когда на скорости слышишь 90% слов и больше — переходи на следующую. Разбор подсказывает, что мешает: окончания, служебные слова, сокращения, похожие звуки.</p>
-      <p>Вкладка «Слитная речь» там же — то, что мешает понимать носителей: слабые формы служебных слов, сокращения, can и can't, связывание и выпадение звуков. А новая глава теперь начинается с ушей: текст закрыт, пока не послушаешь диалог и не ответишь на три вопроса о смысле; потом второе прослушивание — и текст открывается (можно пропустить). Любую главу можно так же пройти кнопкой «Сначала на слух» над диалогом.</p>
+      <p>Вкладка «Слитная речь» там же — то, что мешает понимать носителей: слабые формы служебных слов, сокращения, can и can't, связывание и выпадение звуков. А новая глава теперь начинается с ушей: текст закрыт, пока не послушаешь диалог и не ответишь на три вопроса о смысле; потом второе прослушивание — и текст открывается (можно пропустить). Любую главу можно так же пройти кнопкой «Сначала на слух» над диалогом. Скорость там своя — медленно, обычно или быстро: диалог новый, поэтому она не связана со скоростью диктанта, и выбор запоминается.</p>
       <p>Распознавание проверяет, понятно ли тебя, а не каждый звук отдельно, — поэтому красное слово значит «так не поймут», а зелёное ещё не гарантирует идеального звука. Лучше всего работает в тихой комнате, телефон — сантиметрах в 20–30.</p>
 
       <h3>Почему так</h3>
@@ -1303,12 +1304,12 @@ td.w.speaking{color:var(--sea)}
       <p class="sec-label">Как работать с главой</p>
       <div class="howto">
         <ol class="howto-list">
-          <li><b>Прочитай диалог целиком, не заглядывая в словарь.</b> Незнакомые слова на первом проходе — норма, смысл вытягивается из ситуации.</li>
-          <li><b>Просмотри мини-словарь</b> — 2–3 минуты, без зубрёжки, — <b>и перечитай диалог, снова не останавливаясь.</b> Незнакомое, чего в словаре не было, выписывай отдельно.</li>
-          <li><b>Словосочетания учи одним куском</b> — <span class="cue">the wrong street</span>, <span class="cue">on the left</span> — а не по отдельным словам.</li>
-          <li><b>Упражнения пиши прямо здесь</b> и проверяй кнопкой. Ответы до проверки не показываются — это и есть смысл письменной работы.</li>
-          <li><b>Проверь себя по словарю:</b> кнопка «Скрыть перевод», пройди слова сверху вниз и отметь те, что не вспомнились.</li>
-          <li><b>Нажми «Собрать отчёт»</b> внизу главы и пришли его мне. От него зависит, что будет в следующей главе.</li>
+          <li><b>Сначала послушай:</b> «Слушать диалог», не читая, и ответь на 3 вопроса о главном. Скорость выбери под себя.</li>
+          <li><b>Открой текст и прочитай диалог целиком</b>, не заглядывая в словарь.</li>
+          <li><b>Просмотри мини-словарь</b> — 2–3 минуты — <b>и перечитай диалог.</b> Обороты учи одним куском — <span class="cue">the wrong street</span>, <span class="cue">on the left</span>.</li>
+          <li><b>Упражнения пиши прямо здесь</b> и проверяй кнопкой.</li>
+          <li><b>Проверь себя по словарю</b> с закрытым переводом — и слова, и обороты; что не вспомнилось, отметь галочкой.</li>
+          <li><b>Нажми «Отправить отчёт»</b> внизу главы, а пока пишется следующая — <b>прочитай диалог по ролям</b> вслух.</li>
         </ol>
       </div>
 
@@ -1549,12 +1550,12 @@ td.w.speaking{color:var(--sea)}
       <p class="sec-label">Как работать с главой</p>
       <div class="howto">
         <ol class="howto-list">
-          <li><b>Прочитай диалог целиком, не заглядывая в словарь.</b> Незнакомые слова на первом проходе — норма.</li>
-          <li><b>Просмотри мини-словарь</b> — 2–3 минуты, без зубрёжки, — <b>и перечитай диалог, снова не останавливаясь.</b></li>
-          <li><b>Словосочетания учи одним куском</b> — <span class="cue">for a long time</span>, <span class="cue">in front of</span>.</li>
+          <li><b>Сначала послушай:</b> «Слушать диалог», не читая, и ответь на 3 вопроса о главном. Скорость выбери под себя.</li>
+          <li><b>Открой текст и прочитай диалог целиком</b>, не заглядывая в словарь.</li>
+          <li><b>Просмотри мини-словарь</b> — 2–3 минуты — <b>и перечитай диалог.</b> Обороты учи одним куском — <span class="cue">for a long time</span>, <span class="cue">in front of</span>.</li>
           <li><b>Упражнения пиши прямо здесь</b> и проверяй кнопкой.</li>
-          <li><b>Проверь себя по словарю:</b> кнопка «Скрыть перевод», отметь то, что не вспомнилось.</li>
-          <li><b>Нажми «Отправить отчёт»</b> внизу главы.</li>
+          <li><b>Проверь себя по словарю</b> с закрытым переводом — и слова, и обороты; что не вспомнилось, отметь галочкой.</li>
+          <li><b>Нажми «Отправить отчёт»</b> внизу главы, а пока пишется следующая — <b>прочитай диалог по ролям</b> вслух.</li>
         </ol>
       </div>
 
@@ -1774,12 +1775,12 @@ td.w.speaking{color:var(--sea)}
       <p class="sec-label">Как работать с главой</p>
       <div class="howto">
         <ol class="howto-list">
-          <li><b>Прочитай диалог целиком, не заглядывая в словарь.</b></li>
-          <li><b>Просмотри мини-словарь</b> — 2–3 минуты, — <b>и перечитай диалог, не останавливаясь.</b></li>
-          <li><b>Словосочетания учи одним куском</b> — <span class="cue">ticket office</span>, <span class="cue">got off</span>.</li>
+          <li><b>Сначала послушай:</b> «Слушать диалог», не читая, и ответь на 3 вопроса о главном. Скорость выбери под себя.</li>
+          <li><b>Открой текст и прочитай диалог целиком</b>, не заглядывая в словарь.</li>
+          <li><b>Просмотри мини-словарь</b> — 2–3 минуты — <b>и перечитай диалог.</b> Обороты учи одним куском — <span class="cue">ticket office</span>, <span class="cue">got off</span>.</li>
           <li><b>Упражнения пиши прямо здесь</b> и проверяй кнопкой.</li>
-          <li><b>Проверь себя по словарю</b> с закрытым переводом.</li>
-          <li><b>Нажми «Отправить отчёт»</b> внизу главы.</li>
+          <li><b>Проверь себя по словарю</b> с закрытым переводом — и слова, и обороты; что не вспомнилось, отметь галочкой.</li>
+          <li><b>Нажми «Отправить отчёт»</b> внизу главы, а пока пишется следующая — <b>прочитай диалог по ролям</b> вслух.</li>
         </ol>
       </div>
 
@@ -2009,12 +2010,12 @@ td.w.speaking{color:var(--sea)}
       <p class="sec-label">Как работать с главой</p>
       <div class="howto">
         <ol class="howto-list">
-          <li><b>Прочитай диалог целиком, не заглядывая в словарь.</b></li>
-          <li><b>Просмотри мини-словарь</b> — 2–3 минуты, — <b>и перечитай диалог, не останавливаясь.</b></li>
-          <li><b>Обороты учи одним куском</b> — <span class="cue">across the street</span>, <span class="cue">not a word</span>.</li>
+          <li><b>Сначала послушай:</b> «Слушать диалог», не читая, и ответь на 3 вопроса о главном. Скорость выбери под себя.</li>
+          <li><b>Открой текст и прочитай диалог целиком</b>, не заглядывая в словарь.</li>
+          <li><b>Просмотри мини-словарь</b> — 2–3 минуты — <b>и перечитай диалог.</b> Обороты учи одним куском — <span class="cue">across the street</span>, <span class="cue">not a word</span>.</li>
           <li><b>Упражнения пиши прямо здесь</b> и проверяй кнопкой.</li>
-          <li><b>Проверь себя по словарю</b> с закрытым переводом — и слова, и обороты.</li>
-          <li><b>Нажми «Отправить отчёт»</b> внизу главы.</li>
+          <li><b>Проверь себя по словарю</b> с закрытым переводом — и слова, и обороты; что не вспомнилось, отметь галочкой.</li>
+          <li><b>Нажми «Отправить отчёт»</b> внизу главы, а пока пишется следующая — <b>прочитай диалог по ролям</b> вслух.</li>
         </ol>
       </div>
 
@@ -2429,7 +2430,7 @@ td.w.speaking{color:var(--sea)}
           <p class="sec-label">Глава</p>
           <h2>Как проходить главу</h2>
           <ol class="rm-steps">
-            <li><b>Сначала на слух.</b> Диалог звучит голосами героев, текст скрыт — три вопроса на понимание.</li>
+            <li><b>Сначала на слух.</b> Диалог звучит голосами героев, текст скрыт — три вопроса на понимание. Скорость выбираешь сам, отдельно от диктанта.</li>
             <li><b>Диалог.</b> От 150 слов на A1 до 700 на B2. Любую реплику можно послушать; можно читать по ролям — книга слушает и поправляет.</li>
             <li><b>Мини-словарь</b> — новые слова и обороты с британской транскрипцией и примером. Не вспомнил — отметь.</li>
             <li><b>Упражнения</b> — от узнавания к памяти: сопоставить, выбрать форму, вписать пропуски, ответить, перевести.</li>
@@ -6195,6 +6196,22 @@ td.w.speaking{color:var(--sea)}
   const TTS = window.bsTTS, MIC = window.bsMic;
   if (!TTS || !TTS.dialogue) return;
   const KEY = "blue-suitcase-earfirst";
+  // скорость — своя (решение ученика, 26.09.2026): здесь диалог новый, а в диктанте и других упражнениях — знакомый;
+  // выбор запоминается и синхронизируется (ключ blue-suitcase-ear-speed), по умолчанию — медленно
+  const SPEED_KEY = "blue-suitcase-ear-speed";
+  const SPEEDS = [["slow", "медленно", 0.7], ["normal", "обычно", 0.95], ["fast", "быстро", 1.15]];
+  function speed(){
+    let v = null;
+    try { v = localStorage.getItem(SPEED_KEY); } catch(e){}
+    return SPEEDS.filter(function(x){ return x[0] === v; })[0] || SPEEDS[0];
+  }
+  function speedCtl(){
+    const cur = speed()[0];
+    return '<span class="ear-speed"><span class="seg-lbl">скорость</span><span class="seg" role="group" aria-label="Скорость прослушивания">' +
+      SPEEDS.map(function(x){
+        return '<button type="button" class="seg-b' + (x[0] === cur ? " on" : "") + '" data-ear-speed="' + x[0] + '" aria-pressed="' + (x[0] === cur) + '">' + x[1] + '</button>';
+      }).join("") + '</span></span>';
+  }
   function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
   function today(){ const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
   function shuffle(a){ a = a.slice(); for (let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); const t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
@@ -6242,14 +6259,16 @@ td.w.speaking{color:var(--sea)}
     const ok = s.answers.filter(Boolean).length;
     save(id, { d: today(), skipped: !!skipped, ok: ok, n: s.qs.length, listens: s.listens });
     if (MIC && MIC.send && (s.listens || skipped)) MIC.send({ sentAt: new Date().toISOString(), kind: "listen", source: "chapter", chapter: id, skipped: !!skipped,
-      ok: ok, n: s.qs.length, listens: s.listens,
-      text: "Слушание · глава " + num(s.art) + (skipped ? " — «сначала на слух» пропущено" : " сначала на слух: понял " + ok + " из " + s.qs.length + " вопросов, прослушиваний " + s.listens) });
+      ok: ok, n: s.qs.length, listens: s.listens, speed: speed()[0],
+      text: "Слушание · глава " + num(s.art) + (skipped ? " — «сначала на слух» пропущено" : " сначала на слух: понял " + ok + " из " + s.qs.length +
+        " вопросов, прослушиваний " + s.listens + ", скорость «" + speed()[1] + "»") });
     delete E[id];
   }
   function listen(id){
     const s = E[id];
     if (!s) return;
-    const items = TTS.dialogue(s.art.querySelector(".script")).map(function(it){ return { text: it.text, gender: it.gender, pause: it.pause }; });
+    const rate = speed()[2];
+    const items = TTS.dialogue(s.art.querySelector(".script")).map(function(it){ return { text: it.text, gender: it.gender, pause: it.pause, rate: rate }; });
     s.playing = true;
     render(id);
     if (window.bsLog) window.bsLog.ctx("listen");
@@ -6281,7 +6300,7 @@ td.w.speaking{color:var(--sea)}
     } else if (s.stage === "intro"){
       body = '<p class="ear-text">Послушай диалог целиком, не читая. Не старайся понять каждое слово — только главное: кто, где и что случилось. Потом ' +
              (s.qs.length ? s.qs.length + " вопроса о смысле" : "откроется текст") + '.</p>' +
-             '<div class="snd-btns"><button type="button" class="act ear-play">' + TTS.icon + '<span>Слушать диалог</span></button></div>';
+             '<div class="snd-btns"><button type="button" class="act ear-play">' + TTS.icon + '<span>Слушать диалог</span></button>' + speedCtl() + '</div>';
     } else if (s.stage === "questions"){
       body = '<p class="ear-text">Ответь по услышанному:</p>' +
         s.qs.map(function(q, qi){
@@ -6292,7 +6311,7 @@ td.w.speaking{color:var(--sea)}
               return '<button type="button" class="ear-opt' + cls + '" data-q="' + qi + '" data-o="' + oi + '"' + (a !== undefined ? " disabled" : "") + '>' + esc(o.t) + '</button>';
             }).join("") + '</div></div>';
         }).join("") +
-        '<div class="snd-btns"><button type="button" class="act ghost ear-play">' + TTS.icon + '<span>Послушать ещё раз</span></button></div>';
+        '<div class="snd-btns"><button type="button" class="act ghost ear-play">' + TTS.icon + '<span>Послушать ещё раз</span></button>' + speedCtl() + '</div>';
     } else {
       const ok = s.answers.filter(Boolean).length;
       body = s.qs.map(function(q, i){
@@ -6301,7 +6320,7 @@ td.w.speaking{color:var(--sea)}
              (s.qs.length ? '<p class="ls-score ' + (ok === s.qs.length ? "ok" : "no") + '">Понял на слух: ' + ok + ' из ' + s.qs.length + '</p>' : "") +
              '<p class="ear-text">' + (s.listens < 2 ? "Теперь послушай ещё раз — уже детали. Потом открой текст и проверь себя." : "Открой текст и прочитай диалог — теперь он знаком на слух.") + '</p>' +
              '<div class="snd-btns">' + (s.listens < 2 ? '<button type="button" class="act ghost ear-play">' + TTS.icon + '<span>Слушать ещё раз</span></button>' : "") +
-             '<button type="button" class="act ear-open">Открыть текст</button></div>';
+             '<button type="button" class="act ear-open">Открыть текст</button>' + (s.listens < 2 ? speedCtl() : "") + '</div>';
     }
     s.panel.innerHTML = '<p class="ear-kicker">Сначала на слух</p>' + body +
       (s.stage === "result" ? "" : '<button type="button" class="linkish ear-skip">' + (s.auto ? "Пропустить — читать сразу" : "Выйти — открыть текст") + '</button>');
@@ -6339,6 +6358,7 @@ td.w.speaking{color:var(--sea)}
     if (b.classList.contains("ear-start")){ lock(a, false); a.querySelector(".ear-panel").scrollIntoView({ block: "center" }); return; }
     const s = E[a.id];
     if (!s || !s.panel.contains(b)) return;
+    if (b.dataset.earSpeed){ try { localStorage.setItem(SPEED_KEY, b.dataset.earSpeed); } catch(e){} render(a.id); return; }
     if (b.classList.contains("ear-play")) listen(a.id);
     else if (b.classList.contains("ear-stop")) stopListen(a.id);
     else if (b.classList.contains("ear-opt")) answer(a.id, Number(b.dataset.q), Number(b.dataset.o));
@@ -7817,7 +7837,8 @@ td.w.speaking{color:var(--sea)}
           '<div class="tr-progress">круг ' + round + " · " + (pos + 1) + " / " + deck.length + " · " +
             (c.side === "en" ? "английское → русское" : "русское → английское") +
             (c.item.list === "phrases" ? " · оборот" : "") + '</div>' +
-          '<div class="tr-word">' + esc(front) + (c.side === "en" ? gateSay(c.item.w) : "") + '</div>' +
+          '<div class="tr-word">' + esc(front) + (c.side === "en" ? gateSay(c.item.w) : "") +
+            (c.item.list !== "phrases" && window.bsPos ? window.bsPos.tag(c.item.w) : "") + '</div>' +   // часть речи — как в тренажёрах
           '<div class="tr-answer blank">' + esc(back) + (c.side === "ru" ? gateSay(c.item.w) : "") + '</div>' +
           '<div class="tr-buttons">' +
             '<button class="act ghost tr-show" type="button">Показать ответ</button>' +
